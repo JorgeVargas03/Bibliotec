@@ -57,9 +57,15 @@ form {
 }
 
 .letraform {
-  font-family: 'Agrandir', sans-serif;
+    font-family: 'Agrandir', sans-serif;
 }
- 
+
+.contenedor-boton {
+  display: flex;
+  justify-content: space-between; /* Esto coloca los elementos al principio y al final del contenedor */
+  align-items: center; /* Esto alinea verticalmente los elementos en el centro del contenedor */
+}
+
   .v-line{
     border-left: medium solid #5C82C2 ;
     top: 50%; 
