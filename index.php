@@ -67,22 +67,29 @@ session_start();
                 <li class="nav-item active">
                     <a class="nav-link" href="#" id="colSide">Inicio</a>
                 </li>
-                <li class="nav-item dropdown bg-orange">
+                <li class="nav-item dropend bg-orange">
                     <a class="nav-link dropdown-toggle" href="#" id="carrerasDropdown colSide" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carreras</a>
                     <div class="dropdown-menu" aria-labelledby="carrerasDropdown">
-                        <a class="dropdown-item" href="#">Carrera 1</a>
-                        <a class="dropdown-item" href="#">Carrera 2</a>
-                        <a class="dropdown-item" href="#">Carrera 3</a>
+                    <a class="dropdown-item" href="#">Arquitectura</a>
+                    <a class="dropdown-item" href="#">Ingeniería Bioquímica</a>
+                    <a class="dropdown-item" href="#">Ingeniería Civil</a>
+                    <a class="dropdown-item" href="#">Ingeniería Eléctrica</a>
+                    <a class="dropdown-item" href="#">Ingeniería en Gestión Empresarial</a>
+                    <a class="dropdown-item" href="#">Ingeniería en Sistemas Computacionales</a>
+                    <a class="dropdown-item" href="#">Ingeniería Industrial</a>
+                    <a class="dropdown-item" href="#">Ingeniería Mecatrónica</a>
+                    <a class="dropdown-item" href="#">Ingeniería Química</a>
+                    <a class="dropdown-item" href="#">Licenciatura en Administración</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown bg-transparent">
+                <li class="nav-item dropend bg-transparent">
                     <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Perfil</a>
                     <div class="dropdown-menu" aria-labelledby="perfilDropdown">
                         <a class="dropdown-item" href="#">Editar Perfil</a>
                         <a class="dropdown-item" href="#">Cambiar Contraseña</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown bg-transparent">
+                <li class="nav-item dropend bg-transparent">
                     <a class="nav-link dropdown-toggle" href="#" id="contactoDropdown colSide" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Contacto</a>
                     <div class="dropdown-menu" aria-labelledby="contactoDropdown">
                         <a class="dropdown-item" href="#">Información de Contacto</a>
