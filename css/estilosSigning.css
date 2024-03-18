@@ -20,8 +20,9 @@ html, body {
 }
 
 @media screen and (max-width: 1000px) {
-  form {
-    width: 70%; /* Reducir el ancho del formulario en pantallas más pequeñas */
+  .main{
+    width: 70%; 
+    height: 83%;
     left: 50%;
     transform: translateX(-50%);
     padding: 1em; /* Reducir el espacio alrededor del formulario */
@@ -29,18 +30,22 @@ html, body {
 }
 
 form {
-  width: auto; /* Cambiado a ancho automático */
-  box-sizing: border-box;
-  position: fixed;
-  top: 50%;
-  left: 24%;
-  transform: translate(-50%, -50%);
-  padding: 2em;
-  border: 1px solid #ccc;
-  background-color: #F5F5F5;
-  border-radius: 1em;
-  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.15);
-}
+
+    width: 30%; /* Ancho completo */
+    height: 60%; /* 100% de la altura de la ventana */
+    box-sizing: border-box;
+    position: fixed;
+    top: 50%;
+    left: 13%;
+    transform: translate(-16%, -50%);
+   
+    /* Esquema del formulario */
+    padding: 2em;
+    border: 1px solid #ccc;
+    background-color: #F5F5F5  ;
+    border-radius: 1em;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.15);
+  }
 
 #textoHola {
   font-size: 12vm;
