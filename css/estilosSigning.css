@@ -20,8 +20,9 @@ html, body {
 }
 
 @media screen and (max-width: 1000px) {
-  form {
-    width: 70%; /* Reducir el ancho del formulario en pantallas más pequeñas */
+  .main{
+    width: 70%; 
+    height: 83%;
     left: 50%;
     transform: translateX(-50%);
     padding: 1em; /* Reducir el espacio alrededor del formulario */
@@ -34,12 +35,12 @@ form {
     height: 60%; /* 100% de la altura de la ventana */
     box-sizing: border-box;
     position: fixed;
-    top: 50%;
+    top: 49%;
     left: 13%;
     transform: translate(-16%, -50%);
    
     /* Esquema del formulario */
-    padding: 2em;
+    padding: 2vmax;
     border: 1px solid #ccc;
     background-color: #F5F5F5  ;
     border-radius: 1em;
