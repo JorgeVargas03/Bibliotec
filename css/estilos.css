@@ -50,6 +50,10 @@
 
 /*  CONTENIDO   */
 
+.nav-texto-negro .nav-link {
+    color: black;
+}
+
 .bgcol{
     background-color: #e46e25;
 }
