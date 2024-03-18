@@ -1,19 +1,16 @@
 
 
-@media screen and (max-width:100){
 html, body {
-    margin: 0;
+    margin: 0 ;
     padding: 0;
-    width: 100%;
-    height: 100%;
     }
-  }
   
 
   .content {
     width: 100%;
-    height: 100%;
+    min-height: 100vh; 
     background-color: white; /* Cambia este color según tu preferencia */
+    overflow: hidden;
   }
 
 
@@ -22,11 +19,19 @@ html, body {
     src: url('Agrandir.otf') format('otf');
 }
 
+@media screen and (max-width: 1000px) {
+  form {
+    width: 70%; /* Reducir el ancho del formulario en pantallas más pequeñas */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1em; /* Reducir el espacio alrededor del formulario */
+  }
+}
 
 form {
 
-    width: 30%px; /* Ancho completo */
-    height: 30%px; /* 100% de la altura de la ventana */
+    width: 30%; /* Ancho completo */
+    height: 60%; /* 100% de la altura de la ventana */
     box-sizing: border-box;
     position: fixed;
     top: 50%;
@@ -43,7 +48,7 @@ form {
 
 
   #textoHola{
-    font-size: 60px;
+    font-size: 12vm;
     font-family:'Agrandir', sans-serif;
     color: #FF6100;
     -webkit-text-stroke: 2px #FF6100;
@@ -78,11 +83,10 @@ form {
 }
 
 .Biblio{
-    font-size: 90px;
+    font-size: 4.5vmax;
     font-family:'Agrandir', sans-serif;
     color:black;
-    -webkit-text-stroke: 5px black;
-
+    -webkit-text-stroke: 0.3vmax black;
     top: 53%;
     left: 79.5%;
     transform: translate(-50%, -50%);
@@ -91,10 +95,10 @@ form {
 }
 
 .Tec{
-    font-size: 90px;
+  font-size: 4.5vmax;
     font-family:'Agrandir', sans-serif;
     color:#FF6100 ;
-    -webkit-text-stroke: 5px #FF6100 ;
+    -webkit-text-stroke: 0.3vmax #FF6100 ;
 
     top: 53%;
     left: 90%;
@@ -106,22 +110,22 @@ form {
 
 
 .Bienvenido{
-    font-size: 60px;
+    font-size: 3.5vmax;
     font-family:'Agrandir', sans-serif;
-    color:#032D97   ;
+    color:#032D97 ;
     -webkit-text-stroke: 1px #032D97   ;
 
-    top: 23%;
-    left: 75%;
+    top: 22%;
+    left: 73%;
     transform: translate(-50%, -50%);
 
     position: absolute;
 }
 
 .Saber{
-    font-size: 27px;
+    font-size: 1.5vmax;
     font-family:'Agrandir', sans-serif;
-    color:#032D97   ;
+    color:#032D97;
 
     top: 60%;
     left: 82%;
