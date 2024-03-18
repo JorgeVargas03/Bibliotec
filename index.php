@@ -36,7 +36,7 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <!--Termmina Bootstrap-->
 </head>
@@ -69,22 +69,22 @@ session_start();
                 </li>
                 <li class="nav-item dropdown bg-orange">
                     <a class="nav-link dropdown-toggle" href="#" id="carrerasDropdown colSide" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carreras</a>
-                    <div class="dropdown-menu absolute-menu" aria-labelledby="carrerasDropdown">
+                    <div class="dropdown-menu" aria-labelledby="carrerasDropdown">
                         <a class="dropdown-item" href="#">Carrera 1</a>
                         <a class="dropdown-item" href="#">Carrera 2</a>
                         <a class="dropdown-item" href="#">Carrera 3</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown bg-orange">
+                <li class="nav-item dropdown bg-transparent">
                     <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Perfil</a>
-                    <div class="dropdown-menu absolute-menu" aria-labelledby="perfilDropdown">
+                    <div class="dropdown-menu" aria-labelledby="perfilDropdown">
                         <a class="dropdown-item" href="#">Editar Perfil</a>
                         <a class="dropdown-item" href="#">Cambiar Contraseña</a>
                     </div>
                 </li>
-                <li class="nav-item dropdown bg-orange">
+                <li class="nav-item dropdown bg-transparent">
                     <a class="nav-link dropdown-toggle" href="#" id="contactoDropdown colSide" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Contacto</a>
-                    <div class="dropdown-menu absolute-menu" aria-labelledby="contactoDropdown">
+                    <div class="dropdown-menu" aria-labelledby="contactoDropdown">
                         <a class="dropdown-item" href="#">Información de Contacto</a>
                         <a class="dropdown-item" href="#">Formulario de Contacto</a>
                     </div>
@@ -93,7 +93,6 @@ session_start();
         </div>
     </div>
 </nav>
-
             <!-- Contenido principal -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="container mt-3">
