@@ -2,7 +2,7 @@
 $link = include('php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Consulta a la base de datos
-$consulta = "SELECT * FROM publicacion";
+$consulta = "SELECT titulo_Pub, descrip_Pub FROM publicacion";
 $registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
 
 // Verifica si la consulta se ejecutó correctamente
@@ -92,11 +92,18 @@ session_start();
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="container mt-3">
                     <h2>Últimas Publicaciones</h2>
+                    <?php
+                    while ($fila=mysqli_fetch_array($registros)){
+                        ?>
                     <div class="publicacion">
-                        <h3>Título de la Publicación 1</h3>
-                        <p>Descripción breve de la publicación.</p>
+                        <h3><?php echo ($fila['titulo_Pub']);?></h3>
+                        <p><?php echo ($fila['descrip_Pub']);?></p>
                         <a href="#">Ver más</a>
                     </div>
+                    <?php
+                    }
+                    ?>
+                    <!-- Contenido principal 
                     <div class="publicacion">
                         <h3>Título de la Publicación 2</h3>
                         <p>Descripción breve de la publicación.</p>
@@ -106,7 +113,7 @@ session_start();
                         <h3>Título de la Publicación 3</h3>
                         <p>Descripción breve de la publicación.</p>
                         <a href="#">Ver más</a>
-                    </div>
+                    </div>-->
                 </div>
             </main>
         </div>

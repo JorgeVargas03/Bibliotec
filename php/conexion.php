@@ -4,7 +4,7 @@ $link = mysqli_connect("localhost", "root", "root", "BiblioTec");
 if (!$link) {
     die("Error en la conexión: " . mysqli_connect_error());
 }else{
-    echo "Conexion Exitosa en la base de datos \"BiblioTec\" :)";
+    
 }
 
 function cerrarconexion(){
