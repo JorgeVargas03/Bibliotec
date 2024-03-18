@@ -128,8 +128,5 @@ session_start();
             <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
         </div>
     </footer>
-
-    <!-- Scripts de Bootstrap y jQuery -->
-    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
