@@ -1,6 +1,6 @@
 
 
-@media screen and (max-width:100$){
+@media screen and (max-width:100){
 html, body {
     margin: 0;
     padding: 0;
@@ -14,7 +14,7 @@ html, body {
     width: 100%;
     height: 100%;
     background-color: white; /* Cambia este color según tu preferencia */
-
+  }
 
 
   @font-face {
