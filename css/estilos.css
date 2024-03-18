@@ -66,6 +66,18 @@
     color: black;
 }
 
+.absolute-menu {
+    position: absolute;
+}
+
+.dropdown-menu {
+    background-color: #e46e25; /* Cambia el color de fondo del menú desplegable */
+}
+
+.dropdown-menu.show {
+    display: block; /* Asegura que el menú desplegable permanezca visible */
+}
+
 .publicacion {
     margin-bottom: 20px;
     padding: 20px;
