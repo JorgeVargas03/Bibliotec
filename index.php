@@ -2,7 +2,7 @@
 $link = include('php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Consulta a la base de datos
-$consulta = "SELECT TOP 3 FROM publicacion";
+$consulta = "SELECT * FROM publicacion";
 $registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
 
 // Verifica si la consulta se ejecutó correctamente
