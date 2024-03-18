@@ -38,20 +38,33 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!--Termmina Bootstrap-->
 </head>
 <body>
-    <header>
-    <div class="menu-mobile">
-    <div class="cabecera navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="barra navbar-brand">
-          <a href="#" class="logo">
-            <img src="images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
-            <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
-          </a>
+<header class="bg-primary py-2">
+        <div class="container d-flex align-items-center">
+            <!-- Logo y título -->
+            <div class="logo">
+                <img src="images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
+                <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
+
+                <form class="position-relative search-field">
+                <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+                <a href='#'><i class="bi bi-search search-icon"></i></a>
+                
+            </form>
+            <button type="button" class="btn btn-warning position-relative pos-btn">Notificaciones
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+
+            <span class="visually-hidden">unread messages</span>
+            </span>
+            </button>
+            </div>
+            <!-- Campo de búsqueda -->
+            
+            <!-- Ícono de notificaciones -->
+            
         </div>
-    </div>
-    </div>
     </header>
     <!--Aqui se muestra un apartado para los productos que se venderan-->
     <div class="container-fluid">
