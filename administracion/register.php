@@ -102,7 +102,7 @@ session_start();
   
               <div class="col-5  pt-2">
                 <button type="button" class="btn btn-link mb-2 mt-3" id="letraform" style="font-size: 12px;">
-                  <a href="signin.html">¿Ya tienes una cuenta? Inicia Sesion.</a>
+                  <a href="../index.php">¿Ya tienes una cuenta? Inicia Sesion.</a>
               </div>
             </div>
             
