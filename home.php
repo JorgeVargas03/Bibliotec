@@ -98,9 +98,8 @@ session_start();
                 <li class="nav-item dropend bg-transparent">
                     <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Perfil</a>
                     <div class="dropdown-menu" aria-labelledby="perfilDropdown">
-                        <a class="dropdown-item" href="signin.">Iniciar Sesion</a>
-                        <a class="dropdown-item" href="register.html">Registrarse</a>
                         <a class="dropdown-item" href="#">Mi Perfil</a>
+                        <a class="dropdown-item" href="#">Editar mi Perfil</a>
                     </div>
                 </li>
                 <li class="nav-item dropend bg-transparent">
