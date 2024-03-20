@@ -54,7 +54,7 @@ session_start();
                 <a href='#'><i class="bi bi-search search-icon"></i></a>
                 
             </form>
-            <button type="button" class="btn btn-warning position-relative pos-btn">Notificaciones
+            <button type="button" class="btn btn-warning position-absolute top-0 end-0 me-5 mt-4">Notificaciones
             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+
             <span class="visually-hidden">unread messages</span>
             </span>
@@ -98,7 +98,7 @@ session_start();
                 <li class="nav-item dropend bg-transparent">
                     <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Perfil</a>
                     <div class="dropdown-menu" aria-labelledby="perfilDropdown">
-                        <a class="dropdown-item" href="signin.html">Iniciar Sesion</a>
+                        <a class="dropdown-item" href="signin.">Iniciar Sesion</a>
                         <a class="dropdown-item" href="register.html">Registrarse</a>
                         <a class="dropdown-item" href="#">Mi Perfil</a>
                     </div>
