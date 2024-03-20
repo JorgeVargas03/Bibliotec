@@ -1,3 +1,11 @@
+<?php
+$link = include('../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
+// Cierra la conexión después de realizar la consulta
+mysqli_close($link);
+
+// Inicia la sesión después de cerrar la conexión
+session_start();
+?>
 <!doctype html>
 <html lang="es">
   <head>
@@ -6,10 +14,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--Bootstrap CSS-->
-    <link rel="icon" href="images/icons/tigerF.png">
-    <link rel="stylesheet" href="css\estiloReg.css">
-    <link rel="stylesheet" href="css\normalizar.css">
-    <link rel="stylesheet" href="css\estilos.css">
+    <link rel="icon" href="../images/icons/tigerF.png">
+    <link rel="stylesheet" href="../css\estiloReg.css">
+    <link rel="stylesheet" href="../css\normalizar.css">
+    <link rel="stylesheet" href="../css\estilos.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     
@@ -19,7 +27,7 @@
     <div class="cabeza navbar navbar-expand navbar-dark ">
       <div class="cabeza navbar-brand">
         <a href="#" class="logor">
-          <img src="images/icons/flamita.png" alt="Logo BiblioTec" class="img-fluid mr-1">
+          <img src="../images/icons/flamita.png" alt="Logo BiblioTec" class="img-fluid mr-1">
           <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-3 tec">Tec</span></h4>
         </a>
       </div>
