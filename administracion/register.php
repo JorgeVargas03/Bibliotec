@@ -24,24 +24,7 @@ session_start();
     <title>BiblioTec-Register</title>
   </head>
   <body>
-    <!--
-  <script>
-    var alertMessage = "<?php echo isset($_SESSION['alert_message']) ? $_SESSION['alert_message'] : ''; ?>";
-    if(alertMessage) {
-        // Creamos un elemento de alerta con Bootstrap y el mensaje proporcionado
-        var alertElement = '<div class="alert alert-danger d-flex align-items-center" role="alert">' +
-                               '<svg class="bi flex-shrink-0 me-2" style="width: 1em; height: 1em;" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>' +
-                               '<div>' + alertMessage + '</div>' +
-                           '</div>';
-
-        // Agregamos el elemento de alerta al final del cuerpo del documento
-        document.body.insertAdjacentHTML('beforeend', alertElement);
-
-        // Eliminamos el mensaje de alerta de la sesión para que no se muestre nuevamente
-        <?php unset($_SESSION['alert_message']); ?>
-    }
-  </script> -->
-
+    
     <div class="cabeza navbar navbar-expand navbar-dark ">
       <div class="cabeza navbar-brand">
         <a href="#" class="logor">
@@ -70,27 +53,30 @@ session_start();
 
             <div class="col-md-6 ">
               <label for="inputEmail4" class="form-label">Correo</label>
-              <input type="email" class="form-control" id="inputEmail4 validationCustom01" placeholder="Correo" name="correo" required>
+              <input type="email" class="form-control" id="inputEmail4 validationCustom01" placeholder="@ittepic.edu.mx" name="correo" required>
               
             </div>
             <div class="col-md-6">
               <label for="inputPassword4" class="form-label">Contraseña</label>
               <input type="password" class="form-control" id="inputPassword4 validationCustom01" name="contra" required>
               <div id="passwordHelpBlock" class="form-text lh-1" style="font-size: 1vmax">
-                Mínimo 8 caracteres, letras, números y simbolos.
+              Debe contener al menos una letra mayúscula, una letra minúscula y un número, y 8 carácteres
               </div>
             </div>
             <div class="col-md-6">
                 <label for="inputState validationCustom01" class="form-label">Carrera</label>
                 <select id="inputState validationCustom01" class="form-select" name="carrera" required>
                   <option selected>Seleccionar</option>
-                  <option>ARQ</option>
-                  <option>ISC</option>
-                  <option>IC</option>
-                  <option>IQ</option>
-                  <option>IBQ</option>
-                  <option>IM</option>
-                  <option>IE</option>
+                  <option>Arquitectura</option>
+                  <option>Ing. Bioquimica</option>
+                  <option>Ing. Civil</option>
+                  <option>Ing. Electrica</option>
+                  <option>Ing. Gestion Empresarial</option>
+                  <option>Ing. Sistemas Computacionales</option>
+                  <option>Ing. Industrial</option>
+                  <option>Ing. Mecatronica</option>
+                  <option>Ing. Quimica</option>
+                  <option>Lic. Administracion</option>
                 </select>
               </div>  
 
@@ -135,6 +121,23 @@ session_start();
     </section>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+    var alertMessage = "<?php echo isset($_SESSION['alert_message']) ? $_SESSION['alert_message'] : ''; ?>";
+    if(alertMessage) {
+        // Creamos un elemento de alerta con Bootstrap y el mensaje proporcionado
+        var alertElement = '<div class="alert alert-danger d-flex align-items-center" role="alert">' +
+                               '<svg class="bi flex-shrink-0 me-2" style="width: 1em; height: 1em;" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>' +
+                               '<div>' + alertMessage + '</div>' +
+                           '</div>';
+
+        // Agregamos el elemento de alerta al final del cuerpo del documento
+        document.body.insertAdjacentHTML('beforeend', alertElement);
+
+        // Eliminamos el mensaje de alerta de la sesión para que no se muestre nuevamente
+        <?php unset($_SESSION['alert_message']); ?>
+    }
+  </script> 
   </body>
 </html>

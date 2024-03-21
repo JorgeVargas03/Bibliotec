@@ -13,9 +13,8 @@ $carrera = $_POST['carrera'];
 //validar correo
 $regex = "/^([a-zA-Z0-9\.]+@ittepic(\.)edu(\.)mx)$/";
 if(!preg_match($regex,$correo)){
-    //$_SESSION["alert_message"]=;
     echo '<script>
-        alert("Correo no válido");
+        window.alert("Correo no válido");
         window.history.back();
     </script>';
     exit;
@@ -26,20 +25,28 @@ $existe_correo = mysqli_query($link,"SELECT * FROM `usuario` WHERE `correo_Us` =
 if(mysqli_num_rows($existe_correo) > 0){
     //$_SESSION["alert_message"]=;
     echo '<script>
-        alert("Este correo ya esta registrado, intente con uno diferente o inicie sesión");
+        window.alert("Este correo ya esta registrado, intente con uno diferente o inicie sesión");
         window.history.back();
     </script>';
     exit;
 }
 
 //validar contraseñas
-//$regex2 = "/^([a-zA-Z0-9]{8, })$/"; preg_match($regex2,$contrasena) //para despues
+$regex2 = "/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$/";  //para despues
 if(strcmp($contrasena,$repcon) === 0){
-    //encripta si son iguales las contraseñas
-    $contrasena = hash('sha512',$contrasena);
-}else{
+    if(preg_match($regex2,$contrasena)){
+        //encripta si son iguales y corresponde con la expresion regular las contraseñas
+        $contrasena = password_hash($contrasena,PASSWORD_BCRYPT);
+    }else{
+        echo '<script>
+            window.alert("Las contraseña debe cumplir con las caracteristicas");
+            window.history.back();
+            </script>';
+    exit;
+    }
+}else{      
     echo '<script>
-        alert("Las contraseñas no coinciden");
+        window.alert("Las contraseñas no coinciden");
         window.history.back();
     </script>';
     exit;
