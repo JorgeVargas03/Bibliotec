@@ -41,6 +41,14 @@ session_start();
   </div>
     <section class="container my-2 w-50 text-ligth p-2" id="campos">
         <form class="row g-3 py-2 need-validation ">
+            <div class="col-6">
+              <label for="inputAddress validationCustom01" class="form-label">Nombre(s)</label>
+              <input type="text" class="form-control" id="inputAddress validationCustom01" required>
+            </div>
+            <div class="col-6">
+                <label for="inputAddress" class="form-label">Apellidos</label>
+                <input type="text" class="form-control" id="inputAddress" required>
+              </div>
 
             <div class="col-md-6">
               <label for="inputEmail4" class="form-label">Correo</label>
@@ -50,18 +58,10 @@ session_start();
             <div class="col-md-6">
               <label for="inputPassword4" class="form-label">Contraseña</label>
               <input type="password" class="form-control" id="inputPassword4 validationCustom01" required>
-              <div id="passwordHelpBlock" class="form-text">
+              <div id="passwordHelpBlock" class="form-text lh-1" style="font-size: 1vmax">
                 Mínimo 8 caracteres, letras, números y simbolos.
               </div>
             </div>
-            <div class="col-6">
-              <label for="inputAddress validationCustom01" class="form-label">Nombre(s)</label>
-              <input type="text" class="form-control" id="inputAddress validationCustom01" required>
-            </div>
-            <div class="col-6">
-                <label for="inputAddress" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" id="inputAddress" required>
-              </div>
             <div class="col-md-6">
                 <label for="inputState validationCustom01" class="form-label">Carrera</label>
                 <select id="inputState validationCustom01" class="form-select" required>
@@ -74,7 +74,14 @@ session_start();
                   <option>IM</option>
                   <option>IE</option>
                 </select>
-              </div>
+              </div>  
+
+            <div class="col-md-6">
+              <label for="inputPassword4" class="form-label">Confirmar Contraseña</label>
+              <input type="password" class="form-control" id="inputPassword4 validationCustom01" required>
+            </div>
+            
+            
               <div class="col-md-6 ">
                 <label for="inputNumber validationCustom01" class="form-label">Semestre</label>
                 <select id="inputNumber validationCustom01" class="form-select" required>

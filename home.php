@@ -1,5 +1,15 @@
 <?php
 $link = include('php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
+
+// Consulta a la base de datos
+$consulta = "SELECT titulo_Pub, descrip_Pub FROM publicacion ORDER BY idPub DESC LIMIT 3";
+$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
+
+// Verifica si la consulta se ejecutó correctamente
+if (!$registros) {
+    die('Error en la consulta: ' . mysqli_error($link));
+}
+
 // Cierra la conexión después de realizar la consulta
 mysqli_close($link);
 
@@ -88,9 +98,8 @@ session_start();
                 <li class="nav-item dropend bg-transparent">
                     <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Perfil</a>
                     <div class="dropdown-menu" aria-labelledby="perfilDropdown">
-                        <a class="dropdown-item" href="signin.">Iniciar Sesion</a>
-                        <a class="dropdown-item" href="register.html">Registrarse</a>
                         <a class="dropdown-item" href="#">Mi Perfil</a>
+                        <a class="dropdown-item" href="#">Editar mi Perfil</a>
                     </div>
                 </li>
                 <li class="nav-item dropend bg-transparent">
