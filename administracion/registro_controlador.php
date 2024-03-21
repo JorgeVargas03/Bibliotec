@@ -1,6 +1,6 @@
 <?php
 
-include '..\php\conexion.php';//$link variable de conexion
+$link = include('../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 $nombre = $_POST['nombre'];
 $apellidos = $_POST['apellidos'];
