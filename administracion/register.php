@@ -40,31 +40,31 @@ session_start();
     </div>
   </div>
     <section class="container my-2 w-50 text-ligth p-2" id="campos">
-        <form class="row g-3 py-2 need-validation ">
+        <form class="row g-3 py-2 need-validation" action="registro_controlador.php" method="post">
             <div class="col-6">
               <label for="inputAddress validationCustom01" class="form-label">Nombre(s)</label>
-              <input type="text" class="form-control" id="inputAddress validationCustom01" required>
+              <input type="text" class="form-control" id="inputAddress validationCustom01" name="nombre"required>
             </div>
             <div class="col-6">
                 <label for="inputAddress" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" id="inputAddress" required>
+                <input type="text" class="form-control" id="inputAddress" name="apellidos" required>
               </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 ">
               <label for="inputEmail4" class="form-label">Correo</label>
-              <input type="email" class="form-control" id="inputEmail4 validationCustom01" required>
+              <input type="email" class="form-control" id="inputEmail4 validationCustom01" placeholder="Correo" name="correo" required>
               
             </div>
             <div class="col-md-6">
               <label for="inputPassword4" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" id="inputPassword4 validationCustom01" required>
+              <input type="password" class="form-control" id="inputPassword4 validationCustom01" name="contra" required>
               <div id="passwordHelpBlock" class="form-text lh-1" style="font-size: 1vmax">
                 Mínimo 8 caracteres, letras, números y simbolos.
               </div>
             </div>
             <div class="col-md-6">
                 <label for="inputState validationCustom01" class="form-label">Carrera</label>
-                <select id="inputState validationCustom01" class="form-select" required>
+                <select id="inputState validationCustom01" class="form-select" name="carrera" required>
                   <option selected>Seleccionar</option>
                   <option>ARQ</option>
                   <option>ISC</option>
@@ -78,13 +78,13 @@ session_start();
 
             <div class="col-md-6">
               <label for="inputPassword4" class="form-label">Confirmar Contraseña</label>
-              <input type="password" class="form-control" id="inputPassword4 validationCustom01" required>
+              <input type="password" class="form-control" id="inputPassword4 validationCustom01" name="repContra" required>
             </div>
             
             
               <div class="col-md-6 ">
                 <label for="inputNumber validationCustom01" class="form-label">Semestre</label>
-                <select id="inputNumber validationCustom01" class="form-select" required>
+                <select id="inputNumber validationCustom01" class="form-select" name="semestre" required>
                   <option selected>Seleccionar</option>
                   <option>1</option>
                   <option>2</option>
