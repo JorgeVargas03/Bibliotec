@@ -24,6 +24,24 @@ session_start();
     <title>BiblioTec-Register</title>
   </head>
   <body>
+    <!--
+  <script>
+    var alertMessage = "<?php echo isset($_SESSION['alert_message']) ? $_SESSION['alert_message'] : ''; ?>";
+    if(alertMessage) {
+        // Creamos un elemento de alerta con Bootstrap y el mensaje proporcionado
+        var alertElement = '<div class="alert alert-danger d-flex align-items-center" role="alert">' +
+                               '<svg class="bi flex-shrink-0 me-2" style="width: 1em; height: 1em;" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>' +
+                               '<div>' + alertMessage + '</div>' +
+                           '</div>';
+
+        // Agregamos el elemento de alerta al final del cuerpo del documento
+        document.body.insertAdjacentHTML('beforeend', alertElement);
+
+        // Eliminamos el mensaje de alerta de la sesión para que no se muestre nuevamente
+        <?php unset($_SESSION['alert_message']); ?>
+    }
+  </script> -->
+
     <div class="cabeza navbar navbar-expand navbar-dark ">
       <div class="cabeza navbar-brand">
         <a href="#" class="logor">
@@ -116,6 +134,7 @@ session_start();
           </form>
     </section>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>

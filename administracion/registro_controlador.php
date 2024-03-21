@@ -13,21 +13,23 @@ $carrera = $_POST['carrera'];
 //validar correo
 $regex = "/^([a-zA-Z0-9\.]+@ittepic(\.)edu(\.)mx)$/";
 if(!preg_match($regex,$correo)){
+    //$_SESSION["alert_message"]=;
     echo '<script>
         alert("Correo no válido");
         window.history.back();
     </script>';
-    exit();
+    exit;
 }
 
 //VERIFICAR SI YA EXISTE O ESTA REGISTRADO ESE CORREO
 $existe_correo = mysqli_query($link,"SELECT * FROM `usuario` WHERE `correo_Us` = '$correo'");
 if(mysqli_num_rows($existe_correo) > 0){
+    //$_SESSION["alert_message"]=;
     echo '<script>
         alert("Este correo ya esta registrado, intente con uno diferente o inicie sesión");
         window.history.back();
     </script>';
-    exit();
+    exit;
 }
 
 //validar contraseñas
@@ -40,7 +42,7 @@ if(strcmp($contrasena,$repcon) === 0){
         alert("Las contraseñas no coinciden");
         window.history.back();
     </script>';
-    exit();
+    exit;
 }
 
 //En esta parte, si todo salio bien, se guardan los datos correctos
