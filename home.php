@@ -48,7 +48,6 @@ session_start();
             <div class="logo">
                 <img src="images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
                 <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
-
                 <form class="position-relative search-field " style="margin-top: -0.8%;">
                 <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
                 <a href='#'><i class="bi bi-search search-icon"></i></a>
@@ -78,7 +77,7 @@ session_start();
         <div class="sidebar-sticky">
             <ul class="nav flex-column nav-texto-negro">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#" id="colSide">Inicio</a>
+                    <a class="nav-link" href="home.php" id="colSide">Inicio</a>
                 </li>
                 <li class="nav-item dropend bg-orange">
                     <a class="nav-link dropdown-toggle" href="#" id="carrerasDropdown colSide" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carreras</a>
