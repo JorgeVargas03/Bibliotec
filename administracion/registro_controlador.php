@@ -1,6 +1,6 @@
 <?php
 
-include '..\php\conexion.php';//$link variable de conexion
+$link = include('../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 $nombre = $_POST['nombre'];
 $apellidos = $_POST['apellidos'];
@@ -36,7 +36,7 @@ if(mysqli_num_rows($existe_correo) > 0){
 //$regex2 = "/^([a-zA-Z0-9]{8, })$/"; preg_match($regex2,$contrasena) //para despues
 if(strcmp($contrasena,$repcon) === 0){
     //encripta si son iguales las contraseñas
-    $contrasena = hash('sha512',$contrasena);
+    $contrasena = password_hash($contrasena, PASSWORD_BCRYPT);
 }else{
     echo '<script>
         alert("Las contraseñas no coinciden");
