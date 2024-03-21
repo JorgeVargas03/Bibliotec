@@ -2,7 +2,7 @@
 $link = include('php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Consulta a la base de datos
-$consulta = "SELECT titulo_Pub, descrip_Pub FROM publicacion ORDER BY idPub DESC LIMIT 3";
+$consulta = "SELECT * FROM publicacion ORDER BY idPub DESC LIMIT 3";
 $registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
 
 // Verifica si la consulta se ejecutó correctamente
@@ -114,32 +114,47 @@ session_start();
 </nav>
             <!-- Contenido principal -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                <div class="container mt-3">
-                    <h2>Últimas Publicaciones</h2>
-                    <?php
-                    while ($fila=mysqli_fetch_array($registros)){
-                        ?>
-                    <div class="publicacion">
-                        <h3><?php echo ($fila['titulo_Pub']);?></h3>
-                        <p><?php echo ($fila['descrip_Pub']);?></p>
-                        <a href="#">Ver más</a>
+    <div class="container mt-3">
+        <h2>Últimas Publicaciones</h2>
+        <?php
+        // Array de imágenes disponibles
+        $imagenes = ['images/tigers/a1.png', 'images/tigers/a2.png','images/tigers/a3.png'];
+
+        while ($fila=mysqli_fetch_array($registros)){
+            // Selecciona una imagen aleatoria de la lista
+            $imagen_aleatoria = $imagenes[array_rand($imagenes)];
+        ?>
+        <div class="publicacion">
+            <h3><?php echo ($fila['titulo_Pub']);?></h3>
+            <p><?php echo ($fila['descrip_Pub']);?></p>
+            <!-- Botón Ver más que despliega los detalles -->
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#detalles<?php echo $fila['idPub']; ?>" aria-expanded="false" aria-controls="detalles<?php echo $fila['idPub']; ?>">
+                Ver más
+            </button>
+            <!-- Detalles de la publicación dentro de un acordeón -->
+            <div class="collapse" id="detalles<?php echo $fila['idPub']; ?>">
+                <!-- Detalles específicos de la publicación -->
+                <div class="card card-body">
+                    <!-- Imagen aleatoria como insignia -->
+                    <div class="text-center mb-3">
+                        <img src="<?php echo $imagen_aleatoria; ?>" class="img-thumbnail" style="max-width: 100px;" alt="Imagen Aleatoria">
                     </div>
-                    <?php
-                    }
-                    ?>
-                    <!-- Contenido principal 
-                    <div class="publicacion">
-                        <h3>Título de la Publicación 2</h3>
-                        <p>Descripción breve de la publicación.</p>
-                        <a href="#">Ver más</a>
-                    </div>
-                    <div class="publicacion">
-                        <h3>Título de la Publicación 3</h3>
-                        <p>Descripción breve de la publicación.</p>
-                        <a href="#">Ver más</a>
-                    </div>-->
+                    <p>ID de Usuario: <?php echo $fila['id_Usuario']; ?></p>
+                    <p>Fecha de Publicación: <?php echo $fila['fecha_Pub']; ?></p>
+                    <p>Calificación: <?php echo $fila['calif_Pub']; ?></p>
+                    <p>Carrera: <?php echo $fila['carrera_Pub']; ?></p>
+                    <p>Materia: <?php echo $fila['materia_Pub']; ?></p>
+                    <p>Tipo de Publicación: <?php echo $fila['tipo_pub']; ?></p>
+                    <!-- Si tienes un enlace o archivo adjunto -->
+                    <a href="<?php echo $fila['archivo_Pub']; ?>" target="_blank">Ver archivo adjunto</a>
                 </div>
-            </main>
+            </div>
+        </div>
+        <?php
+        }
+        ?>
+    </div>
+</main>
         </div>
     </div>
 
