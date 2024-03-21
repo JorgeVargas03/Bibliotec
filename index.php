@@ -33,6 +33,7 @@ session_start();
     <!--Inicia Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -41,16 +42,34 @@ session_start();
     <!--Termmina Bootstrap-->
 </head>
 <body>
+<script>
+    var alertMessage = "<?php echo isset($_SESSION['alert_message']) ? $_SESSION['alert_message'] : ''; ?>";
+    if(alertMessage) {
+        // Creamos un elemento de alerta con Bootstrap y el mensaje proporcionado
+        var alertElement = '<div class="alert alert-danger d-flex align-items-center" role="alert">' +
+                               '<svg class="bi flex-shrink-0 me-2" style="width: 1em; height: 1em;" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>' +
+                               '<div>' + alertMessage + '</div>' +
+                           '</div>';
+
+        // Agregamos el elemento de alerta al final del cuerpo del documento
+        document.body.insertAdjacentHTML('beforeend', alertElement);
+
+        // Eliminamos el mensaje de alerta de la sesión para que no se muestre nuevamente
+        <?php unset($_SESSION['alert_message']); ?>
+    }
+</script>
+
     <div class="content">
       <main>
-        <form>
+        <form action="administracion/login_controlador.php" method="post">
             <h1 class="h1 mb-3vmax fw-normal" id="textoHola">¡Hola, <br />de nuevo!<br /> </h1>
                 <div class="form-floating">
-                  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                  <input type="email" class="form-control" id="floatingInput" placeholder="email" name="email" id="validationCustom05" required>
                   <label for="floatingInput" id="letraform"  style="font-size: 15px;">Correo Institucional</label>
+
                 </div>
                 <div class="form-floating">
-                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password"  name="password" id="validationCustom07" required>
                   <label for="floatingPassword" id="letraform"  style="font-size: 15px;">Contraseña</label>
                 </div>
                 <div class="contenedor-boton">
@@ -61,8 +80,8 @@ session_start();
                     ¿No tienes una cuenta?  Registrate aqui. 
             </button></a>
           </div>
-                <button class="btn btn-primary w-100 mt-2" type="button" id="letraform"
-                 style="--bs-btn-padding-y: 0.6rem;  --bs-btn-font-size:15px;">Iniciar sesión</button>
+                <button class="btn btn-primary w-100 mt-2" type="submit" id="letraform"
+                 style="--bs-btn-padding-y: 0.6rem;  --bs-btn-font-size:15px;" value="Login">Iniciar sesión</button>
                 <p class="mt-2vmax mb-auto text-body-secondary" id="letraform">&copy; BiblioTec 2024</p>
               </form>
             </main>  
@@ -76,6 +95,7 @@ session_start();
         <label class="Bienvenido">Bienvenido a</label>
         <label class="Saber">Conectate con el saber...</label>   
     </div>
+    
         
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
