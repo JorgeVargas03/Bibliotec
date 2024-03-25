@@ -18,8 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->num_rows == 1) {
             // Se encontró el correo, puedes enviar el código de confirmación aquí
             // Aquí deberías enviar el código al correo electrónico proporcionado
-            // Por ahora, simplemente estableceremos un mensaje de éxito en la sesión
-            $_SESSION["alert_message"] = "Se ha enviado el código de confirmación al correo electrónico.";
+            // Generar un código aleatorio de 6 dígitos
+            $confirmationCode = rand(100000, 999999);
+            $_SESSION["confirmation_message"] = "Se ha enviado el código de verificación $confirmationCode al correo electrónico: $email.";
         } else {
             // El correo no está registrado, mostrar un mensaje de alerta
             $_SESSION["alert_message"] = "El correo proporcionado no está registrado.";

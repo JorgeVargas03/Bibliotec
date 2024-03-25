@@ -72,7 +72,7 @@ session_start();
                   <label for="floatingPassword" id="letraform"  style="font-size: 15px;">Contraseña</label>
                 </div>
                 <div class="contenedor-boton">
-                <a href="administracion/change_passw/send_code.html"><button type="button" class="btn btn-link mb-2vmax mt-2vmax" id="letraform" style="font-size: 13px;">
+                <a href="administracion/change_passw/send_code.php"><button type="button" class="btn btn-link mb-2vmax mt-2vmax" id="letraform" style="font-size: 13px;">
                         Olvide mi Contraseña
                 </button>
                 <a href="administracion/register.php"><button type="button" class="btn btn-link mb-auto mt-auto" id="letraform" style="font-size: 13px;">
