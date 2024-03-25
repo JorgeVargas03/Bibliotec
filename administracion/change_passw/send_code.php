@@ -32,7 +32,7 @@ session_start();
                 </div>
                 <!-- Botón para volver atrás -->
                 <div class="col-md-6 text-right">
-                    <a href="#" class="btn btn-light">Volver</a>
+                    <a href="../../index.php" class="btn btn-light">Volver</a>
                 </div>
             </div>
         </div>
