@@ -113,7 +113,7 @@ session_start();
             <!-- Contenido principal -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
     <div class="container mt-3">
-        <h2 style=""><b>Últimas Publicaciones</b></h2>
+        <h2 style="user-select: none"><b>Últimas Publicaciones</b></h2>
         <?php
         // Array de imágenes disponibles
         $imagenes = ['images/tigers/a1.png', 'images/tigers/a2.png','images/tigers/a3.png'];
