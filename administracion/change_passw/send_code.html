@@ -15,14 +15,37 @@
     <!--Termmina Bootstrap-->
 </head>
 <body>
-    <header class="bg-primary py-2">
-        <div class="container d-flex align-items-center">
+    <header class="bg-primary py-3">
+        <div class="container d-flex align-items-center justify-content-between">
             <!-- Logo y título -->
             <div class="logo">
                 <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
-                <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
+                <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></b></h4>
             </div>
+            <!-- Botón para volver atrás -->
+            <a href="#" class="btn btn-light">Volver</a>
         </div>
     </header>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">Enviar código por correo</div>
+                    <div class="card-body">
+                        <!-- Formulario para enviar el código por correo -->
+                        <form>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo electrónico</label>
+                                <input type="email" class="form-control" id="email" placeholder="Ingrese su correo electrónico">
+                            </div>
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary">Enviar código</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
