@@ -46,7 +46,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BiblioTec - Home</title>
+    <title>BiblioTec - Detalles de la Publicación</title>
 
     <!--En esta seccion se incluyen las hojas de estilos-->
     <link rel="icon" href="../../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
@@ -85,7 +85,7 @@ session_start();
                 <div class="card card-details">
                     <div class="card-header bg-primary text-light">
                         <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
-                        <p class="card-text mb-0">Por: <?php echo $publicacion['nom_Us'] . "-" . $publicacion['apell_Us']; ?></p>
+                        <p class="card-text mb-0">Por:<b> <?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></p>
                     </div>
                     <div class="card-body">
                         <!-- Descripción de la publicación -->
@@ -193,7 +193,7 @@ session_start();
                                             <img src="<?php echo $imagenes_aleatorias[array_rand($imagenes_aleatorias)]; ?>" alt="Imagen Aleatoria" class="rounded-circle" width="50">
                                         <?php else : ?>
                                             <!-- Mostrar avatar -->
-                                            <img src="avatar.png" alt="Avatar" class="rounded-circle" width="50">
+                                            <img src="<?php echo $imagenes_aleatorias[array_rand($imagenes_aleatorias)]; ?>" alt="Imagen Aleatoria" class="rounded-circle" width="50">
                                         <?php endif; ?>
                                     </div>
                                     <div class="col">
@@ -215,7 +215,7 @@ session_start();
     </div>
 
     <!-- Footer -->
-    <footer class="py-3 text-light bg-primary">
+    <footer class="py-3 text-light bg-primary mt-5">
         <div class="container">
             <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
         </div>
