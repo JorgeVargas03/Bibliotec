@@ -1,0 +1,109 @@
+.cabecera {
+    background-color: #004aad;
+    height: 108px;
+    /*background-image: url('../header/header (7).jpg');*/
+    background-size: 40%;
+}
+
+.logo{
+    width: 55px;
+    text-decoration: none;
+    display: flex;
+    align-items: center; /* Alinea los elementos verticalmente */
+    text-decoration: none;
+}
+
+.logo h4 {
+    font-family: 'Agrandir', sans-serif;
+    font-size: 30px;
+    margin: 0; /* Elimina el margen por defecto del h4 */
+    color: white; /* Color del texto */
+    text-shadow: 1px 1px 0 black;
+    margin-left: 5px;  
+    user-select: none;
+}
+
+.logo h4 .col-1 {
+    color: white; /* Color para la parte "Biblio" */
+}
+
+.logo h4 .col-2{
+    color: #FA5000
+}
+
+.logo img{
+    width:100%;
+    vertical-align: top;
+    margin-left: -100px;
+    width: 55px;
+    margin-right: 10px; 
+}
+
+
+.search-field {
+    margin-top: 35px;
+    width: 340px;
+    margin-left: 30%;
+}
+
+.pos-btn{
+    margin-left: 900px;
+    align-self: center;
+}
+
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+}
+
+
+
+.textogran{
+    font-family: 'Agrandir', sans-serif; 
+    font-size: 2vmax;
+    text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
+    margin-top: 0.5vmax;
+}
+
+.formulario {
+    width: auto; 
+    margin-bottom: 2vmax;
+    box-sizing: border-box;
+    padding: 1.3em;
+    border: 1px solid #b1b1b1;
+    background-color: #b1afaf2a;
+    border-radius: 1em;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.4);
+  }
+
+
+  #letraform{
+    font-family: 'Agrandir'; 
+    font-size:110%;
+    font-weight: 580;
+  }
+
+  #letraradio{
+    font-family: 'Agrandir'; 
+    font-size:100%;
+    font-weight:480;
+  }
+
+  input[type="file"]::-webkit-file-upload-button {
+    background-color: rgba(5, 72, 255, 0.185);
+    font-weight: 580;
+}
+
+#letrabuton{
+    font-family: 'Agrandir'; 
+    font-size:100%;
+    font-weight: 200;
+  }
+
+  body, html {
+    height: 100%;
+}
