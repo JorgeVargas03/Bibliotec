@@ -1,6 +1,6 @@
 <?php
 // Incluir el archivo de conexión a la base de datos
-$link = include('../conexion.php');
+$link = include('../php/conexion.php');
 
 // Verificar si se proporcionó un ID de publicación
 if (isset($_GET['id'])) {
@@ -24,12 +24,12 @@ if (isset($_GET['id'])) {
         $result_comentarios = mysqli_query($link, $query_comentarios);
     } else {
         // Si no se encontró la publicación, redireccionar a la página principal
-        header("Location: home.php");
+        header("Location: ../home.php");
         exit();
     }
 } else {
     // Si no se proporcionó un ID de publicación, redireccionar a la página principal
-    header("Location: home.php");
+    header("Location: ../home.php");
     exit();
 }
 
@@ -49,11 +49,11 @@ session_start();
     <title>BiblioTec - Detalles de la Publicación</title>
 
     <!--En esta seccion se incluyen las hojas de estilos-->
-    <link rel="icon" href="../../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
-    <link rel="stylesheet" href="../../css/normalizar.css">
-    <link rel="stylesheet" href="../../css/estilos.css">
-    <link rel="stylesheet" href="../../css/hover-min.css">
-    <link rel="stylesheet" href="../../css/animate.css">
+    <link rel="icon" href="../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
+    <link rel="stylesheet" href="../css/normalizar.css">
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/hover-min.css">
+    <link rel="stylesheet" href="../css/animate.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!--Inicia Bootstrap-->
@@ -71,7 +71,7 @@ session_start();
     <header class="bg-primary py-2">
         <div class="container">
             <div class="logo">
-                <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
+                <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
                 <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></b></h4>
             </div>
         </div>
@@ -171,10 +171,10 @@ session_start();
                     <!-- Arreglo de rutas de imágenes aleatorias -->
                     <?php
                     $imagenes_aleatorias = array(
-                        "../../images/tigers/a2.png",
-                        "../../images/tigers/a3.png",
-                        "../../images/tigers/ia.png",
-                        "../../images/tigers/a12.png",
+                        "../images/tigers/a2.png",
+                        "../images/tigers/a3.png",
+                        "../images/tigers/ia.png",
+                        "../images/tigers/a12.png",
                         // Agrega más imágenes según sea necesario
                     );
 

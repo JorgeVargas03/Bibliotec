@@ -129,7 +129,7 @@ session_start();
                             <p><?php echo ($fila['descrip_Pub']); ?></p>
                             <!-- Botón Ver más que despliega los detalles -->
                             <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
-                            <a href="php/publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary">Ver más</a>
+                            <a href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary">Ver más</a>
                             <!-- Detalles de la publicación dentro de un acordeón -->
                             <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
                         </div>
