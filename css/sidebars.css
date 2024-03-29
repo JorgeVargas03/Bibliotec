@@ -1,9 +1,8 @@
 
 @font-face {
-    font-family: 'Agrandir';
-    src: url('Agrandir.otf') format('otf');
+  font-family: 'Agrandir';
+  src: url('Agrandir.otf') format('otf');
 }
-
   .dropdown-toggle { outline: 0; }
 
   .btn-toggle::before {
@@ -58,7 +57,7 @@
   }
 
   #letrabar{
-    font-family: 'Agrandir'; 
+    font-family: 'Agrandir', sans-serif; 
     font-size: 1.2vmax;
     margin-left: 1.3vmax;
     font-weight: 550;

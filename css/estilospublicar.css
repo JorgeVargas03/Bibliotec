@@ -1,3 +1,12 @@
+/*Generales*/
+
+@font-face {
+    font-family: 'Agrandir';
+    src: url('Agrandir.otf') format('otf');
+}
+
+/*  FIN GENERALES   */
+
 .cabecera {
     background-color: #004aad;
     height: 108px;
@@ -12,6 +21,7 @@
     align-items: center; /* Alinea los elementos verticalmente */
     text-decoration: none;
 }
+
 
 .logo h4 {
     font-family: 'Agrandir', sans-serif;
@@ -60,7 +70,7 @@
     color: #6c757d;
 }
 
-
+/* CONTENIDO*/
 
 .textogran{
     font-family: 'Agrandir', sans-serif; 
@@ -82,13 +92,13 @@
 
 
   #letraform{
-    font-family: 'Agrandir'; 
+    font-family: 'Agrandir', sans-serif; 
     font-size:110%;
     font-weight: 580;
   }
 
   #letraradio{
-    font-family: 'Agrandir'; 
+    font-family: 'Agrandir', sans-serif; 
     font-size:100%;
     font-weight:480;
   }
@@ -99,11 +109,25 @@
 }
 
 #letrabuton{
-    font-family: 'Agrandir'; 
+    font-family: 'Agrandir', sans-serif;
     font-size:100%;
     font-weight: 200;
   }
 
-  body, html {
-    height: 100%;
+
+.main .limpiar{
+    clear: both;
+}
+
+footer{
+    position: bottom;
+    background-color: #007bff;
+    background-attachment: fixed;
+    width: 100%;
+    height: 50px;
+    padding: 35px;
+    box-sizing: border-box;
+    text-align: center;
+    background-size: 30%;
+    background-position: bottom;
 }
