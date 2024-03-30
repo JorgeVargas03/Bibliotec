@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioTec - Home</title>
+
+    <!--En esta seccion se incluyen las hojas de estilos-->
+    <link rel="icon" href="..\..\images\icons\tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
+    <link rel="stylesheet" href="css/normalizar.css">
+    <link rel="stylesheet" href="..\..\css/estilos.css">
+    <link rel="stylesheet" href="css/hover-min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!--Inicia Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!--Termmina Bootstrap-->
+   
+   <style>.contenedor{
+        margin-top: 21px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }</style>
+    
+    <style>
+        input[type="text"] {
+            padding: 5px;
+            font-size: 12px;
+            margin-bottom: 12px;
+            
+        }
+        button {
+            padding: 5px 5px;
+            background-color: #007bff;
+            color: #000000;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            margin-bottom: 27px;
+        }
+
+    </style>
+
+<style>
+    img {
+        max-width: 200px;
+        max-height: 200px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        border-radius: 50%;
+    }
+</style>
+
+
+    
+</head>
+<body>
+    <header class="bg-primary py-2">
+        <div class="container d-flex align-items-center">
+            <!-- Logo y título -->
+            <div class="logo">
+                <img src="..\..\images\icons\flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
+                <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
+
+                <form class="position-relative search-field " style="margin-top: -0.8%;">
+                <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+                <a href='#'><i class="bi bi-search search-icon"></i></a>
+                
+            </form>
+            <button type="button" class="btn btn-warning position-absolute top-0 end-0 me-5 mt-4">Notificaciones
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+
+            <span class="visually-hidden">unread messages</span>
+            </span>
+            </button>
+            </div>
+            <!-- Campo de búsqueda -->
+            
+            <!-- Ícono de notificaciones -->
+            
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Barra de navegación izquierda -->
+            <nav class="col-md-3 col-lg-2 d-md-block bgcol sidebar navbar navbar-expand-md">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="sidebar-sticky">
+            <ul class="nav flex-column nav-texto-negro">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" id="colSide">Inicio</a>
+                </li>
+                <li class="nav-item dropend bg-orange">
+                    <a class="nav-link dropdown-toggle" href="#" id="carrerasDropdown colSide" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carreras</a>
+                    <div class="dropdown-menu" aria-labelledby="carrerasDropdown">
+                    <a class="dropdown-item" href="#">Arquitectura</a>
+                    <a class="dropdown-item" href="#">Ingeniería Bioquímica</a>
+                    <a class="dropdown-item" href="#">Ingeniería Civil</a>
+                    <a class="dropdown-item" href="#">Ingeniería Eléctrica</a>
+                    <a class="dropdown-item" href="#">Ingeniería en Gestión Empresarial</a>
+                    <a class="dropdown-item" href="#">Ingeniería en Sistemas Computacionales</a>
+                    <a class="dropdown-item" href="#">Ingeniería Industrial</a>
+                    <a class="dropdown-item" href="#">Ingeniería Mecatrónica</a>
+                    <a class="dropdown-item" href="#">Ingeniería Química</a>
+                    <a class="dropdown-item" href="#">Licenciatura en Administración</a>
+                    </div>
+                </li>
+                <li class="nav-item dropend bg-transparent">
+                    <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Perfil</a>
+                    <div class="dropdown-menu" aria-labelledby="perfilDropdown">
+                        <a class="dropdown-item" href="signin.">Iniciar Sesion</a>
+                        <a class="dropdown-item" href="register.html">Registrarse</a>
+                        <a class="dropdown-item" href="#">Mi Perfil</a>
+                    </div>
+                </li>
+                <li class="nav-item dropend bg-transparent">
+                    <a class="nav-link dropdown-toggle" href="#" id="contactoDropdown colSide" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Contacto</a>
+                    <div class="dropdown-menu" aria-labelledby="contactoDropdown">
+                        <a class="dropdown-item" href="#">Información de Contacto</a>
+                        <a class="dropdown-item" href="#">Formulario de Contacto</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+            <!-- Contenido principal -->
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="contenedor">
+                    <script>
+                        function regresar() {
+                            // Obtener el nuevo nombre de usuario ingresado por el usuario
+                            var nuevoNombre = document.getElementById("newUsername").value;
+                            
+                            // Obtener la ruta de la nueva imagen de perfil
+                            var nuevaFoto = document.getElementById("imagenPerfil").src;
+                            
+                            // Redireccionar a la página anterior con los parámetros en la URL
+                            window.location.href = "http://127.0.0.1:5500/administracion/perfil/infoperfil.html?username=" + nuevoNombre + "&photo=" + nuevaFoto;
+                        }
+                    </script> 
+                    <h6><b>-Editar Perfil-</b></h6>
+                    <h8>Editar Foto Perfil</h8>
+                    <!-- foto de perfil -->
+                    <img id="imagenPerfil" src="..\..\images\icons\perfil.png">
+                    <form id="perfilForm" enctype="multipart/form-data">
+                        <input type="file" id="imagen" accept="image/*">
+                        <button type="submit">Guardar Cambios</button>
+                    </form>
+                
+                    <script>
+                        // Obtener referencia al elemento de formulario y al campo de entrada de imagen
+                        var form = document.getElementById('perfilForm');
+                        var input = document.getElementById('imagen');
+                        // Obtener referencia al elemento de imagen de perfil
+                        var imagenPerfil = document.getElementById('imagenPerfil');
+                
+                        // Agregar evento 'submit' al formulario
+                        form.addEventListener('submit', function(event) {
+                            event.preventDefault(); // Evitar que se envíe el formulario por defecto
+                
+                            // Obtener archivo seleccionado por el usuario
+                            var file = input.files[0];
+                            if (file) {
+                                var reader = new FileReader();
+                                
+                                reader.onload = function() {
+                                    imagenPerfil.src = reader.result;
+                                };
+                                
+                                reader.readAsDataURL(file);
+                            }
+                        });
+                    </script>
+                    <!-- Nombre de usuario -->
+                    <h8>Editar Nombre de Usuario</h8>
+                    <h6>Usuario en uso:</h6>
+                    <p><span id="username">Eduardo Rios</span></p>
+                    <h6><label for="newUsername">Nuevo usuario:</label> <input type="text" id="newUsername"><button onclick="cambiarNombreUsuario()">Guardar Cambios</button> </h6>
+                    <h6><a href="http://127.0.0.1:5500/administracion/perfil/infoperfil.html" onclick="regresar()"> <button>Regresar</button></a></h6>
+                
+                    <script>
+                        function cambiarNombreUsuario() {
+                            // Obtener el nuevo nombre de usuario ingresado por el usuario
+                            var nuevoNombre = document.getElementById("newUsername").value;
+                            
+                            // Validar que se haya ingresado un nuevo nombre
+                            if (nuevoNombre.trim() !== "") {
+                                // Actualizar el nombre de usuario en la página
+                                document.getElementById("username").textContent = nuevoNombre;
+                                
+                                // Limpiar el campo de entrada
+                                document.getElementById("newUsername").value = "";
+                            } else {
+                                // Mostrar un mensaje de error si el campo está vacío
+                                alert("Por favor, ingresa un nuevo nombre de usuario.");
+                            }
+                        }
+                    </script>
+                            
+                   
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
+        </div>
+</body>
+</html>
