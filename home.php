@@ -146,12 +146,11 @@ session_start();
             </div>
           </li>
           <hr class="my-2"> <!-- Línea divisora -->
-          <li class="mb-1 mt-2">
+          <li class="mb-1 mt-3">
             <a class="nav-link align-items-center" name ="fade" href="publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
           </li>
         </ul>
       </div>
-      <!-- Contenido principal -->
       <!-- Contenido principal -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <div class="container mt-3">
@@ -164,7 +163,7 @@ session_start();
               <p><?php echo ($fila['descrip_Pub']); ?></p>
               <!-- Botón Ver más que despliega los detalles -->
               <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
-              <a href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary">Ver más</a>
+              <a name ="fade" href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary">Ver más</a>
               <!-- Detalles de la publicación dentro de un acordeón -->
               <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
             </div>
