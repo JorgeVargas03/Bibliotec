@@ -116,9 +116,10 @@ try {
         </script>';
         header('Location: verifymail\verifyemail.php?mail='.$_POST['correo']);
 } catch (Exception $e) {
+    echo "Ha ocurrido un error: ".$e;
     echo '<script>
-        alert("Ha ocurrido un error");
-        
+        alert("Ha ocurrido un error: ");
+        window.location = "register.php";
     </script>';//window.location = "register.php";
 }
 
