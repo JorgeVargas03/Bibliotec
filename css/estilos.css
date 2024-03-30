@@ -134,6 +134,7 @@ clear: both;
 
 footer{
     position: bottom;
+    bottom: 0;
     background-color: #007bff;
     background-attachment: fixed;
     width: 100%;
@@ -155,3 +156,4 @@ footer{
         width: 48.4%;
     }
 }
+

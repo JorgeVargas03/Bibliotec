@@ -81,7 +81,7 @@
       <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
         <ul class="list-unstyled" id="menu-lateral">
           <li class="mb-2 mt-2">
-            <a class="nav-link align-items-center" href="../home.php" id="letrabar">Inicio</a>
+            <a class="nav-link align-items-center" href="home.php" id="letrabar">Inicio</a>
           </li>
           <li class="mb-1">
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -112,7 +112,7 @@
               </ul>
             </div>
           </li>
-          <hr class="my-1"> <!-- Línea divisora -->
+          <hr class="my-2"> <!-- Línea divisora -->
           <li class="mb-1">
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#cuenta-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
               <svg class="bi pe-none" width="1.3vmax" height="1.3vmax">
@@ -127,7 +127,7 @@
               </ul>
             </div>
           </li>
-          <hr class="my-1"> <!-- Línea divisora -->
+          <hr class="my-2"> <!-- Línea divisora -->
         </ul>
       </div>
       <!-- Contenido principal -->

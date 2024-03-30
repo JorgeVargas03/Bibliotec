@@ -7,7 +7,7 @@ $registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida de
 
 // Verifica si la consulta se ejecutó correctamente
 if (!$registros) {
-    die('Error en la consulta: ' . mysqli_error($link));
+  die('Error en la consulta: ' . mysqli_error($link));
 }
 
 // Cierra la conexión después de realizar la consulta
@@ -21,26 +21,25 @@ session_start();
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BiblioTec - Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiblioTec - Home</title>
 
-    <!--En esta seccion se incluyen las hojas de estilos-->
-    <link rel="icon" href="images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
-    <link rel="stylesheet" href="css/normalizar.css">
-    <link rel="stylesheet" href="css/estilos.css">
-    <link rel="stylesheet" href="css/hover-min.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/sidebars.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <!--Inicia Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!--Termmina Bootstrap-->
-
+  <!--En esta seccion se incluyen las hojas de estilos-->
+  <link rel="icon" href="images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
+  <link rel="stylesheet" href="css/normalizar.css">
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/hover-min.css">
+  <link rel="stylesheet" href="css/animate.css">
+  <link rel="stylesheet" href="css/sidebars.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <!--Inicia Bootstrap-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!--Termmina Bootstrap-->
   <!--iconos-->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
@@ -131,7 +130,7 @@ session_start();
               </ul>
             </div>
           </li>
-          <hr class="my-1"> <!-- Línea divisora -->
+          <hr class="my-2"> <!-- Línea divisora -->
           <li class="mb-1">
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#cuenta-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
               <svg class="bi pe-none" width="1.3vmax" height="1.3vmax">
@@ -146,44 +145,43 @@ session_start();
               </ul>
             </div>
           </li>
-          <hr class="my-1"> <!-- Línea divisora -->
+          <hr class="my-2"> <!-- Línea divisora -->
+          <li class="mb-1 mt-2">
+            <a class="nav-link align-items-center" name ="fade" href="publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
+          </li>
         </ul>
       </div>
       <!-- Contenido principal -->
-            <!-- Contenido principal -->
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                <div class="container mt-3">
-                    <h2 style="user-select: none"><b>Últimas Publicaciones</b></h2>
-                    <?php
-                    // Array de imágenes disponibles
-                    $imagenes = ['images/tigers/a1.png', 'images/tigers/a2.png', 'images/tigers/a3.png'];
-
-                    while ($fila = mysqli_fetch_array($registros)) {
-                        // Selecciona una imagen aleatoria de la lista
-                        $imagen_aleatoria = $imagenes[array_rand($imagenes)];
-                    ?>
-                        <div class="publicacion">
-                            <h3><?php echo ($fila['titulo_Pub']); ?></h3>
-                            <p><?php echo ($fila['descrip_Pub']); ?></p>
-                            <!-- Botón Ver más que despliega los detalles -->
-                            <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
-                            <a href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary">Ver más</a>
-                            <!-- Detalles de la publicación dentro de un acordeón -->
-                            <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
-                        </div>
-                    <?php
-                    }
-                    ?>
-                </div>
-            </main>
+      <!-- Contenido principal -->
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div class="container mt-3">
+          <h2 style="user-select: none"><b>Últimas Publicaciones</b></h2>
+          <?php
+          while ($fila = mysqli_fetch_array($registros)) {
+          ?>
+            <div class="publicacion">
+              <h3><?php echo ($fila['titulo_Pub']); ?></h3>
+              <p><?php echo ($fila['descrip_Pub']); ?></p>
+              <!-- Botón Ver más que despliega los detalles -->
+              <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
+              <a href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary">Ver más</a>
+              <!-- Detalles de la publicación dentro de un acordeón -->
+              <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
+            </div>
+          <?php
+          }
+          ?>
         </div>
+      </main>
     </div>
-
-    <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
-        <div class="container">
-            <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
-        </div>
-    </footer>
+  </div>
+  <script src ="js/fadeout.js"></script>
+  <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
+    <div class="container">
+      <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
+    </div>
+  </footer>
+  
 </body>
 
 </html>
