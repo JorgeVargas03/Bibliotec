@@ -154,7 +154,8 @@ session_start();
       <!-- Contenido principal -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <div class="container mt-3">
-          <h2 style="user-select: none"><b>Últimas Publicaciones</b></h2>
+          <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
+          margin-top: 0.5vmax;"><b>Últimas Publicaciones</b></h2>
           <?php
           while ($fila = mysqli_fetch_array($registros)) {
           ?>
