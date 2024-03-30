@@ -81,7 +81,7 @@
       <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
         <ul class="list-unstyled" id="menu-lateral">
           <li class="mb-2 mt-2">
-            <a class="nav-link align-items-center" href="home.php" id="letrabar">Inicio</a>
+            <a class="nav-link align-items-center" name = "fade" href="../home.php" id="letrabar">Inicio</a>
           </li>
           <li class="mb-1">
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -205,7 +205,7 @@
       </main>
     </div>
   </div>
-
+  <script src="../js/fadeout.js"></script>
   <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
     <div class="container">
       <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
