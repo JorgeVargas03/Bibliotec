@@ -23,7 +23,7 @@ session_start();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BiblioTec - Home</title>
+  <title>BiblioTec - Búsqueda</title>
 
   <!--En esta seccion se incluyen las hojas de estilos-->
   <link rel="icon" href="images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
@@ -65,11 +65,6 @@ session_start();
       <div class="logo">
         <img src="images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
         <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
-        <form class="position-relative search-field " style="margin-top: -0.8%;">
-          <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-          <a href='search.php'><i class="bi bi-search search-icon"></i></a>
-
-        </form>
         <button type="button" class="btn btn-warning position-absolute top-0 end-0 me-5 mt-4">Notificaciones
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+
             <span class="visually-hidden">unread messages</span>
@@ -153,10 +148,64 @@ session_start();
       </div>
       <!-- Contenido principal -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <div class="container mt-3">
-          <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
-          margin-top: 0.5vmax;"><b>Últimas Publicaciones</b></h2>
-          <?php
+      <br>  
+      <div class="container">
+          <h2>Búsqueda</h2>
+          <form>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="categorySelect" class="form-label">Materia</label>
+                <select class="form-select" id="categorySelect">
+                  <option selected>Seleccione una categoría...</option>
+                  <option value="1">Ingenieria de Software</option>
+                  <option value="2">Programación Web</option>
+                  <option value="3">Ecuaciones Diferenciales</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="searchInput" class="form-label">Palabra clave</label>
+                <input type="text" class="form-control" id="searchInput" placeholder="Ingrese la palabra clave">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="searchType" id="bibliografias">
+                  <label class="form-check-label" for="bibliografias">Bibliografías</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="searchType" id="apuntes">
+                  <label class="form-check-label" for="apuntes">Apuntes</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="searchType" id="tareas">
+                  <label class="form-check-label" for="tareas">Tareas</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="featuredCheck">
+                  <label class="form-check-label" for="featuredCheck">
+                    Mejor calificados
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="trustedCheck">
+                  <label class="form-check-label" for="trustedCheck">
+                    Usuarios confiables
+                  </label>
+                </div>
+              </div>
+            </div>
+          </form>
+        <div class="d-flex justify-content-center align-items-center">
+            <button type="submit" class="btn btn-primary px-4">Buscar</button>
+        </div>
+        <br> 
+        </div>
+                <!--Esta parte contiene los aportes coincidentes-->
+        <div>
+            <?php
           while ($fila = mysqli_fetch_array($registros)) {
           ?>
             <div class="publicacion">
@@ -172,9 +221,12 @@ session_start();
           }
           ?>
         </div>
-      </main>
+    </main>
+    </div>
+  </main>
     </div>
   </div>
+  
   <script src ="js/fadeout.js"></script>
   <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
     <div class="container">
