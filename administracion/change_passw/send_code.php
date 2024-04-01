@@ -30,10 +30,6 @@ session_start();
                         <h4 class="mb-0"><b><span class="col-1 text-white">Biblio</span><span class="col-2 text-white">Tec</span></b></h4>
                     </div>
                 </div>
-                <!-- Botón para volver atrás -->
-                <div class="col-md-6 text-right">
-                    <a href="../../index.php" class="btn btn-light">Volver</a>
-                </div>
             </div>
         </div>
     </div>
@@ -51,7 +47,11 @@ session_start();
                                 <input type="email" class="form-control" id="email" placeholder="Correo electrónico" required name="correo">
                             </div>
                             <div class="form-group text-center my-3">
-                                <button type="submit" class="btn btn-primary btn-block">Enviar código</button>
+                                <button type="submit" class="btn btn-primary btn-block"><b>Enviar código</b></button>
+                            </div>
+                             <!-- Botón para volver atrás -->
+                            <div class="col-md-6 text-right">
+                                <a href="../../index.php" class="btn btn-light" style="background-color:orange">Volver</a>
                             </div>
                         </form>
                         <?php if(isset($_SESSION['alert_message'])): ?>
