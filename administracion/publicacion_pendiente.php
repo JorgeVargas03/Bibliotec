@@ -60,7 +60,7 @@ session_start();
 
 <body>
   <header class="bg-primary py-2">
-    <div class="container d-flex align-items-center">
+    <div class="container" style="margin-left:7.8vmax;" >
       <!-- Logo y título -->
       <div class="logo">
         <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
@@ -68,32 +68,36 @@ session_start();
     </div>
   </header>
 
-  <!--IMAGEN DE CONTACTO-->
-  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-    <symbol id="people-circle" viewBox="0 0 16 16">
-      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-      <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-    </symbol>
-  </svg>
-
-
-  <div class="container-fluid">
-    <div class="row">
-      <!-- Barra de navegación izquierda -->
-      <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
-        <ul class="list-unstyled" id="menu-lateral">
-          <li class="mb-2 mt-2">
-            <a class="nav-link align-items-center" id="letrabar">Publicaciones Pendientes</a>
-          </li>
-          </li>
-          </li>
-
-          <hr class="my-2"> <!-- Línea divisora -->
-          <li class="mb-1 mt-3">
-            <a class="nav-link align-items-center" name ="fade" id="letrabardos" style="margin-left:10px">Reportes</a>
-          </li>
-        </ul>
-      </div>
+  <div class="container-fluid" >
+    <div class="row" >
+        <!-- Barra de navegación izquierda -->
+        <div class="flex-shrink-0 p-3 hola" style="width: 15%; background-color: #F07B12; ">
+            <ul class="list-unstyled" id="menu-lateral">
+                <li class="mb-1">
+                    <button class="btn d-inline-flex align-items-start rounded border-5 col-1" id="letrabardos"  style="color: black; font-weight: bold;">
+                        Publicaciones Pendientes
+                    </button>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+                      Reportes
+                    </button>
+                    <div class="collapse" id="dashboard-collapse">
+                      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Comentarios</a></li>
+                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                <hr class="my-2"> <!-- Línea divisora -->
+                <li class="mb-1">
+                    <button class="btn d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" style="color: black; font-weight: bold;">
+                        <span style="margin-top:0.3vmax; margin-left: 0.4vmax;">Cerrar Sesión</span>
+                    </button>
+                </li>
+                <hr class="my-2"> <!-- Línea divisora -->
+            </ul>
+        </div>
       
       <!-- Contenido principal -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
@@ -108,7 +112,7 @@ session_start();
               <p><?php echo ($fila['descrip_Pub']); ?></p>
               <!-- Botón Ver más que despliega los detalles -->
               <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
-              <a class="btn btn-link mb-2 mt-3">Ver más</a>
+              <a class="btn btn-link mb-2 mt-3"><b>Revisar</b></a>
               <!-- Detalles de la publicación dentro de un acordeón -->
               <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
             </div>
@@ -119,12 +123,14 @@ session_start();
       </main>
     </div>
   </div>
+
   <script src ="js/fadeout.js"></script>
+
   <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
-    <div class="container">
-      <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
-    </div>
-  </footer>
+        <div class="container" >
+            <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
+        </div>
+    </footer>
   
 </body>
 

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliotec - Reporte comentario</title>
+
+   
+
+    <!--En esta seccion se incluyen las hojas de estilos-->
+    <link rel="icon" href="../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
+    <link rel="stylesheet" href="../css/normalizar.css">
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/hover-min.css">
+    <link rel="stylesheet" href="../css/animate.css">
+    <link rel="stylesheet" href="../css/sidebars.css">
+    <link rel="stylesheet" href="../publicacion/style.css">
+    <link rel="stylesheet" href="../css\estiloReg.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!--Inicia Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <!--Termmina Bootstrap-->
+
+    <!--iconos-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+
+</head>
+
+<style>
+    .material-symbols-outlined {
+        color: #F87200;
+        text-shadow: 2px 2px 4px rgba(134, 134, 134, 0.2);
+        font-variation-settings:
+            'FILL' 1,
+            'wght' 900,
+            'GRAD' 100,
+            'opsz' 424
+    }
+
+    
+</style>
+
+
+<body>
+    <header class="bg-primary py-2">
+        <div class="container d-flex align-items-right" style="margin-left:7.8vmax;">
+            <!-- Logo y título -->
+            <div class="logo col-5">
+                <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
+                <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span>
+                <span>- Reportes comentarios</span></h4></b>
+            </div>
+    </header>
+
+    <div class="container-fluid" >
+        <div class="row" >
+            <!-- Barra de navegación izquierda -->
+            <div class="flex-shrink-0 p-3 hola" style="width: 15%; background-color: #F07B12; ">
+                <ul class="list-unstyled" id="menu-lateral">
+                    <li class="mb-1">
+                        <button class="btn d-inline-flex align-items-start rounded border-5 col-1" id="letrabardos"  style="color: black; font-weight: bold;">
+                            Publicaciones Pendientes
+                        </button>
+                    </li>
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+                          Reportes
+                        </button>
+                        <div class="collapse" id="dashboard-collapse">
+                          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Comentarios</a></li>
+                            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
+                          </ul>
+                        </div>
+                      </li>
+                    <hr class="my-2"> <!-- Línea divisora -->
+                    <li class="mb-1">
+                        <button class="btn d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" style="color: black; font-weight: bold;">
+                            <span style="margin-top:0.3vmax; margin-left: 0.4vmax;">Cerrar Sesión</span>
+                        </button>
+                    </li>
+                    <hr class="my-2"> <!-- Línea divisora -->
+                </ul>
+            </div>
+            <!-- Contenido principal -->
+
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="font-weight:normal; margin-left: 1.5%;">
+                
+                    <div class="container mt-5 mb-6" >
+                        <div class="row" >
+                            <div class="col-md-11" style="margin-left: 4%;">
+                                <!-- Detalles de la publicación -->
+                                <div class="card card-details" style="background-color:rgba(255, 51, 0, 0.158);" >
+                                    <div class="card-header" style="background-color: rgb(167, 4, 4);" >
+                                    </div>
+                                    
+                                    <!-- Botón para ver archivo adjunto -->
+                                    <div class="row"  >
+                                        <div class="col  mt-1 mb-2" style="color: black;">
+                                            <h3 class="pl-5 mb-2 ml-2" style="margin-left: 2vmax;">Reporte de comentario</h3>
+                                            <h5><Span style="margin-left: 2vmax;"><b>Tipo de reporte: </b></Span><span>Tiene: XXXx</span></h5> 
+                                        </div>
+                                        <div class="col text-end mt-4 mb-3  align-items-end" style="margin-right: 2vmax;">
+                                            <a href="#"  class="btn btn-success btn-sm">
+                                                <i class="bi bi-check2 mr-2"></i> Rechazar reporte
+                                            </a>
+                                            <a href="#" class="btn btn-danger btn-sm">
+                                                <i class="bi bi-trash3 mr-2"></i> Eliminar comentario
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                                    
+                                    <!-- COMENTARIO REPORTADO -->
+                                        <div class="card mt-5 mb-5" style="height: 40%; width: 92%; margin-left: 4%;">
+                                            <div class="card-header bg-primary text-light" style="height: 3vh;">
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-auto">
+                                                        
+                                                    </div>
+                                                    <div class="col">
+                                                        <h3 class="mb-4"><b>Autor: </b></h3>
+                                                        <textarea class="form-control mb-4" id="comentario" name="comentario" rows="3" disabled>Comentario</textarea>
+                                                        <small class="text-muted mb-2">Fecha del Comentario: </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            
+                    
+            </main>
+        </div>
+    </div>
+
+   
+
+    <script src ="js/fadeout.js"></script>
+            
+     <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
+        <div class="container" >
+            <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
+        </div>
+    </footer>
+</body>
+</html>
