@@ -272,13 +272,16 @@ session_start();
 
                                     <!-- Arreglo de rutas de imágenes aleatorias -->
                                     <?php
-                                    $imagenes_aleatorias = array(
-                                        "../images/tigers/a2.png",
-                                        "../images/tigers/a3.png",
-                                        "../images/tigers/ia.png",
-                                        "../images/tigers/a12.png",
-                                        // Agrega más imágenes según sea necesario
-                                    );
+                                    $imagenes_aleatorias = array();
+                                    
+                                    // Ruta base de las imágenes
+                                    $ruta_base = "../images/tigers/";
+                                    
+                                    // Generar el arreglo de rutas de imágenes
+                                    for ($i = 1; $i <= 15; $i++) {
+                                        $ruta_imagen = $ruta_base . "a" . $i . ".png";
+                                        $imagenes_aleatorias[] = $ruta_imagen;
+                                    }
 
                                     // Contador para alternar entre las imágenes aleatorias y los avatares
                                     $contador = 0;
