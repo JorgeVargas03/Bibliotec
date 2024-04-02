@@ -128,36 +128,44 @@
             </div>
           </li>
           <hr class="my-2"> <!-- Línea divisora -->
+          <li class="mb-1 mt-3">
+            <a class="nav-link align-items-center" name ="fade" href="publicacion/publicar.php" id="letrabardos" style="margin-left:10px; 
+                 filter: drop-shadow(-1px 2px 3px rgb(255, 231, 2));">Nueva publicación</a>
+          </li>
         </ul>
       </div>
       <!-- Contenido principal -->
 
 
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="margin-left: 0.1%;">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="margin-left: 0.9%;">
 
-        <div class="container" style="margin-top: 3.6%; align-items: center;">
+        <div class="container" style="margin-top:1vmax; align-items: center;">
 
           <h2 style=" margin-left: 0.1% ; margin-bottom: 1.2vmax;"><span class="material-symbols-outlined"> library_add </span>
             <b style="margin-left:0.5vmax;" class="textogran">Nueva Publicación</b>
           </h2>
 
           <form class="row g-3 formulario mt-2 mb-2vmax">
-            <div class="col-md-8 mt-1">
-              <label for="inputEmail4" class="form-label" id="letraform">Título:</label>
+            <div class="col-md-8 mt-0">
+              <label for="inputEmail4" class="form-label" id="letraform">Título * :</label>
               <input type="text" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);">
             </div>
-            <div class="col-md-4 mt-1 mb-2">
-              <label for="inputPassword4" class="form-label" id="letraform">Autor:</label>
+            <div class="col-md-4 mt-0 mb-1">
+              <label for="inputPassword4" class="form-label" id="letraform">Usuario * :</label>
               <input class="form-control" style="border-color: rgb(179, 179, 179); font-weight: 500;" type="text" placeholder="@lireramirezve" aria-label="Disabled input example" disabled>
             </div>
-            <div class="mb-3 mt-2">
-              <label for="exampleFormControlTextarea1" class="form-label" id="letraform">Descripción:</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" style="border-color: rgb(179, 179, 179)"></textarea>
+
+            <div class="mb-2 mt-3">
+              <label for="exampleFormControlTextarea1" class="form-label" id="letraform">Descripción (en caso de ser Recurso Bibliográfico agregar aqui los datos de referencia) :</label>
+              <textarea class="form-control" placeholder="Ej. Autor del libro: Ramirez, M. (2008)" id="floatingTextarea2" style="height: 100px"></textarea>
             </div>
 
+            
+
             <div class="row g-3 mt-1 mb-2">
-              <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm" id="letraform">Carrera:</label>
+              <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm" id="letraform">Carrera * :</label>
               <div class="col-sm-10">
+
                 <select class="form-select" aria-label="Default select example" style="border-color: rgb(179, 179, 179);">
                   <option selected>Selecciona...</option>
                   <option value="1">Arquitectura</option>
@@ -174,9 +182,10 @@
               </div>
             </div>
 
+
             <fieldset class="row g-2 mb-2 mt-2">
-              <legend class="col-form-label col-sm-1 pt-0 " id="letraradio" style="margin-left: 1%;">Tipo de Publicación:</legend>
-              <div class="col-sm-10">
+              <legend class="col-form-label col-sm-2 pt-0 " id="letraradio" style="margin-left: 0.2%;">Tipo de Publicación* :</legend>
+              <div class="col-md-6">
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" style="border-color: rgb(179, 179, 179); margin-left: 2%;" value="option1" checked>
                   <label class="form-check-label" for="gridRadios1" id="letraradio">
@@ -190,14 +199,15 @@
                   </label>
                 </div>
             </fieldset>
+            
 
             <div class="mb-3 mt-3">
-              <label for="formFileLg" class="form-label" id="letraform">Documento:</label>
+              <label for="formFileLg" class="form-label" id="letraform">Documento* :</label>
               <input class="form-control" type="file" id="formFile" style="border-color: rgb(179, 179, 179);">
             </div>
 
-            <div class="d-grid gap-2 col-6 mx-auto">
-              <input class="btn btn-primary btn-lg" type="submit" value="Publicar" id="letrabuton">
+            <div class="d-grid gap-1 col-6 mx-auto">
+              <input class="btn btn-primary btn" type="submit" value="Publicar" id="letrabuton">
             </div>
 
           </form>
