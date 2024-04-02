@@ -52,11 +52,6 @@
           <a href='#'><i class="bi bi-search search-icon"></i></a>
 
         </form>
-        <button type="button" class="btn btn-warning position-absolute top-0 end-0 me-5 mt-4">Notificaciones
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+
-            <span class="visually-hidden">unread messages</span>
-          </span>
-        </button>
       </div>
       <!-- Campo de búsqueda -->
 
