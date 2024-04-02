@@ -7,10 +7,13 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enviar código por correo</title>
+    <title>Recuperación de contraseña</title>
     <!--En esta seccion se incluyen las hojas de estilos-->
     <link rel="icon" href="../../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
     <link rel="stylesheet" href="../../css/estilos.css">
+    <link rel="stylesheet" href="../../css/normalizar.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!--Inicia Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
@@ -20,19 +23,16 @@ session_start();
     <!--Termina Bootstrap-->
 </head>
 <body>
-<div class="container-fluid bg-primary py-3">
-        <div class="container">
-            <div class="row align-items-center justify-content-between">
-                <!-- Logo y título -->
-                <div class="col-md-6">
-                    <div class="logo d-flex align-items-center">
-                        <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
-                        <h4 class="mb-0"><b><span class="col-1 text-white">Biblio</span><span class="col-2 text-white">Tec</span></b></h4>
-                    </div>
-                </div>
-            </div>
-        </div>
+    
+<header class="bg-primary py-2">
+    <div class="container d-flex align-items-center">
+      <!-- Logo y título -->
+      <div class="logo">
+        <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
+        <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
+      </div>
     </div>
+  </header>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">

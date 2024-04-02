@@ -15,25 +15,25 @@ session_start();
 
     <!--Bootstrap CSS-->
     <link rel="icon" href="../images/icons/tigerF.png">
-    <link rel="stylesheet" href="../css\estiloReg.css">
-    <link rel="stylesheet" href="../css\normalizar.css">
-    <link rel="stylesheet" href="../css\estilos.css">
+    <link rel="stylesheet" href="../css/estiloReg.css">
+    <link rel="stylesheet" href="../css/normalizar.css">
+    <link rel="stylesheet" href="../css/estilos.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     
-    <title>BiblioTec-Register</title>
+    <title>BiblioTec-Registro</title>
   </head>
   <body>
-    
-    <div class="cabeza navbar navbar-expand navbar-dark ">
-      <div class="cabeza navbar-brand">
-        <a href="#" class="logor">
-          <img src="../images/icons/flamita.png" alt="Logo BiblioTec" class="img-fluid mr-1">
-          <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-3 tec">Tec</span></h4>
-        </a>
+  <header class="bg-primary py-1">
+    <div class="container">
+      <!-- Logo y título -->
+      <div class="logo">
+        <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
+        <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
       </div>
-  </div>
-  <div class="row" >
+    </div>
+  </header>
+  <div class="row mt-5" >
     <div class="container-fl ">
         <header class="text-center form">
             <h1 id="encabezado">Registrarse</h1>

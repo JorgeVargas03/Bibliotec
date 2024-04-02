@@ -144,12 +144,12 @@ footer{
 }
 
 @media screen and (max-width:900px){
-    .main .productosmain{
+    body{
         width: 32.4%;
     }
 }
 @media screen and (max-width:600px){
-    .main .productosmain{
+    body{
         width: 48.4%;
     }
 }
