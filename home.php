@@ -164,6 +164,11 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
           <li class="mb-1 mt-3">
             <a class="nav-link align-items-center" name ="fade" href="publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
           </li>
+
+          <hr class="my-2"> <!-- Línea divisora -->
+          <li class="mb-1 mt-3">
+            <a class="nav-link align-items-center" href="#" id="letrabardos" style="margin-left:10px"><?php echo "Hola ".$_SESSION['nombre']." ". $_SESSION['apellido']?></a>
+          </li>
         </ul>
       </div>
       <!-- Contenido principal -->

@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('../php/sesion.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Comprobar si los campos de correo electrónico y contraseña no están vacíos
@@ -46,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             // La contraseña es correcta, inicia una nueva sesión
                             $_SESSION["loggedin"] = true;
                             $_SESSION["email"] = $email;
+                            Login($conn, $email);
                             header("location: ../home.php"); // Redirigir al usuario a la página de inicio
                             exit;
                         } else{
