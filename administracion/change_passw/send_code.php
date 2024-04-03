@@ -49,10 +49,17 @@ session_start();
                             <div class="form-group text-center my-3">
                                 <button type="submit" class="btn btn-primary btn-block"><b>Enviar código</b></button>
                             </div>
-                             <!-- Botón para volver atrás -->
-                            <div class="col-md-6 text-right">
-                                <a href="../../index.php" class="btn btn-light" style="background-color:orange">Volver</a>
-                            </div>
+                             <!-- Botones Volver y Siguiente -->
+        <div class="row">
+            <div class="col-md-6">
+                <a href="../../index.php" class="btn btn-light" style="background-color:orange">Volver</a>
+            </div>
+            <?php if(isset($_SESSION['confirmation_message'])): ?>
+            <div class="col-md-6 text-right">
+                <a href="CambioContraseña.html" class="btn btn-light" style="background-color:green">Siguiente</a>
+            </div>
+            <?php endif; ?>
+        </div>
                         </form>
                         <?php if(isset($_SESSION['alert_message'])): ?>
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
