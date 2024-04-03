@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             // La contraseña es correcta, inicia una nueva sesión
                             $_SESSION["loggedin"] = true;
                             $_SESSION["email"] = $email;
-                            header("location: ../home.php"); // Redirigir al usuario a la página de bienvenida
+                            header("location: ../home.php"); // Redirigir al usuario a la página de inicio
                             exit;
                         } else{
                             // Mostrar un mensaje de error si la contraseña no es válida
@@ -73,6 +73,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Cerrar conexión
         $conn->close();
-    } 
+    } else {
+        // Si no se proporcionaron credenciales, redirigir de vuelta al formulario de inicio de sesión
+        $_SESSION["alert_message"] = "Por favor, ingresa tu correo electrónico y contraseña.";
+        header("location: ../index.php");
+        exit;
+    }
 }
 ?>

@@ -15,6 +15,26 @@ mysqli_close($link);
 
 // Inicia la sesión después de cerrar la conexión
 session_start();
+
+// Verificar si el usuario no ha iniciado sesión
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+  header("location: index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
+  exit;
+}
+
+// Verificar si se ha enviado una solicitud para cerrar sesión
+if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
+  // Destruir todas las variables de sesión
+  session_unset();
+  
+  // Destruir la sesión
+  session_destroy();
+  
+  // Redirigir al usuario al inicio de sesión
+  header("location: index.php");
+  exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -136,7 +156,7 @@ session_start();
             <div class="collapse" id="cuenta-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a></li>
+                <a href="home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a>
               </ul>
             </div>
           </li>
