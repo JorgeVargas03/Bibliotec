@@ -13,6 +13,7 @@ function Login($link, $correo)
         $fila = mysqli_fetch_assoc($registros);
 
         // Almacenar los datos en variables de sesión
+        $_SESSION['idU'] = $fila['idUsuario'];
         $_SESSION['nombre'] = $fila['nom_Us'];
         $_SESSION['apellido'] = $fila['apell_Us'];
         $_SESSION['carrera'] = $fila['carrera_Us'];

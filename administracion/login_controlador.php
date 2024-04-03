@@ -1,6 +1,6 @@
 <?php
+require '../php/sesion.php';
 session_start();
-include('../php/sesion.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Comprobar si los campos de correo electrónico y contraseña no están vacíos

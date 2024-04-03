@@ -67,6 +67,18 @@ session_start();
     <!--iconos-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+
+    <style>
+        @font-face {
+            font-family: 'Agrandir';
+            src: url('../css/Agrandir.otf') format('otf');
+        }
+
+        pre{
+            font-family: 'Agrandir', sans-serif;
+            font-size: 16px;
+        }
+    </style>
 </head>
 
 <style>
@@ -261,7 +273,7 @@ session_start();
                                     <h5 class="mb-4">Comentarios</h5>
 
                                     <!-- Formulario para agregar comentarios -->
-                                    <form action="procesar_comentario.php" method="POST">
+                                    <form action="comentar.php" method="POST">
                                         <div class="mb-3">
                                             <label for="comentario" class="form-label">Agregar Comentario:</label>
                                             <textarea class="form-control" id="comentario" name="comentario" rows="3" required></textarea>
@@ -273,10 +285,10 @@ session_start();
                                     <!-- Arreglo de rutas de imágenes aleatorias -->
                                     <?php
                                     $imagenes_aleatorias = array();
-                                    
+
                                     // Ruta base de las imágenes
                                     $ruta_base = "../images/tigers/";
-                                    
+
                                     // Generar el arreglo de rutas de imágenes
                                     for ($i = 1; $i <= 15; $i++) {
                                         $ruta_imagen = $ruta_base . "a" . $i . ".png";
@@ -303,7 +315,7 @@ session_start();
                                                     </div>
                                                     <div class="col">
                                                         <h6 class="mb-1"><?php echo $comentario['nom_Us'] . " " . $comentario['apell_Us']; ?></h6>
-                                                        <p class="mb-1"><?php echo $comentario['text_Coment']; ?></p>
+                                                        <pre class="mb-1"><?php echo $comentario['text_Coment']; ?></pre>
                                                         <small class="text-muted"><?php echo $comentario['fecha_Coment']; ?></small>
                                                     </div>
                                                 </div>
