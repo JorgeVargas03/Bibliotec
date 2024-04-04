@@ -2,11 +2,8 @@
 $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Consulta a la base de datos
-$consulta_pub = "SELECT * FROM 	reportepublicación ORDER BY idReporte DESC LIMIT 3";
-$consulta_com = "SELECT * FROM reportecomentario ORDER BY idReporteCom DESC LIMIT 3";
-$registros_pub = mysqli_query($link, $consulta_pub); // Utiliza la conexión obtenida desde el archivo de conexión
-$registros_com = mysqli_query($link, $consulta_com); // Utiliza la conexión obtenida desde el archivo de conexión
-
+$consulta_com = "SELECT * FROM 	reportecomentario ORDER BY idReporteCom DESC LIMIT 3";
+$registros = mysqli_query($link, $consulta_com); // Utiliza la conexión obtenida desde el archivo de conexión
 // Verifica si la consulta se ejecutó correctamente
 if (!$registros) {
   die('Error en la consulta: ' . mysqli_error($link));
@@ -76,9 +73,7 @@ session_start();
         <div class="flex-shrink-0 p-3 hola" style="width: 15%; background-color: #F07B12; ">
             <ul class="list-unstyled" id="menu-lateral">
                 <li class="mb-1">
-                    <button class="btn d-inline-flex align-items-start rounded border-5 col-1" id="letrabardos"  style="color: black; font-weight: bold;">
-                        Publicaciones Pendientes
-                    </button>
+                  <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
                 </li>
                 <li class="mb-1">
                     <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -86,8 +81,8 @@ session_start();
                     </button>
                     <div class="collapse" id="dashboard-collapse">
                       <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Comentarios</a></li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
+                        <li><a href="rep_comentario_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Comentarios</a></li>
+                        <li><a href="rep_publicacion_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
                       </ul>
                     </div>
                   </li>
@@ -106,33 +101,13 @@ session_start();
         <!-- REPORTE PUBLICACION -->
         <div class="container mt-3">
           <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
-          margin-top: 0.5vmax;"><b>Publicaciones Reportadas</b></h2>
-          <?php
-          while ($fila_pub = mysqli_fetch_array($registros_pub)) {
-          ?>
-            <div class="publicacion">
-              <h3><?php echo ($fila_pub['titulo_Pub']); ?></h3>
-              <p><?php echo ($fila_pub['descrip_Pub']); ?></p>
-              <!-- Botón Ver más que despliega los detalles -->
-              <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
-              <a class="btn btn-link mb-2 mt-3"><b>Revisar</b></a>
-              <!-- Detalles de la publicación dentro de un acordeón -->
-              <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
-            </div>
-          <?php
-          }
-          ?>
-        </div>
-        <!-- REPORTE COMENTARIO -->
-        <div class="container mt-3">
-          <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
-          margin-top: 0.5vmax;"><b>Reportes Pendientes</b></h2>
+          margin-top: 0.5vmax;"><b>Comentarios Reportados</b></h2>
           <?php
           while ($fila = mysqli_fetch_array($registros)) {
           ?>
-            <div class="publicacion">
-              <h3><?php echo ($fila['titulo_Pub']); ?></h3>
-              <p><?php echo ($fila['descrip_Pub']); ?></p>
+            <div class="comentario reportado">
+              <p><?php echo ($fila['motivo_Report']); ?></p>
+              <p><?php echo ($fila['fecha_Report']); ?></p>
               <!-- Botón Ver más que despliega los detalles -->
               <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
               <a class="btn btn-link mb-2 mt-3"><b>Revisar</b></a>
@@ -154,7 +129,5 @@ session_start();
             <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
         </div>
     </footer>
-  
 </body>
-
 </html>
