@@ -8,13 +8,13 @@
    
 
     <!--En esta seccion se incluyen las hojas de estilos-->
-    <link rel="icon" href="../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
-    <link rel="stylesheet" href="../css/normalizar.css">
-    <link rel="stylesheet" href="../css/estilos.css">
-    <link rel="stylesheet" href="../css/hover-min.css">
-    <link rel="stylesheet" href="../css/animate.css">
-    <link rel="stylesheet" href="../css/sidebars.css">
-    <link rel="stylesheet" href="../publicacion/style.css">
+    <link rel="icon" href="../../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
+    <link rel="stylesheet" href="../../css/normalizar.css">
+    <link rel="stylesheet" href="../../css/estilos.css">
+    <link rel="stylesheet" href="../../css/hover-min.css">
+    <link rel="stylesheet" href="../../css/animate.css">
+    <link rel="stylesheet" href="../../css/sidebars.css">
+    <link rel="stylesheet" href="../../publicacion/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!--Inicia Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -50,7 +50,7 @@
         <div class="container" style="margin-left:7.8vmax;">
             <!-- Logo y título -->
             <div class="logo col-6" >
-                <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
+                <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
                 <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span>
                 <span>- Publicación pendiente</span></b></h4>
             </div>
@@ -202,7 +202,7 @@
     
 
    
-     <script src ="js/fadeout.js"></script>
+     <script src ="../../js/fadeout.js"></script>
             
      <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
         <div class="container" >
