@@ -1,3 +1,51 @@
+<?php
+$link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
+
+// Consulta a la base de datos
+$consulta = "SELECT * FROM publicaciones_pendientes ORDER BY idPub DESC LIMIT 3";
+$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
+
+// Verifica si la consulta se ejecutó correctamente
+if (!$registros) {
+  die('Error en la consulta: ' . mysqli_error($link));
+}
+
+if (isset($_GET['id'])) {
+    // Obtener el ID de la publicación desde el parámetro GET
+    $idPub = $_GET['id'];
+
+    // Consultar la base de datos para obtener la información completa de la publicación
+    $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+              JOIN usuario u ON p.id_Usuario = u.idUsuario
+              WHERE p.idPub = $idPub";
+    $result = mysqli_query($link, $query);
+
+    // Verificar si se encontró la publicación
+    if (mysqli_num_rows($result) == 1) {
+        $publicacion = mysqli_fetch_assoc($result);
+
+        // Consultar los comentarios asociados a esta publicación
+        $query_comentarios = "SELECT c.*, u.nom_Us, u.apell_Us FROM comentario c
+                              JOIN usuario u ON c.idUsuario = u.idUsuario
+                              WHERE c.idPub = $idPub";
+        $result_comentarios = mysqli_query($link, $query_comentarios);
+    } else {
+        // Si no se encontró la publicación, redireccionar a la página principal
+       //header("Location: ../home.php");
+        exit();
+    }
+} else {
+    // Si no se proporcionó un ID de publicación, redireccionar a la página principal
+    //header("Location: ../home.php");
+    exit();
+}
+
+// Cierra la conexión después de realizar la consulta
+mysqli_close($link);
+
+// Inicia la sesión después de cerrar la conexión
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,13 +56,13 @@
    
 
     <!--En esta seccion se incluyen las hojas de estilos-->
-    <link rel="icon" href="../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
-    <link rel="stylesheet" href="../css/normalizar.css">
-    <link rel="stylesheet" href="../css/estilos.css">
-    <link rel="stylesheet" href="../css/hover-min.css">
-    <link rel="stylesheet" href="../css/animate.css">
-    <link rel="stylesheet" href="../css/sidebars.css">
-    <link rel="stylesheet" href="../publicacion/style.css">
+    <link rel="icon" href="../../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
+    <link rel="stylesheet" href="../../css/normalizar.css">
+    <link rel="stylesheet" href="../../css/estilos.css">
+    <link rel="stylesheet" href="../../css/hover-min.css">
+    <link rel="stylesheet" href="../../css/animate.css">
+    <link rel="stylesheet" href="../../css/sidebars.css">
+    <link rel="stylesheet" href="../../publicacion/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!--Inicia Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -50,7 +98,7 @@
         <div class="container" style="margin-left:7.8vmax;">
             <!-- Logo y título -->
             <div class="logo col-6" >
-                <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
+                <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
                 <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span>
                 <span>- Publicación pendiente</span></b></h4>
             </div>
