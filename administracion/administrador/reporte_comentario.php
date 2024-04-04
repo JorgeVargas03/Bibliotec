@@ -145,7 +145,7 @@
 
    
 
-    <script src ="js/fadeout.js"></script>
+    <script src ="../../js/fadeout.js"></script>
             
      <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
         <div class="container" >

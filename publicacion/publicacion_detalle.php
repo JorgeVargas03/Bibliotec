@@ -2,12 +2,6 @@
 // Incluir el archivo de conexión a la base de datos
 $link = include('../php/conexion.php');
 
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: ../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
-    exit;
-}
-
-
 // Verificar si se proporcionó un ID de publicación
 if (isset($_GET['id'])) {
     // Obtener el ID de la publicación desde el parámetro GET
@@ -44,6 +38,12 @@ mysqli_close($link);
 
 // Iniciar sesión
 session_start();
+
+// Verificar si el usuario no ha iniciado sesión
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("location: ../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
