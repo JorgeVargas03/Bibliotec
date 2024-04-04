@@ -1,5 +1,5 @@
 <?php
-$link = include('../../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
+$link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Consulta a la base de datos
 $consulta = "SELECT * FROM publicaciones_pendientes ORDER BY idPub DESC LIMIT 3";
