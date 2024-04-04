@@ -2,8 +2,10 @@
 $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Consulta a la base de datos
-$consulta = "SELECT * FROM publicaciones_pendientes ORDER BY idPub DESC LIMIT 3";
-$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
+$consulta_pub = "SELECT * FROM 	reportepublicación ORDER BY idReporte DESC LIMIT 3";
+$consulta_com = "SELECT * FROM reportecomentario ORDER BY idReporteCom DESC LIMIT 3";
+$registros_pub = mysqli_query($link, $consulta_pub); // Utiliza la conexión obtenida desde el archivo de conexión
+$registros_com = mysqli_query($link, $consulta_com); // Utiliza la conexión obtenida desde el archivo de conexión
 
 // Verifica si la consulta se ejecutó correctamente
 if (!$registros) {
@@ -101,9 +103,30 @@ session_start();
       
       <!-- Contenido principal -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <!-- REPORTE PUBLICACION -->
         <div class="container mt-3">
           <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
-          margin-top: 0.5vmax;"><b>Publicaciones Pendientes</b></h2>
+          margin-top: 0.5vmax;"><b>Publicaciones Reportadas</b></h2>
+          <?php
+          while ($fila_pub = mysqli_fetch_array($registros_pub)) {
+          ?>
+            <div class="publicacion">
+              <h3><?php echo ($fila_pub['titulo_Pub']); ?></h3>
+              <p><?php echo ($fila_pub['descrip_Pub']); ?></p>
+              <!-- Botón Ver más que despliega los detalles -->
+              <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
+              <a class="btn btn-link mb-2 mt-3"><b>Revisar</b></a>
+              <!-- Detalles de la publicación dentro de un acordeón -->
+              <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
+            </div>
+          <?php
+          }
+          ?>
+        </div>
+        <!-- REPORTE COMENTARIO -->
+        <div class="container mt-3">
+          <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
+          margin-top: 0.5vmax;"><b>Reportes Pendientes</b></h2>
           <?php
           while ($fila = mysqli_fetch_array($registros)) {
           ?>
