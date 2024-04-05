@@ -23,10 +23,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Error de conexión: " . $conn->connect_error);
         }
 
-        // Preparar la consulta
-        $sql = "SELECT contra_Us FROM usuario WHERE correo_Us = ?";
+        // Preparar la consulta para la tabla 'usuario'
+        $sql_usuario = "SELECT contra_Us FROM usuario WHERE correo_Us = ?";
         
-        if($stmt = $conn->prepare($sql)){
+        if($stmt = $conn->prepare($sql_usuario)){
             // Vincular variables a la declaración preparada como parámetros
             $stmt->bind_param("s", $param_email);
             
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Almacenar resultado
                 $stmt->store_result();
                 
-                // Verificar si se encontró el correo electrónico
+                // Verificar si se encontró el correo electrónico en la tabla 'usuario'
                 if($stmt->num_rows == 1){                    
                     // Vincular variables de resultado
                     $stmt->bind_result($hashed_password);
@@ -57,21 +57,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             exit;
                         }
                     }
-                } else{
-                    // Mostrar un mensaje de error si el correo electrónico no existe
-                    $_SESSION["alert_message"] = "Contraseña o Correo incorrecto";
-                    header("location: ../index.php"); // Redirigir de vuelta al formulario de inicio de sesión
-                    exit;
                 }
-            } else{
-                $_SESSION["alert_message"] = "Oops! Algo salió mal. Por favor, inténtalo de nuevo más tarde.";
-                header("location: ../index.php"); // Redirigir de vuelta al formulario de inicio de sesión
-                exit;
             }
-
-            // Cerrar declaración
             $stmt->close();
         }
+
+        // Preparar la consulta para la tabla 'administrador'
+        $sql_administrador = "SELECT contra_Admin FROM administrador WHERE correo_Admin = ?";
+        
+        if($stmt = $conn->prepare($sql_administrador)){
+            // Vincular variables a la declaración preparada como parámetros
+            $stmt->bind_param("s", $param_email);
+            
+            // Establecer parámetros
+            $param_email = $email;
+            
+            // Ejecutar la declaración
+            if($stmt->execute()){
+                // Almacenar resultado
+                $stmt->store_result();
+                
+                // Verificar si se encontró el correo electrónico en la tabla 'administrador'
+                if($stmt->num_rows == 1){                    
+                    // Vincular variables de resultado
+                    $stmt->bind_result($admin_password);
+                    if($stmt->fetch()){
+                        if($password == $admin_password){
+                            // La contraseña es correcta, inicia una nueva sesión como administrador
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["email"] = $email;
+                            $_SESSION['rol'] = "admin";
+                            header("location: administrador/admin_home.php"); // Redirigir al administrador a la página de inicio de sesión de administrador
+                            exit;
+                        } else{
+                            // Mostrar un mensaje de error si la contraseña no es válida
+                            $_SESSION["alert_message"] = "Contraseña o Correo incorrecto";
+                            header("location: ../index.php"); // Redirigir de vuelta al formulario de inicio de sesión
+                            exit;
+                        }
+                    }
+                }
+            }
+            $stmt->close();
+        }
+        
+        // Si el correo electrónico no se encuentra en ninguna de las tablas, mostrar un mensaje de error
+        $_SESSION["alert_message"] = "Contraseña o Correo incorrecto";
+        header("location: ../index.php"); // Redirigir de vuelta al formulario de inicio de sesión
+        exit;
         
         // Cerrar conexión
         $conn->close();

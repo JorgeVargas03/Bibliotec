@@ -1,15 +1,8 @@
 <?php
-$link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
+// Incluir el archivo de conexión a la base de datos
+$link = include('../../php/conexion.php');
 
-// Consulta a la base de datos
-$consulta = "SELECT * FROM publicaciones_pendientes ORDER BY idPub DESC LIMIT 3";
-$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
-
-// Verifica si la consulta se ejecutó correctamente
-if (!$registros) {
-  die('Error en la consulta: ' . mysqli_error($link));
-}
-
+// Verificar si se proporcionó un ID de publicación
 if (isset($_GET['id'])) {
     // Obtener el ID de la publicación desde el parámetro GET
     $idPub = $_GET['id'];
@@ -18,34 +11,30 @@ if (isset($_GET['id'])) {
     $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
               JOIN usuario u ON p.id_Usuario = u.idUsuario
               WHERE p.idPub = $idPub";
+    $query2 = "SELECT * FROM 	reportepublicación WHERE idPub = $idPub";
     $result = mysqli_query($link, $query);
+    $registro = mysqli_query($link, $query2);
+    $fila = mysqli_fetch_array($registro);
 
     // Verificar si se encontró la publicación
     if (mysqli_num_rows($result) == 1) {
         $publicacion = mysqli_fetch_assoc($result);
-
-        // Consultar los comentarios asociados a esta publicación
-        $query_comentarios = "SELECT c.*, u.nom_Us, u.apell_Us FROM comentario c
-                              JOIN usuario u ON c.idUsuario = u.idUsuario
-                              WHERE c.idPub = $idPub";
-        $result_comentarios = mysqli_query($link, $query_comentarios);
     } else {
         // Si no se encontró la publicación, redireccionar a la página principal
-       //header("Location: ../home.php");
+        header("Location: ../home.php");
         exit();
     }
 } else {
     // Si no se proporcionó un ID de publicación, redireccionar a la página principal
-    //header("Location: ../home.php");
+    header("Location: ../home.php");
     exit();
 }
 
-// Cierra la conexión después de realizar la consulta
+// Cerrar la conexión a la base de datos
 mysqli_close($link);
 
-// Inicia la sesión después de cerrar la conexión
-session_start();
-?>
+// Iniciar sesión
+session_start();?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -101,7 +90,7 @@ session_start();
             <div class="logo col-5" >
                 <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
                 <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span>
-                <span>- Reportes publicación</span></b></h4>
+                <span>- Reportes de publicaciones</span></b></h4>
             </div>
     </header>
 
@@ -110,20 +99,18 @@ session_start();
             <!-- Barra de navegación izquierda -->
             <div class="flex-shrink-0 p-3 hola" style="width: 15%; background-color: #F07B12; ">
                 <ul class="list-unstyled" id="menu-lateral">
-                    <li class="mb-1">
-                        <button class="btn d-inline-flex align-items-start rounded border-5 col-1" id="letrabardos"  style="color: black; font-weight: bold;">
-                            Publicaciones Pendientes
-                        </button>
-                    </li>
+                <li class="mb-1">
+                  <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
+                </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
                           Reportes
                         </button>
                         <div class="collapse" id="dashboard-collapse">
-                          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Comentarios</a></li>
-                            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
-                          </ul>
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="rep_comentario_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Comentarios</a></li>
+                            <li><a href="rep_publicacion_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
+                      </ul>
                         </div>
                       </li>
                     <hr class="my-2"> <!-- Línea divisora -->
@@ -153,7 +140,7 @@ session_start();
                                     <div class="row">
                                         <div class="col mt-1 mb-2" >
                                             <h3 class="pl-1  mb-2" style="margin-left: 2vmax;"> Reporte de publicación</h3>
-                                            <h5><Span style="margin-left: 2vmax;"><b>Tipo de reporte: </b></Span><span>Tiene: XXXx</span></h5> 
+                                            <h5><Span style="margin-left: 2vmax;"><b>Tipo de reporte: </b><?php echo $fila['motivo_Report'];?></Span><span></span></h5> 
                                         </div>
                                         <div class="col text-end mt-4 mb-3  align-items-end" style="margin-right: 2vmax;">
                                             <a href="#"  class="btn btn-success btn-sm">
@@ -243,7 +230,7 @@ session_start();
                                         }
                                         ?>
                                         <!-- Fecha de Publicación -->
-                                        <p class="card-text comment-date mb-0 align-self-end">Fecha: <?php echo $publicacion['fecha_Pub']; ?></p>
+                                        <p class="card-text comment-date mb-0 align-self-end">Fecha de Reporte: <?php echo $fila['fecha_Report']; ?></p>
                                     </div>
                                 </div>
 

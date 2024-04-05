@@ -15,6 +15,27 @@ mysqli_close($link);
 
 // Inicia la sesión después de cerrar la conexión
 session_start();
+
+
+// Verificar si el usuario no ha iniciado sesión
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["rol"] !== "admin") {
+  header("location: ../../index.php");
+  exit;
+}
+
+// Verificar si se ha enviado una solicitud para cerrar sesión
+if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
+  // Destruir todas las variables de sesión
+  session_unset();
+  
+  // Destruir la sesión
+  session_destroy();
+  
+  // Redirigir al usuario al inicio de sesión
+  header("location: ../../index.php");
+  exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +44,7 @@ session_start();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BiblioTec - Home</title>
+  <title>BiblioTec - AdminHome</title>
 
   <!--En esta seccion se incluyen las hojas de estilos-->
   <link rel="icon" href="../../images\icons\tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
@@ -90,7 +111,7 @@ session_start();
                 <hr class="my-2"> <!-- Línea divisora -->
                 <li class="mb-1">
                     <button class="btn d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" style="color: black; font-weight: bold;">
-                        <span style="margin-top:0.3vmax; margin-left: 0.4vmax;">Cerrar Sesión</span>
+                    <a class="nav-link align-items-center" href="admin_home.php?logout=true" id="letrabar">Cerrar sesión</a>
                     </button>
                 </li>
                 <hr class="my-2"> <!-- Línea divisora -->
@@ -122,7 +143,8 @@ session_start();
     </div>
   </div>
 
-  <script src ="../../js/fadeout.js"></script>
+  <script src ="../../js/fadeout.js">
+  </script>
 
   <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
         <div class="container" >
