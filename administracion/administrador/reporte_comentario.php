@@ -1,3 +1,41 @@
+<?php
+// Incluir el archivo de conexión a la base de datos
+$link = include('../../php/conexion.php');
+
+// Verificar si se proporcionó un ID de publicación
+if (isset($_GET['id'])) {
+    // Obtener el ID de la publicación desde el parámetro GET
+    $idComent = $_GET['id'];
+
+    // Consultar la base de datos para obtener la información completa de la publicación
+    $query = "SELECT c.*, u.nom_Us, u.apell_Us FROM comentario c
+              JOIN usuario u ON c.idUsuario = u.idUsuario
+              WHERE c.idComent = $idComent";
+    $query2 = "SELECT * FROM reportecomentario WHERE idComent = $idComent";
+    $result = mysqli_query($link, $query);
+    $registro = mysqli_query($link, $query2);
+    $fila = mysqli_fetch_array($registro);
+
+    // Verificar si se encontró la publicación
+    if (mysqli_num_rows($result) == 1) {
+        $comentario = mysqli_fetch_assoc($result);
+    } else {
+        // Si no se encontró la publicación, redireccionar a la página principal
+        header("Location: ../home.php");
+        exit();
+    }
+} else {
+    // Si no se proporcionó un ID de publicación, redireccionar a la página principal
+    header("Location: ../home.php");
+    exit();
+}
+
+// Cerrar la conexión a la base de datos
+mysqli_close($link);
+
+// Iniciar sesión
+session_start();?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +91,7 @@
             <div class="logo col-5">
                 <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
                 <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span>
-                <span>- Reportes comentarios</span></h4></b>
+                <span>- Reportes de comentarios</span></h4></b>
             </div>
     </header>
 
@@ -62,20 +100,18 @@
             <!-- Barra de navegación izquierda -->
             <div class="flex-shrink-0 p-3 hola" style="width: 15%; background-color: #F07B12; ">
                 <ul class="list-unstyled" id="menu-lateral">
-                    <li class="mb-1">
-                        <button class="btn d-inline-flex align-items-start rounded border-5 col-1" id="letrabardos"  style="color: black; font-weight: bold;">
-                            Publicaciones Pendientes
-                        </button>
-                    </li>
+                <li class="mb-1">
+                  <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
+                </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
                           Reportes
                         </button>
                         <div class="collapse" id="dashboard-collapse">
-                          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Comentarios</a></li>
-                            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
-                          </ul>
+                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="rep_comentario_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Comentarios</a></li>
+                                <li><a href="rep_publicacion_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
+                      </ul>
                         </div>
                       </li>
                     <hr class="my-2"> <!-- Línea divisora -->
@@ -104,7 +140,7 @@
                                     <div class="row"  >
                                         <div class="col  mt-1 mb-2" style="color: black;">
                                             <h3 class="pl-5 mb-2 ml-2" style="margin-left: 2vmax;">Reporte de comentario</h3>
-                                            <h5><Span style="margin-left: 2vmax;"><b>Tipo de reporte: </b></Span><span>Tiene: XXXx</span></h5> 
+                                            <h5><Span style="margin-left: 2vmax;"><b>Tipo de reporte: </b></Span><span><?php echo $fila['motivo_Report'];?></span></h5> 
                                         </div>
                                         <div class="col text-end mt-4 mb-3  align-items-end" style="margin-right: 2vmax;">
                                             <a href="#"  class="btn btn-success btn-sm">
@@ -130,9 +166,9 @@
                                                         
                                                     </div>
                                                     <div class="col">
-                                                        <h3 class="mb-4"><b>Autor: </b></h3>
-                                                        <textarea class="form-control mb-4" id="comentario" name="comentario" rows="3" disabled>Comentario</textarea>
-                                                        <small class="text-muted mb-2">Fecha del Comentario: </small>
+                                                        <h3 class="mb-4"><b>Usuario: <?php echo $comentario['nom_Us']; ?>  <?php echo $comentario['apell_Us'];?></b></h3>
+                                                        <textarea class="form-control mb-4" id="comentario" name="comentario" rows="3" disabled><?php echo $comentario['text_Coment']; ?></textarea>
+                                                        <small class="text-muted mb-2">Fecha de Reporte: <?php echo $fila['fecha_Report']; ?></small>
                                                     </div>
                                                 </div>
                                             </div>

@@ -2,17 +2,21 @@
 $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Consulta a la base de datos
-$consulta_pub = "SELECT * FROM 	reportepublicación ORDER BY idReporte DESC LIMIT 3";
-$registros = mysqli_query($link, $consulta_pub); // Utiliza la conexión obtenida desde el archivo de conexión
+$query_rp = "SELECT * FROM 	reportepublicación ORDER BY idReporte DESC LIMIT 3";
+$query_p = "SELECT * FROM 	publicacion WHERE idPub IN (SELECT idPub FROM reportepublicación)";
+$registros_rp = mysqli_query($link, $query_rp); // Utiliza la conexión obtenida desde el archivo de conexión
+$registros_p = mysqli_query($link, $query_p);
 // Verifica si la consulta se ejecutó correctamente
-if (!$registros) {
+if (!$registros_rp) {
   die('Error en la consulta: ' . mysqli_error($link));
 }
-
+if (!$registros_p) {
+  die('Error en la consulta: ' . mysqli_error($link));
+}
 // Cierra la conexión después de realizar la consulta
 mysqli_close($link);
 
-// Inicia la sesión después de cerrar la conexión
+// Inicia la sesión después de cerrar la conexiónE
 session_start();
 ?>
 
@@ -22,7 +26,7 @@ session_start();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BiblioTec - Home</title>
+  <title>Administrador - Reportes</title>
 
   <!--En esta seccion se incluyen las hojas de estilos-->
   <link rel="icon" href="../../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
@@ -103,14 +107,15 @@ session_start();
           <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
           margin-top: 0.5vmax;"><b>Publicaciones Reportadas</b></h2>
           <?php
-          while ($fila = mysqli_fetch_array($registros)) {
+          while ($fila = mysqli_fetch_array($registros_rp) and $fila2 = mysqli_fetch_array($registros_p)) {
           ?>
             <div class="publicacion reportada">
-              <p><?php echo ($fila['motivo_Report']); ?></p>
-              <p><?php echo ($fila['fecha_Report']); ?></p>
+              <p>Publicación: <?php echo ($fila2['titulo_Pub']); ?></p>
+              <p>Motivo: <?php echo ($fila['motivo_Report']); ?></p>
+              <p>Fecha de reporte: <?php echo ($fila['fecha_Report']); ?></p>
               <!-- Botón Ver más que despliega los detalles -->
               <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
-              <a class="btn btn-link mb-2 mt-3"><b>Revisar</b></a>
+              <a name ="fade" href="reporte_publicación.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary">Revisar</a>
               <!-- Detalles de la publicación dentro de un acordeón -->
               <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
             </div>
