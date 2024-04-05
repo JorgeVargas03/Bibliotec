@@ -2,9 +2,8 @@
 $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Consulta a la base de datos
-$consulta = "SELECT * FROM publicaciones_pendientes ORDER BY idPub DESC LIMIT 3";
-$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
-
+$consulta_pub = "SELECT * FROM 	reportepublicación ORDER BY idReporte DESC LIMIT 3";
+$registros = mysqli_query($link, $consulta_pub); // Utiliza la conexión obtenida desde el archivo de conexión
 // Verifica si la consulta se ejecutó correctamente
 if (!$registros) {
   die('Error en la consulta: ' . mysqli_error($link));
@@ -26,7 +25,7 @@ session_start();
   <title>BiblioTec - Home</title>
 
   <!--En esta seccion se incluyen las hojas de estilos-->
-  <link rel="icon" href="../../images\icons\tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
+  <link rel="icon" href="../../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
   <link rel="stylesheet" href="../../css/normalizar.css">
   <link rel="stylesheet" href="../../css/estilos.css">
   <link rel="stylesheet" href="../../css/hover-min.css">
@@ -73,7 +72,7 @@ session_start();
         <!-- Barra de navegación izquierda -->
         <div class="flex-shrink-0 p-3 hola" style="width: 15%; background-color: #F07B12; ">
             <ul class="list-unstyled" id="menu-lateral">
-            <li class="mb-1">
+                <li class="mb-1">
                   <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
                 </li>
                 <li class="mb-1">
@@ -99,15 +98,16 @@ session_start();
       
       <!-- Contenido principal -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <!-- REPORTE PUBLICACION -->
         <div class="container mt-3">
           <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
-          margin-top: 0.5vmax;"><b>Publicaciones Pendientes</b></h2>
+          margin-top: 0.5vmax;"><b>Publicaciones Reportadas</b></h2>
           <?php
           while ($fila = mysqli_fetch_array($registros)) {
           ?>
-            <div class="publicacion">
-              <h3><?php echo ($fila['titulo_Pub']); ?></h3>
-              <p><?php echo ($fila['descrip_Pub']); ?></p>
+            <div class="publicacion reportada">
+              <p><?php echo ($fila['motivo_Report']); ?></p>
+              <p><?php echo ($fila['fecha_Report']); ?></p>
               <!-- Botón Ver más que despliega los detalles -->
               <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
               <a class="btn btn-link mb-2 mt-3"><b>Revisar</b></a>
@@ -129,7 +129,5 @@ session_start();
             <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
         </div>
     </footer>
-  
 </body>
-
 </html>

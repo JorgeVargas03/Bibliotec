@@ -1,3 +1,51 @@
+<?php
+$link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
+
+// Consulta a la base de datos
+$consulta = "SELECT * FROM publicaciones_pendientes ORDER BY idPub DESC LIMIT 3";
+$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
+
+// Verifica si la consulta se ejecutó correctamente
+if (!$registros) {
+  die('Error en la consulta: ' . mysqli_error($link));
+}
+
+if (isset($_GET['id'])) {
+    // Obtener el ID de la publicación desde el parámetro GET
+    $idPub = $_GET['id'];
+
+    // Consultar la base de datos para obtener la información completa de la publicación
+    $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+              JOIN usuario u ON p.id_Usuario = u.idUsuario
+              WHERE p.idPub = $idPub";
+    $result = mysqli_query($link, $query);
+
+    // Verificar si se encontró la publicación
+    if (mysqli_num_rows($result) == 1) {
+        $publicacion = mysqli_fetch_assoc($result);
+
+        // Consultar los comentarios asociados a esta publicación
+        $query_comentarios = "SELECT c.*, u.nom_Us, u.apell_Us FROM comentario c
+                              JOIN usuario u ON c.idUsuario = u.idUsuario
+                              WHERE c.idPub = $idPub";
+        $result_comentarios = mysqli_query($link, $query_comentarios);
+    } else {
+        // Si no se encontró la publicación, redireccionar a la página principal
+       //header("Location: ../home.php");
+        exit();
+    }
+} else {
+    // Si no se proporcionó un ID de publicación, redireccionar a la página principal
+    //header("Location: ../home.php");
+    exit();
+}
+
+// Cierra la conexión después de realizar la consulta
+mysqli_close($link);
+
+// Inicia la sesión después de cerrar la conexión
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
