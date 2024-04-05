@@ -1,11 +1,17 @@
+<?php
+$link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
+session_start();
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BiblioTec - Home</title>
   <!--En esta seccion se incluyen las hojas de estilos-->
-  <link rel="icon" href="../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
+  <link rel="icon" href="../../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
   <link rel="stylesheet" href="../../css/normalizar.css">
   <link rel="stylesheet" href="../../css/estilos.css">
   <link rel="stylesheet" href="../../css/hover-min.css">
@@ -24,47 +30,74 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
   <style>
     /* Estilo para centrar los campos de texto */
-    .centered-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 50px;
-    }
-    /* Estilo para el botón redondo */
-    .round-btn {
+    .btn-custom {
       border-radius: 25px;
+    }
+
+    /* Estilo para el formulario */
+    .card {
+      border: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control:focus {
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    }
+
+    /* Estilo para el contenedor principal */
+    body {
+      background-color: #f8f9fa;
+    }
+
+    /* Estilo para el contenedor del formulario */
+    .container-form {
+      margin-top: 80px;
     }
   </style>
 </head>
+
 <body>
-  <!-- Barra azul con logo -->
+  <!-- Encabezado -->
   <header class="bg-primary py-2">
     <div class="container d-flex align-items-center">
       <!-- Logo y título -->
       <div class="logo">
         <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
         <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
+      </div>
     </div>
   </header>
 
-  <div class="container mx-auto">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="centered-form">
-          <!-- Texto "Cambio de contraseña" -->
-          <h2>Cambio de contraseña</h2>
-          <!-- Campos de texto centrados -->
-          <input type="text" class="form-control mb-3" placeholder="Nombre">
-          <input type="text" class="form-control mb-3" placeholder="Correo electrónico">
-          <input type="password" class="form-control mb-3" placeholder="Contraseña">
-          <!-- Botón de registro -->
-          <button type="button" class="btn btn-primary btn-lg round-btn">Aceptar</button>
+  <div class="container container-form">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <!-- Formulario -->
+        <div class="card p-4">
+          <!-- Título del formulario -->
+          <h2 class="text-center mb-4">Cambio de contraseña</h2>
+          <form action="update_pass.php" method="post">
+            <!-- Campo para la nueva contraseña -->
+            <div class="mb-3">
+              <label for="newPassword" class="form-label">Contraseña nueva</label>
+              <input type="password" class="form-control" id="newPassword" placeholder="Ingrese su nueva contraseña">
+              <div id="passwordRequirementsError" class="text-danger"></div>
+            </div>
+            <!-- Campo para confirmar la contraseña -->
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+              <input type="password" class="form-control" id="confirmPassword" name="newPassword" placeholder="Confirme su nueva contraseña" disabled>
+              <div id="passwordError" class="text-danger"></div>
+              <input type="hidden" name="email" value="<?php echo $_GET['email']; ?>">
+            </div>
+            <!-- Botón para enviar el formulario -->
+            <button type="submit" class="btn btn-primary btn-lg btn-custom w-100" id="submitButton" disabled>Aceptar</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
-  <!-- Scripts de Bootstrap (jQuery y Popper.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+  <script src="../../js/validatepass.js"></script>
 </body>
+
 </html>

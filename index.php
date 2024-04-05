@@ -44,7 +44,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <!--Termmina Bootstrap-->
-  <script src = "js/loading.js"></script>
+  <script src="js/loading.js"></script>
 </head>
 
 <body>
@@ -52,11 +52,21 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     var alertMessage = "<?php echo isset($_SESSION['alert_message']) ? $_SESSION['alert_message'] : ''; ?>";
     if (alertMessage) {
       // Creamos un elemento de alerta con Bootstrap y el mensaje proporcionado
-      var alertElement = '<div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">' +
-        '<svg class="bi flex-shrink-0 me-2" style="width: 1em; height: 1em;" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>' +
-        '<div>' + alertMessage + '</div>' +
-        '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-        '</div>';
+      var alertElement;
+      if ("<?php echo $_SESSION['alert_message']; ?>" == "Contraseña actualizada exitosamente, por favor inicie sesion para continuar") {
+
+        alertElement = '<div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">' +
+          '<svg class="bi flex-shrink-0 me-2" style="width: 1em; height: 1em;" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>' +
+          '<div>' + alertMessage + '</div>' +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+          '</div>';
+      } else {
+        alertElement = '<div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">' +
+          '<svg class="bi flex-shrink-0 me-2" style="width: 1em; height: 1em;" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>' +
+          '<div>' + alertMessage + '</div>' +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+          '</div>';
+      }
 
       // Agregamos el elemento de alerta al final del cuerpo del documento
       document.body.insertAdjacentHTML('beforeend', alertElement);
@@ -65,6 +75,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
       <?php unset($_SESSION['alert_message']); ?>
     }
   </script>
+
 
   <div class="content">
     <main>
@@ -87,7 +98,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
                 ¿No tienes una cuenta? Registrate aqui.
               </button></a>
         </div>
-       <!-- <button class="btn btn-primary w-100 mt-2" type="submit" id="letraform" style="--bs-btn-padding-y: 0.6rem;  --bs-btn-font-size:15px;" value="Login">Iniciar sesión</button>  -->
+        <!-- <button class="btn btn-primary w-100 mt-2" type="submit" id="letraform" style="--bs-btn-padding-y: 0.6rem;  --bs-btn-font-size:15px;" value="Login">Iniciar sesión</button>  -->
         <button type="button" class="btn btn-primary w-100 mt-2" id="login-btn" style="--bs-btn-padding-y: 0.6rem;  --bs-btn-font-size:15px;" value="Login">Iniciar sesión</button>
         <p class="mt-2vmax mb-auto text-body-secondary" id="letraform">&copy; BiblioTec 2024</p>
       </form>

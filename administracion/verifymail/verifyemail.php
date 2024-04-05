@@ -11,7 +11,7 @@ $correo = $_GET['mail'];
 $_SESSION['enviarCorreo']=$correo;
 ?>
 <!DOCTYPE html>
-<html lang="esp">
+<html lang="es">
 <head>
     <!--Required Meta tags-->
     <meta charset="utf-8">

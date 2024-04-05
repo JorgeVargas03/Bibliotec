@@ -154,3 +154,21 @@ footer{
     }
 }
 
+.centered-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  /* Estilo para el contenedor del formulario */
+  .form-container {
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  /* Estilo para el botón */
+  .btn-custom {
+    border-radius: 25px;
+  }
