@@ -4,7 +4,7 @@ $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y 
 // Consulta a la base de datos
 $query_rc = "SELECT * FROM 	reportecomentario ORDER BY idReporteCom DESC LIMIT 3";
 $query_c = "SELECT * FROM comentario WHERE idComent IN (SELECT idComent FROM reportecomentario)";
-$query_u = "SELECT nom_Us FROM usuario WHERE idUsuario = (SELECT idUsuario FROM comentario WHERE idComent IN (SELECT idComent FROM reportecomentario))";
+$query_u = "SELECT nom_Us, apell_Us FROM usuario WHERE idUsuario = (SELECT idUsuario FROM comentario WHERE idComent IN (SELECT idComent FROM reportecomentario))";
 $registros_rc = mysqli_query($link, $query_rc); // Utiliza la conexión obtenida desde el archivo de conexión
 $registros_c = mysqli_query($link, $query_c);
 $registros_u = mysqli_query($link, $query_u);
@@ -115,7 +115,7 @@ session_start();
           while ($fila = mysqli_fetch_array($registros_rc) and $fila2 = mysqli_fetch_array($registros_c) and $fila3 = mysqli_fetch_array($registros_u)) {
           ?>
             <div class="publicacion reportada">
-              <p>Usuario: <?php echo ($fila3['nom_Us']); ?></p>
+              <p>Usuario: <?php echo $fila3['nom_Us']; ?>  <?php echo $fila3['apell_Us'];?></p>
               <p>Comentario: <?php echo ($fila2['text_Coment']); ?></p>
               <p>Motivo: <?php echo ($fila['motivo_Report']); ?></p>
               <p>Fecha de Reporte: <?php echo ($fila['fecha_Report']); ?></p>
