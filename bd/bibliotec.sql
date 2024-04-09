@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 02-04-2024 a las 04:24:22
+-- Tiempo de generación: 09-04-2024 a las 05:22:38
 -- Versión del servidor: 8.0.32
 -- Versión de PHP: 8.0.26
 
@@ -35,7 +35,14 @@ CREATE TABLE IF NOT EXISTS `administrador` (
   `correo_Admin` varchar(100) NOT NULL,
   `contra_Admin` varchar(45) NOT NULL,
   PRIMARY KEY (`idAdmin`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Volcado de datos para la tabla `administrador`
+--
+
+INSERT INTO `administrador` (`idAdmin`, `correo_Admin`, `contra_Admin`) VALUES
+(1, 'rebeca@hotmail.com', '12345');
 
 -- --------------------------------------------------------
 
@@ -53,16 +60,20 @@ CREATE TABLE IF NOT EXISTS `comentario` (
   PRIMARY KEY (`idComent`),
   KEY `fk_Comentario_Publicacion_idx` (`idPub`),
   KEY `fk_Comentario_Usuario1_idx` (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `comentario`
 --
 
 INSERT INTO `comentario` (`idComent`, `idPub`, `idUsuario`, `text_Coment`, `fecha_Coment`) VALUES
-(1, 3, 5, 'salaverga. Apenas ando viendo lo del token. Se ve chidoo', '2024-03-27'),
+(1, 3, 5, 'Buen documento, me sirvio para mi tarea. Te RIFASTE Fernando!!', '2024-03-27'),
 (2, 3, 4, 'WAAAAOOOOO esta suuper bonita, muchas graciasss por el aporte :D', '2024-03-28'),
-(3, 5, 3, 'WAOS', '2024-03-31');
+(3, 5, 3, 'WAOS', '2024-03-31'),
+(8, 4, 10, 'Este es uno de mis mejores aportes, disfruten :D', '2023-04-03'),
+(9, 4, 5, 'Ya jalan los comentarios yeeeiiii :)\r\nPD: Buen aporte', '2023-04-03'),
+(10, 4, 4, 'WOW Joorgeee eres un crackkkk. ', '2023-04-03'),
+(12, 5, 10, 'Excelente aporte amigo ', '2024-04-03');
 
 -- --------------------------------------------------------
 
@@ -74,7 +85,6 @@ DROP TABLE IF EXISTS `insignia`;
 CREATE TABLE IF NOT EXISTS `insignia` (
   `idInsignia` int NOT NULL AUTO_INCREMENT,
   `tipo_Insig` varchar(45) NOT NULL,
-  `descrip_Insig` varchar(100) NOT NULL,
   PRIMARY KEY (`idInsignia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -88,9 +98,9 @@ DROP TABLE IF EXISTS `publicacion`;
 CREATE TABLE IF NOT EXISTS `publicacion` (
   `idPub` int NOT NULL AUTO_INCREMENT,
   `id_Usuario` int NOT NULL,
-  `titulo_Pub` varchar(45) NOT NULL,
+  `titulo_Pub` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `fecha_Pub` date NOT NULL,
-  `descrip_Pub` varchar(100) NOT NULL,
+  `descrip_Pub` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `calif_Pub` decimal(10,0) NOT NULL,
   `carrera_Pub` varchar(45) NOT NULL,
   `materia_Pub` varchar(60) NOT NULL,
@@ -105,11 +115,11 @@ CREATE TABLE IF NOT EXISTS `publicacion` (
 --
 
 INSERT INTO `publicacion` (`idPub`, `id_Usuario`, `titulo_Pub`, `fecha_Pub`, `descrip_Pub`, `calif_Pub`, `carrera_Pub`, `materia_Pub`, `tipo_pub`, `archivo_Pub`) VALUES
-(1, 1, 'Mi primera publicacion', '2024-03-18', 'Hola a todos amigos, mi primer aporte :)', '5', 'Sistemas', 'Ingenieria de Software', 'Aporte', 'libroHTML.pdf'),
-(2, 1, 'Curso de Cocina de Benigno', '2024-03-18', 'Hola a todos amigos, mi segundo aporte :)', '7', 'Sistemas', 'Ingenieria de Software', 'Aporte', 'RecetasBenigno.pdf'),
-(3, 1, 'Como resolver una Ecuacion Diferencial', '2024-03-18', 'Hola a todos amigos, mi tercer aporte :)', '10', 'Sistemas', 'Ingenieria de Software', 'Aporte', 'EcuacionesDiferenciales.pdf'),
-(4, 1, 'Curso de HTML+PHP', '2024-03-18', 'Les comparto mi libro de HTML', '10', 'Sistemas', 'Ingenieria de Software', 'Aporte', 'libroHTML.pdf'),
-(5, 1, 'Metodologia SCRUM', '2024-03-18', 'Lo que debes saber sobre la Metodologia Scrum', '10', 'Sistemas', 'Ingenieria de Software', 'Aporte', 'SCRUM.pdf');
+(1, 1, 'Mi primera publicacion', '2024-03-18', 'Hola a todos amigos, mi primer aporte :)', '5', 'Ing. Sistemas Computacionales', 'Ingenieria de Software', 'Aporte', 'libroHTML.pdf'),
+(2, 1, 'Curso de Cocina de Benigno', '2024-03-18', 'Hola a todos amigos, mi segundo aporte :)', '7', 'Ing. Sistemas Computacionales', 'Ingenieria de Software', 'Aporte', 'RecetasBenigno.pdf'),
+(3, 1, 'Como resolver una Ecuacion Diferencial', '2024-03-18', 'Hola a todos amigos, mi tercer aporte :)', '10', 'Ing. Sistemas Computacionales', 'Ingenieria de Software', 'Aporte', 'EcuacionesDiferenciales.pdf'),
+(4, 1, 'Curso de HTML+PHP', '2024-03-18', 'Les comparto mi libro de HTML', '10', 'Ing. Sistemas Computacionales', 'Ingenieria de Software', 'Aporte', 'libroHTML.pdf'),
+(5, 1, 'Metodologia SCRUM', '2024-03-18', 'Lo que debes saber sobre la Metodologia Scrum', '10', 'Ing. Sistemas Computacionales', 'Ingenieria de Software', 'Aporte', 'SCRUM.pdf');
 
 -- --------------------------------------------------------
 
@@ -121,17 +131,24 @@ DROP TABLE IF EXISTS `publicaciones_pendientes`;
 CREATE TABLE IF NOT EXISTS `publicaciones_pendientes` (
   `idPub` int NOT NULL AUTO_INCREMENT,
   `id_Usuario` int NOT NULL,
-  `titulo_Pub` varchar(45) NOT NULL,
+  `titulo_Pub` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `fecha_Pub` date NOT NULL,
-  `descrip_Pub` varchar(100) NOT NULL,
-  `calif_Pub` decimal(10,0) NOT NULL,
+  `descrip_Pub` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `calif_Pub` decimal(10,2) NOT NULL,
   `carrera_Pub` varchar(45) NOT NULL,
   `materia_Pub` varchar(60) NOT NULL,
   `tipo_pub` varchar(45) NOT NULL,
   `archivo_Pub` varchar(100) NOT NULL,
   `estado_Pub` tinyint(1) NOT NULL,
   PRIMARY KEY (`idPub`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Volcado de datos para la tabla `publicaciones_pendientes`
+--
+
+INSERT INTO `publicaciones_pendientes` (`idPub`, `id_Usuario`, `titulo_Pub`, `fecha_Pub`, `descrip_Pub`, `calif_Pub`, `carrera_Pub`, `materia_Pub`, `tipo_pub`, `archivo_Pub`, `estado_Pub`) VALUES
+(1, 3, 'Eclipses', '2024-04-01', 'Mi aporte acerca de lo impresionantes que son los eclipses solares, y el como poder observarlos', '4.00', 'Ing. Civil', 'Dinamica de Materiales', 'Informativa', 'eclipses.png', 0);
 
 -- --------------------------------------------------------
 
@@ -148,7 +165,14 @@ CREATE TABLE IF NOT EXISTS `reportecomentario` (
   `estado_Report` tinyint NOT NULL,
   PRIMARY KEY (`idReporteCom`),
   KEY `fk_ReporteComentario_Comentario1_idx` (`idComent`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Volcado de datos para la tabla `reportecomentario`
+--
+
+INSERT INTO `reportecomentario` (`idReporteCom`, `idComent`, `fecha_Report`, `motivo_Report`, `estado_Report`) VALUES
+(1, 1, '2024-03-28', 'Lenguaje inapropiado', 0);
 
 -- --------------------------------------------------------
 
@@ -162,10 +186,17 @@ CREATE TABLE IF NOT EXISTS `reportepublicación` (
   `idPub` int NOT NULL,
   `fecha_Report` date NOT NULL,
   `motivo_Report` varchar(60) NOT NULL,
-  `estado_Report` tinyint NOT NULL,
+  `estado_Report` tinyint(1) NOT NULL,
   PRIMARY KEY (`idReporte`),
   KEY `fk_ReportePublicación_Publicacion1_idx` (`idPub`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Volcado de datos para la tabla `reportepublicación`
+--
+
+INSERT INTO `reportepublicación` (`idReporte`, `idPub`, `fecha_Report`, `motivo_Report`, `estado_Report`) VALUES
+(1, 3, '2024-04-03', 'Se registró contenido plagiado.', 0);
 
 -- --------------------------------------------------------
 
@@ -183,20 +214,19 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `correo_Us` varchar(100) NOT NULL,
   `contra_Us` varchar(60) NOT NULL,
   PRIMARY KEY (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`idUsuario`, `nom_Us`, `apell_Us`, `carrera_Us`, `semestre_Us`, `correo_Us`, `contra_Us`) VALUES
-(1, 'Jorge', 'Vargas', 'Sistemas', '6', 'jorge@gmail.com', '12345678'),
+(1, 'Jorge', 'Vargas', 'Ing. Sistemas Computacionales', '6', 'jorge@gmail.com', '12345678'),
 (2, 'Maria', 'DB', 'Aquitectura', '7', 'mariadb@ittepic.edu.mx', '12345678'),
-(3, 'Javier', 'DB', 'IC', '8', 'javierdb@ittepic.edu.mx', '$2y$10$KCchinKpMrOiXWaS9Fg1X.tiLFzb.nKtetLEVclKfAOJkyBdnq0H.'),
-(4, 'Rebeca', 'Ramirez', 'ISC', '6', 'Rebeca@ittepic.edu.mx', '$2y$10$KiRPmLKUFjCrPHLBPbtqp.Cwu17lDWg9C..eS49TYWQDcbhXkvgzC'),
-(5, 'Yvan', 'Acosta', 'Ing. Sistemas Computacionales', '6', 'yvfeacostaca@ittepic.edu.mx', '$2y$10$EShbFar.TUg4HfwQSS/tKOi4yM5jhObnDlSlbPabJpFMqhJyzYVza'),
-(6, 'Jorge ', 'Vargas', 'Ing. Sistemas Computacionales', '6', 'joluvargaspa@ittepic.edu.mxXX', '$2y$10$ZHRqM2ux03eryPtk9WJ/6Oj5BPKsqm.lOcprqBRmSG0gBdkXIORHe'),
-(7, 'Carlitos', 'Acosta', 'Ing. Electrica', '10', 'joluvargaspa@ittepic.edu.mx', '$2y$10$DoIqO0PO9YqTsmX1rWWYU.uZ1fTICCUQ1TsPOGQF8KVPXliGcXzPC');
+(3, 'Javier', 'DB', 'IC', '8', 'javierdb@ittepic.edu.mx', '$2y$10$gLoihHD8cQm7tBTvR8oN/.MlbnU8XjGEKWpK0.ZuSEMN/snUcWyDi'),
+(4, 'Rebeca', 'Ramirez', 'Ing. Sistemas Computacionales', '6', 'Rebeca@ittepic.edu.mx', '$2y$10$gLoihHD8cQm7tBTvR8oN/.MlbnU8XjGEKWpK0.ZuSEMN/snUcWyDi'),
+(5, 'Yvan', 'Acosta', 'Ing. Sistemas Computacionales', '6', 'yvfeacostaca@ittepic.edu.mx', '$2y$10$gLoihHD8cQm7tBTvR8oN/.MlbnU8XjGEKWpK0.ZuSEMN/snUcWyDi'),
+(10, 'Jorge', 'Mendoza', 'Ing. Sistemas Computacionales', '8', 'joluvargaspa@ittepic.edu.mx', '$2y$10$tPxDnWlKfAuN35pCvnfdL.u9tLI9ByiK1ld62IVi50p63AwIpZkHO');
 
 -- --------------------------------------------------------
 
@@ -230,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `usuario_temp` (
   `contra_Us` varchar(60) NOT NULL,
   `token` varchar(5) NOT NULL,
   PRIMARY KEY (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Restricciones para tablas volcadas
