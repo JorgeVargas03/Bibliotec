@@ -93,7 +93,7 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
     <div class="row" >
         <!-- Barra de navegación izquierda -->
         <div class="flex-shrink-0 p-3 hola" style="width: 15%; background-color: #F07B12; ">
-            <ul class="list-unstyled" id="menu-lateral">
+            <ul class="list-unstyled" id="menu-lateral" style="padding-bottom: 300px">
             <li class="mb-1">
                   <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
                 </li>

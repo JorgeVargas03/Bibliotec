@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Generar un código aleatorio de 6 dígitos
             //ENVIO DE CORREO USANDO PHPMAILER :,v
             $mail = new PHPMailer(true);
-            $site = 'http://localhost:8080/Biliotec/administracion/change_passw/change_password.php?email='. $email;
+            $site = 'http://localhost/Bibliotec/administracion/change_passw/change_password.php?email='. $email;
 
             try {
                 //Server settings
