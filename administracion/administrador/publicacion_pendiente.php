@@ -2,20 +2,14 @@
 $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Consulta a la base de datos
-$consulta = "SELECT * FROM publicaciones_pendientes ORDER BY idPub DESC LIMIT 3";
-$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
 
 // Verifica si la consulta se ejecutó correctamente
-if (!$registros) {
-  die('Error en la consulta: ' . mysqli_error($link));
-}
-
 if (isset($_GET['id'])) {
     // Obtener el ID de la publicación desde el parámetro GET
     $idPub = $_GET['id'];
 
     // Consultar la base de datos para obtener la información completa de la publicación
-    $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+    $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicaciones_pendientes p
               JOIN usuario u ON p.id_Usuario = u.idUsuario
               WHERE p.idPub = $idPub";
     $result = mysqli_query($link, $query);

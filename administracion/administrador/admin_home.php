@@ -131,7 +131,7 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
               <p><?php echo ($fila['descrip_Pub']); ?></p>
               <!-- Botón Ver más que despliega los detalles -->
               <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
-              <a class="btn btn-link mb-2 mt-3"><b>Revisar</b></a>
+              <a href="publicacion_pendiente.php?id=<?php echo ($fila['idPub']); ?>" class="btn btn-link mb-2 mt-3"><b>Revisar</b></a>
               <!-- Detalles de la publicación dentro de un acordeón -->
               <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
             </div>

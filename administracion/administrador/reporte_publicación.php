@@ -116,7 +116,7 @@ session_start();?>
                     <hr class="my-2"> <!-- Línea divisora -->
                     <li class="mb-1">
                         <button class="btn d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" style="color: black; font-weight: bold;">
-                        <a class="nav-link align-items-center" href="admin_home.php?logout=true" id="letrabar">Cerrar sesión</a>
+                        <a class="nav-link align-items-center" href="admin_home.php?logout=true" id="letrabar" name ="id">Cerrar sesión</a>
                         </button>
                     </li>
                     <hr class="my-2"> <!-- Línea divisora -->
