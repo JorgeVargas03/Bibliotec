@@ -178,15 +178,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <select class="form-select" aria-label="Default select example" style="border-color: rgb(179, 179, 179);">
                   <option selected>Selecciona...</option>
                   <option value="1">Arquitectura</option>
-                  <option value="2">Ingeniería Bioquímica</option>
-                  <option value="3">Ingeniería Civil</option>
-                  <option value="4">Ingeniería Eléctrica</option>
-                  <option value="5">Ingenieria en Gestión Empresarial</option>
-                  <option value="6">Ingenieria en Sistemas Computacionales</option>
-                  <option value="7">Ingeniería Industrial</option>
-                  <option value="8">Ingeniería Mecatrónica</option>
-                  <option value="9">Ingeniería Química</option>
-                  <option value="9">Licenciatura en Administración</option>
+                  <option value="2">Ing. Bioquímica</option>
+                  <option value="3">Ing. Civil</option>
+                  <option value="4">Ing. Electrica</option>
+                  <option value="5">Ing. Gestion Empresarial</option>
+                  <option value="6">Ing. Sistemas Computacionales</option>
+                  <option value="7">Ing. Industrial</option>
+                  <option value="8">Ing. Mecatronica</option>
+                  <option value="9">Ing. Quimica</option>
+                  <option value="9">Lic. Administracion</option>
                 </select>
               </div>
             </div>
