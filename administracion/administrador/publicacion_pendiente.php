@@ -110,7 +110,7 @@ session_start();
             <div class="flex-shrink-0 p-3 hola" style="width: 15%; background-color: #F07B12; ">
                 <ul class="list-unstyled" id="menu-lateral">
                     <li class="mb-1">
-                        <button class="btn d-inline-flex align-items-start rounded border-5 col-1" id="letrabardos"  style="color: black; font-weight: bold;">
+                        <button class="btn d-inline-flex align-items-start rounded border-5 col-1" href="admin_home.php" id="letrabardos"  style="color: black; font-weight: bold;">
                             Publicaciones Pendientes
                         </button>
                     </li>
@@ -120,8 +120,8 @@ session_start();
                         </button>
                         <div class="collapse" id="dashboard-collapse">
                           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Comentarios</a></li>
-                            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
+                            <li><a href="rep_comentario_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Comentarios</a></li>
+                            <li><a href="rep_publicacion_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
                           </ul>
                         </div>
                       </li>
