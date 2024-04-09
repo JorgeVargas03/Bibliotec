@@ -16,11 +16,17 @@ mysqli_close($link);
 // Inicia la sesión después de cerrar la conexión
 session_start();
 // Verificar si ya hay una sesión activa
-if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-  // Redirigir al usuario a la página de inicio
-  header("location: home.php");
+if(!isset($_SESSION["rol"])){
+  if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+    // Redirigir al usuario a la página de inicio
+    header("location: home.php");
+    exit;
+  }
+}else{
+  header("location: administracion/administrador/admin_home.php");
   exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

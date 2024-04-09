@@ -1,18 +1,6 @@
 <?php
 $link = include('php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
-// Consulta a la base de datos
-$consulta = "SELECT * FROM publicacion ORDER BY idPub DESC LIMIT 3";
-$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
-
-// Verifica si la consulta se ejecutó correctamente
-if (!$registros) {
-  die('Error en la consulta: ' . mysqli_error($link));
-}
-
-// Cierra la conexión después de realizar la consulta
-mysqli_close($link);
-
 // Inicia la sesión después de cerrar la conexión
 session_start();
 
@@ -34,6 +22,23 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
   header("location: index.php");
   exit;
 }
+
+$carrera = $_SESSION['carrera'];
+
+// Consulta a la base de datos
+$consulta = "SELECT * FROM publicacion
+WHERE carrera_Pub = '$carrera'
+ORDER BY idPub DESC LIMIT 3";
+
+$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
+
+// Verifica si la consulta se ejecutó correctamente
+if (!$registros) {
+  die('Error en la consulta: ' . mysqli_error($link));
+}
+
+// Cierra la conexión después de realizar la consulta
+mysqli_close($link);
 
 ?>
 
