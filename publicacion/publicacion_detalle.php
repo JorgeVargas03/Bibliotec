@@ -44,6 +44,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: ../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
     exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -109,14 +110,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
                 <form class="position-relative search-field " style="margin-top: -0.8%;">
                     <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-                    <a href='#'><i class="bi bi-search search-icon"></i></a>
+                    <a href='search.php'><i class="bi bi-search search-icon"></i></a>
 
                 </form>
-                <button type="button" class="btn btn-warning position-absolute top-0 end-0 me-5 mt-4">Notificaciones
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+
-                        <span class="visually-hidden">unread messages</span>
-                    </span>
-                </button>
             </div>
             <!-- Campo de búsqueda -->
 
@@ -154,7 +150,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                 <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
                                 <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
                                 <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
+                                <li><a href="../administracion/search.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
                                 <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
                                 <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
                                 <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
@@ -183,7 +179,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <div class="collapse" id="cuenta-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a></li>
+                                <li><a href="../home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a></li>
                             </ul>
                         </div>
                     </li>

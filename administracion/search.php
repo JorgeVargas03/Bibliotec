@@ -59,17 +59,17 @@ session_start();
 
 
 <body>
-  <header class="bg-primary py-2">
+<header class="bg-primary py-2">
     <div class="container d-flex align-items-center">
       <!-- Logo y título -->
       <div class="logo">
         <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
         <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
-        <button type="button" class="btn btn-warning position-absolute top-0 end-0 me-5 mt-4">Notificaciones
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+
-            <span class="visually-hidden">unread messages</span>
-          </span>
-        </button>
+        <form class="position-relative search-field " style="margin-top: -0.8%;">
+          <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+          <a href='search.php'><i class="bi bi-search search-icon"></i></a>
+
+        </form>
       </div>
       <!-- Campo de búsqueda -->
 
@@ -94,7 +94,7 @@ session_start();
       <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
         <ul class="list-unstyled" id="menu-lateral">
           <li class="mb-2 mt-2">
-            <a class="nav-link align-items-center" href="home.php" id="letrabar">Inicio</a>
+            <a class="nav-link align-items-center" href="../home.php" id="letrabar">Inicio</a>
           </li>
           <li class="mb-1">
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -135,8 +135,8 @@ session_start();
             </button>
             <div class="collapse" id="cuenta-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a></li>
+                <li><a href="Perfil/infoperfil.html" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
+                <li><a href="../home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a></li>
               </ul>
             </div>
           </li>
