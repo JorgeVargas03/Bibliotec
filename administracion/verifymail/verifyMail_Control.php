@@ -7,7 +7,7 @@ $tokenIn = $_POST['codigoIn'];//Token que ingresa en la ventana de verificacion
 $correo = isset($_SESSION['enviarCorreo'])? $_SESSION['enviarCorreo'] : ''; //Se obtiene el correo de la ventana de registro para obtener el resto de datos y hacer la comparacion necesaria.
 
 //se obtiene el token generado y guardado en la tabla
-$tokenBD = mysqli_query($link,"SELECT `token` FROM `usuario_temp` WHERE `correo_Us` = '$correo'");
+$tokenBD = mysqli_query($link,"SELECT `token` FROM `usuario_temp` WHERE `correo_Us` = '$correo' ORDER BY idUsuario DESC");
 
 $tokenBD =  mysqli_fetch_array($tokenBD); //conversion de arreglo
 
