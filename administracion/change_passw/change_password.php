@@ -1,6 +1,10 @@
 <?php
 $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 session_start();
+if(!isset($_SESSION['correo_ch'])){
+  $_SESSION['error_form'] = 'Error: Por favor, confirme el reenvío del formulario desde el mismo navegador.';
+  header("Location: send_code.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -88,7 +92,7 @@ session_start();
               <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
               <input type="password" class="form-control" id="confirmPassword" name="newPassword" placeholder="Confirme su nueva contraseña" disabled>
               <div id="passwordError" class="text-danger"></div>
-              <input type="hidden" name="email" value="<?php echo $_GET['email']; ?>">
+              <input type="hidden" name="email" value="<?php echo $_SESSION['correo_ch']; ?>">
             </div>
             <!-- Botón para enviar el formulario -->
             <button type="submit" class="btn btn-primary btn-lg btn-custom w-100" id="submitButton" disabled>Aceptar</button>
