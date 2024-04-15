@@ -16,13 +16,13 @@ mysqli_close($link);
 // Inicia la sesión después de cerrar la conexión
 session_start();
 // Verificar si ya hay una sesión activa
-if(!isset($_SESSION["rol"])){
+if (!isset($_SESSION["rol"])) {
   if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     // Redirigir al usuario a la página de inicio
     header("location: home.php");
     exit;
   }
-}else{
+} else {
   header("location: administracion/administrador/admin_home.php");
   exit;
 }
@@ -119,6 +119,22 @@ if(!isset($_SESSION["rol"])){
     <label class="Bienvenido">Bienvenido a</label>
     <label class="Saber">Conectate con el saber...</label>
   </div>
+
+  <script>
+    // Obtener una referencia al botón
+    var boton = document.getElementById('login-btn');
+
+    // Agregar un evento de clic al botón
+    boton.addEventListener('click', function() {});
+    // Agregar un evento de teclado al documento
+    document.addEventListener('keypress', function(event) {
+      // Verificar si la tecla presionada es Enter (código 13)
+      if (event.keyCode === 13) {
+        // Simular un clic en el botón
+        boton.click();
+      }
+    });
+  </script>
 </body>
 
 </html>
