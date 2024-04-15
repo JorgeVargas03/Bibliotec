@@ -1,41 +1,28 @@
 <?php
+include('../php/functions.php');
 $link = include('../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Consulta a la base de datos
-$consulta = "SELECT * FROM publicacion ORDER BY idPub DESC LIMIT 3";
-$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
 
 // Verifica si la consulta se ejecutó correctamente
-if (!$registros) {
-  die('Error en la consulta: ' . mysqli_error($link));
-}
 
-if (isset($_GET['id'])) {
+if (isset($_GET['carrera'])) {
   // Obtener el ID de la publicación desde el parámetro GET
-  $idComent = $_GET['id'];
+  $carrera = $_GET['carrera'];
 
   // Consultar la base de datos para obtener la información completa de la publicación
-  $query = "SELECT c.*, u.nom_Us, u.apell_Us FROM comentario c
-            JOIN usuario u ON c.idUsuario = u.idUsuario
-            WHERE c.idComent = $idComent";
-  $query2 = "SELECT * FROM reportecomentario WHERE idComent = $idComent";
-  $result = mysqli_query($link, $query);
-  $registro = mysqli_query($link, $query2);
-  $fila = mysqli_fetch_array($registro);
-
-  // Verificar si se encontró la publicación
-  if (mysqli_num_rows($result) == 1) {
-      $comentario = mysqli_fetch_assoc($result);
-  } else {
-      // Si no se encontró la publicación, redireccionar a la página principal
-      header("Location: ../home.php");
-      exit();
-  }
+  $consulta = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+              JOIN usuario u ON p.id_Usuario = u.idUsuario
+              WHERE carrera_Pub = '$carrera'
+              ORDER BY p.idPub";
+  $result = mysqli_query($link, $consulta);
 } else {
   // Si no se proporcionó un ID de publicación, redireccionar a la página principal
   header("Location: ../home.php");
   exit();
 }
+
+
 // Cierra la conexión después de realizar la consulta
 mysqli_close($link);
 
@@ -52,7 +39,7 @@ session_start();
   <title>BiblioTec - Búsqueda</title>
 
   <!--En esta seccion se incluyen las hojas de estilos-->
-  <link rel="icon" href="images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
+  <link rel="icon" href="../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
   <link rel="stylesheet" href="../css/normalizar.css">
   <link rel="stylesheet" href="../css/estilos.css">
   <link rel="stylesheet" href="../css/hover-min.css">
@@ -128,16 +115,16 @@ session_start();
             </button>
             <div class="collapse" id="dashboard-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="administracion/search.php?id=Arquitectura" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
-                <li><a href="administracion/search.php?id=Ing. Bioquimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
-                <li><a href="administracion/search.php?id=Ing. Civil" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
-                <li><a href="administracion/search.php?id=Ing. Electrica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
-                <li><a href="administracion/search.php?id=Ing. Gestion Empresarial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
-                <li><a href="administracion/search.php?id=Ing. Sistemas Computacionales" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
-                <li><a href="administracion/search.php?id=Ing. Industrial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
-                <li><a href="administracion/search.php?id=Ing. Mecatronica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
-                <li><a href="administracion/search.php?id=Ing. Quimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
-                <li><a href="administracion/search.php?id=Lic. Administracion" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
+                <li><a href="search.php?carrera=Arquitectura" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
+                <li><a href="search.php?carrera=Ing. Bioquimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
+                <li><a href="search.php?carrera=Ing. Civil" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
+                <li><a href="search.php?carrera=Ing. Electrica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
+                <li><a href="search.php?carrera=Ing. Gestion Empresarial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
+                <li><a href="search.php?carrera=Ing. Sistemas Computacionales" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
+                <li><a href="search.php?carrera=Ing. Industrial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
+                <li><a href="search.php?carrera=Ing. Mecatronica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
+                <li><a href="search.php?carrera=Ing. Quimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
+                <li><a href="search.php?carrera=Lic. Administracion" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
               </ul>
             </div>
           </li>
@@ -211,21 +198,19 @@ session_start();
         </div>
                 <!--Esta parte contiene los aportes coincidentes-->
         <div>
-            <?php
-          while ($fila = mysqli_fetch_array($registros)) {
-          ?>
-            <div class="publicacion">
-              <h3><?php echo ($fila['titulo_Pub']); ?></h3>
-              <p><?php echo ($fila['descrip_Pub']); ?></p>
-              <!-- Botón Ver más que despliega los detalles -->
-              <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
-              <a name ="fade" href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary">Ver más</a>
-              <!-- Detalles de la publicación dentro de un acordeón -->
-              <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
+        <?php while ($fila = mysqli_fetch_array($result)) : ?>
+            <div class="publicacion card mb-4">
+              <div class="card-body">
+                <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
+                <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
+                <a name="fade" href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary btn-sm"><b>Leer más</b></a>
+              </div>
+              <div class="card-footer d-flex text-muted justify-content-between align-items-end">
+                <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
+                <span class="card-text comment-date mb-0">Fecha de publicación: <?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
+              </div>
             </div>
-          <?php
-          }
-          ?>
+          <?php endwhile; ?>
         </div>
     </main>
     </div>
