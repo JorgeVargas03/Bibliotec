@@ -97,7 +97,7 @@ mysqli_close($link);
         <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
         <form class="position-relative search-field " style="margin-top: -0.8%;">
           <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-          <a href='#'><i class="bi bi-search search-icon"></i></a>
+          <a href='search.php'><i class="bi bi-search search-icon"></i></a>
 
         </form>
       </div>
