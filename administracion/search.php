@@ -10,6 +10,32 @@ if (!$registros) {
   die('Error en la consulta: ' . mysqli_error($link));
 }
 
+if (isset($_GET['id'])) {
+  // Obtener el ID de la publicación desde el parámetro GET
+  $idComent = $_GET['id'];
+
+  // Consultar la base de datos para obtener la información completa de la publicación
+  $query = "SELECT c.*, u.nom_Us, u.apell_Us FROM comentario c
+            JOIN usuario u ON c.idUsuario = u.idUsuario
+            WHERE c.idComent = $idComent";
+  $query2 = "SELECT * FROM reportecomentario WHERE idComent = $idComent";
+  $result = mysqli_query($link, $query);
+  $registro = mysqli_query($link, $query2);
+  $fila = mysqli_fetch_array($registro);
+
+  // Verificar si se encontró la publicación
+  if (mysqli_num_rows($result) == 1) {
+      $comentario = mysqli_fetch_assoc($result);
+  } else {
+      // Si no se encontró la publicación, redireccionar a la página principal
+      header("Location: ../home.php");
+      exit();
+  }
+} else {
+  // Si no se proporcionó un ID de publicación, redireccionar a la página principal
+  header("Location: ../home.php");
+  exit();
+}
 // Cierra la conexión después de realizar la consulta
 mysqli_close($link);
 
@@ -101,17 +127,17 @@ session_start();
               Carreras
             </button>
             <div class="collapse" id="dashboard-collapse">
-              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="administracion/search.php?id=Arquitectura" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
+                <li><a href="administracion/search.php?id=Ing. Bioquimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
+                <li><a href="administracion/search.php?id=Ing. Civil" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
+                <li><a href="administracion/search.php?id=Ing. Electrica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
+                <li><a href="administracion/search.php?id=Ing. Gestion Empresarial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
+                <li><a href="administracion/search.php?id=Ing. Sistemas Computacionales" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
+                <li><a href="administracion/search.php?id=Ing. Industrial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
+                <li><a href="administracion/search.php?id=Ing. Mecatronica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
+                <li><a href="administracion/search.php?id=Ing. Quimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
+                <li><a href="administracion/search.php?id=Lic. Administracion" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
               </ul>
             </div>
           </li>
@@ -163,12 +189,6 @@ session_start();
                 </select>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="searchInput" class="form-label">Palabra clave</label>
-                <input type="text" class="form-control" id="searchInput" placeholder="Ingrese la palabra clave">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 mb-3">
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="searchType" id="bibliografias">
                   <label class="form-check-label" for="bibliografias">Bibliografías</label>
@@ -181,21 +201,7 @@ session_start();
                   <input class="form-check-input" type="radio" name="searchType" id="tareas">
                   <label class="form-check-label" for="tareas">Tareas</label>
                 </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="featuredCheck">
-                  <label class="form-check-label" for="featuredCheck">
-                    Mejor calificados
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="trustedCheck">
-                  <label class="form-check-label" for="trustedCheck">
-                    Usuarios confiables
-                  </label>
-                </div>
-              </div>
+            </div>
             </div>
           </form>
         <div class="d-flex justify-content-center align-items-center">
