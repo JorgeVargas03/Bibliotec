@@ -252,15 +252,19 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Botón para ver archivo adjunto -->
-                                    <div class="row">
-                                        <div class="col text-center mt-3 mb-3">
+                                    <!-- Botones para ver y descargar archivo adjunto -->
+                                    <div class="card-footer d-flex justify-content-center align-items-center">
+                                        <div class="mx-3">
                                             <a href="<?php echo $publicacion['archivo_Pub']; ?>" target="_blank" class="btn btn-primary btn-lg">
                                                 <i class="bi bi-file-pdf-fill mr-2"></i> Ver Archivo Adjunto
                                             </a>
                                         </div>
+                                        <div class="mx-3">
+                                            <a href="<?php echo $publicacion['archivo_Pub']; ?>" download class="btn btn-success">
+                                                <i class="bi bi-cloud-arrow-down mr-2" style="font-size: 1.5em;"></i> <!-- Cambiar a otro icono de descarga -->
+                                            </a>
+                                        </div>
                                     </div>
-
                                     <!-- Etiquetas -->
                                     <div class="card-footer d-flex justify-content-between align-items-end">
                                         <?php
@@ -277,6 +281,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         <p class="card-text comment-date mb-0 align-self-end">Fecha: <?php echo functions::convertirFecha($publicacion['fecha_Pub']); ?></p>
                                     </div>
                                 </div>
+
 
 
 
