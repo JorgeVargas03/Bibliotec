@@ -36,12 +36,11 @@ class functions
         $fechaN = implode(" ", $dateArr); //VUELVE A UNIR EL ARREGLO EN UNA CADENA
         */
         $fecha = new DateTime($fecha);
-        $fecha = $fecha->format('Y-m-d');
+        $fecha = $fecha->format('d-m-Y');
         $dateArr = explode("-", $fecha); //SEPARA LA FECHA EN UN ARREGLO
         $dateArr[1] = self::mes($dateArr[1]); //REMPLAZA EL MES EN INGLES Y LOS TRADUCE A ESPAÑOL
-        $dateArr = array_reverse($dateArr);
         $fechaN = implode(" de ", $dateArr); //VUELVE A UNIR EL ARREGLO EN UNA CADENA
-        
+
         // Retornar la fecha formateada
         return $fechaN;
     }
