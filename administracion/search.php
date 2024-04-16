@@ -15,7 +15,9 @@ if (isset($_GET['carrera'])) {
               JOIN usuario u ON p.id_Usuario = u.idUsuario
               WHERE carrera_Pub = '$carrera'
               ORDER BY p.idPub";
+  $consulta2 = "SELECT DISTINCT materia_Pub from publicacion WHERE carrera_Pub = '$carrera'";
   $result = mysqli_query($link, $consulta);
+  $result2 = mysqli_query($link, $consulta2);
 } else {
   // Si no se proporcionó un ID de publicación, redireccionar a la página principal
   header("Location: ../home.php");
@@ -165,33 +167,29 @@ session_start();
       <div class="container">
           <h2>Búsqueda</h2>
           <form>
-            <div class="row">
-              <div class="col-md-6 mb-3">
+            <div class="row align-items-center justify-content-center">
+              <div class="col-md-5 mb-3">
                 <label for="categorySelect" class="form-label">Materia</label>
                 <select class="form-select" id="categorySelect">
                   <option selected>Seleccione una categoría...</option>
-                  <option value="1">Ingenieria de Software</option>
-                  <option value="2">Programación Web</option>
-                  <option value="3">Ecuaciones Diferenciales</option>
+                  <?php 
+                    $contador = 1;
+                    while ($fila2 = mysqli_fetch_array($result2)) : ?>
+                      <option value=<?php $contador?>><?php echo $fila2['materia_Pub']; ?></option>
+                    <?php $contador++; ?>
+                  <?php endwhile; ?>
                 </select>
               </div>
-              <div class="col-md-6 mb-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="searchType" id="bibliografias">
-                  <label class="form-check-label" for="bibliografias">Bibliografías</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="searchType" id="apuntes">
-                  <label class="form-check-label" for="apuntes">Apuntes</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="searchType" id="tareas">
-                  <label class="form-check-label" for="tareas">Tareas</label>
-                </div>
-            </div>
-            </div>
+              <div class="col-md-5 mb-3">
+                <label for="categorySelect" class="form-label">Tipo de Recurso</label>
+                <select class="form-select" id="categorySelect">
+                  <option selected>Seleccione una categoría...</option>
+                  <option value="1">Apuntes y Tareas</option>
+                  <option value="2">Recursos Bibliográficos</option>
+                </select>
+              </div>
           </form>
-        <div class="d-flex justify-content-center align-items-center">
+        <div class="d-flex justify-content-center align-items-center mb-3">
             <button type="submit" class="btn btn-primary px-4">Buscar</button>
         </div>
         <br> 
