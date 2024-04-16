@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Generar un código aleatorio de 6 dígitos
             //ENVIO DE CORREO USANDO PHPMAILER :,v
             $mail = new PHPMailer(true);
-            $site = 'http://localhost/Bibliotec/administracion/change_passw/change_password.php?email='. $email;
+            $site = 'http://localhost/Bibliotec/administracion/change_passw/change_password.php';
 
             try {
                 //Server settings
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 //Content
                 // Content
                 $mail->isHTML(true); // Set email format to HTML
-                $mail->Subject = "Confirmación de cambio de contraseña para BiblioTec";
+                $mail->Subject = mb_encode_mimeheader("Confirmación de cambio de contraseña para usuario BiblioTec","UTF-8");
 
                 // Cuerpo del correo con estilos CSS
                 $mail->Body = "

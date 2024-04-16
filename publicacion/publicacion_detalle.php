@@ -1,4 +1,5 @@
 <?php
+include('../php/functions.php');
 // Incluir el archivo de conexión a la base de datos
 $link = include('../php/conexion.php');
 
@@ -199,9 +200,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                             <div class="col-md-8">
                                 <!-- Detalles de la publicación -->
                                 <div class="card card-details">
-                                    <div class="card-header bg-primary text-light">
-                                        <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
-                                        <p class="card-text mb-0">Por:<b> <?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></p>
+                                    <div class="card-header bg-primary text-light d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
+                                            <p class="card-text mb-0">Por:<b> <?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></p>
+                                        </div>
+                                        <div>
+                                            <!-- Botón de reportar -->
+                                            <a href="#" class="btn btn-danger shadow" data-toggle="tooltip" data-placement="top" title="Reportar publicación">
+                                                <i class="bi bi-flag-fill"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <!-- Descripción de la publicación -->
@@ -245,11 +254,16 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Botón para ver archivo adjunto -->
-                                    <div class="row">
-                                        <div class="col text-center mt-3 mb-3">
+                                    <!-- Botones para ver y descargar archivo adjunto -->
+                                    <div class="card-footer d-flex justify-content-center align-items-center">
+                                        <div class="mx-3">
                                             <a href="<?php echo $publicacion['archivo_Pub']; ?>" target="_blank" class="btn btn-primary btn-lg">
                                                 <i class="bi bi-file-pdf-fill mr-2"></i> Ver Archivo Adjunto
+                                            </a>
+                                        </div>
+                                        <div class="mx-3">
+                                            <a href="<?php echo $publicacion['archivo_Pub']; ?>" download class="btn btn-success">
+                                                <i class="bi bi-cloud-arrow-down mr-2" style="font-size: 1.5em;"></i> <!-- Cambiar a otro icono de descarga -->
                                             </a>
                                         </div>
                                     </div>
@@ -266,9 +280,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         }
                                         ?>
                                         <!-- Fecha de Publicación -->
-                                        <p class="card-text comment-date mb-0 align-self-end">Fecha: <?php echo $publicacion['fecha_Pub']; ?></p>
+                                        <p class="card-text comment-date mb-0 align-self-end">Fecha: <?php echo functions::convertirFecha($publicacion['fecha_Pub']); ?></p>
                                     </div>
                                 </div>
+
 
 
 
@@ -307,7 +322,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                     <?php while ($comentario = mysqli_fetch_assoc($result_comentarios)) : ?>
                                         <div class="card mt-4">
                                             <div class="card-body">
-                                                <div class="row">
+                                                <div class="row align-items-center">
                                                     <div class="col-auto">
                                                         <?php if ($contador % 2 == 0) : ?>
                                                             <!-- Mostrar imagen aleatoria -->
@@ -320,7 +335,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                     <div class="col">
                                                         <h6 class="mb-1"><?php echo $comentario['nom_Us'] . " " . $comentario['apell_Us']; ?></h6>
                                                         <pre class="mb-1"><?php echo $comentario['text_Coment']; ?></pre>
-                                                        <small class="text-muted"><?php echo $comentario['fecha_Coment']; ?></small>
+                                                        <small class="text-muted"><?php echo functions::convertirFecha($comentario['fecha_Coment']); ?></small>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <!-- Botón de reportar -->
+                                                        <a class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Reportar comentario">
+                                                            <i class="bi bi-flag-fill"></i>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -330,6 +351,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         $contador++;
                                         ?>
                                     <?php endwhile; ?>
+
                                 </div>
                             </div>
                         </div>

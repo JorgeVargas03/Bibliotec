@@ -1,14 +1,29 @@
 <?php
+include('../php/functions.php');
 $link = include('../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Consulta a la base de datos
-$consulta = "SELECT * FROM publicacion ORDER BY idPub DESC LIMIT 3";
-$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
 
 // Verifica si la consulta se ejecutó correctamente
-if (!$registros) {
-  die('Error en la consulta: ' . mysqli_error($link));
+
+if (isset($_GET['carrera'])) {
+  // Obtener el ID de la publicación desde el parámetro GET
+  $carrera = $_GET['carrera'];
+
+  // Consultar la base de datos para obtener la información completa de la publicación
+  $consulta = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+              JOIN usuario u ON p.id_Usuario = u.idUsuario
+              WHERE carrera_Pub = '$carrera'
+              ORDER BY p.idPub";
+  $consulta2 = "SELECT DISTINCT materia_Pub from publicacion WHERE carrera_Pub = '$carrera'";
+  $result = mysqli_query($link, $consulta);
+  $result2 = mysqli_query($link, $consulta2);
+} else {
+  // Si no se proporcionó un ID de publicación, redireccionar a la página principal
+  header("Location: ../home.php");
+  exit();
 }
+
 
 // Cierra la conexión después de realizar la consulta
 mysqli_close($link);
@@ -26,7 +41,7 @@ session_start();
   <title>BiblioTec - Búsqueda</title>
 
   <!--En esta seccion se incluyen las hojas de estilos-->
-  <link rel="icon" href="images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
+  <link rel="icon" href="../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
   <link rel="stylesheet" href="../css/normalizar.css">
   <link rel="stylesheet" href="../css/estilos.css">
   <link rel="stylesheet" href="../css/hover-min.css">
@@ -101,17 +116,17 @@ session_start();
               Carreras
             </button>
             <div class="collapse" id="dashboard-collapse">
-              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="search.php?carrera=Arquitectura" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
+                <li><a href="search.php?carrera=Ing. Bioquimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
+                <li><a href="search.php?carrera=Ing. Civil" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
+                <li><a href="search.php?carrera=Ing. Electrica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
+                <li><a href="search.php?carrera=Ing. Gestion Empresarial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
+                <li><a href="search.php?carrera=Ing. Sistemas Computacionales" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
+                <li><a href="search.php?carrera=Ing. Industrial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
+                <li><a href="search.php?carrera=Ing. Mecatronica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
+                <li><a href="search.php?carrera=Ing. Quimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
+                <li><a href="search.php?carrera=Lic. Administracion" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
               </ul>
             </div>
           </li>
@@ -152,74 +167,48 @@ session_start();
       <div class="container">
           <h2>Búsqueda</h2>
           <form>
-            <div class="row">
-              <div class="col-md-6 mb-3">
+            <div class="row align-items-center justify-content-center">
+              <div class="col-md-5 mb-3">
                 <label for="categorySelect" class="form-label">Materia</label>
                 <select class="form-select" id="categorySelect">
                   <option selected>Seleccione una categoría...</option>
-                  <option value="1">Ingenieria de Software</option>
-                  <option value="2">Programación Web</option>
-                  <option value="3">Ecuaciones Diferenciales</option>
+                  <?php 
+                    $contador = 1;
+                    while ($fila2 = mysqli_fetch_array($result2)) : ?>
+                      <option value=<?php $contador?>><?php echo $fila2['materia_Pub']; ?></option>
+                    <?php $contador++; ?>
+                  <?php endwhile; ?>
                 </select>
               </div>
-              <div class="col-md-6 mb-3">
-                <label for="searchInput" class="form-label">Palabra clave</label>
-                <input type="text" class="form-control" id="searchInput" placeholder="Ingrese la palabra clave">
+              <div class="col-md-5 mb-3">
+                <label for="categorySelect" class="form-label">Tipo de Recurso</label>
+                <select class="form-select" id="categorySelect">
+                  <option selected>Seleccione una categoría...</option>
+                  <option value="1">Apuntes y Tareas</option>
+                  <option value="2">Recursos Bibliográficos</option>
+                </select>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="searchType" id="bibliografias">
-                  <label class="form-check-label" for="bibliografias">Bibliografías</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="searchType" id="apuntes">
-                  <label class="form-check-label" for="apuntes">Apuntes</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="searchType" id="tareas">
-                  <label class="form-check-label" for="tareas">Tareas</label>
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="featuredCheck">
-                  <label class="form-check-label" for="featuredCheck">
-                    Mejor calificados
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="trustedCheck">
-                  <label class="form-check-label" for="trustedCheck">
-                    Usuarios confiables
-                  </label>
-                </div>
-              </div>
-            </div>
           </form>
-        <div class="d-flex justify-content-center align-items-center">
+        <div class="d-flex justify-content-center align-items-center mb-3">
             <button type="submit" class="btn btn-primary px-4">Buscar</button>
         </div>
         <br> 
         </div>
                 <!--Esta parte contiene los aportes coincidentes-->
         <div>
-            <?php
-          while ($fila = mysqli_fetch_array($registros)) {
-          ?>
-            <div class="publicacion">
-              <h3><?php echo ($fila['titulo_Pub']); ?></h3>
-              <p><?php echo ($fila['descrip_Pub']); ?></p>
-              <!-- Botón Ver más que despliega los detalles -->
-              <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
-              <a name ="fade" href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary">Ver más</a>
-              <!-- Detalles de la publicación dentro de un acordeón -->
-              <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
+        <?php while ($fila = mysqli_fetch_array($result)) : ?>
+            <div class="publicacion card mb-4">
+              <div class="card-body">
+                <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
+                <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
+                <a name="fade" href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary btn-sm"><b>Leer más</b></a>
+              </div>
+              <div class="card-footer d-flex text-muted justify-content-between align-items-end">
+                <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
+                <span class="card-text comment-date mb-0">Fecha de publicación: <?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
+              </div>
             </div>
-          <?php
-          }
-          ?>
+          <?php endwhile; ?>
         </div>
     </main>
     </div>

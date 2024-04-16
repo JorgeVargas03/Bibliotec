@@ -34,6 +34,13 @@ session_start();
             </div>
         </div>
     </header>
+    <?php if (isset($_SESSION['error_form'])) : ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo $_SESSION['error_form']; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+    <?php unset($_SESSION['error_form']); ?>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -57,14 +64,14 @@ session_start();
                                 </div>
                             </div>
                         </form>
-                        <?php if(isset($_SESSION['alert_message'])): ?>
+                        <?php if (isset($_SESSION['alert_message'])) : ?>
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <?php echo $_SESSION['alert_message']; ?>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                             <?php unset($_SESSION['alert_message']); ?>
                         <?php endif; ?>
-                        <?php if(isset($_SESSION['confirmation_message'])): ?>
+                        <?php if (isset($_SESSION['confirmation_message'])) : ?>
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <?php echo $_SESSION['confirmation_message']; ?>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

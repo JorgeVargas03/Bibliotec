@@ -3,6 +3,7 @@ $link = include('../php/conexion.php'); // Incluye el archivo de conexión y obt
 
 // Inicia la sesión después de cerrar la conexión
 session_start();
+$nombreUS =  strstr($_SESSION['email'],'@',true);
 
 // Verificar si el usuario no ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
@@ -161,7 +162,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             </div>
             <div class="col-md-4 mt-0 mb-1">
               <label for="inputPassword4" class="form-label" id="letraform">Usuario * :</label>
-              <input class="form-control" style="border-color: rgb(179, 179, 179); font-weight: 500;" type="text" placeholder="@lireramirezve" aria-label="Disabled input example" disabled>
+              <input class="form-control" style="border-color: rgb(179, 179, 179); font-weight: 500;" type="text" placeholder="@<?php echo $nombreUS?>" aria-label="Disabled input example" disabled>
             </div>
 
             <div class="mb-2 mt-3">
