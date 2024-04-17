@@ -245,7 +245,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                         if ($i <= $calificacion_estrellas) {
                                                             echo '<i class="bi bi-star-fill estrella" name="estrellas"></i>';
                                                         } else {
-                                                            echo '<i class="bi bi-star-fill estrella" name="estrellas"></i>';
+                                                            echo '<i class="bi bi-star-fill " name="estrellas"></i>';
                                                         }
                                                     }
                                                     ?>

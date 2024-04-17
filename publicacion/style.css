@@ -14,15 +14,19 @@
     color: #6c757d;
 }
 
-i.estrella {
+.bi-star-fill {
     color: palegoldenrod;
     font-size: larger;
     transition: color 0.3s;
     cursor: pointer;    
 }
 
-.estrella:hover,
-.estrella.checado{
+.estrella {
+    color: gold;
+}
+
+.bi-star-fill:hover,
+.bi-star-fill.checado{
     color: gold;
 
 }
