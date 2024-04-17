@@ -13,3 +13,16 @@
     user-select: none;
     color: #6c757d;
 }
+
+i.estrella {
+    color: palegoldenrod;
+    font-size: larger;
+    transition: color 0.3s;
+    cursor: pointer;    
+}
+
+.estrella:hover,
+.estrella.checado{
+    color: gold;
+
+}

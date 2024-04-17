@@ -232,6 +232,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                 <!-- Calificación con estrellas -->
                                                 <div class="rating mt-3">
                                                     <p class="card-text"><b>Calificación:</b></p>
+                                                    <p class="calificar">
                                                     <?php
                                                     // Calificación actual de la publicación
                                                     $calificacion = $publicacion['calif_Pub'];
@@ -242,15 +243,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                     // Mostrar estrellas llenas según la calificación
                                                     for ($i = 1; $i <= 5; $i++) {
                                                         if ($i <= $calificacion_estrellas) {
-                                                            echo '<i class="bi bi-star-fill  estrella"></i>';
+                                                            echo '<i class="bi bi-star-fill estrella" name="estrellas"></i>';
                                                         } else {
-                                                            echo '<i class="bi bi-star estrella" ></i>';
+                                                            echo '<i class="bi bi-star-fill estrella" name="estrellas"></i>';
                                                         }
                                                     }
                                                     ?>
-                                                    
+                                                    </p>
+                                                    <!--Script para las estrelas -->
+                                                    <script src="valoracion.js"></script>
                                                 </div>
-                                                <!-- <a href=""class="btn btn-primary btn-sm">Calificar</a>-->
+                                                
                                             </div>
                                         </div>
                                     </div>
