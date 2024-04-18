@@ -3,16 +3,15 @@ include('../php/functions.php');
 $link = include('../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Obtener el ID de la publicación desde el parámetro GET
-if(!isset($_SESSION['filtro'])){
-$materia = $_GET['materia'];
-$tipo = $_GET['tipo'];
-}
 $carrera = $_GET['carrera'];
 // Verifica si la consulta se ejecutó correctamente
 if (isset($_GET['carrera'])) {
   // Consultar la base de datos para obtener la información completa de la publicación
-  $consulta = functions::filtrado($carrera, $materia, $tipo);
-  $consulta2 = "SELECT DISTINCT materia_Pub from publicacion WHERE carrera_Pub = '$carrera'";
+  $consulta = $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+  JOIN usuario u ON p.id_Usuario = u.idUsuario
+  WHERE carrera_Pub = '$carrera'
+  ORDER BY p.idPub";
+  $consulta2 = "SELECT nomMateria from materia WHERE nomCarrera = '$carrera'";
   $result = mysqli_query($link, $consulta);
   $result2 = mysqli_query($link, $consulta2);
 } else {
@@ -172,7 +171,7 @@ session_start();
                   <?php 
                     $contador = 1;
                     while ($fila2 = mysqli_fetch_array($result2)) : ?>
-                      <option value=<?php $contador?>><?php $materia = $fila2['materia_Pub']?><?php echo $fila2['materia_Pub']; ?></option>
+                      <option value=<?php $contador?>><?php $materia = $fila2['nomMateria']?><?php echo $fila2['nomMateria']; ?></option>
                     <?php $contador++; ?>
                   <?php endwhile; ?>
                 </select>
