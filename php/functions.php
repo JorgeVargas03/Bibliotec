@@ -30,10 +30,16 @@ class functions
     private static function fechaCompleta($fecha)
     {
         // Convertir la fecha al formato deseado
-        $fecha = strftime("%d de %B del %Y", strtotime($fecha));
+        /*$fecha = strftime("%d de %B del %Y", strtotime($fecha));
         $dateArr = explode(" ", $fecha); //SEPARA LA FECHA EN UN ARREGLO
         $dateArr[2] = self::mes($dateArr[2]); //REMPLAZA EL MES EN INGLES Y LOS TRADUCE A ESPAÑOL
         $fechaN = implode(" ", $dateArr); //VUELVE A UNIR EL ARREGLO EN UNA CADENA
+        */
+        $fecha = new DateTime($fecha);
+        $fecha = $fecha->format('d-m-Y');
+        $dateArr = explode("-", $fecha); //SEPARA LA FECHA EN UN ARREGLO
+        $dateArr[1] = self::mes($dateArr[1]); //REMPLAZA EL MES EN INGLES Y LOS TRADUCE A ESPAÑOL
+        $fechaN = implode(" de ", $dateArr); //VUELVE A UNIR EL ARREGLO EN UNA CADENA
 
         // Retornar la fecha formateada
         return $fechaN;
@@ -75,40 +81,40 @@ class functions
     private static function mes($month)
     {
         switch ($month) {
-            case 'January':
+            case '01':
                 return 'Enero';
                 break;
-            case 'February':
+            case '02':
                 return 'Febrero';
                 break;
-            case 'March':
+            case '03':
                 return 'Marzo';
                 break;
-            case 'April':
+            case '04':
                 return 'Abril';
                 break;
-            case 'May':
+            case '05':
                 return 'Mayo';
                 break;
-            case 'June':
+            case '06':
                 return 'Junio';
                 break;
-            case 'July':
+            case '07':
                 return 'Julio';
                 break;
-            case 'August':
+            case '08':
                 return 'Agosto';
                 break;
-            case 'September':
+            case '09':
                 return 'Septiembre';
                 break;
-            case 'October':
+            case '10':
                 return 'Octubre';
                 break;
-            case 'November':
+            case '11':
                 return 'Noviembre';
                 break;
-            case 'December':
+            case '12':
                 return 'Diciembre';
                 break;
         }
