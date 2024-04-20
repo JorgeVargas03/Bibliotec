@@ -13,3 +13,20 @@
     user-select: none;
     color: #6c757d;
 }
+
+.bi-star-fill {
+    color: palegoldenrod;
+    font-size: larger;
+    transition: color 0.3s;
+    cursor: pointer;    
+}
+
+.estrella {
+    color: gold;
+}
+
+.bi-star-fill:hover,
+.bi-star-fill.checado{
+    color: gold;
+
+}

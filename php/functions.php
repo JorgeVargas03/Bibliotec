@@ -30,52 +30,91 @@ class functions
     private static function fechaCompleta($fecha)
     {
         // Convertir la fecha al formato deseado
-        $fecha = strftime("%d de %B del %Y", strtotime($fecha));
+        /*$fecha = strftime("%d de %B del %Y", strtotime($fecha));
         $dateArr = explode(" ", $fecha); //SEPARA LA FECHA EN UN ARREGLO
         $dateArr[2] = self::mes($dateArr[2]); //REMPLAZA EL MES EN INGLES Y LOS TRADUCE A ESPAÑOL
         $fechaN = implode(" ", $dateArr); //VUELVE A UNIR EL ARREGLO EN UNA CADENA
+        */
+        $fecha = new DateTime($fecha);
+        $fecha = $fecha->format('d-m-Y');
+        $dateArr = explode("-", $fecha); //SEPARA LA FECHA EN UN ARREGLO
+        $dateArr[1] = self::mes($dateArr[1]); //REMPLAZA EL MES EN INGLES Y LOS TRADUCE A ESPAÑOL
+        $fechaN = implode(" de ", $dateArr); //VUELVE A UNIR EL ARREGLO EN UNA CADENA
 
         // Retornar la fecha formateada
         return $fechaN;
     }
 
+    //METODO DE FILTRADO DE PUBLICACIONES
+    public static function filtrado($carrera, $materia, $tipo)
+    {
+        $query = NULL;
+        if($materia == NULL AND $tipo == NULL){
+            $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+            JOIN usuario u ON p.id_Usuario = u.idUsuario
+            WHERE carrera_Pub = '$carrera'
+            ORDER BY p.idPub";
+        }
+        elseif($tipo != NULL){
+            $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+            JOIN usuario u ON p.id_Usuario = u.idUsuario
+            WHERE carrera_Pub = '$carrera'
+            AND tipo_Pub = '$tipo'
+            ORDER BY p.idPub";
+        }
+        elseif($materia != NULL){
+            $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+            JOIN usuario u ON p.id_Usuario = u.idUsuario
+            WHERE carrera_Pub = '$carrera'
+            AND materia_Pub = '$materia'
+            ORDER BY p.idPub";
+        }else{
+            $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+            JOIN usuario u ON p.id_Usuario = u.idUsuario
+            WHERE carrera_Pub = '$carrera'
+            AND materia_Pub = '$materia'
+            AND tipo_Pub = '$tipo'
+            ORDER BY p.idPub";
+        }
+        return $query;
+    }
     private static function mes($month)
     {
         switch ($month) {
-            case 'January':
+            case '01':
                 return 'Enero';
                 break;
-            case 'February':
+            case '02':
                 return 'Febrero';
                 break;
-            case 'March':
+            case '03':
                 return 'Marzo';
                 break;
-            case 'April':
+            case '04':
                 return 'Abril';
                 break;
-            case 'May':
+            case '05':
                 return 'Mayo';
                 break;
-            case 'June':
+            case '06':
                 return 'Junio';
                 break;
-            case 'July':
+            case '07':
                 return 'Julio';
                 break;
-            case 'August':
+            case '08':
                 return 'Agosto';
                 break;
-            case 'September':
+            case '09':
                 return 'Septiembre';
                 break;
-            case 'October':
+            case '10':
                 return 'Octubre';
                 break;
-            case 'November':
+            case '11':
                 return 'Noviembre';
                 break;
-            case 'December':
+            case '12':
                 return 'Diciembre';
                 break;
         }
