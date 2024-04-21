@@ -97,7 +97,12 @@ mysqli_close($link);
     </style>
 
     <style>
-        .badge {
+    .badge {
+    width: 200px; /* Tamaño fijo para el cuadro */
+    height: 100px; /* Tamaño fijo para el cuadro */
+    overflow: hidden; /* Para ocultar el texto que desborde el contenedor */
+    text-overflow: ellipsis; /* Para mostrar puntos suspensivos (...) cuando el texto desborde el contenedor */
+    white-space: nowrap; /* Para evitar que el texto se divida en múltiples líneas */
     display: inline-block;
     margin-right: 20px;
     border: 2px solid #007bff; /* blue border */
@@ -112,7 +117,7 @@ mysqli_close($link);
 
 .trophy-icon {
     width: 50px; /* adjust size as needed */
-    height: auto;
+    height: 50px; 
 }
 
 .badge-title {
@@ -375,26 +380,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                         <div class="container mt-3">
                             <hr noshade="noshade"><br>
-                            <h3>
-                             <div class="badge">
-                               <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
-                             <div class="badge-content">
-                             <span class="badge-title">Tigre Creativo</span>
-                            </div>
-                            </div>
-                             <div class="badge">
-                             <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
-                             <div class="badge-content">
-                              <span class="badge-title">Tigre Contribuidor</span>
-                            </div>
-                            </div>
-                            <div class="badge">
-                             <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
-                            <div class="badge-content">
-                             <span class="badge-title">Tigre Pro</span>
-                            </div>
-                            </div>
-                            </h3>
+ <h3>
+    <div class="badge">
+        <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
+        <div class="badge-content">
+            <span class="badge-title">Tigre Creativo</span>
+        </div>
+    </div>
+    
+    <div class="badge">
+        <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
+        <div class="badge-content">
+            <span class="badge-title">Tigre Contribuidor</span>
+        </div>
+    </div>
+    
+    <div class="badge">
+        <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
+        <div class="badge-content">
+            <span class="badge-title">Tigre Pro</span>
+        </div>
+    </div>
+</h3>
 
                             <hr noshade="noshade"><br>
                             <h3 class="mb-5">Historial de Publicaciones</h3>
