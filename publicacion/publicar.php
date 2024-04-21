@@ -11,6 +11,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   exit;
 }
 
+$queryCarrera = "SELECT nomCarrera FROM carrera";
+$res = mysqli_query($link,$queryCarrera); // Utiliza la conexión obtenida desde el archivo de conexión
+
+// Verifica si la consulta se ejecutó correctamente
+if (!$res) {
+  die('Error en la consulta: ' . mysqli_error($link));
+}
 ?>
 
 <!DOCTYPE html>
@@ -40,19 +47,25 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <!--iconos-->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+  <script language="javascript" src="../js/jquery-3.1.1.min.js"></script>
+
+  <script language="javascript">
+			$(document).ready(function(){
+				$("#cbx_carrera").change(function (){
+					
+					$("#cbx_carrera option:selected").each(function () {
+						nomCarrera = $(this).val();
+						$.post("../php/materia.php", { nomCarrera: nomCarrera }, function(data){
+							$("#cbx_materia").html(data);
+						});            
+					});
+				})
+			});
+		</script>
+		
+
 </head>
 
-<style>
-  .material-symbols-outlined {
-    color: #F87200;
-    text-shadow: 2px 2px 4px rgba(134, 134, 134, 0.2);
-    font-variation-settings:
-      'FILL' 1,
-      'wght' 900,
-      'GRAD' 100,
-      'opsz' 424
-  }
-</style>
 
 
 <body>
@@ -151,59 +164,62 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
         <div class="container" style="margin-top:1vmax; align-items: center;">
 
-          <h2 style=" margin-left: 0.1% ; margin-bottom: 1.2vmax;"><span class="material-symbols-outlined"> library_add </span>
+          <h2 style=" margin-left: 0.1% ; margin-bottom: 1vmax;"><span class="material-symbols-outlined"> library_add </span>
             <b style="margin-left:0.5vmax;" class="textogran">Nueva Publicación</b>
           </h2>
 
-          <form class="row g-3 formulario mt-2 mb-2vmax">
+          <div class="linea-delgada"></div>
+
+          <form class="row g-3  mt-2 mb-2vmax" method="POST">
             <div class="col-md-8 mt-0">
-              <label for="inputEmail4" class="form-label" id="letraform">Título * :</label>
+              <label for="inputEmail4" class="form-label" id="letraform"><b>Título * :</b></label>
               <input type="text" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);">
             </div>
             <div class="col-md-4 mt-0 mb-1">
-              <label for="inputPassword4" class="form-label" id="letraform">Usuario * :</label>
+              <label for="inputPassword4" class="form-label" id="letraform"><b>Usuario * :</b></label>
               <input class="form-control" style="border-color: rgb(179, 179, 179); font-weight: 500;" type="text" placeholder="@<?php echo $nombreUS?>" aria-label="Disabled input example" disabled>
             </div>
 
             <div class="mb-2 mt-3">
-              <label for="exampleFormControlTextarea1" class="form-label" id="letraform">Descripción (en caso de ser Recurso Bibliográfico agregar aqui los datos de referencia) :</label>
+              <label for="exampleFormControlTextarea1" class="form-label" id="letraform"><b>Descripción (en caso de ser Recurso Bibliográfico agregar aqui los datos de referencia) :</b></label>
               <textarea class="form-control" placeholder="Ej. Autor del libro: Ramirez, M. (2008)" id="floatingTextarea2" style="height: 100px"></textarea>
             </div>
 
-            
 
-            <div class="row g-3 mt-1 mb-2">
-              <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm" id="letraform">Carrera * :</label>
-              <div class="col-sm-10">
-
-                <select class="form-select" aria-label="Default select example" style="border-color: rgb(179, 179, 179);">
-                  <option selected>Selecciona...</option>
-                  <option value="1">Arquitectura</option>
-                  <option value="2">Ing. Bioquímica</option>
-                  <option value="3">Ing. Civil</option>
-                  <option value="4">Ing. Electrica</option>
-                  <option value="5">Ing. Gestion Empresarial</option>
-                  <option value="6">Ing. Sistemas Computacionales</option>
-                  <option value="7">Ing. Industrial</option>
-                  <option value="8">Ing. Mecatronica</option>
-                  <option value="9">Ing. Quimica</option>
-                  <option value="9">Lic. Administracion</option>
+            <div class="col-md-5 mt-0">
+              <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm" id="letraform"><b>Carrera * :</b></label>
+              <div class="col-sm-12">
+                <select class="form-select" id="cbx_carrera" name="cbx_carrera" aria-label="Default select example" style="border-color: rgb(179, 179, 179);">
+                  <option value="0">Selecciona carrera...</option>
+                   <?php WHILE ($ROW = $res ->fetch_assoc() ){ ?>
+                    <option value="<?php echo $ROW['nomCarrera']; ?>"><?php echo $ROW['nomCarrera']; ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
+           
+            <div class="col-md-7 mt-0 mb-1">
+             <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm" id="letraform"><b>Materia * :</b></label>
+             <div class="col-sm-13">
+                <select class="form-select"  id="cbx_materia" name="cbx_materia" aria-label="Default select example" style="border-color: rgb(179, 179, 179);">   
+                <option value="0">Selecciona carrera...</option>     
+                </select>
+              </div>
+            </div>
+          
 
 
             <fieldset class="row g-2 mb-2 mt-2">
-              <legend class="col-form-label col-sm-2 pt-0 " id="letraradio" style="margin-left: 0.2%;">Tipo de Publicación* :</legend>
+              <legend class="col-form-label col-sm-2 pt-0 " id="letraradio" style="margin-left: 0.2%;"><b>Tipo de Publicación* :</b></legend>
               <div class="col-md-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" style="border-color: rgb(179, 179, 179); margin-left: 2%;" value="option1" checked>
+                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" style="border-color: rgb(179, 179, 179); margin-left: 1%;" value="option1" checked>
                   <label class="form-check-label" for="gridRadios1" id="letraradio">
                     Recurso Bibliográfico
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" style="border-color: rgb(179, 179, 179); margin-left: 2%;" name="gridRadios" id="gridRadios2" value="option2">
+                  <input class="form-check-input" type="radio" style="border-color: rgb(179, 179, 179); margin-left: 1%;" name="gridRadios" id="gridRadios2" value="option2">
                   <label class="form-check-label" for="gridRadios2" id="letraradio">
                     Trabajos y tareas
                   </label>
@@ -211,12 +227,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             </fieldset>
             
 
-            <div class="mb-3 mt-3">
-              <label for="formFileLg" class="form-label" id="letraform">Documento* :</label>
-              <input class="form-control" type="file" id="formFile" style="border-color: rgb(179, 179, 179);">
+            <div class="mb-3 mt-1">
+              <label for="formFileLg" class="form-label" id="letraform"><b>Documento* :</b></label>
+              <input class="form-control form-control-lg" type="file" id="formFileLg" style="border-color: rgb(179, 179, 179);">
             </div>
 
-            <div class="d-grid gap-1 col-6 mx-auto">
+            <div class="d-grid gap-1 col-6 mx-auto mb-4" style="">
               <input class="btn btn-primary btn" type="submit" value="Publicar" id="letrabuton">
             </div>
 

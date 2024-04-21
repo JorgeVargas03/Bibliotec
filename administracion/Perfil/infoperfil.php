@@ -61,6 +61,7 @@ mysqli_close($link);
     <link rel="stylesheet" href="../../css/hover-min.css">
     <link rel="stylesheet" href="../../css/animate.css">
     <link rel="stylesheet" href="../../css/sidebars.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!--Inicia Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -87,12 +88,18 @@ mysqli_close($link);
             justify-content: center;
             align-items: center;
         }
-    </style>
 
-    <style>
         .imagen {
             height: 180px;
             margin-right: 93px;
+        }
+      
+        .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 300,
+        'GRAD' 0,
+        'opsz' 22
         }
     </style>
 
@@ -139,7 +146,7 @@ mysqli_close($link);
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                             id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
-                            aria-expanded="false" style="color: black; font-weight: bold;">
+                            aria-expanded="false">
                             Carreras
                         </button>
                         <div class="collapse" id="dashboard-collapse">
@@ -172,13 +179,13 @@ mysqli_close($link);
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                             id="letrabardos" data-bs-toggle="collapse" data-bs-target="#contacto-collapse"
-                            aria-expanded="false" style="color: black; font-weight: bold;">
+                            aria-expanded="false" style="color:rgb(255, 255, 255); font-weight: bold;">
                             Contacto
                         </button>
                         <div class="collapse" id="contacto-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres" style="color: black;">Información de contacto</a></li>
+                                        id="letrabartres" style="color: rgb(255, 255, 255);">Información de contacto</a></li>
                             </ul>
                         </div>
                     </li>
@@ -186,20 +193,20 @@ mysqli_close($link);
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                             id="letrabardos" data-bs-toggle="collapse" data-bs-target="#cuenta-collapse"
-                            aria-expanded="false" style="color: black; font-weight: bold;">
+                            aria-expanded="false" style="color: white; font-weight: bold;">
                             <svg class="bi pe-none" width="1.3vmax" height="1.3vmax">
                                 <use xlink:href="#people-circle" />
                             </svg>
-                            <span style="margin-top:0.3vmax; margin-left: 0.4vmax;">Cuenta</span>
+                            <span style="margin-top:0.3vmax; margin-left: 0.4vmax; color: white;">Cuenta</span>
                         </button>
                         <div class="collapse" id="cuenta-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li><a href="administracion/Perfil/infoperfil.html"
                                         class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres" style="color: black;">Mi Perfil</a></li>
+                                        id="letrabartres" style="color: white;">Mi Perfil</a></li>
                                 <a href="home.php?logout=true"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                    id="letrabartres" style="color: black;">Cerrar Sesión</a>
+                                    id="letrabartres" style="color: white;">Cerrar Sesión</a>
                             </ul>
                         </div>
                     </li>
@@ -249,15 +256,24 @@ mysqli_close($link);
                         </div>
 
                         <?php while ($fila = mysqli_fetch_array($registros)) : ?>
-                         <div class="publicacion card mb-4">
+                         <div class="publicacion card mb-3">
                         <div class="card-body">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-0"> 
+                                <button type="button" class="btn btn-outline-warning"  style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
+                                <span class="material-symbols-outlined">
+                                    edit_square
+                                </span>
+                                </button>
+                            </div>
                             <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
+                            <span class="card-text comment-date mb-0 ">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
                             <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
+
                             <a name="fade" href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary btn-sm"><b>Leer más</b></a>
                         </div>
                         <div class="card-footer d-flex text-muted justify-content-between align-items-end">
-                            <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
-                            <span class="card-text comment-date mb-0">Fecha de publicación: <?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
+                        <span class="badge rounded-pill" style="background-color: #F07B12;">Primary</span>
+                            <span class="card-text comment-date mb-0"><?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
                         </div>
                          </div>
                      <?php endwhile; ?>
