@@ -1,5 +1,7 @@
 <?php
 include('../php/functions.php');
+//include('../php/sesion.php');
+session_start();
 // Incluir el archivo de conexión a la base de datos
 $link = include('../php/conexion.php');
 
@@ -28,6 +30,47 @@ if (isset($_GET['id'])) {
         header("Location: ../home.php");
         exit();
     }
+    
+    //Query para obtener el promedio de calificaciones de esta publicacion
+    $qcalif = "SELECT AVG(`calificacion`) as promedio from calificacion_detalle cd 
+                join usuario u on u.idUsuario = cd.id_Usuario 
+                join publicacion p on p.idPub = cd.idPub 
+                where cd.idPub = $idPub;";
+    $consulta = mysqli_query($link,$qcalif);
+
+    $consultaCal = mysqli_fetch_assoc($consulta);
+    $idUser = $_SESSION['idU'];
+    if(isset($_POST["guardar"])){  //Desmadre para guardar la calificacion
+        $rate = $_POST["calificacion"];
+        
+        //verificar si es la primera vez que el usuario califica esta publicacion
+        $ver = "SELECT * FROM `calificacion_detalle` 
+                WHERE id_Usuario = $idUser AND idPub=$idPub;";
+
+        $res = mysqli_query($link,$ver);
+        if(mysqli_num_rows($res) == 1){
+            $sql = "UPDATE `calificacion_detalle` SET `calificacion`= $rate 
+            WHERE id_Usuario = $idUser AND idPub=$idPub;";
+
+            $res = mysqli_query($link,$sql);
+            if($res){
+                echo 'SI';
+            }else{
+                echo 'NO';
+            }
+        }else{
+            $sql = "INSERT INTO `calificacion_detalle` VALUES($idUser,$idPub,$rate)";
+            
+            $res = mysqli_query($link,$sql);
+            if($res){
+                echo 'SI';
+            }else{
+                echo 'NO';
+            }
+        }
+    }
+    //exit(json_encode(array('id' => $idUser)));
+
 } else {
     // Si no se proporcionó un ID de publicación, redireccionar a la página principal
     header("Location: ../home.php");
@@ -38,7 +81,7 @@ if (isset($_GET['id'])) {
 mysqli_close($link);
 
 // Iniciar sesión
-session_start();
+//session_start();
 
 // Verificar si el usuario no ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
@@ -231,21 +274,29 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                             <div class="col-md-6">
                                                 <!-- Calificación con estrellas -->
                                                 <div class="rating mt-3">
-                                                    <p class="card-text"><b>Calificación:</b></p>
-                                                    <p class="calificar">
+                                                    <p class="card-text"><b>Calificación:
+                                                    
                                                     <?php
                                                     // Calificación actual de la publicación
-                                                    $calificacion = $publicacion['calif_Pub'];
-
+                                                    if($consultaCal == null){
+                                                        $calificacion = 0;
+                                                    }else{
+                                                        $calificacion = $consultaCal['promedio'];
+                                                    }
+                                                    echo '<span> '.round($calificacion,2).'</span> / 5 </b></p>';
+                                                    
                                                     // Convertir calificación del rango 1-10 a 1-5
-                                                    $calificacion_estrellas = ceil($calificacion / 2);
-
+                                                    $calificacion_estrellas = ceil($calificacion/1);
+                                                    ?>
+                                                    <p class="calificar">
+                                                    <?php
+                                                    //echo '<p class="calificar">';
                                                     // Mostrar estrellas llenas según la calificación
                                                     for ($i = 1; $i <= 5; $i++) {
                                                         if ($i <= $calificacion_estrellas) {
-                                                            echo '<i class="bi bi-star-fill estrella" name="estrellas"></i>';
+                                                            echo '<i class="bi bi-star-fill estrella" data-rating="'.$i.'"></i>';
                                                         } else {
-                                                            echo '<i class="bi bi-star-fill " name="estrellas"></i>';
+                                                            echo '<i class="bi bi-star-fill" data-rating="'.$i.'"></i>';
                                                         }
                                                     }
                                                     ?>
