@@ -17,7 +17,7 @@
 .bi-star-fill {
     color: palegoldenrod;
     font-size: larger;
-    transition: color 0.3s;
+    transition: color 0.2s;
     cursor: pointer;    
 }
 
