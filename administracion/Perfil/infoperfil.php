@@ -233,8 +233,31 @@ mysqli_close($link);
                         }
                     </script>
                     <h1><img id="profilePic" src="..\..\images\icons\perfil.png"></h1>
-                    <h2><span> <?php echo $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?> </span> <a href="editarPerfil.html"><img
-                                src="..\..\images\icons\editar.png" height="25 "></a></h2>
+                    <h2><span> <?php echo $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?> </span> <img src="..\..\images\icons\editar.png" height="25 "></h2>
+                    <div id="espacio_edicion" style="display: none;">
+                    <input type="text" id="nuevo_nombre" placeholder="Nuevo Nombre"><br>
+                    <input type="text" id="nuevo_apellido" placeholder="Nuevo Apellido"><br>
+                    <button onclick="guardarCambios()">Guardar</button>
+                    <button onclick="cancelarEdicion()">Cancelar</button>
+                    </div>
+                    <script>
+                     document.getElementById('editar_icono').addEventListener('click', function() {
+                     document.getElementById('espacio_edicion').style.display = 'block';
+                     });
+
+                     function guardarCambios() {
+                      var nuevoNombre = document.getElementById('nuevo_nombre').value;
+                      var nuevoApellido = document.getElementById('nuevo_apellido').value;
+                      document.getElementById('nombre_apellido').innerText = nuevoNombre + " " + nuevoApellido;
+                      document.getElementById('espacio_edicion').style.display = 'none';
+                     }
+
+                     function cancelarEdicion() {
+                     document.getElementById('espacio_edicion').style.display = 'none';
+                     }
+                    </script>
+
+
                     <h5>Ing. Sistemas Computacionales</h5>
 
                     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
