@@ -96,6 +96,46 @@ mysqli_close($link);
         }
     </style>
 
+    <style>
+        .badge {
+    display: inline-block;
+    margin-right: 20px;
+    border: 2px solid #007bff; /* blue border */
+    border-radius: 20px; /* oval shape */
+    padding: 10px;
+    text-align: center;
+}
+
+.badge-content {
+    margin-top: 10px;
+}
+
+.trophy-icon {
+    width: 50px; /* adjust size as needed */
+    height: auto;
+}
+
+.badge-title {
+    font-weight: bold;
+    color: #007bff; /* blue color */
+}
+        
+
+#guardarBtn, #cancelarBtn {
+    background-color: blue;
+    color: white;
+    border: 2px solid blue;
+    border-radius: 8px; /* Agrega bordes curvos */
+    padding: 2px 5px; /* Ajusta el espaciado dentro del botón */
+    margin-right: 5px; /* Agrega un espacio entre los botones */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+}
+
+#guardarBtn:hover, #cancelarBtn:hover {
+    background-color: darkblue; /* Cambia el color de fondo al pasar el cursor sobre el botón */
+    border-color: darkblue; /* Cambia el color del borde al pasar el cursor sobre el botón */
+}
+</style>
 </head>
 
 <!--IMAGEN DE CONTACTO-->
@@ -233,39 +273,128 @@ mysqli_close($link);
                         }
                     </script>
                     <h1><img id="profilePic" src="..\..\images\icons\perfil.png"></h1>
-                    <h2><span> <?php echo $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?> </span> <img src="..\..\images\icons\editar.png" height="25 "></h2>
-                    <div id="espacio_edicion" style="display: none;">
-                    <input type="text" id="nuevo_nombre" placeholder="Nuevo Nombre"><br>
-                    <input type="text" id="nuevo_apellido" placeholder="Nuevo Apellido"><br>
-                    <button onclick="guardarCambios()">Guardar</button>
-                    <button onclick="cancelarEdicion()">Cancelar</button>
-                    </div>
-                    <script>
-                     document.getElementById('editar_icono').addEventListener('click', function() {
-                     document.getElementById('espacio_edicion').style.display = 'block';
-                     });
 
-                     function guardarCambios() {
-                      var nuevoNombre = document.getElementById('nuevo_nombre').value;
-                      var nuevoApellido = document.getElementById('nuevo_apellido').value;
-                      document.getElementById('nombre_apellido').innerText = nuevoNombre + " " + nuevoApellido;
-                      document.getElementById('espacio_edicion').style.display = 'none';
-                     }
+<h2>
+    <span id="nombreApellido"><?php echo $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></span>
+    <img src="..\..\images\icons\editar.png" height="25" id="editarBtn">
+</h2>
+<div id="formularioEdicion" style="display: none;">
+    <input type="text" id="nuevoNombre" placeholder="Nuevo nombre">
+    <input type="text" id="nuevoApellido" placeholder="Nuevo apellido">
+    <button id="guardarBtn">Guardar</button>
+    <button id="cancelarBtn">Cancelar</button>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const nombreApellido = document.getElementById('nombreApellido');
+    const editarBtn = document.getElementById('editarBtn');
+    const formularioEdicion = document.getElementById('formularioEdicion');
+    const nuevoNombre = document.getElementById('nuevoNombre');
+    const nuevoApellido = document.getElementById('nuevoApellido');
+    const guardarBtn = document.getElementById('guardarBtn');
+    const cancelarBtn = document.getElementById('cancelarBtn');
 
-                     function cancelarEdicion() {
-                     document.getElementById('espacio_edicion').style.display = 'none';
-                     }
-                    </script>
+    // Mostrar formulario de edición al hacer clic en la imagen de edición
+    editarBtn.addEventListener('click', function () {
+        formularioEdicion.style.display = 'block';
+        const nombreApellidoSplit = nombreApellido.textContent.split(' ');
+        nuevoNombre.value = nombreApellidoSplit[0];
+        nuevoApellido.value = nombreApellidoSplit.slice(1).join(' ');
+        nombreApellido.style.display = 'none';
+    });
+
+    // Guardar los cambios al hacer clic en el botón de guardar
+    guardarBtn.addEventListener('click', function () {
+        const nuevoNombreValor = nuevoNombre.value.trim();
+        const nuevoApellidoValor = nuevoApellido.value.trim();
+        if (nuevoNombreValor !== '' && nuevoApellidoValor !== '') {
+            // Aquí puedes enviar los nuevos valores al servidor mediante AJAX o cualquier otra forma
+            // Por simplicidad, actualizaremos solo el nombre y apellido en el DOM
+            nombreApellido.textContent = nuevoNombreValor + ' ' + nuevoApellidoValor;
+            nombreApellido.style.display = 'inline';
+            formularioEdicion.style.display = 'none';
+        } else {
+            alert('Por favor ingresa un nombre y un apellido válidos.');
+        }
+    });
+
+    // Cancelar la edición al hacer clic en el botón de cancelar
+    cancelarBtn.addEventListener('click', function () {
+        nombreApellido.style.display = 'inline';
+        formularioEdicion.style.display = 'none';
+    });
+});
+</script>
+                    
+                      
+
+                      
+                    
 
 
-                    <h5>Ing. Sistemas Computacionales</h5>
+<h5>
+    <span id="nombreCarrera"><?php echo $_SESSION['carrera'] ?></span>
+    <img src="..\..\images\icons\editar.png" height="25" id="editarBtn" onclick="mostrarCombo()">
+</h5>
+
+<div id="comboCarreras" style="display: none;">
+    <select id="selectCarrera" onchange="cambiarCarrera()">
+        <option value="Arquitectura">Arquitectura</option>
+        <option value="Ingeniería Bioquímica">Ingeniería Bioquímica</option>
+        <option value="Ingeniería Civil">Ingeniería Civil</option>
+        <option value="Ingeniería Eléctrica">Ingeniería Eléctrica</option>
+        <option value="Ingeniería en Gestión Empresarial">Ingeniería en Gestión Empresarial</option>
+        <option value="Ingeniería en Sistemas Computacionales">Ingeniería en Sistemas Computacionales</option>
+        <option value="Ingeniería Mecatrónica">Ingeniería Mecatrónica</option>
+        <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+    </select>
+</div>
+
+<script>
+    function mostrarCombo() {
+        document.getElementById("comboCarreras").style.display = "block";
+    }
+
+    function cambiarCarrera() {
+        var select = document.getElementById("selectCarrera");
+        var carrera = select.options[select.selectedIndex].text;
+        // Reemplazar "Ingeniería" por "Ing."
+        carrera = carrera.replace("Ingeniería", "Ing.");
+        // Actualizar el texto en el span
+        document.getElementById("nombreCarrera").textContent = carrera;
+        // Ocultar el combo box
+        document.getElementById("comboCarreras").style.display = "none";
+    }
+</script>
+
+                        
+
+
+
 
                     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                         <div class="container mt-3">
                             <hr noshade="noshade"><br>
-                            <h3><img class="imagen" src="..\..\images\icons\mente-creativa.gif"> <img class="imagen"
-                                    src="..\..\images\icons\Estudiante-Sobresaliente.gif"> <img class="imagen"
-                                    src="..\..\images\icons\voluntario-estrella.gif"> </h3>
+                            <h3>
+                             <div class="badge">
+                               <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
+                             <div class="badge-content">
+                             <span class="badge-title">Tigre Creativo</span>
+                            </div>
+                            </div>
+                             <div class="badge">
+                             <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
+                             <div class="badge-content">
+                              <span class="badge-title">Tigre Contribuidor</span>
+                            </div>
+                            </div>
+                            <div class="badge">
+                             <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
+                            <div class="badge-content">
+                             <span class="badge-title">Tigre Pro</span>
+                            </div>
+                            </div>
+                            </h3>
 
                             <hr noshade="noshade"><br>
                             <h3 class="mb-5">Historial de Publicaciones</h3>
