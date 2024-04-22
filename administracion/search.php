@@ -4,6 +4,7 @@ $link = include('../php/conexion.php'); // Incluye el archivo de conexión y obt
 
 // Obtener el ID de la publicación desde el parámetro GET
 $carrera = $_GET['carrera'];
+
 // Verifica si la consulta se ejecutó correctamente
 if (isset($_GET['carrera'])) {
   // Consultar la base de datos para obtener la información completa de la publicación
@@ -54,6 +55,34 @@ session_start();
   <!--iconos-->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+
+  <!-- CODIGO AJAX  -->
+  <script>
+  $(document).ready(function() {
+    // Manejar clic en el botón de búsqueda
+    $('#btnBuscar').click(function(e) {
+        e.preventDefault(); // Evitar el comportamiento predeterminado del botón
+
+        // Obtener valores seleccionados de los selects
+        var materia = $('#categorySelectMateria').val();
+        var tipo = $('#categorySelectTipo').val();
+
+        // Realizar petición AJAX
+        $.ajax({
+            url: 'search.php',
+            type: 'GET',
+            data: { materia: materia, tipo: tipo },
+            success: function(response) {
+                // Actualizar el contenido de la página con los resultados recibidos
+                $('.publicaciones').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+</script>
 </head>
 
 <style>
@@ -180,8 +209,8 @@ session_start();
                 <label for="categorySelect" class="form-label">Tipo de Recurso</label>
                 <select class="form-select" id="categorySelect">
                   <option selected><?php $tipo = NULL?>Seleccione una categoría...</option>
-                  <option value="1"><?php $tipo = "Apuntes y Tareas"?>Apuntes y Tareas</option>
-                  <option value="2"><?php $tipo = "Recursos Bibliograficos"?>Recursos Bibliográficos</option>
+                  <option value="Apuntes y Tareas"><?php $tipo = "Apuntes y Tareas"?>Apuntes y Tareas</option>
+                  <option value="2"><?php $tipo = "Recursos Bibliograficos"?>Recurso Bibliográfico</option>
                 </select>
               </div>
           </form>
