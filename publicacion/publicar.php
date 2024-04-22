@@ -5,6 +5,8 @@ $link = include('../php/conexion.php'); // Incluye el archivo de conexión y obt
 session_start();
 $nombreUS =  strstr($_SESSION['email'],'@',true);
 
+
+
 // Verificar si el usuario no ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   header("location: ../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
@@ -167,13 +169,12 @@ if (!$res) {
           <h2 style=" margin-left: 0.1% ; margin-bottom: 1vmax;"><span class="material-symbols-outlined"> library_add </span>
             <b style="margin-left:0.5vmax;" class="textogran">Nueva Publicación</b>
           </h2>
-
           <div class="linea-delgada"></div>
 
-          <form class="row g-3  mt-2 mb-2vmax" method="POST">
+          <form class="row g-3  mt-2 mb-2vmax" method="POST" action="publicar_control.php" enctype="multipart/form-data">
             <div class="col-md-8 mt-0">
               <label for="inputEmail4" class="form-label" id="letraform"><b>Título * :</b></label>
-              <input type="text" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);">
+              <input type="text" name="titulo" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);">
             </div>
             <div class="col-md-4 mt-0 mb-1">
               <label for="inputPassword4" class="form-label" id="letraform"><b>Usuario * :</b></label>
@@ -182,7 +183,7 @@ if (!$res) {
 
             <div class="mb-2 mt-3">
               <label for="exampleFormControlTextarea1" class="form-label" id="letraform"><b>Descripción (en caso de ser Recurso Bibliográfico agregar aqui los datos de referencia) :</b></label>
-              <textarea class="form-control" placeholder="Ej. Autor del libro: Ramirez, M. (2008)" id="floatingTextarea2" style="height: 100px"></textarea>
+              <textarea class="form-control" name="descripcion" placeholder="Ej. Autor del libro: Ramirez, M. (2008)" id="floatingTextarea2" style="height: 100px"></textarea>
             </div>
 
 
@@ -213,13 +214,13 @@ if (!$res) {
               <legend class="col-form-label col-sm-2 pt-0 " id="letraradio" style="margin-left: 0.2%;"><b>Tipo de Publicación* :</b></legend>
               <div class="col-md-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" style="border-color: rgb(179, 179, 179); margin-left: 1%;" value="option1" checked>
+                  <input class="form-check-input" type="radio" name="tipo" id="gridRadios1" style="border-color: rgb(179, 179, 179); margin-left: 1%;" value="Recurso Bibliografico" checked>
                   <label class="form-check-label" for="gridRadios1" id="letraradio">
                     Recurso Bibliográfico
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" style="border-color: rgb(179, 179, 179); margin-left: 1%;" name="gridRadios" id="gridRadios2" value="option2">
+                  <input class="form-check-input" type="radio" style="border-color: rgb(179, 179, 179); margin-left: 1%;" name="tipo"  id="gridRadios2" value="Trabajos y tareas">
                   <label class="form-check-label" for="gridRadios2" id="letraradio">
                     Trabajos y tareas
                   </label>
@@ -229,7 +230,8 @@ if (!$res) {
 
             <div class="mb-3 mt-1">
               <label for="formFileLg" class="form-label" id="letraform"><b>Documento* :</b></label>
-              <input class="form-control form-control-lg" type="file" id="formFileLg" style="border-color: rgb(179, 179, 179);">
+              <input class="form-control form-control-lg"  accept=" .pdf, .doc, .docx, .ppt, .ccv"
+                       name="archivo" type="file" id="formFileLg" style="border-color: rgb(179, 179, 179);">
             </div>
 
             <div class="d-grid gap-1 col-6 mx-auto mb-4" style="">
