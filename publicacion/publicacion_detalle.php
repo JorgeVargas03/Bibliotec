@@ -250,11 +250,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         </div>
                                         <div>
                                             <!-- Botón de reportar -->
-                                            <a href="#" class="btn btn-danger shadow" data-toggle="tooltip" data-placement="top" title="Reportar publicación">
-                                                <i class="bi bi-flag-fill"></i>
+                                            <a class="btn btn-danger btn-sm shadow" id="reportarPub" data-bs-toggle="modal" data-bs-target="#modal_report_p">
+                                                <i class="bi bi-flag-fill" ></i>
                                             </a>
                                         </div>
-                                    </div>
+                                    </div>    
+
                                     <div class="card-body">
                                         <!-- Descripción de la publicación -->
                                         <div class="row mb-4">
@@ -285,12 +286,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                     }
                                                     echo '<span> '.round($calificacion,2).'</span> / 5 </b></p>';
                                                     
-                                                    // Convertir calificación del rango 1-10 a 1-5
+                                                    // Convertir calificación de 1-5
                                                     $calificacion_estrellas = ceil($calificacion/1);
                                                     ?>
                                                     <p class="calificar">
                                                     <?php
-                                                    //echo '<p class="calificar">';
+                                                    
                                                     // Mostrar estrellas llenas según la calificación
                                                     for ($i = 1; $i <= 5; $i++) {
                                                         if ($i <= $calificacion_estrellas) {
@@ -393,7 +394,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                     </div>
                                                     <div class="col-auto">
                                                         <!-- Botón de reportar -->
-                                                        <a class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Reportar comentario">
+                                                        <a class="btn btn-sm btn-danger" id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c">
                                                             <i class="bi bi-flag-fill"></i>
                                                         </a>
                                                     </div>
@@ -411,6 +412,67 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         </div>
                     </div>
             </main>
+            
+            <!-- Ventana de reportar P -->
+            <div class="modal fade" id="modal_report_p" tabindex="-1" aria-labelledby="modal_report_pl" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Reportar Publicacion</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="inputState validationCustom01" class="form-label">Motivo</label>
+                                <select id="inputState validationCustom01" class="form-select" name="motivo" required>
+                                <option selected>Seleccionar</option>
+                                <option>Contenido inapropiado</option>
+                                <option>Spam</option>
+                                <option>No cumple con las normas de referenciado</option>
+                                </select>
+                            <br>
+                            <label for="textAreaRp">Comentario</label>
+                            <textarea name="Comentario" id="textAreaRp" cols="60" rows="2" placeholder="(Opcional)"></textarea>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger">Aceptar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VEntana reportar C -->
+            <div class="modal fade" id="modal_report_c" tabindex="-1" aria-labelledby="modal_report_cl" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Reportar Comentario</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="inputState validationCustom01" class="form-label">Motivo</label>
+                                <select id="inputState validationCustom01" class="form-select" name="motivo" required>
+                                <option selected>Seleccionar</option>
+                                <option>Contenido inapropiado</option>
+                                <option>Spam</option>
+                                <option>No cumple con las normas de referenciado</option>
+                                </select>
+                            <br>
+                            <label for="textAreaRp">Comentario</label>
+                            <textarea name="Comentario" id="textAreaRp" cols="60" rows="2" placeholder="(Opcional)"></textarea>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger">Aceptar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <script src="reportar_pub.js"></script>                              
         </div>
     </div>
 

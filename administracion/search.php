@@ -4,6 +4,7 @@ $link = include('../php/conexion.php'); // Incluye el archivo de conexión y obt
 
 // Obtener el ID de la publicación desde el parámetro GET
 $carrera = $_GET['carrera'];
+
 // Verifica si la consulta se ejecutó correctamente
 if (isset($_GET['carrera'])) {
   // Consultar la base de datos para obtener la información completa de la publicación
@@ -54,6 +55,34 @@ session_start();
   <!--iconos-->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+
+  <!-- CODIGO AJAX  -->
+  <script>
+  $(document).ready(function() {
+    // Manejar clic en el botón de búsqueda
+    $('#btnBuscar').click(function(e) {
+        e.preventDefault(); // Evitar el comportamiento predeterminado del botón
+
+        // Obtener valores seleccionados de los selects
+        var materia = $('#categorySelectMateria').val();
+        var tipo = $('#categorySelectTipo').val();
+
+        // Realizar petición AJAX
+        $.ajax({
+            url: 'search.php',
+            type: 'GET',
+            data: { materia: materia, tipo: tipo },
+            success: function(response) {
+                // Actualizar el contenido de la página con los resultados recibidos
+                $('.publicaciones').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+</script>
 </head>
 
 <style>
@@ -169,10 +198,8 @@ session_start();
                 <select class="form-select" id="categorySelect">
                   <option selected><?php $materia = NULL?>Seleccione una categoría...</option>
                   <?php 
-                    $contador = 1;
                     while ($fila2 = mysqli_fetch_array($result2)) : ?>
-                      <option value=<?php $contador?>><?php $materia = $fila2['nomMateria']?><?php echo $fila2['nomMateria']; ?></option>
-                    <?php $contador++; ?>
+                      <option><?php $materia = $fila2['nomMateria']?><?php echo $fila2['nomMateria']; ?></option>
                   <?php endwhile; ?>
                 </select>
               </div>
@@ -184,14 +211,15 @@ session_start();
                   <option value="2"><?php $tipo = "Recursos Bibliograficos"?>Recursos Bibliográficos</option>
                 </select>
               </div>
-          </form>
-        <div class="d-flex justify-content-center align-items-center mb-3">
+               <div class="d-flex justify-content-center mb-3">
             <button type="submit" onclick="<?php $_SESSION['filtro'] = true?>" href = "search.php?carrera=<?php echo $carrera?>?materia=<?php echo $materia?>?tipo=<?php echo $tipo?>" class="btn btn-primary px-4">Buscar</button>
         </div>
+          </form>
         <br> 
         </div>
                 <!--Esta parte contiene los aportes coincidentes-->
-        <div>
+        <div class="container">
+    <div id="ajaxContainer" class="ajax-container"></div>
         <?php while ($fila = mysqli_fetch_array($result)) : ?>
             <div class="publicacion card mb-4">
               <div class="card-body">
@@ -211,9 +239,7 @@ session_start();
   </main>
     </div>
   </div>
-  
-  <script src ="js/fadeout.js"></script>
-  <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
+  <footer class="py-3 text-light bg-primary">
     <div class="container">
       <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
     </div>
