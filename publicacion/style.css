@@ -14,10 +14,18 @@
     color: #6c757d;
 }
 
+.bi-flag-fill {
+    font-size: smaller;
+}
+
+.btn-danger{
+    color: #E36B6B;
+}
+
 .bi-star-fill {
     color: palegoldenrod;
     font-size: larger;
-    transition: color 0.3s;
+    transition: color 0.2s;
     cursor: pointer;    
 }
 
