@@ -476,7 +476,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     $motivo = $_POST['motivo'];
                     $fechaRep = getdate();
 
-                    $qRepPub = "INSERT INTO "
+                    $qRepPub = "INSERT INTO ";
                 }
             
             ?>   

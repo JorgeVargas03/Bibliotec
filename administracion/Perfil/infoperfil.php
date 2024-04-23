@@ -345,14 +345,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 </script>
 
-                        
-
-
-
-
-                    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                         <div class="container mt-3">
-                            <hr noshade="noshade"><br>
+                            <hr noshade="noshade"><br>                       
+
  <h3>
     <div class="badge">
         <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
@@ -376,6 +372,9 @@ document.addEventListener('DOMContentLoaded', function () {
     </div>
 </h3>
 
+
+
+                   
                             <hr noshade="noshade"><br>
                             <h3 class="mb-5">Historial de Publicaciones</h3>
                         </div>
@@ -383,32 +382,28 @@ document.addEventListener('DOMContentLoaded', function () {
                         <?php while ($fila = mysqli_fetch_array($registros)) : ?>
                          <div class="publicacion card mb-3">
                         <div class="card-body">
-
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-0"> 
-                            <a href="editar_interfaz.php" class="btn btn-outline-warning" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
+                            
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-0"> 
+                             <a href="../../publicacion/editar_interfaz.php" class="btn btn-outline-warning" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
                             <span class="material-symbols-outlined">
                              edit_square
                             </span>
                             </a>
-
-
-                             <a href="eliminar_publicacion.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-outline-warning" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
+                             <a href="../../publicacion/eliminar_publicacion.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-outline-warning" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
                                     <span class="material-symbols-outlined">
                                         delete
                                     </span>
-                                </a>
-
-                                
-
+                             </a>
                             </div>
+
                             <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
-                            <span class="card-text comment-date mb-0 ">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
+                            
                             <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
 
                             <a name="fade" href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary btn-sm"><b>Leer más</b></a>
                         </div>
                         <div class="card-footer d-flex text-muted justify-content-between align-items-end">
-                        <span class="badge rounded-pill" style="background-color: #F07B12;">Primary</span>
+                        <span class="card-text comment-date mb-0 ">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
                             <span class="card-text comment-date mb-0"><?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
                         </div>
                          </div>
