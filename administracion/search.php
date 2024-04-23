@@ -35,7 +35,7 @@ session_start();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BiblioTec - Búsqueda</title>
+  <title>BiblioTec - Filtrado</title>
 
   <!--En esta seccion se incluyen las hojas de estilos-->
   <link rel="icon" href="../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
@@ -55,34 +55,7 @@ session_start();
   <!--iconos-->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
-
-  <!-- CODIGO AJAX  -->
-  <script>
-  $(document).ready(function() {
-    // Manejar clic en el botón de búsqueda
-    $('#btnBuscar').click(function(e) {
-        e.preventDefault(); // Evitar el comportamiento predeterminado del botón
-
-        // Obtener valores seleccionados de los selects
-        var materia = $('#categorySelectMateria').val();
-        var tipo = $('#categorySelectTipo').val();
-
-        // Realizar petición AJAX
-        $.ajax({
-            url: 'search.php',
-            type: 'GET',
-            data: { materia: materia, tipo: tipo },
-            success: function(response) {
-                // Actualizar el contenido de la página con los resultados recibidos
-                $('.publicaciones').html(response);
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
-    });
-});
-</script>
+  </script>
 </head>
 
 <style>
@@ -99,7 +72,7 @@ session_start();
 
 
 <body>
-<header class="bg-primary py-2">
+  <header class="bg-primary py-2">
     <div class="container d-flex align-items-center">
       <!-- Logo y título -->
       <div class="logo">
@@ -175,14 +148,14 @@ session_start();
             </button>
             <div class="collapse" id="cuenta-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="administracion/Perfil/infoperfil.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
+                <li><a href="Perfil/infoperfil.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
                 <a href="home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a>
               </ul>
             </div>
           </li>
           <hr class="my-2"> <!-- Línea divisora -->
           <li class="mb-1 mt-3">
-            <a class="nav-link align-items-center" name="fade" href="publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
+            <a class="nav-link align-items-center" name="fade" href="../publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
           </li>
 
           <hr class="my-2"> <!-- Línea divisora -->
@@ -191,42 +164,39 @@ session_start();
           </li>
         </ul>
       </div>
-      
+
       <!-- Contenido principal -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-      <br>  
-      <div class="container">
+        <br>
+        <div class="container">
           <h2>Búsqueda</h2>
-          <form>
+          <form id="filterForm">
             <div class="row align-items-center justify-content-center">
               <div class="col-md-5 mb-3">
-                <label for="categorySelect" class="form-label">Materia</label>
-                <select class="form-select" id="categorySelect">
-                  <option selected><?php $materia = NULL?>Seleccione una categoría...</option>
-                  <?php 
-                    while ($fila2 = mysqli_fetch_array($result2)) : ?>
-                      <option><?php $materia = $fila2['nomMateria']?><?php echo $fila2['nomMateria']; ?></option>
-                  <?php endwhile; ?>
-                </select>
+                <label for="materiaInput" class="form-label">Materia</label>
+                <input class="form-control" type="text" id="materiaInput" name="materia" placeholder="Escribe el nombre de la materia">
+                <!-- Lista de sugerencias -->
+                <ul id="suggestions" class="autocomplete"></ul>
               </div>
               <div class="col-md-5 mb-3">
-                <label for="categorySelect" class="form-label">Tipo de Recurso</label>
-                <select class="form-select" id="categorySelect">
-                  <option selected><?php $tipo = NULL?>Seleccione una categoría...</option>
-                  <option value="1"><?php $tipo = "Apuntes y Tareas"?>Apuntes y Tareas</option>
-                  <option value="2"><?php $tipo = "Recursos Bibliograficos"?>Recursos Bibliográficos</option>
+                <label for="typeSelect" class="form-label">Tipo de Recurso</label>
+                <select class="form-select" id="typeSelect" name="tipo">
+                  <option value="">Seleccione una categoría...</option>
+                  <option value="Apuntes y Tareas">Apuntes y Tareas</option>
+                  <option value="Recurso Bibliografico">Recurso Bibliográfico</option>
                 </select>
               </div>
-               <div class="d-flex justify-content-center mb-3">
-            <button type="submit" onclick="<?php $_SESSION['filtro'] = true?>" href = "search.php?carrera=<?php echo $carrera?>?materia=<?php echo $materia?>?tipo=<?php echo $tipo?>" class="btn btn-primary px-4">Buscar</button>
-        </div>
+              <div class="d-flex justify-content-center mb-3">
+                <button type="submit" class="btn btn-primary px-4">Buscar</button>
+              </div>
+            </div>
           </form>
-        <br> 
+          <br>
         </div>
-                <!--Esta parte contiene los aportes coincidentes-->
-        <div class="container">
-    <div id="ajaxContainer" class="ajax-container"></div>
-        <?php while ($fila = mysqli_fetch_array($result)) : ?>
+        <!--Esta parte contiene los aportes coincidentes-->
+        <div id="filteredPublications" class="container">
+          <div id="ajaxContainer" class="ajax-container"></div>
+          <?php while ($fila = mysqli_fetch_array($result)) : ?>
             <div class="publicacion card mb-4">
               <div class="card-body">
                 <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
@@ -235,22 +205,121 @@ session_start();
               </div>
               <div class="card-footer d-flex text-muted justify-content-between align-items-end">
                 <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
-                <span class="card-text comment-date mb-0">Fecha de publicación: </span>
+                <span class="card-text comment-date mb-0">Fecha de publicación: <?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
               </div>
             </div>
           <?php endwhile; ?>
         </div>
+    </div>
     </main>
-    </div>
-  </main>
-    </div>
+
+  </div>
   </div>
   <footer class="py-3 text-light bg-primary">
     <div class="container">
       <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
     </div>
   </footer>
-  
+
+
+
+  <!-- Agrega este código al final del <head> o al final del <body> -->
+  <style>
+    /* Define una animación CSS */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Aplica la animación a los elementos que deseas animar */
+    .publicacion {
+      animation: fadeIn 0.5s ease-in-out;
+      /* Duración y tipo de animación */
+    }
+  </style>
+
+  <!-- Script para el autocompletado y el envío del formulario de búsqueda -->
+  <script>
+    $(document).ready(function() {
+    // Función para manejar el autocompletado en el textfield
+    $('#materiaInput').on('input', function() {
+        var inputText = $(this).val();
+        if (inputText.length >= 2) {
+            $.ajax({
+                type: 'GET',
+                url: 'suggest.php',
+                data: {
+                    input: inputText,
+                    carrera: '<?php echo $carrera; ?>'
+                },
+                success: function(response) {
+                    $('#suggestions').html(response);
+                    // Mostrar la lista de sugerencias
+                    $('#suggestions').show();
+                }
+            });
+        } else {
+            // Si el texto de entrada es corto, ocultar la lista de sugerencias
+            $('#suggestions').hide();
+        }
+    });
+
+    // Agregar evento de clic a los elementos de la lista de sugerencias
+    $('#suggestions').on('click', 'li', function(e) {
+        // Obtener el texto del elemento seleccionado
+        var selectedText = $(this).text().trim();
+        // Asignar el texto seleccionado al input
+        $('#materiaInput').val(selectedText);
+        // Limpiar la lista de sugerencias
+        $('#suggestions').html('');
+        // Ocultar la lista de sugerencias
+        $('#suggestions').hide();
+    });
+
+    // Función para ocultar la lista de sugerencias cuando se hace clic fuera de ella
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('#suggestions').length && !$(e.target).is('#materiaInput')) {
+            $('#suggestions').hide();
+        }
+    });
+
+    // Función para mostrar la lista de sugerencias cuando se hace clic en el campo de texto
+    $('#materiaInput').on('click', function() {
+        var inputText = $(this).val();
+        if (inputText.length >= 2) {
+            $('#suggestions').show();
+        }
+    });
+
+    // Función para enviar los parámetros del formulario de filtro a filter.php y mostrar las publicaciones filtradas
+    $('#filterForm').submit(function(event) {
+        event.preventDefault();
+        var materia = $('#materiaInput').val();
+        var tipo = $('#typeSelect').val();
+        var carrera = '<?php echo $carrera; ?>';
+        // Realizar la petición AJAX
+        $.ajax({
+            type: 'GET',
+            url: 'filter.php',
+            data: {
+                carrera: carrera,
+                materia: materia,
+                tipo: tipo
+            },
+            success: function(response) {
+                $('#filteredPublications').html(response);
+            }
+        });
+    });
+});
+
+  </script>
+
 </body>
 
 </html>
