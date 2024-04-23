@@ -106,7 +106,7 @@ if (!$res) {
       <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
         <ul class="list-unstyled" id="menu-lateral">
           <li class="mb-2 mt-2">
-            <a class="nav-link align-items-center" href="../home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
+            <a class="nav-link align-items-center" href="home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
           </li>
           <li class="mb-1">
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -171,7 +171,7 @@ if (!$res) {
         <div class="container" style="margin-top:1vmax; align-items: center;">
 
           <h2 style=" margin-left: 0.1% ; margin-bottom: 1vmax;"><span class="material-symbols-outlined"> library_add </span>
-            <b style="margin-left:0.5vmax;" class="textogran">Nueva Publicación</b>
+            <b style="margin-left:0.5vmax;" class="textogran">Editar Publicación</b>
           </h2>
           <div class="linea-delgada"></div>
 
@@ -192,8 +192,8 @@ if (!$res) {
 
 
             <div class="col-md-5 mt-0">
-              <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm" id="letraform"><b>Carrera * :</b></label>
-              <div class="col-sm-11">
+              <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm" id="letraform"><b>Carrera * :</b></label>
+              <div class="col-sm-12">
                 <select class="form-select" id="cbx_carrera" name="cbx_carrera" aria-label="Default select example" style="border-color: rgb(179, 179, 179);">
                   <option value="0">Selecciona carrera...</option>
                    <?php WHILE ($ROW = $res ->fetch_assoc() ){ ?>
@@ -205,7 +205,7 @@ if (!$res) {
            
             <div class="col-md-7 mt-0 mb-1">
              <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm" id="letraform"><b>Materia * :</b></label>
-             <div class="col-sm-12">
+             <div class="col-sm-13">
                 <select class="form-select"  id="cbx_materia" name="cbx_materia" aria-label="Default select example" style="border-color: rgb(179, 179, 179);">   
                 <option value="0">Selecciona carrera...</option>     
                 </select>
@@ -239,7 +239,7 @@ if (!$res) {
             </div>
 
             <div class="d-grid gap-1 col-6 mx-auto mb-4" style="">
-              <input class="btn btn-primary btn" type="submit" value="Publicar" id="letrabuton">
+              <input class="btn btn-primary btn" type="submit" value="Guardar" id="letrabuton">
             </div>
 
           </form>

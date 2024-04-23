@@ -394,7 +394,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                     </div>
                                                     <div class="col-auto">
                                                         <!-- Botón de reportar -->
-                                                        <a class="btn btn-sm btn-danger" id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c">
+                                                        <a class="btn btn-sm btn-danger" id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c" data-comid="<?php echo $comentario['idComent'] ?>">
                                                             <i class="bi bi-flag-fill"></i>
                                                         </a>
                                                     </div>
@@ -435,7 +435,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger">Aceptar</button>
+                            <button type="button" class="btn btn-danger" id="subir_reporte_p">Aceptar</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         </div>
                     </div>
@@ -460,19 +460,27 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                 </select>
                             <br>
                             <label for="textAreaRp">Comentario</label>
-                            <textarea name="Comentario" id="textAreaRp" cols="60" rows="2" placeholder="(Opcional)"></textarea>
+                            <textarea name="Comentario" id="comentarioRc" cols="60" rows="2" placeholder="(Opcional)"></textarea>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger">Aceptar</button>
+                            <button type="button" class="btn btn-danger" id="subir_reporte_c">Aceptar</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         </div>
                     </div>
                 </div>
             </div>
+            <script src="reportar_pub.js"></script> 
+            <?php 
+                if(isset($_POST['repPub'])){
+                    $motivo = $_POST['motivo'];
+                    $fechaRep = getdate();
 
+                    $qRepPub = "INSERT INTO ";
+                }
+            
+            ?>   
 
-            <script src="reportar_pub.js"></script>                              
         </div>
     </div>
 
