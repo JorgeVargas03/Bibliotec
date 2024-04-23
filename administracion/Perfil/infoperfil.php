@@ -103,6 +103,51 @@ mysqli_close($link);
         }
     </style>
 
+    <style>
+    .badge {
+    width: 200px; /* Tamaño fijo para el cuadro */
+    height: 100px; /* Tamaño fijo para el cuadro */
+    overflow: hidden; /* Para ocultar el texto que desborde el contenedor */
+    text-overflow: ellipsis; /* Para mostrar puntos suspensivos (...) cuando el texto desborde el contenedor */
+    white-space: nowrap; /* Para evitar que el texto se divida en múltiples líneas */
+    display: inline-block;
+    margin-right: 20px;
+    border: 2px solid #007bff; /* blue border */
+    border-radius: 20px; /* oval shape */
+    padding: 10px;
+    text-align: center;
+}
+
+.badge-content {
+    margin-top: 10px;
+}
+
+.trophy-icon {
+    width: 50px; /* adjust size as needed */
+    height: 50px; 
+}
+
+.badge-title {
+    font-weight: bold;
+    color: #007bff; /* blue color */
+}
+        
+
+#guardarBtn, #cancelarBtn {
+    background-color: blue;
+    color: white;
+    border: 2px solid blue;
+    border-radius: 8px; 
+    padding: 2px 5px;
+    margin-right: 5px; 
+    cursor: pointer; 
+}
+
+#guardarBtn:hover, #cancelarBtn:hover {
+    background-color: darkblue; 
+    border-color: darkblue; 
+}
+</style>
 </head>
 
 <!--IMAGEN DE CONTACTO-->
@@ -128,102 +173,74 @@ mysqli_close($link);
 
                 </form>
             </div>
-            <!-- Campo de búsqueda -->
-
-            <!-- Ícono de notificaciones -->
-
         </div>
     </header>
+
+
     <div class="container-fluid">
         <div class="row">
             <!-- Barra de navegación izquierda -->
-            <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
-                <ul class="list-unstyled" id="menu-lateral">
-                    <li class="mb-2 mt-2">
-                        <a class="nav-link align-items-center" href="home.php" id="letrabar"
-                            style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
-                    </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                            id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
-                            aria-expanded="false">
-                            Carreras
-                        </button>
-                        <div class="collapse" id="dashboard-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres">Arquitectura</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres">Ingeniería Bioquímica</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
-                                <li><a href="administracion/search.php"
-                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a>
-                                </li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres" style="color: black;">Ingeniería Química</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                            id="letrabardos" data-bs-toggle="collapse" data-bs-target="#contacto-collapse"
-                            aria-expanded="false" style="color:rgb(255, 255, 255); font-weight: bold;">
-                            Contacto
-                        </button>
-                        <div class="collapse" id="contacto-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres" style="color: rgb(255, 255, 255);">Información de contacto</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <hr class="my-2"> <!-- Línea divisora -->
-                    <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                            id="letrabardos" data-bs-toggle="collapse" data-bs-target="#cuenta-collapse"
-                            aria-expanded="false" style="color: white; font-weight: bold;">
-                            <svg class="bi pe-none" width="1.3vmax" height="1.3vmax">
-                                <use xlink:href="#people-circle" />
-                            </svg>
-                            <span style="margin-top:0.3vmax; margin-left: 0.4vmax; color: white;">Cuenta</span>
-                        </button>
-                        <div class="collapse" id="cuenta-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="administracion/Perfil/infoperfil.html"
-                                        class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                        id="letrabartres" style="color: white;">Mi Perfil</a></li>
-                                <a href="home.php?logout=true"
-                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                    id="letrabartres" style="color: white;">Cerrar Sesión</a>
-                            </ul>
-                        </div>
-                    </li>
-                    <hr class="my-2"> <!-- Línea divisora -->
-                    <li class="mb-1 mt-3">
-                        <a class="nav-link align-items-center" name="fade" href="../../publicacion/publicar.php"
-                            id="letrabardos" style="margin-left:10px">Nueva publicación</a>
-                    </li>
-
-                    <hr class="my-2"> <!-- Línea divisora -->
-                    <li class="mb-1 mt-3">
-                        <a class="nav-link align-items-center" href="#" id="letrabardos" style="margin-left:10px">
-                            <?php echo "Hola ".$_SESSION['nombre']." ". $_SESSION['apellido']?>
-                        </a>
-                    </li>
-                </ul>
+             <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
+        <ul class="list-unstyled" id="menu-lateral">
+          <li class="mb-2 mt-2">
+            <a class="nav-link align-items-center" href="../../home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
+          </li>
+          <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+              Carreras
+            </button>
+            <div class="collapse" id="dashboard-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="../search.php?carrera=Arquitectura" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
+                <li><a href="../search.php?carrera=Ing. Bioquimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
+                <li><a href="../search.php?carrera=Ing. Civil" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
+                <li><a href="../search.php?carrera=Ing. Electrica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
+                <li><a href="../search.php?carrera=Ing. Gestion Empresarial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
+                <li><a href="../search.php?carrera=Ing. Sistemas Computacionales" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
+                <li><a href="../search.php?carrera=Ing. Industrial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
+                <li><a href="../search.php?carrera=Ing. Mecatronica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
+                <li><a href="../search.php?carrera=Ing. Quimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
+                <li><a href="../search.php?carrera=Lic. Administracion" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
+              </ul>
             </div>
+          </li>
+          <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#contacto-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+              Contacto
+            </button>
+            <div class="collapse" id="contacto-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
+              </ul>
+            </div>
+          </li>
+          <hr class="my-2"> <!-- Línea divisora -->
+          <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#cuenta-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+              <svg class="bi pe-none" width="1.3vmax" height="1.3vmax">
+                <use xlink:href="#people-circle" />
+              </svg>
+              <span style="margin-top:0.3vmax; margin-left: 0.4vmax;">Cuenta</span>
+            </button>
+            <div class="collapse" id="cuenta-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="infoperfil.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
+                <a href="../../home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a>
+              </ul>
+            </div>
+          </li>
+          <hr class="my-2"> <!-- Línea divisora -->
+          <li class="mb-1 mt-3">
+            <a class="nav-link align-items-center" name="fade" href="../../publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
+          </li>
+
+          <hr class="my-2"> <!-- Línea divisora -->
+          <li class="mb-1 mt-3">
+            <a class="nav-link align-items-center" href="#" id="letrabardos" style="margin-left:10px"><?php echo "Hola " . $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></a>
+          </li>
+        </ul>
+      </div>
+
             <!-- Contenido principal -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="contenedor">
@@ -240,16 +257,124 @@ mysqli_close($link);
                         }
                     </script>
                     <h1><img id="profilePic" src="..\..\images\icons\perfil.png"></h1>
-                    <h2><span> <?php echo $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?> </span> <a href="editarPerfil.html"><img
-                                src="..\..\images\icons\editar.png" height="25 "></a></h2>
-                    <h5>Ing. Sistemas Computacionales</h5>
+
+<h2>
+    <span id="nombreApellido"><?php echo $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></span>
+    <img src="..\..\images\icons\editar.png" height="25" id="editarBtn">
+</h2>
+<div id="formularioEdicion" style="display: none;">
+    <input type="text" id="nuevoNombre" placeholder="Nuevo nombre">
+    <input type="text" id="nuevoApellido" placeholder="Nuevo apellido">
+    <button id="guardarBtn">Guardar</button>
+    <button id="cancelarBtn">Cancelar</button>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const nombreApellido = document.getElementById('nombreApellido');
+    const editarBtn = document.getElementById('editarBtn');
+    const formularioEdicion = document.getElementById('formularioEdicion');
+    const nuevoNombre = document.getElementById('nuevoNombre');
+    const nuevoApellido = document.getElementById('nuevoApellido');
+    const guardarBtn = document.getElementById('guardarBtn');
+    const cancelarBtn = document.getElementById('cancelarBtn');
+
+    // Mostrar formulario de edición al hacer clic en la imagen de edición
+    editarBtn.addEventListener('click', function () {
+        formularioEdicion.style.display = 'block';
+        const nombreApellidoSplit = nombreApellido.textContent.split(' ');
+        nuevoNombre.value = nombreApellidoSplit[0];
+        nuevoApellido.value = nombreApellidoSplit.slice(1).join(' ');
+        nombreApellido.style.display = 'none';
+    });
+
+    // Guardar los cambios al hacer clic en el botón de guardar
+    guardarBtn.addEventListener('click', function () {
+        const nuevoNombreValor = nuevoNombre.value.trim();
+        const nuevoApellidoValor = nuevoApellido.value.trim();
+        if (nuevoNombreValor !== '' && nuevoApellidoValor !== '') {
+            // Aquí puedes enviar los nuevos valores al servidor mediante AJAX o cualquier otra forma
+            // Por simplicidad, actualizaremos solo el nombre y apellido en el DOM
+            nombreApellido.textContent = nuevoNombreValor + ' ' + nuevoApellidoValor;
+            nombreApellido.style.display = 'inline';
+            formularioEdicion.style.display = 'none';
+        } else {
+            alert('Por favor ingresa un nombre y un apellido válidos.');
+        }
+    });
+
+    // Cancelar la edición al hacer clic en el botón de cancelar
+    cancelarBtn.addEventListener('click', function () {
+        nombreApellido.style.display = 'inline';
+        formularioEdicion.style.display = 'none';
+    });
+});
+</script>
+                    
+<h5>
+    <span id="nombreCarrera"><?php echo $_SESSION['carrera'] ?></span>
+    <img src="..\..\images\icons\editar.png" height="25" id="editarBtn" onclick="mostrarCombo()">
+</h5>
+
+<div id="comboCarreras" style="display: none;">
+    <select id="selectCarrera" onchange="cambiarCarrera()">
+        <option value="Arquitectura">Arquitectura</option>
+        <option value="Ingeniería Bioquímica">Ingeniería Bioquímica</option>
+        <option value="Ingeniería Civil">Ingeniería Civil</option>
+        <option value="Ingeniería Eléctrica">Ingeniería Eléctrica</option>
+        <option value="Ingeniería en Gestión Empresarial">Ingeniería en Gestión Empresarial</option>
+        <option value="Ingeniería en Sistemas Computacionales">Ingeniería en Sistemas Computacionales</option>
+        <option value="Ingeniería Mecatrónica">Ingeniería Mecatrónica</option>
+        <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+    </select>
+</div>
+
+<script>
+    function mostrarCombo() {
+        document.getElementById("comboCarreras").style.display = "block";
+    }
+
+    function cambiarCarrera() {
+        var select = document.getElementById("selectCarrera");
+        var carrera = select.options[select.selectedIndex].text;
+        // Reemplazar "Ingeniería" por "Ing."
+        carrera = carrera.replace("Ingeniería", "Ing.");
+        // Actualizar el texto en el span
+        document.getElementById("nombreCarrera").textContent = carrera;
+        // Ocultar el combo box
+        document.getElementById("comboCarreras").style.display = "none";
+    }
+</script>
+
+                        
+
+
+
 
                     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                         <div class="container mt-3">
                             <hr noshade="noshade"><br>
-                            <h3><img class="imagen" src="..\..\images\icons\mente-creativa.gif"> <img class="imagen"
-                                    src="..\..\images\icons\Estudiante-Sobresaliente.gif"> <img class="imagen"
-                                    src="..\..\images\icons\voluntario-estrella.gif"> </h3>
+ <h3>
+    <div class="badge">
+        <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
+        <div class="badge-content">
+            <span class="badge-title">Tigre Creativo</span>
+        </div>
+    </div>
+    
+    <div class="badge">
+        <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
+        <div class="badge-content">
+            <span class="badge-title">Tigre Contribuidor</span>
+        </div>
+    </div>
+    
+    <div class="badge">
+        <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
+        <div class="badge-content">
+            <span class="badge-title">Tigre Pro</span>
+        </div>
+    </div>
+</h3>
 
                             <hr noshade="noshade"><br>
                             <h3 class="mb-5">Historial de Publicaciones</h3>
@@ -258,12 +383,23 @@ mysqli_close($link);
                         <?php while ($fila = mysqli_fetch_array($registros)) : ?>
                          <div class="publicacion card mb-3">
                         <div class="card-body">
+
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-0"> 
-                                <button type="button" class="btn btn-outline-warning"  style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
-                                <span class="material-symbols-outlined">
-                                    edit_square
-                                </span>
-                                </button>
+                            <a href="editar_interfaz.php" class="btn btn-outline-warning" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
+                            <span class="material-symbols-outlined">
+                             edit_square
+                            </span>
+                            </a>
+
+
+                             <a href="eliminar_publicacion.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-outline-warning" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
+                                    <span class="material-symbols-outlined">
+                                        delete
+                                    </span>
+                                </a>
+
+                                
+
                             </div>
                             <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
                             <span class="card-text comment-date mb-0 ">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>

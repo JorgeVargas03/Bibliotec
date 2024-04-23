@@ -191,6 +191,7 @@ session_start();
           </li>
         </ul>
       </div>
+      
       <!-- Contenido principal -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <br>  
@@ -203,10 +204,8 @@ session_start();
                 <select class="form-select" id="categorySelect">
                   <option selected><?php $materia = NULL?>Seleccione una categoría...</option>
                   <?php 
-                    $contador = 1;
                     while ($fila2 = mysqli_fetch_array($result2)) : ?>
-                      <option value=<?php $contador?>><?php $materia = $fila2['nomMateria']?><?php echo $fila2['nomMateria']; ?></option>
-                    <?php $contador++; ?>
+                      <option><?php $materia = $fila2['nomMateria']?><?php echo $fila2['nomMateria']; ?></option>
                   <?php endwhile; ?>
                 </select>
               </div>
@@ -214,18 +213,19 @@ session_start();
                 <label for="categorySelect" class="form-label">Tipo de Recurso</label>
                 <select class="form-select" id="categorySelect">
                   <option selected><?php $tipo = NULL?>Seleccione una categoría...</option>
-                  <option value="Apuntes y Tareas"><?php $tipo = "Apuntes y Tareas"?>Apuntes y Tareas</option>
-                  <option value="2"><?php $tipo = "Recursos Bibliograficos"?>Recurso Bibliográfico</option>
+                  <option value="1"><?php $tipo = "Apuntes y Tareas"?>Apuntes y Tareas</option>
+                  <option value="2"><?php $tipo = "Recursos Bibliograficos"?>Recursos Bibliográficos</option>
                 </select>
               </div>
-          </form>
-        <div class="d-flex justify-content-center align-items-center mb-3">
+               <div class="d-flex justify-content-center mb-3">
             <button type="submit" onclick="<?php $_SESSION['filtro'] = true?>" href = "search.php?carrera=<?php echo $carrera?>?materia=<?php echo $materia?>?tipo=<?php echo $tipo?>" class="btn btn-primary px-4">Buscar</button>
         </div>
+          </form>
         <br> 
         </div>
                 <!--Esta parte contiene los aportes coincidentes-->
-        <div>
+        <div class="container">
+    <div id="ajaxContainer" class="ajax-container"></div>
         <?php while ($fila = mysqli_fetch_array($result)) : ?>
             <div class="publicacion card mb-4">
               <div class="card-body">
@@ -245,9 +245,7 @@ session_start();
   </main>
     </div>
   </div>
-  
-  <script src ="js/fadeout.js"></script>
-  <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
+  <footer class="py-3 text-light bg-primary">
     <div class="container">
       <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
     </div>
