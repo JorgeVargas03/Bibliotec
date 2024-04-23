@@ -192,25 +192,6 @@ session_start();
                                             </div>
                                             <div class="col-md-6">
                                                 <!-- Calificación con estrellas -->
-                                                <div class="rating mt-3">
-                                                    <p class="card-text"><b>Calificación:</b></p>
-                                                    <?php
-                                                    // Calificación actual de la publicación
-                                                    $calificacion = $publicacion['calif_Pub'];
-
-                                                    // Convertir calificación del rango 1-10 a 1-5
-                                                    $calificacion_estrellas = ceil($calificacion / 2);
-
-                                                    // Mostrar estrellas llenas según la calificación
-                                                    for ($i = 1; $i <= 5; $i++) {
-                                                        if ($i <= $calificacion_estrellas) {
-                                                            echo '<i class="bi bi-star-fill text-warning"></i>';
-                                                        } else {
-                                                            echo '<i class="bi bi-star text-warning"></i>';
-                                                        }
-                                                    }
-                                                    ?>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
