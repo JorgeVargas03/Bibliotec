@@ -181,3 +181,63 @@ footer{
   .btn-custom {
     border-radius: 25px;
   }
+
+
+  /*  ESTILOS PARA LAS SUGERENCIAS */
+  .autocomplete {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    list-style-type: none;
+    margin-top: 0;
+    padding-left: 0;
+    width: 100%;
+    z-index: 1000;
+    max-height: 200px; /* Establece la altura máxima de la lista de sugerencias */
+    overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
+  }
+
+  /* Estilo para cada elemento de la lista de sugerencias */
+  .autocomplete li {
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  /* Estilo para resaltar el texto coincidente */
+  .match {
+    font-weight: bold;
+    color: #1a0dab; /* Cambia el color del texto coincidente */
+  }
+
+  /* Estilo para resaltar el elemento seleccionado */
+  .autocomplete li:hover {
+    background-color: #f5f5f5; /* Cambia el color de fondo al pasar el mouse */
+  }
+
+  .form-control {
+    border-bottom: 1px solid transparent;
+  }
+
+  #suggestions {
+    width: 31.5%; /* Establece el ancho al 100% */
+    list-style-type: none; /* Quita los puntos de la lista */
+    margin: 0; /* Quita el margen */
+    padding: 0; /* Quita el relleno */
+    z-index: 999; /* Asegura que esté por encima de otros elementos */
+    background-color: #fff; /* Color de fondo de la lista de sugerencias */
+    border: 1px solid #ccc; /* Borde de la lista de sugerencias */
+    border-top: none; /* Quita el borde superior */
+  }
+
+  /* Establece el estilo de cada elemento de la lista de sugerencias */
+  #suggestions li {
+    padding: 8px 10px; /* Relleno interno */
+    cursor: pointer; /* Cambia el cursor a una mano */
+    border-bottom: none;
+  }
+
+  /* Cambia el color de fondo cuando se pasa el mouse por encima */
+  #suggestions li:hover {
+    background-color: #f1f1f1; /* Color de fondo al pasar el mouse */
+  }

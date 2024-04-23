@@ -173,15 +173,10 @@ session_start();
           <form id="filterForm">
             <div class="row align-items-center justify-content-center">
               <div class="col-md-5 mb-3">
-                <label for="categorySelect" class="form-label">Materia</label>
-                <select class="form-select" id="materiaSelect" name="materia">
-                  <option value="">Seleccione una categoría...</option>
-                  <?php
-                  while ($fila2 = mysqli_fetch_array($result2)) {
-                    echo '<option value="' . $fila2['nomMateria'] . '">' . $fila2['nomMateria'] . '</option>';
-                  }
-                  ?>
-                </select>
+                <label for="materiaInput" class="form-label">Materia</label>
+                <input class="form-control" type="text" id="materiaInput" name="materia" placeholder="Escribe el nombre de la materia">
+                <!-- Lista de sugerencias -->
+                <ul id="suggestions" class="autocomplete"></ul>
               </div>
               <div class="col-md-5 mb-3">
                 <label for="typeSelect" class="form-label">Tipo de Recurso</label>
@@ -214,21 +209,69 @@ session_start();
               </div>
             </div>
           <?php endwhile; ?>
-        </div> 
+        </div>
     </div>
     </main>
 
-    <script>
+  </div>
+  </div>
+  <footer class="py-3 text-light bg-primary">
+    <div class="container">
+      <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+
+
+  <!-- Agrega este código al final del <head> o al final del <body> -->
+  <style>
+    /* Define una animación CSS */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Aplica la animación a los elementos que deseas animar */
+    .publicacion {
+      animation: fadeIn 0.5s ease-in-out;
+      /* Duración y tipo de animación */
+    }
+  </style>
+
+  <!-- Script para el autocompletado y el envío del formulario de búsqueda -->
+  <script>
     $(document).ready(function() {
+      // Función para manejar el autocompletado en el textfield
+      $('#materiaInput').on('input', function() {
+        var inputText = $(this).val();
+        if (inputText.length >= 2) {
+          $.ajax({
+            type: 'GET',
+            url: 'suggest.php',
+            data: {
+              input: inputText,
+              carrera: '<?php echo $carrera; ?>'
+            },
+            success: function(response) {
+              $('#suggestions').html(response);
+            }
+          });
+        } else {
+          $('#suggestions').html('');
+        }
+      });
+
       // Función para enviar los parámetros del formulario de filtro a filter.php y mostrar las publicaciones filtradas
       $('#filterForm').submit(function(event) {
-        event.preventDefault(); // Evita el envío del formulario por el método tradicional
-
-        // Obtener los valores seleccionados en los selects
-        var carrera = '<?php echo $carrera; ?>';
-        var materia = $('#materiaSelect').val();
+        event.preventDefault();
+        var materia = $('#materiaInput').val();
         var tipo = $('#typeSelect').val();
-
+        var carrera = '<?php echo $carrera; ?>';
         // Realizar la petición AJAX
         $.ajax({
           type: 'GET',
@@ -239,50 +282,24 @@ session_start();
             tipo: tipo
           },
           success: function(response) {
-            $('#filteredPublications').html(response); // Mostrar las publicaciones filtradas en el contenedor correspondiente
+            $('#filteredPublications').html(response);
           }
         });
       });
     });
-  </script>
-
-  </div>
-  </div>
-  <footer class="py-3 text-light bg-primary">
-    <div class="container">
-      <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
-    </div>
-  </footer>
-
-  <!-- Agrega este código al final del <head> o al final del <body> -->
-<style>
-  /* Define una animación CSS */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  /* Aplica la animación a los elementos que deseas animar */
-  .publicacion {
-    animation: fadeIn 0.5s ease-in-out; /* Duración y tipo de animación */
-  }
-</style>
-
-<!-- Agrega este script al final del <body> -->
-<script>
-  // Espera a que se cargue el contenido de la página
-  document.addEventListener("DOMContentLoaded", function() {
-    // Agrega una clase de animación a los elementos con la clase 'publicacion'
-    var publicaciones = document.querySelectorAll('.publicacion');
-    publicaciones.forEach(function(publicacion) {
-      publicacion.classList.add('animate');
+    // Agregar evento de clic a los elementos de la lista de sugerencias
+    document.getElementById('suggestions').addEventListener('click', function(e) {
+      // Verificar si el clic fue en un elemento de la lista de sugerencias
+      if (e.target && e.target.nodeName == 'LI') {
+        // Obtener el texto del elemento seleccionado
+        var selectedText = e.target.textContent.trim();
+        // Asignar el texto seleccionado al input
+        document.getElementById('materiaInput').value = selectedText;
+        // Limpiar la lista de sugerencias
+        document.getElementById('suggestions').innerHTML = '';
+      }
     });
-  });
-</script>
+  </script>
 
 </body>
 
