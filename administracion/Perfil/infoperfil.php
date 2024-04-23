@@ -258,12 +258,23 @@ mysqli_close($link);
                         <?php while ($fila = mysqli_fetch_array($registros)) : ?>
                          <div class="publicacion card mb-3">
                         <div class="card-body">
+
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-0"> 
-                                <button type="button" class="btn btn-outline-warning"  style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
-                                <span class="material-symbols-outlined">
-                                    edit_square
-                                </span>
-                                </button>
+                            <a href="editar_interfaz.php" class="btn btn-outline-warning" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
+                            <span class="material-symbols-outlined">
+                             edit_square
+                            </span>
+                            </a>
+
+
+                             <a href="eliminar_publicacion.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-outline-warning" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
+                                    <span class="material-symbols-outlined">
+                                        delete
+                                    </span>
+                                </a>
+
+                                
+
                             </div>
                             <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
                             <span class="card-text comment-date mb-0 ">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
