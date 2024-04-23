@@ -2,20 +2,17 @@
 include('../php/functions.php');
 $link = include('../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
-// Consulta a la base de datos
+// Obtener el ID de la publicación desde el parámetro GET
+$carrera = $_GET['carrera'];
 
 // Verifica si la consulta se ejecutó correctamente
-
 if (isset($_GET['carrera'])) {
-  // Obtener el ID de la publicación desde el parámetro GET
-  $carrera = $_GET['carrera'];
-
   // Consultar la base de datos para obtener la información completa de la publicación
-  $consulta = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
-              JOIN usuario u ON p.id_Usuario = u.idUsuario
-              WHERE carrera_Pub = '$carrera'
-              ORDER BY p.idPub";
-  $consulta2 = "SELECT DISTINCT materia_Pub from publicacion WHERE carrera_Pub = '$carrera'";
+  $consulta = $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+  JOIN usuario u ON p.id_Usuario = u.idUsuario
+  WHERE carrera_Pub = '$carrera'
+  ORDER BY p.idPub";
+  $consulta2 = "SELECT nomMateria from materia WHERE nomCarrera = '$carrera'";
   $result = mysqli_query($link, $consulta);
   $result2 = mysqli_query($link, $consulta2);
 } else {
@@ -58,6 +55,34 @@ session_start();
   <!--iconos-->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+
+  <!-- CODIGO AJAX  -->
+  <script>
+  $(document).ready(function() {
+    // Manejar clic en el botón de búsqueda
+    $('#btnBuscar').click(function(e) {
+        e.preventDefault(); // Evitar el comportamiento predeterminado del botón
+
+        // Obtener valores seleccionados de los selects
+        var materia = $('#categorySelectMateria').val();
+        var tipo = $('#categorySelectTipo').val();
+
+        // Realizar petición AJAX
+        $.ajax({
+            url: 'search.php',
+            type: 'GET',
+            data: { materia: materia, tipo: tipo },
+            success: function(response) {
+                // Actualizar el contenido de la página con los resultados recibidos
+                $('.publicaciones').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+</script>
 </head>
 
 <style>
@@ -171,31 +196,30 @@ session_start();
               <div class="col-md-5 mb-3">
                 <label for="categorySelect" class="form-label">Materia</label>
                 <select class="form-select" id="categorySelect">
-                  <option selected>Seleccione una categoría...</option>
+                  <option selected><?php $materia = NULL?>Seleccione una categoría...</option>
                   <?php 
-                    $contador = 1;
                     while ($fila2 = mysqli_fetch_array($result2)) : ?>
-                      <option value=<?php $contador?>><?php echo $fila2['materia_Pub']; ?></option>
-                    <?php $contador++; ?>
+                      <option><?php $materia = $fila2['nomMateria']?><?php echo $fila2['nomMateria']; ?></option>
                   <?php endwhile; ?>
                 </select>
               </div>
               <div class="col-md-5 mb-3">
                 <label for="categorySelect" class="form-label">Tipo de Recurso</label>
                 <select class="form-select" id="categorySelect">
-                  <option selected>Seleccione una categoría...</option>
-                  <option value="1">Apuntes y Tareas</option>
-                  <option value="2">Recursos Bibliográficos</option>
+                  <option selected><?php $tipo = NULL?>Seleccione una categoría...</option>
+                  <option value="1"><?php $tipo = "Apuntes y Tareas"?>Apuntes y Tareas</option>
+                  <option value="2"><?php $tipo = "Recursos Bibliograficos"?>Recursos Bibliográficos</option>
                 </select>
               </div>
-          </form>
-        <div class="d-flex justify-content-center align-items-center mb-3">
-            <button type="submit" class="btn btn-primary px-4">Buscar</button>
+               <div class="d-flex justify-content-center mb-3">
+            <button type="submit" onclick="<?php $_SESSION['filtro'] = true?>" href = "search.php?carrera=<?php echo $carrera?>?materia=<?php echo $materia?>?tipo=<?php echo $tipo?>" class="btn btn-primary px-4">Buscar</button>
         </div>
+          </form>
         <br> 
         </div>
                 <!--Esta parte contiene los aportes coincidentes-->
-        <div>
+        <div class="container">
+    <div id="ajaxContainer" class="ajax-container"></div>
         <?php while ($fila = mysqli_fetch_array($result)) : ?>
             <div class="publicacion card mb-4">
               <div class="card-body">
@@ -205,7 +229,7 @@ session_start();
               </div>
               <div class="card-footer d-flex text-muted justify-content-between align-items-end">
                 <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
-                <span class="card-text comment-date mb-0">Fecha de publicación: <?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
+                <span class="card-text comment-date mb-0">Fecha de publicación: </span>
               </div>
             </div>
           <?php endwhile; ?>
@@ -215,9 +239,7 @@ session_start();
   </main>
     </div>
   </div>
-  
-  <script src ="js/fadeout.js"></script>
-  <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
+  <footer class="py-3 text-light bg-primary">
     <div class="container">
       <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
     </div>

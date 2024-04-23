@@ -1,5 +1,7 @@
 <?php
 include('../php/functions.php');
+//include('../php/sesion.php');
+session_start();
 // Incluir el archivo de conexión a la base de datos
 $link = include('../php/conexion.php');
 
@@ -28,6 +30,47 @@ if (isset($_GET['id'])) {
         header("Location: ../home.php");
         exit();
     }
+    
+    //Query para obtener el promedio de calificaciones de esta publicacion
+    $qcalif = "SELECT AVG(`calificacion`) as promedio from calificacion_detalle cd 
+                join usuario u on u.idUsuario = cd.id_Usuario 
+                join publicacion p on p.idPub = cd.idPub 
+                where cd.idPub = $idPub;";
+    $consulta = mysqli_query($link,$qcalif);
+
+    $consultaCal = mysqli_fetch_assoc($consulta);
+    $idUser = $_SESSION['idU'];
+    if(isset($_POST["guardar"])){  //Desmadre para guardar la calificacion
+        $rate = $_POST["calificacion"];
+        
+        //verificar si es la primera vez que el usuario califica esta publicacion
+        $ver = "SELECT * FROM `calificacion_detalle` 
+                WHERE id_Usuario = $idUser AND idPub=$idPub;";
+
+        $res = mysqli_query($link,$ver);
+        if(mysqli_num_rows($res) == 1){
+            $sql = "UPDATE `calificacion_detalle` SET `calificacion`= $rate 
+            WHERE id_Usuario = $idUser AND idPub=$idPub;";
+
+            $res = mysqli_query($link,$sql);
+            if($res){
+                echo 'SI';
+            }else{
+                echo 'NO';
+            }
+        }else{
+            $sql = "INSERT INTO `calificacion_detalle` VALUES($idUser,$idPub,$rate)";
+            
+            $res = mysqli_query($link,$sql);
+            if($res){
+                echo 'SI';
+            }else{
+                echo 'NO';
+            }
+        }
+    }
+    //exit(json_encode(array('id' => $idUser)));
+
 } else {
     // Si no se proporcionó un ID de publicación, redireccionar a la página principal
     header("Location: ../home.php");
@@ -38,7 +81,7 @@ if (isset($_GET['id'])) {
 mysqli_close($link);
 
 // Iniciar sesión
-session_start();
+//session_start();
 
 // Verificar si el usuario no ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
@@ -207,11 +250,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         </div>
                                         <div>
                                             <!-- Botón de reportar -->
-                                            <a href="#" class="btn btn-danger shadow" data-toggle="tooltip" data-placement="top" title="Reportar publicación">
-                                                <i class="bi bi-flag-fill"></i>
+                                            <a class="btn btn-danger btn-sm shadow" id="reportarPub" data-bs-toggle="modal" data-bs-target="#modal_report_p">
+                                                <i class="bi bi-flag-fill" ></i>
                                             </a>
                                         </div>
-                                    </div>
+                                    </div>    
+
                                     <div class="card-body">
                                         <!-- Descripción de la publicación -->
                                         <div class="row mb-4">
@@ -231,21 +275,29 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                             <div class="col-md-6">
                                                 <!-- Calificación con estrellas -->
                                                 <div class="rating mt-3">
-                                                    <p class="card-text"><b>Calificación:</b></p>
-                                                    <p class="calificar">
+                                                    <p class="card-text"><b>Calificación:
+                                                    
                                                     <?php
                                                     // Calificación actual de la publicación
-                                                    $calificacion = $publicacion['calif_Pub'];
-
-                                                    // Convertir calificación del rango 1-10 a 1-5
-                                                    $calificacion_estrellas = ceil($calificacion / 2);
-
+                                                    if($consultaCal == null){
+                                                        $calificacion = 0;
+                                                    }else{
+                                                        $calificacion = $consultaCal['promedio'];
+                                                    }
+                                                    echo '<span> '.round($calificacion,2).'</span> / 5 </b></p>';
+                                                    
+                                                    // Convertir calificación de 1-5
+                                                    $calificacion_estrellas = ceil($calificacion/1);
+                                                    ?>
+                                                    <p class="calificar">
+                                                    <?php
+                                                    
                                                     // Mostrar estrellas llenas según la calificación
                                                     for ($i = 1; $i <= 5; $i++) {
                                                         if ($i <= $calificacion_estrellas) {
-                                                            echo '<i class="bi bi-star-fill estrella" name="estrellas"></i>';
+                                                            echo '<i class="bi bi-star-fill estrella" data-rating="'.$i.'"></i>';
                                                         } else {
-                                                            echo '<i class="bi bi-star-fill " name="estrellas"></i>';
+                                                            echo '<i class="bi bi-star-fill" data-rating="'.$i.'"></i>';
                                                         }
                                                     }
                                                     ?>
@@ -342,7 +394,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                     </div>
                                                     <div class="col-auto">
                                                         <!-- Botón de reportar -->
-                                                        <a class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Reportar comentario">
+                                                        <a class="btn btn-sm btn-danger" id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c">
                                                             <i class="bi bi-flag-fill"></i>
                                                         </a>
                                                     </div>
@@ -360,6 +412,67 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         </div>
                     </div>
             </main>
+            
+            <!-- Ventana de reportar P -->
+            <div class="modal fade" id="modal_report_p" tabindex="-1" aria-labelledby="modal_report_pl" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Reportar Publicacion</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="inputState validationCustom01" class="form-label">Motivo</label>
+                                <select id="inputState validationCustom01" class="form-select" name="motivo" required>
+                                <option selected>Seleccionar</option>
+                                <option>Contenido inapropiado</option>
+                                <option>Spam</option>
+                                <option>No cumple con las normas de referenciado</option>
+                                </select>
+                            <br>
+                            <label for="textAreaRp">Comentario</label>
+                            <textarea name="Comentario" id="textAreaRp" cols="60" rows="2" placeholder="(Opcional)"></textarea>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger">Aceptar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VEntana reportar C -->
+            <div class="modal fade" id="modal_report_c" tabindex="-1" aria-labelledby="modal_report_cl" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Reportar Comentario</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="inputState validationCustom01" class="form-label">Motivo</label>
+                                <select id="inputState validationCustom01" class="form-select" name="motivo" required>
+                                <option selected>Seleccionar</option>
+                                <option>Contenido inapropiado</option>
+                                <option>Spam</option>
+                                <option>No cumple con las normas de referenciado</option>
+                                </select>
+                            <br>
+                            <label for="textAreaRp">Comentario</label>
+                            <textarea name="Comentario" id="textAreaRp" cols="60" rows="2" placeholder="(Opcional)"></textarea>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger">Aceptar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <script src="reportar_pub.js"></script>                              
         </div>
     </div>
 

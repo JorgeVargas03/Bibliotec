@@ -155,7 +155,7 @@ if (!$res) {
           <hr class="my-2"> <!-- Línea divisora -->
           <li class="mb-1 mt-3">
             <a class="nav-link align-items-center" name ="fade" href="publicacion/publicar.php" id="letrabardos" style="margin-left:10px; 
-                 filter: drop-shadow(-1px 2px 3px rgb(255, 231, 2));">Nueva publicación</a>
+                 filter: drop-shadow(-1px 2px 3px rgb(255, 231, 2));">Editar publicación</a>
           </li>
         </ul>
       </div>
@@ -167,7 +167,7 @@ if (!$res) {
         <div class="container" style="margin-top:1vmax; align-items: center;">
 
           <h2 style=" margin-left: 0.1% ; margin-bottom: 1vmax;"><span class="material-symbols-outlined"> library_add </span>
-            <b style="margin-left:0.5vmax;" class="textogran">Nueva Publicación</b>
+            <b style="margin-left:0.5vmax;" class="textogran">Editar Publicación</b>
           </h2>
           <div class="linea-delgada"></div>
 
@@ -235,7 +235,7 @@ if (!$res) {
             </div>
 
             <div class="d-grid gap-1 col-6 mx-auto mb-4" style="">
-              <input class="btn btn-primary btn" type="submit" value="Publicar" id="letrabuton">
+              <input class="btn btn-primary btn" type="submit" value="Guardar" id="letrabuton">
             </div>
 
           </form>

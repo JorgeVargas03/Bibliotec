@@ -45,6 +45,39 @@ class functions
         return $fechaN;
     }
 
+    //METODO DE FILTRADO DE PUBLICACIONES
+    public static function filtrado($carrera, $materia, $tipo)
+    {
+        $query = NULL;
+        if($materia == NULL AND $tipo == NULL){
+            $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+            JOIN usuario u ON p.id_Usuario = u.idUsuario
+            WHERE carrera_Pub = '$carrera'
+            ORDER BY p.idPub";
+        }
+        elseif($tipo != NULL){
+            $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+            JOIN usuario u ON p.id_Usuario = u.idUsuario
+            WHERE carrera_Pub = '$carrera'
+            AND tipo_Pub = '$tipo'
+            ORDER BY p.idPub";
+        }
+        elseif($materia != NULL){
+            $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+            JOIN usuario u ON p.id_Usuario = u.idUsuario
+            WHERE carrera_Pub = '$carrera'
+            AND materia_Pub = '$materia'
+            ORDER BY p.idPub";
+        }else{
+            $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+            JOIN usuario u ON p.id_Usuario = u.idUsuario
+            WHERE carrera_Pub = '$carrera'
+            AND materia_Pub = '$materia'
+            AND tipo_Pub = '$tipo'
+            ORDER BY p.idPub";
+        }
+        return $query;
+    }
     private static function mes($month)
     {
         switch ($month) {
