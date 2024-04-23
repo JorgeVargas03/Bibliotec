@@ -246,59 +246,78 @@ session_start();
   <!-- Script para el autocompletado y el envío del formulario de búsqueda -->
   <script>
     $(document).ready(function() {
-      // Función para manejar el autocompletado en el textfield
-      $('#materiaInput').on('input', function() {
+    // Función para manejar el autocompletado en el textfield
+    $('#materiaInput').on('input', function() {
         var inputText = $(this).val();
         if (inputText.length >= 2) {
-          $.ajax({
-            type: 'GET',
-            url: 'suggest.php',
-            data: {
-              input: inputText,
-              carrera: '<?php echo $carrera; ?>'
-            },
-            success: function(response) {
-              $('#suggestions').html(response);
-            }
-          });
+            $.ajax({
+                type: 'GET',
+                url: 'suggest.php',
+                data: {
+                    input: inputText,
+                    carrera: '<?php echo $carrera; ?>'
+                },
+                success: function(response) {
+                    $('#suggestions').html(response);
+                    // Mostrar la lista de sugerencias
+                    $('#suggestions').show();
+                }
+            });
         } else {
-          $('#suggestions').html('');
+            // Si el texto de entrada es corto, ocultar la lista de sugerencias
+            $('#suggestions').hide();
         }
-      });
+    });
 
-      // Función para enviar los parámetros del formulario de filtro a filter.php y mostrar las publicaciones filtradas
-      $('#filterForm').submit(function(event) {
+    // Agregar evento de clic a los elementos de la lista de sugerencias
+    $('#suggestions').on('click', 'li', function(e) {
+        // Obtener el texto del elemento seleccionado
+        var selectedText = $(this).text().trim();
+        // Asignar el texto seleccionado al input
+        $('#materiaInput').val(selectedText);
+        // Limpiar la lista de sugerencias
+        $('#suggestions').html('');
+        // Ocultar la lista de sugerencias
+        $('#suggestions').hide();
+    });
+
+    // Función para ocultar la lista de sugerencias cuando se hace clic fuera de ella
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('#suggestions').length && !$(e.target).is('#materiaInput')) {
+            $('#suggestions').hide();
+        }
+    });
+
+    // Función para mostrar la lista de sugerencias cuando se hace clic en el campo de texto
+    $('#materiaInput').on('click', function() {
+        var inputText = $(this).val();
+        if (inputText.length >= 2) {
+            $('#suggestions').show();
+        }
+    });
+
+    // Función para enviar los parámetros del formulario de filtro a filter.php y mostrar las publicaciones filtradas
+    $('#filterForm').submit(function(event) {
         event.preventDefault();
         var materia = $('#materiaInput').val();
         var tipo = $('#typeSelect').val();
         var carrera = '<?php echo $carrera; ?>';
         // Realizar la petición AJAX
         $.ajax({
-          type: 'GET',
-          url: 'filter.php',
-          data: {
-            carrera: carrera,
-            materia: materia,
-            tipo: tipo
-          },
-          success: function(response) {
-            $('#filteredPublications').html(response);
-          }
+            type: 'GET',
+            url: 'filter.php',
+            data: {
+                carrera: carrera,
+                materia: materia,
+                tipo: tipo
+            },
+            success: function(response) {
+                $('#filteredPublications').html(response);
+            }
         });
-      });
     });
-    // Agregar evento de clic a los elementos de la lista de sugerencias
-    document.getElementById('suggestions').addEventListener('click', function(e) {
-      // Verificar si el clic fue en un elemento de la lista de sugerencias
-      if (e.target && e.target.nodeName == 'LI') {
-        // Obtener el texto del elemento seleccionado
-        var selectedText = e.target.textContent.trim();
-        // Asignar el texto seleccionado al input
-        document.getElementById('materiaInput').value = selectedText;
-        // Limpiar la lista de sugerencias
-        document.getElementById('suggestions').innerHTML = '';
-      }
-    });
+});
+
   </script>
 
 </body>
