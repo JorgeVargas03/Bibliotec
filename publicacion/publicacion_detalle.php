@@ -31,6 +31,7 @@ if (isset($_GET['id'])) {
         exit();
     }
     
+
     //Query para obtener el promedio de calificaciones de esta publicacion
     $qcalif = "SELECT AVG(`calificacion`) as promedio from calificacion_detalle cd 
                 join usuario u on u.idUsuario = cd.id_Usuario 
@@ -39,10 +40,10 @@ if (isset($_GET['id'])) {
     $consulta = mysqli_query($link,$qcalif);
 
     $consultaCal = mysqli_fetch_assoc($consulta);
-    $idUser = $_SESSION['idU'];
+    
     if(isset($_POST["guardar"])){  //Desmadre para guardar la calificacion
         $rate = $_POST["calificacion"];
-        
+        $idUser = $_SESSION['idU'];
         //verificar si es la primera vez que el usuario califica esta publicacion
         $ver = "SELECT * FROM `calificacion_detalle` 
                 WHERE id_Usuario = $idUser AND idPub=$idPub;";
@@ -70,7 +71,38 @@ if (isset($_GET['id'])) {
         }
     }
     //exit(json_encode(array('id' => $idUser)));
+       
+     //PARA LOS REPORTES DE PUBLICACIONES Y COMENTARIOS
+     if(isset($_POST["repub"])){
+        $motivo = $_POST["motivo"];
+        $fechaRep = date("Y-m-d");
+        
+        $qRepPub = "INSERT INTO `reportepublicación`(`idPub`, `fecha_Report`, `motivo_Report`) 
+                    VALUES ($idPub,$fechaRep,$motivo);";
 
+        $resR = mysqli_query($link,$qRepPub);
+        if($resR){
+            echo "Se ha guardado el reporte en la base de datos";
+        }else{
+            echo "NO";
+        }
+    } 
+    if(isset($_POST["idComentario"])){
+        $motivo = $_POST["motivo"];
+        $idComRep = $_POST["idComentario"];
+        $fechaRep = date("Y-m-d");
+
+        $qRepCom = "INSERT INTO `reportecomentario`(`idComent`, `fecha_Report`, `motivo_Report`)
+                    VALUES ($idComRep,$fechaRep,$motivo)";
+
+        $resR = mysqli_query($link,$qRepCom);
+        if($resR){
+            echo 'SI';
+        }else{
+            echo 'NO';
+        }
+    }
+            
 } else {
     // Si no se proporcionó un ID de publicación, redireccionar a la página principal
     header("Location: ../home.php");
@@ -179,57 +211,65 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <div class="row">
             <!-- Barra de navegación izquierda -->
             <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
-                <ul class="list-unstyled" id="menu-lateral">
-                    <li class="mb-2 mt-2">
-                        <a class="nav-link align-items-center" name="fade" href="../home.php" id="letrabar">Inicio</a>
-                    </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
-                            Carreras
-                        </button>
-                        <div class="collapse" id="dashboard-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
-                                <li><a href="../administracion/search.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#contacto-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
-                            Contacto
-                        </button>
-                        <div class="collapse" id="contacto-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <hr class="my-2"> <!-- Línea divisora -->
-                    <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#cuenta-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
-                            <svg class="bi pe-none" width="1.3vmax" height="1.3vmax">
-                                <use xlink:href="#people-circle" />
-                            </svg>
-                            <span style="margin-top:0.3vmax; margin-left: 0.4vmax;">Cuenta</span>
-                        </button>
-                        <div class="collapse" id="cuenta-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
-                                <li><a href="../home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <hr class="my-2"> <!-- Línea divisora -->
-                </ul>
+        <ul class="list-unstyled" id="menu-lateral">
+          <li class="mb-2 mt-2">
+            <a class="nav-link align-items-center" href="../home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
+          </li>
+          <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+              Carreras
+            </button>
+            <div class="collapse" id="dashboard-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="../administracion/search.php?carrera=Arquitectura" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
+                <li><a href="../administracion/search.php?carrera=Ing. Bioquimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
+                <li><a href="../administracion/search.php?carrera=Ing. Civil" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
+                <li><a href="../administracion/search.php?carrera=Ing. Electrica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
+                <li><a href="../administracion/search.php?carrera=Ing. Gestion Empresarial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
+                <li><a href="../administracion/search.php?carrera=Ing. Sistemas Computacionales" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
+                <li><a href="../administracion/search.php?carrera=Ing. Industrial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
+                <li><a href="../administracion/search.php?carrera=Ing. Mecatronica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
+                <li><a href="../administracion/search.php?carrera=Ing. Quimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
+                <li><a href="../administracion/search.php?carrera=Lic. Administracion" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
+              </ul>
             </div>
+          </li>
+          <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#contacto-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+              Contacto
+            </button>
+            <div class="collapse" id="contacto-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
+              </ul>
+            </div>
+          </li>
+          <hr class="my-2"> <!-- Línea divisora -->
+          <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#cuenta-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+              <svg class="bi pe-none" width="1.3vmax" height="1.3vmax">
+                <use xlink:href="#people-circle" />
+              </svg>
+              <span style="margin-top:0.3vmax; margin-left: 0.4vmax;">Cuenta</span>
+            </button>
+            <div class="collapse" id="cuenta-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="administracion/Perfil/infoperfil.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
+                <a href="home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a>
+              </ul>
+            </div>
+          </li>
+          <hr class="my-2"> <!-- Línea divisora -->
+          <li class="mb-1 mt-3">
+            <a class="nav-link align-items-center" name="fade" href="publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
+          </li>
+
+          <hr class="my-2"> <!-- Línea divisora -->
+          <li class="mb-1 mt-3">
+            <a class="nav-link align-items-center" href="#" id="letrabardos" style="margin-left:10px"><?php echo "Hola " . $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></a>
+          </li>
+        </ul>
+      </div>
             <!-- Contenido principal -->
 
 
@@ -376,6 +416,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                     <!-- Mostrar comentarios existentes -->
                                     <?php while ($comentario = mysqli_fetch_assoc($result_comentarios)) : ?>
                                         <div class="card mt-4">
+                                            <div class="card-header">
+                                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                    <!-- Botón de reportar -->
+                                                    <a class="btn btn-sm btn-outline-danger " id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c" data-comid="<?php echo $comentario['idComent'] ?>">
+                                                        <i class="bi bi-flag-fill"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
                                             <div class="card-body">
                                                 <div class="row align-items-center">
                                                     <div class="col-auto">
@@ -393,10 +441,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                         <small class="text-muted"><?php echo functions::convertirFecha($comentario['fecha_Coment']); ?></small>
                                                     </div>
                                                     <div class="col-auto">
-                                                        <!-- Botón de reportar -->
-                                                        <a class="btn btn-sm btn-danger" id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c" data-comid="<?php echo $comentario['idComent'] ?>">
-                                                            <i class="bi bi-flag-fill"></i>
-                                                        </a>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -423,7 +468,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         </div>
                         <div class="modal-body">
                             <label for="inputState validationCustom01" class="form-label">Motivo</label>
-                                <select id="inputState validationCustom01" class="form-select" name="motivo" required>
+                                <select id="inputState validationCustom01 " class="form-select selepub" name="motivo" >
                                 <option selected>Seleccionar</option>
                                 <option>Contenido inapropiado</option>
                                 <option>Spam</option>
@@ -441,6 +486,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     </div>
                 </div>
             </div>
+            
+            <?php 
+                
+                    
+            ?>
 
             <!-- VEntana reportar C -->
             <div class="modal fade" id="modal_report_c" tabindex="-1" aria-labelledby="modal_report_cl" aria-hidden="true">
@@ -451,8 +501,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <label for="inputState validationCustom01" class="form-label">Motivo</label>
-                                <select id="inputState validationCustom01" class="form-select" name="motivo" required>
+                            <label for="inputState validationCustom01 " class="form-label">Motivo</label>
+                                <select id="inputState validationCustom01 " class="form-select selecom" name="motivo" >
                                 <option selected>Seleccionar</option>
                                 <option>Contenido inapropiado</option>
                                 <option>Spam</option>
@@ -471,15 +521,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
             </div>
             <script src="reportar_pub.js"></script> 
-            <?php 
-                if(isset($_POST['repPub'])){
-                    $motivo = $_POST['motivo'];
-                    $fechaRep = getdate();
-
-                    $qRepPub = "INSERT INTO "
-                }
-            
-            ?>   
+            <?php  ?>
 
         </div>
     </div>

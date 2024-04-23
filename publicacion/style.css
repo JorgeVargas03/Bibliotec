@@ -15,11 +15,12 @@
 }
 
 .bi-flag-fill {
-    font-size: smaller;
+    font-size: xx-small;
 }
 
-.btn-danger{
+.btn-outline-danger{
     color: #E36B6B;
+    font-size: xx-small;
 }
 
 .bi-star-fill {

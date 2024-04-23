@@ -35,8 +35,3 @@ $(document).ready(function(){
 
 });//document
 
-
-// estrellas.addEventListener('click',function(){
-
-
-// });
