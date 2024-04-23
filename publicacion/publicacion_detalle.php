@@ -87,7 +87,7 @@ if (isset($_GET['id'])) {
             echo "NO";
         }
     } 
-    if(isset($_POST["idComentario"])){
+    if(isset($_POST["repCom"])){
         $motivo = $_POST["motivo"];
         $idComRep = $_POST["idComentario"];
         $fechaRep = date("Y-m-d");
