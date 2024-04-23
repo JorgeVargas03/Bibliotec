@@ -137,15 +137,15 @@ mysqli_close($link);
     background-color: blue;
     color: white;
     border: 2px solid blue;
-    border-radius: 8px; /* Agrega bordes curvos */
-    padding: 2px 5px; /* Ajusta el espaciado dentro del botón */
-    margin-right: 5px; /* Agrega un espacio entre los botones */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    border-radius: 8px; 
+    padding: 2px 5px;
+    margin-right: 5px; 
+    cursor: pointer; 
 }
 
 #guardarBtn:hover, #cancelarBtn:hover {
-    background-color: darkblue; /* Cambia el color de fondo al pasar el cursor sobre el botón */
-    border-color: darkblue; /* Cambia el color del borde al pasar el cursor sobre el botón */
+    background-color: darkblue; 
+    border-color: darkblue; 
 }
 </style>
 </head>
@@ -310,12 +310,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
                     
-                      
-
-                      
-                    
-
-
 <h5>
     <span id="nombreCarrera"><?php echo $_SESSION['carrera'] ?></span>
     <img src="..\..\images\icons\editar.png" height="25" id="editarBtn" onclick="mostrarCombo()">
