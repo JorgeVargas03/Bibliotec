@@ -238,7 +238,7 @@ if (!$res) {
                        name="archivo" type="file" id="formFileLg" style="border-color: rgb(179, 179, 179);">
             </div>
 
-            <div class="d-grid gap-1 col-6 mx-auto mb-4" style="">
+            <div class="d-grid gap-1 col-6 mx-auto mb-4">
               <input class="btn btn-primary btn" type="submit" value="Guardar" id="letrabuton">
             </div>
 
