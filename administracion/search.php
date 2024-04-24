@@ -174,13 +174,13 @@ session_start();
             <div class="row align-items-center justify-content-center">
               <div class="col-md-5 mb-3">
                 <label for="materiaInput" class="form-label">Materia</label>
-                <input class="form-control" type="text" id="materiaInput" name="materia" placeholder="Escribe el nombre de la materia">
+                <input class="form-control" type="text" id="materiaInput" autocomplete="off" name="materia" placeholder="Escribe el nombre de la materia" title="Si se deja en blanco se mostrarán todas las publicaciones">
                 <!-- Lista de sugerencias -->
                 <ul id="suggestions" class="autocomplete"></ul>
               </div>
               <div class="col-md-5 mb-3">
                 <label for="typeSelect" class="form-label">Tipo de Recurso</label>
-                <select class="form-select" id="typeSelect" name="tipo">
+                <select class="form-select" id="typeSelect" name="tipo" title="Si no se elige nada se mostraran todas las categorias">
                   <option value="">Seleccione una categoría...</option>
                   <option value="Apuntes y Tareas">Apuntes y Tareas</option>
                   <option value="Recurso Bibliografico">Recurso Bibliográfico</option>
