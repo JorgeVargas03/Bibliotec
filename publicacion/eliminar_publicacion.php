@@ -1,13 +1,13 @@
 <?php
 // Incluye el archivo de conexión a la base de datos
-include('../../php/conexion.php');
+$conexion = include('../../php/conexion.php');
 
 // Verifica si se ha enviado el ID de la publicación a eliminar
 if (isset($_POST['idpub'])) {
     $idPublicacion = $_POST['idpub'];
 
     // Prepara la consulta SQL para eliminar la publicación
-    $consulta = "DELETE FROM publicacion WHERE idPub = '$idPublicacion'";
+    $consulta = "DELETE FROM `publicacion` WHERE `idPub` = $idPublicacion";
 
     // Ejecuta la consulta
     if (mysqli_query($conexion, $consulta)) {
