@@ -10,12 +10,6 @@ if (!is_dir($carpetaUsuario)) {
         die('Error al crear la carpeta');
     }
 }
-
-// Verificar el tamaño del archivo
-$tamanoMaximo = 2 * 1024 * 1024; // 2 MB en bytes
-if ($_FILES['archivo']['size'] > $tamanoMaximo) {
-    echo "El tamaño del archivo excede el límite permitido (2 MB).";
-} else {
     // Archivo 
     // Obtener nombre temporal y nombre de archivo
     $archivoTemporal = $_FILES['archivo']['tmp_name'];
@@ -45,20 +39,28 @@ if ($_FILES['archivo']['size'] > $tamanoMaximo) {
 
             // Ejecutar la consulta
             if ($stmt->execute()) {
-                echo "Los datos se han guardado correctamente.";
+                $_SESSION["alert_message"] = "la publicación se ha mandado a revision.";
+                header("location: publicar.php"); // Redirigir de vuelta al formulario de inicio de sesión
+                exit;
             } else {
-                echo "Error al guardar los datos: " . $link->error;
+                $_SESSION["alert_message"] = "Error en la preparación de la consulta: " . $link->error;
+                header("location: publicar.php"); // Redirigir de vuelta al formulario de inicio de sesión
+                exit;
             }
 
             // Cerrar la consulta preparada
             $stmt->close();
         } else {
-            echo "Error en la preparación de la consulta: " . $link->error;
+            $_SESSION["alert_message"] = "Error en la preparación de la consulta: " . $link->error;
+            header("location: publicar.php"); // Redirigir de vuelta al formulario de inicio de sesión
+            exit;
         }
     } else {
-        echo "Error al subir el archivo. No se ha realizado ninguna inserción en la base de datos.";
+        $_SESSION["alert_message"] = "Error al subir el archivo.";
+        header("location: publicar.php"); // Redirigir de vuelta al formulario de inicio de sesión
+         exit;
     }
-}
+
 
 // Cerrar la conexión
 $link->close();

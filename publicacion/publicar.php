@@ -262,10 +262,11 @@ if (!$res) {
                     <span class="material-symbols-outlined">help </span>
                     </button> 
               </label>
-              <input class="form-control form-control-lg"  accept=" .pdf, .doc, .docx, .ppt, .ccv" name="archivo" type="file" id="formFileLg" style="border-color: rgb(179, 179, 179);" required>
+              <input class="form-control form-control-lg"  onchange="checkFileSize(this)" accept=" .pdf, .doc, .docx, .ppt, .ccv" name="archivo" type="file" id="formFileLg" style="border-color: rgb(179, 179, 179);" required>
                        <div class="invalid-feedback">
                             Por favor selecciona un archivo.
                      </div>
+                     <div id="errorMessage" style="color: red;"></div>
             </div>
 
             <div class="d-grid gap-1 col-6 mx-auto mb-4">
@@ -330,8 +331,21 @@ if (!$res) {
           </script>
 
 
-
-        
+           <!--Script para validar tamaño-->  
+            <script>
+            function checkFileSize(input) {
+              var maxSize = 2 * 1024 * 1024; // Tamaño máximo permitido en bytes (2 MB)
+              if (input.files && input.files[0]) {
+                var fileSize = input.files[0].size;
+                if (fileSize > maxSize) {
+                  document.getElementById('errorMessage').innerText = 'El tamaño del archivo excede el límite permitido (2 MB).';
+                  input.value = ''; // Limpiar el valor del input file
+                } else {
+                  document.getElementById('errorMessage').innerText = '';
+                }
+              }
+            }
+            </script>
       </div>
       </main>
     </div>
@@ -342,6 +356,32 @@ if (!$res) {
       <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
     </div>
   </footer>
+
+
+
+  <!-- TOAST -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="alertToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">Mensaje de Alerta</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body"></div>
+  </div>
+</div>
+
+<script>
+  var alertMessage = "<?php echo isset($_SESSION['alert_message']) ? $_SESSION['alert_message'] : ''; ?>";
+  if (alertMessage) {
+    var alertToast = document.getElementById('alertToast');
+    var toastBody = alertToast.querySelector('.toast-body');
+    toastBody.textContent = alertMessage;
+    var bsAlert = new bootstrap.Toast(alertToast);
+    bsAlert.show();
+    <?php unset($_SESSION['alert_message']); ?>
+  }
+</script>
+
 </body>
 
 </html>
