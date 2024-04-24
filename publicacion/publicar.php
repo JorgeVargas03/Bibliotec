@@ -6,7 +6,6 @@ session_start();
 $nombreUS =  strstr($_SESSION['email'],'@',true);
 
 
-
 // Verificar si el usuario no ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   header("location: ../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
@@ -51,6 +50,8 @@ if (!$res) {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
   <script language="javascript" src="../js/jquery-3.1.1.min.js"></script>
 
+
+    <!--SCRIPT PARA ACTUALIZAR COMBO BOX-->
   <script language="javascript">
 			$(document).ready(function(){
 				$("#cbx_carrera").change(function (){
@@ -64,9 +65,18 @@ if (!$res) {
 				})
 			});
 		</script>
-		
 
-</head>
+    </head>
+
+      <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' -25,
+        'opsz' 2
+      }
+      </style>
 
 
 
@@ -167,25 +177,24 @@ if (!$res) {
 
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="margin-left: 0.9%;">
-
         <div class="container" style="margin-top:1vmax; align-items: center;">
+
 
           <h2 style=" margin-left: 0.1% ; margin-bottom: 1vmax;"><span class="material-symbols-outlined"> library_add </span>
             <b style="margin-left:0.5vmax;" class="textogran">Nueva Publicación</b>
           </h2>
           <div class="linea-delgada"></div>
 
+
+          
          <form class="row g-3  mt-2 mb-2vmax needs-validation" method="POST" action="publicar_control.php" enctype="multipart/form-data" novalidate>
             <div class="col-md-8 mt-0">
               <label for="inputEmail4" class="form-label" id="letraform"><b>Título * :</b></label>
-<<<<<<< HEAD
               <input type="text" name="titulo"  id="validationCustom07" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);" required>
                 <div class="invalid-feedback">
                      Ingrese un titulo para esta publicación.
                  </div>
-=======
-              <input type="text" name="titulo" class="form-control bs-primary-rgb" autocomplete="off" style="border-color: rgb(179, 179, 179);">
->>>>>>> bc4e64a2b9273f94362b0082ab048d0744ba3302
+
             </div>
             <div class="col-md-4 mt-0 mb-1">
               <label for="inputPassword4" class="form-label" id="letraform"><b>Usuario * :</b></label>
@@ -246,21 +255,46 @@ if (!$res) {
             
 
             <div class="mb-3 mt-1">
-              <label for="formFileLg" class="form-label" id="letraform"><b>Documento* :</b></label>
-              <input class="form-control form-control-lg"  accept=" .pdf, .doc, .docx, .ppt, .ccv"
-                       name="archivo" type="file" id="formFileLg" style="border-color: rgb(179, 179, 179);" required>
+              <label for="formFileLg" class="form-label" id="letraform"><b>Documento* :</b>
+                    <button type="button" class="btn" data-bs-toggle="popover" title="Restricciones de documentos" 
+                      style="--bs-btn-padding-y: .01rem; --bs-btn-padding-x: .0rem; --bs-btn-font-size: .1rem; --bs-btn-color: var(--bs-blue)"
+                      data-bs-content="Solo los archivos .pdf, .doc, .docx, .ppt, .ccv estan permitidos. No más de 100MB">
+                    <span class="material-symbols-outlined">help </span>
+                    </button> 
+              </label>
+              <input class="form-control form-control-lg"  accept=" .pdf, .doc, .docx, .ppt, .ccv" name="archivo" type="file" id="formFileLg" style="border-color: rgb(179, 179, 179);" required>
                        <div class="invalid-feedback">
                             Por favor selecciona un archivo.
                      </div>
             </div>
 
             <div class="d-grid gap-1 col-6 mx-auto mb-4">
-              <input class="btn btn-primary btn" type="submit" value="Publicar" id="letrabuton">
+              <input class="btn btn-primary btn" type="button" value="Publicar" id="letrabuton" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             </div>
+
+                    <!-- POPUP-->
+              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirmación de publicación</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      ¿Estas seguro de realizar la publicacion?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="submit"  value="Enviar" class="btn btn-primary" data-bs-dismiss="modal">Sí, publicar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>          
           </form>
 
+
           <!-- Scrib para validación -->
-            <script>
+        <script>
                           (() => {
               'use strict'
               const forms = document.querySelectorAll('.needs-validation')
@@ -277,7 +311,28 @@ if (!$res) {
               })
             })()
         </script>
-        </div>
+
+        <!--Script para POPOVERS-->     
+        <script>  
+          const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+          const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))  
+          
+        </script>
+
+         <!--Script para popup confirmacion--> 
+          <script>
+          const myModal = document.getElementById('myModal')
+          const myInput = document.getElementById('myInput')
+
+          myModal.addEventListener('shown.bs.modal', () => {
+            myInput.focus()
+          })
+          </script>
+
+
+
+        
+      </div>
       </main>
     </div>
   </div>
