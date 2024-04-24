@@ -78,10 +78,11 @@ if (isset($_GET['id'])) {
         $fechaRep = date("Y-m-d");
         
         $qRepPub = "INSERT INTO `reportepublicación`(`idPub`, `fecha_Report`, `motivo_Report`) 
-                    VALUES ($idPub,$fechaRep,$motivo);";
+                    VALUES ($idPub,CURDATE(),'$motivo');";
 
         $resR = mysqli_query($link,$qRepPub);
         if($resR){
+            //header("Location: ../home.php");
             echo "Se ha guardado el reporte en la base de datos";
         }else{
             echo "NO";
@@ -93,7 +94,7 @@ if (isset($_GET['id'])) {
         $fechaRep = date("Y-m-d");
 
         $qRepCom = "INSERT INTO `reportecomentario`(`idComent`, `fecha_Report`, `motivo_Report`)
-                    VALUES ($idComRep,$fechaRep,$motivo)";
+                    VALUES ($idComRep,CURDATE(),'$motivo')";
 
         $resR = mysqli_query($link,$qRepCom);
         if($resR){

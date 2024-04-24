@@ -28,7 +28,7 @@ $(document).ready(function(){
                 method:"POST",
                 data: {repub:1,motivo:motivo},
                 success:function(r){
-                    localStorage.setItem('uID', r.id);                    
+                    //localStorage.setItem('uID', r.id);                    
                     $('#modal_report_p').modal('hide');
                     alert("publicacion reportada ");
                 }
