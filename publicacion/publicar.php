@@ -178,7 +178,7 @@ if (!$res) {
           <form class="row g-3  mt-2 mb-2vmax" method="POST" action="publicar_control.php" enctype="multipart/form-data">
             <div class="col-md-8 mt-0">
               <label for="inputEmail4" class="form-label" id="letraform"><b>Título * :</b></label>
-              <input type="text" name="titulo" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);">
+              <input type="text" name="titulo" class="form-control bs-primary-rgb" autocomplete="off" style="border-color: rgb(179, 179, 179);">
             </div>
             <div class="col-md-4 mt-0 mb-1">
               <label for="inputPassword4" class="form-label" id="letraform"><b>Usuario * :</b></label>
