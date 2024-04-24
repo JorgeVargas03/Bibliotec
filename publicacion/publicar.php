@@ -175,10 +175,17 @@ if (!$res) {
           </h2>
           <div class="linea-delgada"></div>
 
-          <form class="row g-3  mt-2 mb-2vmax" method="POST" action="publicar_control.php" enctype="multipart/form-data">
+         <form class="row g-3  mt-2 mb-2vmax needs-validation" method="POST" action="publicar_control.php" enctype="multipart/form-data" novalidate>
             <div class="col-md-8 mt-0">
               <label for="inputEmail4" class="form-label" id="letraform"><b>Título * :</b></label>
+<<<<<<< HEAD
+              <input type="text" name="titulo"  id="validationCustom07" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);" required>
+                <div class="invalid-feedback">
+                     Ingrese un titulo para esta publicación.
+                 </div>
+=======
               <input type="text" name="titulo" class="form-control bs-primary-rgb" autocomplete="off" style="border-color: rgb(179, 179, 179);">
+>>>>>>> bc4e64a2b9273f94362b0082ab048d0744ba3302
             </div>
             <div class="col-md-4 mt-0 mb-1">
               <label for="inputPassword4" class="form-label" id="letraform"><b>Usuario * :</b></label>
@@ -190,44 +197,50 @@ if (!$res) {
               <textarea class="form-control" name="descripcion" placeholder="Ej. Autor del libro: Ramirez, M. (2008)" id="floatingTextarea2" style="height: 100px"></textarea>
             </div>
 
-
             <div class="col-md-5 mt-0">
               <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm" id="letraform"><b>Carrera * :</b></label>
               <div class="col-sm-11">
-                <select class="form-select" id="cbx_carrera" name="cbx_carrera" aria-label="Default select example" style="border-color: rgb(179, 179, 179);">
-                  <option value="0">Selecciona carrera...</option>
+                <select class="form-select" id="cbx_carrera" name="cbx_carrera" aria-label="Default select example" style="border-color: rgb(179, 179, 179);" required>
+                  <option selected disabled value="">Selecciona carrera...</option>
                    <?php WHILE ($ROW = $res ->fetch_assoc() ){ ?>
                     <option value="<?php echo $ROW['nomCarrera']; ?>"><?php echo $ROW['nomCarrera']; ?></option>
                   <?php } ?>
                 </select>
+                 <div class="invalid-feedback">
+                     Seleccione una carrera.
+                 </div>
               </div>
             </div>
            
             <div class="col-md-7 mt-0 mb-1">
              <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm" id="letraform"><b>Materia * :</b></label>
              <div class="col-sm-12">
-                <select class="form-select"  id="cbx_materia" name="cbx_materia" aria-label="Default select example" style="border-color: rgb(179, 179, 179);">   
-                <option value="0">Selecciona carrera...</option>     
+                <select class="form-select" id="cbx_materia" name="cbx_materia" aria-label="Default select example" style="border-color: rgb(179, 179, 179);" required>   
+                <option selected disabled value="">Selecciona materia...</option>     
                 </select>
+                <div class="invalid-feedback">
+                     Seleccione una materia
+                 </div>
               </div>
             </div>
-          
-
 
             <fieldset class="row g-2 mb-2 mt-2">
               <legend class="col-form-label col-sm-2 pt-0 " id="letraradio" style="margin-left: 0.2%;"><b>Tipo de Publicación* :</b></legend>
               <div class="col-md-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="tipo" id="gridRadios1" style="border-color: rgb(179, 179, 179); margin-left: 1%;" value="Recurso Bibliografico" checked>
+                  <input class="form-check-input" type="radio" name="tipo" id="gridRadios1" style="border-color: rgb(179, 179, 179); margin-left: 1%;" value="Recurso Bibliografico"  required>
                   <label class="form-check-label" for="gridRadios1" id="letraradio">
                     Recurso Bibliográfico
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" style="border-color: rgb(179, 179, 179); margin-left: 1%;" name="tipo"  id="gridRadios2" value="Trabajos y tareas">
+                  <input class="form-check-input" type="radio" style="border-color: rgb(179, 179, 179); margin-left: 1%;" name="tipo"  id="gridRadios2" value="Trabajos y tareas" required>
                   <label class="form-check-label" for="gridRadios2" id="letraradio">
                     Trabajos y tareas
                   </label>
+                  <div class="invalid-feedback">
+                    Seleccione el tipo de publicación
+                 </div>
                 </div>
             </fieldset>
             
@@ -235,14 +248,35 @@ if (!$res) {
             <div class="mb-3 mt-1">
               <label for="formFileLg" class="form-label" id="letraform"><b>Documento* :</b></label>
               <input class="form-control form-control-lg"  accept=" .pdf, .doc, .docx, .ppt, .ccv"
-                       name="archivo" type="file" id="formFileLg" style="border-color: rgb(179, 179, 179);">
+                       name="archivo" type="file" id="formFileLg" style="border-color: rgb(179, 179, 179);" required>
+                       <div class="invalid-feedback">
+                            Por favor selecciona un archivo.
+                     </div>
             </div>
 
             <div class="d-grid gap-1 col-6 mx-auto mb-4">
               <input class="btn btn-primary btn" type="submit" value="Publicar" id="letrabuton">
             </div>
-
           </form>
+
+          <!-- Scrib para validación -->
+            <script>
+                          (() => {
+              'use strict'
+              const forms = document.querySelectorAll('.needs-validation')
+
+              Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                  if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                  }
+
+                  form.classList.add('was-validated')
+                }, false)
+              })
+            })()
+        </script>
         </div>
       </main>
     </div>
