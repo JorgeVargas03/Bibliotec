@@ -380,21 +380,24 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
 
                         <?php while ($fila = mysqli_fetch_array($registros)) : ?>
-                         <div class="publicacion card mb-3">
+                        <div class="publicacion card mb-3">
                         <div class="card-body">
                             
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-0"> 
-                             <a href="../../publicacion/editar_interfaz.php" class="btn btn-outline-warning" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
+                             <a class="btn btn-outline-warning" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
                             <span class="material-symbols-outlined">
                              edit_square
                             </span>
                             </a>
-                             <a href="../../publicacion/eliminar_publicacion.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-outline-warning" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
-                                    <span class="material-symbols-outlined">
+
+                            <!-- Boton eliminar y modal -->
+                             <a data-idpub="<?php echo $fila['idPub']; ?>" id="idEliminar" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#reg-modal" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" >
+                            <span class="material-symbols-outlined">
                                         delete
-                                    </span>
-                             </a>
-                            </div>
+                            </span>
+                            </a> 
+                             
+                        </div>
 
                             <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
                             
@@ -409,6 +412,26 @@ document.addEventListener('DOMContentLoaded', function () {
                          </div>
                      <?php endwhile; ?>
                     </main>
+                    <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title"
+                            aria-hidden="true">
+                                <div class="modal.dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modal-title">Confirmar Eliminar</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p> ¿Estas seguro de querer eliminar esta publicación?</p>
+                                        </div>
+                                        <div class="modal-footer" >
+                                            <button class="btn btn-primary" id="ConfirmarEliminar">Eliminar</button>
+                                    </div>
+                                </div>   
+                            </div>
+                            <script src="../../publicacion/eliminar2.js">
+                            </script>
                 </div>
         </div>
     </div>

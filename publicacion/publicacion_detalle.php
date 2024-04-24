@@ -25,70 +25,74 @@ if (isset($_GET['id'])) {
                               JOIN usuario u ON c.idUsuario = u.idUsuario
                               WHERE c.idPub = $idPub";
         $result_comentarios = mysqli_query($link, $query_comentarios);
+
+        //CONSULTAR LAS ETIQUETAS DE LA PUBLICACION
+        $consultaEtiquetas = "SELECT nombreTag FROM tag_publicacion WHERE idPub = $idPub LIMIT 5";
+        $resultEtiquetas = mysqli_query($link, $consultaEtiquetas);
     } else {
         // Si no se encontró la publicación, redireccionar a la página principal
         header("Location: ../home.php");
         exit();
     }
-    
+
 
     //Query para obtener el promedio de calificaciones de esta publicacion
     $qcalif = "SELECT AVG(`calificacion`) as promedio from calificacion_detalle cd 
                 join usuario u on u.idUsuario = cd.id_Usuario 
                 join publicacion p on p.idPub = cd.idPub 
                 where cd.idPub = $idPub;";
-    $consulta = mysqli_query($link,$qcalif);
+    $consulta = mysqli_query($link, $qcalif);
 
     $consultaCal = mysqli_fetch_assoc($consulta);
-    
-    if(isset($_POST["guardar"])){  //Desmadre para guardar la calificacion
+
+    if (isset($_POST["guardar"])) {  //Desmadre para guardar la calificacion
         $rate = $_POST["calificacion"];
         $idUser = $_SESSION['idU'];
         //verificar si es la primera vez que el usuario califica esta publicacion
         $ver = "SELECT * FROM `calificacion_detalle` 
                 WHERE id_Usuario = $idUser AND idPub=$idPub;";
 
-        $res = mysqli_query($link,$ver);
-        if(mysqli_num_rows($res) == 1){
+        $res = mysqli_query($link, $ver);
+        if (mysqli_num_rows($res) == 1) {
             $sql = "UPDATE `calificacion_detalle` SET `calificacion`= $rate 
             WHERE id_Usuario = $idUser AND idPub=$idPub;";
 
-            $res = mysqli_query($link,$sql);
-            if($res){
+            $res = mysqli_query($link, $sql);
+            if ($res) {
                 echo 'SI';
-            }else{
+            } else {
                 echo 'NO';
             }
-        }else{
+        } else {
             $sql = "INSERT INTO `calificacion_detalle` VALUES($idUser,$idPub,$rate)";
-            
-            $res = mysqli_query($link,$sql);
-            if($res){
+
+            $res = mysqli_query($link, $sql);
+            if ($res) {
                 echo 'SI';
-            }else{
+            } else {
                 echo 'NO';
             }
         }
     }
     //exit(json_encode(array('id' => $idUser)));
-       
-     //PARA LOS REPORTES DE PUBLICACIONES Y COMENTARIOS
-     if(isset($_POST["repub"])){
+
+    //PARA LOS REPORTES DE PUBLICACIONES Y COMENTARIOS
+    if (isset($_POST["repub"])) {
         $motivo = $_POST["motivo"];
         $fechaRep = date("Y-m-d");
-        
+
         $qRepPub = "INSERT INTO `reportepublicación`(`idPub`, `fecha_Report`, `motivo_Report`) 
                     VALUES ($idPub,CURDATE(),'$motivo');";
 
-        $resR = mysqli_query($link,$qRepPub);
-        if($resR){
+        $resR = mysqli_query($link, $qRepPub);
+        if ($resR) {
             //header("Location: ../home.php");
             echo "Se ha guardado el reporte en la base de datos";
-        }else{
+        } else {
             echo "NO";
         }
-    } 
-    if(isset($_POST["repCom"])){
+    }
+    if (isset($_POST["repCom"])) {
         $motivo = $_POST["motivo"];
         $idComRep = $_POST["idComentario"];
         $fechaRep = date("Y-m-d");
@@ -96,14 +100,13 @@ if (isset($_GET['id'])) {
         $qRepCom = "INSERT INTO `reportecomentario`(`idComent`, `fecha_Report`, `motivo_Report`)
                     VALUES ($idComRep,CURDATE(),'$motivo')";
 
-        $resR = mysqli_query($link,$qRepCom);
-        if($resR){
+        $resR = mysqli_query($link, $qRepCom);
+        if ($resR) {
             echo 'SI';
-        }else{
+        } else {
             echo 'NO';
         }
     }
-            
 } else {
     // Si no se proporcionó un ID de publicación, redireccionar a la página principal
     header("Location: ../home.php");
@@ -212,65 +215,65 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <div class="row">
             <!-- Barra de navegación izquierda -->
             <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
-        <ul class="list-unstyled" id="menu-lateral">
-          <li class="mb-2 mt-2">
-            <a class="nav-link align-items-center" href="../home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
-          </li>
-          <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
-              Carreras
-            </button>
-            <div class="collapse" id="dashboard-collapse">
-              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="../administracion/search.php?carrera=Arquitectura" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
-                <li><a href="../administracion/search.php?carrera=Ing. Bioquimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
-                <li><a href="../administracion/search.php?carrera=Ing. Civil" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
-                <li><a href="../administracion/search.php?carrera=Ing. Electrica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
-                <li><a href="../administracion/search.php?carrera=Ing. Gestion Empresarial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
-                <li><a href="../administracion/search.php?carrera=Ing. Sistemas Computacionales" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
-                <li><a href="../administracion/search.php?carrera=Ing. Industrial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
-                <li><a href="../administracion/search.php?carrera=Ing. Mecatronica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
-                <li><a href="../administracion/search.php?carrera=Ing. Quimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
-                <li><a href="../administracion/search.php?carrera=Lic. Administracion" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#contacto-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
-              Contacto
-            </button>
-            <div class="collapse" id="contacto-collapse">
-              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
-              </ul>
-            </div>
-          </li>
-          <hr class="my-2"> <!-- Línea divisora -->
-          <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#cuenta-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
-              <svg class="bi pe-none" width="1.3vmax" height="1.3vmax">
-                <use xlink:href="#people-circle" />
-              </svg>
-              <span style="margin-top:0.3vmax; margin-left: 0.4vmax;">Cuenta</span>
-            </button>
-            <div class="collapse" id="cuenta-collapse">
-              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="administracion/Perfil/infoperfil.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
-                <a href="home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a>
-              </ul>
-            </div>
-          </li>
-          <hr class="my-2"> <!-- Línea divisora -->
-          <li class="mb-1 mt-3">
-            <a class="nav-link align-items-center" name="fade" href="publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
-          </li>
+                <ul class="list-unstyled" id="menu-lateral">
+                    <li class="mb-2 mt-2">
+                        <a class="nav-link align-items-center" href="../home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
+                    </li>
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+                            Carreras
+                        </button>
+                        <div class="collapse" id="dashboard-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="../administracion/search.php?carrera=Arquitectura" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
+                                <li><a href="../administracion/search.php?carrera=Ing. Bioquimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
+                                <li><a href="../administracion/search.php?carrera=Ing. Civil" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
+                                <li><a href="../administracion/search.php?carrera=Ing. Electrica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
+                                <li><a href="../administracion/search.php?carrera=Ing. Gestion Empresarial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
+                                <li><a href="../administracion/search.php?carrera=Ing. Sistemas Computacionales" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
+                                <li><a href="../administracion/search.php?carrera=Ing. Industrial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
+                                <li><a href="../administracion/search.php?carrera=Ing. Mecatronica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
+                                <li><a href="../administracion/search.php?carrera=Ing. Quimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
+                                <li><a href="../administracion/search.php?carrera=Lic. Administracion" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#contacto-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+                            Contacto
+                        </button>
+                        <div class="collapse" id="contacto-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <hr class="my-2"> <!-- Línea divisora -->
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#cuenta-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+                            <svg class="bi pe-none" width="1.3vmax" height="1.3vmax">
+                                <use xlink:href="#people-circle" />
+                            </svg>
+                            <span style="margin-top:0.3vmax; margin-left: 0.4vmax;">Cuenta</span>
+                        </button>
+                        <div class="collapse" id="cuenta-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="administracion/Perfil/infoperfil.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
+                                <a href="home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a>
+                            </ul>
+                        </div>
+                    </li>
+                    <hr class="my-2"> <!-- Línea divisora -->
+                    <li class="mb-1 mt-3">
+                        <a class="nav-link align-items-center" name="fade" href="publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
+                    </li>
 
-          <hr class="my-2"> <!-- Línea divisora -->
-          <li class="mb-1 mt-3">
-            <a class="nav-link align-items-center" href="#" id="letrabardos" style="margin-left:10px"><?php echo "Hola " . $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></a>
-          </li>
-        </ul>
-      </div>
+                    <hr class="my-2"> <!-- Línea divisora -->
+                    <li class="mb-1 mt-3">
+                        <a class="nav-link align-items-center" href="#" id="letrabardos" style="margin-left:10px"><?php echo "Hola " . $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></a>
+                    </li>
+                </ul>
+            </div>
             <!-- Contenido principal -->
 
 
@@ -292,10 +295,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         <div>
                                             <!-- Botón de reportar -->
                                             <a class="btn btn-danger btn-sm shadow" id="reportarPub" data-bs-toggle="modal" data-bs-target="#modal_report_p">
-                                                <i class="bi bi-flag-fill" ></i>
+                                                <i class="bi bi-flag-fill"></i>
                                             </a>
                                         </div>
-                                    </div>    
+                                    </div>
 
                                     <div class="card-body">
                                         <!-- Descripción de la publicación -->
@@ -317,36 +320,36 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                 <!-- Calificación con estrellas -->
                                                 <div class="rating mt-3">
                                                     <p class="card-text"><b>Calificación:
-                                                    
-                                                    <?php
-                                                    // Calificación actual de la publicación
-                                                    if($consultaCal == null){
-                                                        $calificacion = 0;
-                                                    }else{
-                                                        $calificacion = $consultaCal['promedio'];
-                                                    }
-                                                    echo '<span> '.round($calificacion,2).'</span> / 5 </b></p>';
-                                                    
-                                                    // Convertir calificación de 1-5
-                                                    $calificacion_estrellas = ceil($calificacion/1);
-                                                    ?>
-                                                    <p class="calificar">
-                                                    <?php
-                                                    
-                                                    // Mostrar estrellas llenas según la calificación
-                                                    for ($i = 1; $i <= 5; $i++) {
-                                                        if ($i <= $calificacion_estrellas) {
-                                                            echo '<i class="bi bi-star-fill estrella" data-rating="'.$i.'"></i>';
-                                                        } else {
-                                                            echo '<i class="bi bi-star-fill" data-rating="'.$i.'"></i>';
-                                                        }
-                                                    }
-                                                    ?>
-                                                    </p>
-                                                    <!--Script para las estrelas -->
-                                                    <script src="valoracion.js"></script>
+
+                                                            <?php
+                                                            // Calificación actual de la publicación
+                                                            if ($consultaCal == null) {
+                                                                $calificacion = 0;
+                                                            } else {
+                                                                $calificacion = $consultaCal['promedio'];
+                                                            }
+                                                            echo '<span> ' . round($calificacion, 2) . '</span> / 5 </b></p>';
+
+                                                            // Convertir calificación de 1-5
+                                                            $calificacion_estrellas = ceil($calificacion / 1);
+                                                            ?>
+                                                            <p class="calificar">
+                                                                <?php
+
+                                                                // Mostrar estrellas llenas según la calificación
+                                                                for ($i = 1; $i <= 5; $i++) {
+                                                                    if ($i <= $calificacion_estrellas) {
+                                                                        echo '<i class="bi bi-star-fill estrella" data-rating="' . $i . '"></i>';
+                                                                    } else {
+                                                                        echo '<i class="bi bi-star-fill" data-rating="' . $i . '"></i>';
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </p>
+                                                            <!--Script para las estrelas -->
+                                                            <script src="valoracion.js"></script>
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -366,165 +369,170 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                     <!-- Etiquetas -->
                                     <div class="card-footer d-flex justify-content-between align-items-end">
                                         <?php
-                                        // Etiquetas por defecto y colores asignados
-                                        $etiquetas = array("Etiqueta1", "Etiqueta2", "Etiqueta3");
-                                        $colores = array("bg-danger", "bg-success", "bg-info");
+                                        // Colores predefinidos para las etiquetas
+                                        $colores = array("bg-danger", "bg-success", "bg-info", "bg-warning", "bg-primary");
 
-                                        // Iterar sobre las etiquetas y mostrarlas
-                                        foreach ($etiquetas as $index => $etiqueta) {
-                                            echo '<span class="badge ' . $colores[$index % count($colores)] . ' mr-1">' . $etiqueta . '</span>';
+                                        // Contador para asignar colores
+                                        $colorIndex = 0;
+
+                                        // Mostrar las etiquetas obtenidas
+                                        while ($etiqueta = mysqli_fetch_assoc($resultEtiquetas)) {
+                                            echo '<span class="badge ' . $colores[$colorIndex] . ' mr-1">' . $etiqueta['nombreTag'] . '</span>';
+
+                                            // Incrementar el índice de color (cíclico)
+                                            $colorIndex = ($colorIndex + 1) % count($colores);
                                         }
                                         ?>
-                                        <!-- Fecha de Publicación -->
-                                        <p class="card-text comment-date mb-0 align-self-end">Fecha: <?php echo functions::convertirFecha($publicacion['fecha_Pub']); ?></p>
+                                    <!-- Fecha de Publicación -->
+                                    <p class="card-text comment-date mb-0 align-self-end">Fecha: <?php echo functions::convertirFecha($publicacion['fecha_Pub']); ?></p>
+                                </div>
+                            </div>
+
+
+
+
+                            <!-- Sección de comentarios -->
+                            <div class="mt-5">
+                                <h5 class="mb-4">Comentarios</h5>
+
+                                <!-- Formulario para agregar comentarios -->
+                                <form action="comentar.php" method="POST">
+                                    <div class="mb-3">
+                                        <label for="comentario" class="form-label">Agregar Comentario:</label>
+                                        <textarea class="form-control" id="comentario" name="comentario" rows="3" required></textarea>
                                     </div>
-                                </div>
+                                    <input type="hidden" name="id_publicacion" value="<?php echo $publicacion['idPub']; ?>">
+                                    <button type="submit" class="btn btn-primary">Enviar Comentario</button>
+                                </form>
 
+                                <!-- Arreglo de rutas de imágenes aleatorias -->
+                                <?php
+                                $imagenes_aleatorias = array();
 
+                                // Ruta base de las imágenes
+                                $ruta_base = "../images/tigers/";
 
+                                // Generar el arreglo de rutas de imágenes
+                                for ($i = 1; $i <= 15; $i++) {
+                                    $ruta_imagen = $ruta_base . "a" . $i . ".png";
+                                    $imagenes_aleatorias[] = $ruta_imagen;
+                                }
 
-                                <!-- Sección de comentarios -->
-                                <div class="mt-5">
-                                    <h5 class="mb-4">Comentarios</h5>
+                                // Contador para alternar entre las imágenes aleatorias y los avatares
+                                $contador = 0;
+                                ?>
 
-                                    <!-- Formulario para agregar comentarios -->
-                                    <form action="comentar.php" method="POST">
-                                        <div class="mb-3">
-                                            <label for="comentario" class="form-label">Agregar Comentario:</label>
-                                            <textarea class="form-control" id="comentario" name="comentario" rows="3" required></textarea>
+                                <!-- Mostrar comentarios existentes -->
+                                <?php while ($comentario = mysqli_fetch_assoc($result_comentarios)) : ?>
+                                    <div class="card mt-4">
+                                        <div class="card-header">
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <!-- Botón de reportar -->
+                                                <a class="btn btn-sm btn-outline-danger " id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c" data-comid="<?php echo $comentario['idComent'] ?>">
+                                                    <i class="bi bi-flag-fill"></i>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <input type="hidden" name="id_publicacion" value="<?php echo $publicacion['idPub']; ?>">
-                                        <button type="submit" class="btn btn-primary">Enviar Comentario</button>
-                                    </form>
+                                        <div class="card-body">
+                                            <div class="row align-items-center">
+                                                <div class="col-auto">
+                                                    <?php if ($contador % 2 == 0) : ?>
+                                                        <!-- Mostrar imagen aleatoria -->
+                                                        <img src="<?php echo $imagenes_aleatorias[array_rand($imagenes_aleatorias)]; ?>" alt="Imagen Aleatoria" class="rounded-circle" width="50">
+                                                    <?php else : ?>
+                                                        <!-- Mostrar avatar -->
+                                                        <img src="<?php echo $imagenes_aleatorias[array_rand($imagenes_aleatorias)]; ?>" alt="Imagen Aleatoria" class="rounded-circle" width="50">
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="col">
+                                                    <h6 class="mb-1"><?php echo $comentario['nom_Us'] . " " . $comentario['apell_Us']; ?></h6>
+                                                    <pre class="mb-1"><?php echo $comentario['text_Coment']; ?></pre>
+                                                    <small class="text-muted"><?php echo functions::convertirFecha($comentario['fecha_Coment']); ?></small>
+                                                </div>
+                                                <div class="col-auto">
 
-                                    <!-- Arreglo de rutas de imágenes aleatorias -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <?php
-                                    $imagenes_aleatorias = array();
-
-                                    // Ruta base de las imágenes
-                                    $ruta_base = "../images/tigers/";
-
-                                    // Generar el arreglo de rutas de imágenes
-                                    for ($i = 1; $i <= 15; $i++) {
-                                        $ruta_imagen = $ruta_base . "a" . $i . ".png";
-                                        $imagenes_aleatorias[] = $ruta_imagen;
-                                    }
-
-                                    // Contador para alternar entre las imágenes aleatorias y los avatares
-                                    $contador = 0;
+                                    // Incrementar el contador
+                                    $contador++;
                                     ?>
+                                <?php endwhile; ?>
 
-                                    <!-- Mostrar comentarios existentes -->
-                                    <?php while ($comentario = mysqli_fetch_assoc($result_comentarios)) : ?>
-                                        <div class="card mt-4">
-                                            <div class="card-header">
-                                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                    <!-- Botón de reportar -->
-                                                    <a class="btn btn-sm btn-outline-danger " id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c" data-comid="<?php echo $comentario['idComent'] ?>">
-                                                        <i class="bi bi-flag-fill"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row align-items-center">
-                                                    <div class="col-auto">
-                                                        <?php if ($contador % 2 == 0) : ?>
-                                                            <!-- Mostrar imagen aleatoria -->
-                                                            <img src="<?php echo $imagenes_aleatorias[array_rand($imagenes_aleatorias)]; ?>" alt="Imagen Aleatoria" class="rounded-circle" width="50">
-                                                        <?php else : ?>
-                                                            <!-- Mostrar avatar -->
-                                                            <img src="<?php echo $imagenes_aleatorias[array_rand($imagenes_aleatorias)]; ?>" alt="Imagen Aleatoria" class="rounded-circle" width="50">
-                                                        <?php endif; ?>
-                                                    </div>
-                                                    <div class="col">
-                                                        <h6 class="mb-1"><?php echo $comentario['nom_Us'] . " " . $comentario['apell_Us']; ?></h6>
-                                                        <pre class="mb-1"><?php echo $comentario['text_Coment']; ?></pre>
-                                                        <small class="text-muted"><?php echo functions::convertirFecha($comentario['fecha_Coment']); ?></small>
-                                                    </div>
-                                                    <div class="col-auto">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <?php
-                                        // Incrementar el contador
-                                        $contador++;
-                                        ?>
-                                    <?php endwhile; ?>
-
-                                </div>
                             </div>
                         </div>
                     </div>
-            </main>
-            
-            <!-- Ventana de reportar P -->
-            <div class="modal fade" id="modal_report_p" tabindex="-1" aria-labelledby="modal_report_pl" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Reportar Publicacion</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <label for="inputState validationCustom01" class="form-label">Motivo</label>
-                                <select id="inputState validationCustom01 " class="form-select selepub" name="motivo" >
-                                <option selected>Seleccionar</option>
-                                <option>Contenido inapropiado</option>
-                                <option>Spam</option>
-                                <option>No cumple con las normas de referenciado</option>
-                                </select>
-                            <br>
-                            <label for="textAreaRp">Comentario</label>
-                            <textarea name="Comentario" id="textAreaRp" cols="60" rows="2" placeholder="(Opcional)"></textarea>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" id="subir_reporte_p">Aceptar</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <?php 
-                
-                    
-            ?>
-
-            <!-- VEntana reportar C -->
-            <div class="modal fade" id="modal_report_c" tabindex="-1" aria-labelledby="modal_report_cl" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Reportar Comentario</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <label for="inputState validationCustom01 " class="form-label">Motivo</label>
-                                <select id="inputState validationCustom01 " class="form-select selecom" name="motivo" >
-                                <option selected>Seleccionar</option>
-                                <option>Contenido inapropiado</option>
-                                <option>Spam</option>
-                                <option>No cumple con las normas de referenciado</option>
-                                </select>
-                            <br>
-                            <label for="textAreaRp">Comentario</label>
-                            <textarea name="Comentario" id="comentarioRc" cols="60" rows="2" placeholder="(Opcional)"></textarea>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" id="subir_reporte_c">Aceptar</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <script src="reportar_pub.js"></script> 
-            <?php  ?>
-
         </div>
+        </main>
+
+        <!-- Ventana de reportar P -->
+        <div class="modal fade" id="modal_report_p" tabindex="-1" aria-labelledby="modal_report_pl" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Reportar Publicacion</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="inputState validationCustom01" class="form-label">Motivo</label>
+                        <select id="inputState validationCustom01 " class="form-select selepub" name="motivo">
+                            <option selected>Seleccionar</option>
+                            <option>Contenido inapropiado</option>
+                            <option>Spam</option>
+                            <option>No cumple con las normas de referenciado</option>
+                        </select>
+                        <br>
+                        <label for="textAreaRp">Comentario</label>
+                        <textarea name="Comentario" id="textAreaRp" cols="60" rows="2" placeholder="(Opcional)"></textarea>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="subir_reporte_p">Aceptar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <?php
+
+
+        ?>
+
+        <!-- VEntana reportar C -->
+        <div class="modal fade" id="modal_report_c" tabindex="-1" aria-labelledby="modal_report_cl" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Reportar Comentario</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="inputState validationCustom01 " class="form-label">Motivo</label>
+                        <select id="inputState validationCustom01 " class="form-select selecom" name="motivo">
+                            <option selected>Seleccionar</option>
+                            <option>Contenido inapropiado</option>
+                            <option>Spam</option>
+                            <option>No cumple con las normas de referenciado</option>
+                        </select>
+                        <br>
+                        <label for="textAreaRp">Comentario</label>
+                        <textarea name="Comentario" id="comentarioRc" cols="60" rows="2" placeholder="(Opcional)"></textarea>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="subir_reporte_c">Aceptar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="reportar_pub.js"></script>
+        <?php  ?>
+
+    </div>
     </div>
 
     <script src="../js/fadeout.js"></script>
