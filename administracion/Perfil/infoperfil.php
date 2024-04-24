@@ -106,7 +106,7 @@ mysqli_close($link);
     <style>
     .badge {
     width: 200px; /* Tamaño fijo para el cuadro */
-    height: 100px; /* Tamaño fijo para el cuadro */
+    height: 150px; /* Tamaño fijo para el cuadro */
     overflow: hidden; /* Para ocultar el texto que desborde el contenedor */
     text-overflow: ellipsis; /* Para mostrar puntos suspensivos (...) cuando el texto desborde el contenedor */
     white-space: nowrap; /* Para evitar que el texto se divida en múltiples líneas */
@@ -119,17 +119,17 @@ mysqli_close($link);
 }
 
 .badge-content {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .trophy-icon {
-    width: 50px; /* adjust size as needed */
-    height: 50px; 
+    width: 80px; 
+    height: 80px; 
 }
 
 .badge-title {
     font-weight: bold;
-    color: #007bff; /* blue color */
+    color: #007bff; 
 }
         
 
@@ -351,23 +351,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
  <h3>
     <div class="badge">
-        <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
+        <img class="trophy-icon" src="..\..\images\icons\medalla.png" alt="Trophy Icon">
         <div class="badge-content">
             <span class="badge-title">Tigre Creativo</span>
         </div>
     </div>
     
     <div class="badge">
-        <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
+        <img class="trophy-icon" src="..\..\images\icons\medalla.png" alt="Trophy Icon">
         <div class="badge-content">
             <span class="badge-title">Tigre Contribuidor</span>
         </div>
     </div>
     
     <div class="badge">
-        <img class="trophy-icon" src="..\..\images\icons\trof.png" alt="Trophy Icon">
+        <img class="trophy-icon" src="..\..\images\icons\medalla.png" alt="Trophy Icon">
         <div class="badge-content">
-            <span class="badge-title">Tigre Pro</span>
+            <span class="badge-title">Tigre Nuevo</span>
         </div>
     </div>
 </h3>

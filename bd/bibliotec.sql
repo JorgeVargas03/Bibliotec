@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 23-04-2024 a las 08:43:21
+-- Tiempo de generación: 24-04-2024 a las 19:00:38
 -- Versión del servidor: 8.0.32
 -- Versión de PHP: 8.0.26
 
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `comentario` (
   PRIMARY KEY (`idComent`),
   KEY `fk_Comentario_Publicacion_idx` (`idPub`),
   KEY `fk_Comentario_Usuario1_idx` (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `comentario`
@@ -165,9 +165,9 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Administración de la Construcción II', 'Arquitectura'),
 ('Análisis Crítico de la Arquitectura y el Arte I', 'Arquitectura'),
 ('Análisis Crítico de la Arquitectura y el Arte II', 'Arquitectura'),
+('Análisis Crítico de la Arquitectura y el Arte III', 'Arquitectura'),
+('Análisis Crítico de la Arquitectura y el Arte IV', 'Arquitectura'),
 ('Análisis Proyectual', 'Arquitectura'),
-('Análisis Crítico de la Arquitectura y el Arte III', 'Arquitectura'),
-('Análisis Crítico de la Arquitectura y el Arte IV', 'Arquitectura'),
 ('Criterios para el Diseño Bioclimático Urbano y Arquitectónico', 'Arquitectura'),
 ('Desarrollo Sustentable', 'Arquitectura'),
 ('Disc. y Consid. Sobre el Conoc. de Pat. y de Paisaje en la Ciudad', 'Arquitectura'),
@@ -189,7 +189,7 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Matemáticas Aplicadas a la Arquitectura', 'Arquitectura'),
 ('Met. e Instrum. Norm. en la Plan. y Dis. del Paisaje', 'Arquitectura'),
 ('Metodología para el Diseño', 'Arquitectura'),
-('Pensamiento Arquitectónico Contemporáneo', 'Arquitectura'),
+('Pensamiento Arquitectónico Contemporáneo', 'Arquitectura'),
 ('Propiedades y Comportamiento de los Materiales', 'Arquitectura'),
 ('Taller de Construcción I', 'Arquitectura'),
 ('Taller de Construcción II', 'Arquitectura'),
@@ -212,7 +212,7 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Administración y Legislación de Empresas', 'Ing. Bioquimica'),
 ('Álgebra Lineal', 'Ing. Bioquimica'),
 ('Análisis de Alimentos', 'Ing. Bioquimica'),
-('Análisis Instrumental', 'Ing. Bioquimica'),
+('Análisis Instrumental', 'Ing. Bioquimica'),
 ('Aseguramiento de la Calidad', 'Ing. Bioquimica'),
 ('Auditoría Ambiental', 'Ing. Bioquimica'),
 ('Balance de Materia y Energía	', 'Ing. Bioquimica'),
@@ -258,22 +258,22 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Programación y Métodos Numéricos', 'Ing. Bioquimica'),
 ('Química', 'Ing. Bioquimica'),
 ('Química Analítica', 'Ing. Bioquimica'),
-('Química Orgánica I', 'Ing. Bioquimica'),
-('Química Orgánica II', 'Ing. Bioquimica'),
+('Química Orgánica I', 'Ing. Bioquimica'),
+('Química Orgánica II', 'Ing. Bioquimica'),
 ('Seguridad e Higiene', 'Ing. Bioquimica'),
 ('Taller de Ética', 'Ing. Bioquimica'),
 ('Taller de Investigación I', 'Ing. Bioquimica'),
 ('Taller de Investigación II', 'Ing. Bioquimica'),
 ('Tecnología de Alimentos de Origen Animal', 'Ing. Bioquimica'),
 ('Tecnología de Alimentos de Origen Vegetal', 'Ing. Bioquimica'),
-('Termodinámica', 'Ing. Bioquimica'),
+('Termodinámica', 'Ing. Bioquimica'),
 ('Tratamiento de Aguas Residuales', 'Ing. Bioquimica'),
 ('Abastecimiento de Agua', 'Ing. Civil'),
 ('Administración de la Construcción', 'Ing. Civil'),
 ('Alcantarillado', 'Ing. Civil'),
 ('Álgebra Lineal', 'Ing. Civil'),
-('Análisis Estructural', 'Ing. Civil'),
-('Análisis Estructural Avanzado', 'Ing. Civil'),
+('Análisis Estructural', 'Ing. Civil'),
+('Análisis Estructural Avanzado', 'Ing. Civil'),
 ('Cálculo Diferencial', 'Ing. Civil'),
 ('Cálculo Integral', 'Ing. Civil'),
 ('Cálculo Vectorial', 'Ing. Civil'),
@@ -283,26 +283,26 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Desarrollo Empresarial', 'Ing. Civil'),
 ('Desarrollo Sustentable', 'Ing. Civil'),
 ('Dibujo en Ingeniería Civil', 'Ing. Civil'),
-('Dinámica', 'Ing. Civil'),
+('Dinámica', 'Ing. Civil'),
 ('Diseño de Elementos de Acero', 'Ing. Civil'),
 ('Diseño de Elementos de Concreto Reforzado', 'Ing. Civil'),
 ('Diseño Estructural de Cimentaciones', 'Ing. Civil'),
 ('Diseño y Construcción de Pavimentos', 'Ing. Civil'),
 ('Ecuaciones Diferenciales', 'Ing. Civil'),
-('Estática', 'Ing. Civil'),
+('Estática', 'Ing. Civil'),
 ('Formulación y Evaluación de Proyectos', 'Ing. Civil'),
 ('Fundamentos de Investigación', 'Ing. Civil'),
-('Fundamentos de la Mecánica de los Medios Continuos', 'Ing. Civil'),
+('Fundamentos de la Mecánica de los Medios Continuos', 'Ing. Civil'),
 ('Geología', 'Ing. Civil'),
-('Hidráulica Básica', 'Ing. Civil'),
-('Hidráulica de Canales', 'Ing. Civil'),
+('Hidráulica Básica', 'Ing. Civil'),
+('Hidráulica de Canales', 'Ing. Civil'),
 ('Hidrología Superficial', 'Ing. Civil'),
 ('Instalaciones en los Edificios', 'Ing. Civil'),
 ('Maquinaria Pesada y Movimiento de Tierra', 'Ing. Civil'),
 ('Materiales y Procesos Constructivos', 'Ing. Civil'),
-('Mecánica de Materiales', 'Ing. Civil'),
-('Mecánica de Suelos', 'Ing. Civil'),
-('Mecánica de Suelos Aplicada', 'Ing. Civil'),
+('Mecánica de Materiales', 'Ing. Civil'),
+('Mecánica de Suelos', 'Ing. Civil'),
+('Mecánica de Suelos Aplicada', 'Ing. Civil'),
 ('Métodos Numéricos', 'Ing. Civil'),
 ('Modelos de Optimización de Recursos', 'Ing. Civil'),
 ('Probabilidad y Estadística', 'Ing. Civil'),
@@ -326,7 +326,7 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Circuitos Eléctricos I', 'Ing. Electrica'),
 ('Circuitos Eléctricos II', 'Ing. Electrica'),
 ('Comunicación Humana', 'Ing. Electrica'),
-('Control de Máquinas Eléctricas', 'Ing. Electrica'),
+('Control de Máquinas Eléctricas', 'Ing. Electrica'),
 ('Control I', 'Ing. Electrica'),
 ('Control II', 'Ing. Electrica'),
 ('Controlador Lógico Programable', 'Ing. Electrica'),
@@ -340,7 +340,7 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Electrónica Analógica', 'Ing. Electrica'),
 ('Electrónica Digital', 'Ing. Electrica'),
 ('Electrónica Industrial', 'Ing. Electrica'),
-('Equipos Mecánicos', 'Ing. Electrica'),
+('Equipos Mecánicos', 'Ing. Electrica'),
 ('Física Moderna', 'Ing. Electrica'),
 ('Fuentes Renovables de Energía', 'Ing. Electrica'),
 ('Fundamentos de Investigación', 'Ing. Electrica'),
@@ -349,9 +349,9 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Instalaciones Eléctricas Industriales', 'Ing. Electrica'),
 ('Instrumentación', 'Ing. Electrica'),
 ('Legislación en Materia Eléctrica', 'Ing. Electrica'),
-('Máquinas Sincrónicas y de CD', 'Ing. Electrica'),
-('Mecánica Clásica', 'Ing. Electrica'),
-('Mecánica de Fluidos y Termodinámica', 'Ing. Electrica'),
+('Máquinas Sincrónicas y de CD', 'Ing. Electrica'),
+('Mecánica Clásica', 'Ing. Electrica'),
+('Mecánica de Fluidos y Termodinámica', 'Ing. Electrica'),
 ('Mediciones Eléctricas', 'Ing. Electrica'),
 ('Métodos Numéricos', 'Ing. Electrica'),
 ('Modelado de Sistemas Eléctricos de Potencia', 'Ing. Electrica'),
@@ -380,7 +380,7 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Costos Empresariales', 'Ing. Gestion Empresarial'),
 ('Desarrollo Humano', 'Ing. Gestion Empresarial'),
 ('Desarrollo Sustentable', 'Ing. Gestion Empresarial'),
-('Dinámica Social', 'Ing. Gestion Empresarial'),
+('Dinámica Social', 'Ing. Gestion Empresarial'),
 ('Diseño Organizacional', 'Ing. Gestion Empresarial'),
 ('Economía Empresarial', 'Ing. Gestion Empresarial'),
 ('El Emprendedor y la Innovación', 'Ing. Gestion Empresarial'),
@@ -423,7 +423,7 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Administración del Mantenimiento', 'Ing. Industrial'),
 ('Álgebra Lineal', 'Ing. Industrial'),
 ('Algoritmos y Lenguajes de Programación', 'Ing. Industrial'),
-('Análisis de la Realidad Nacional', 'Ing. Industrial'),
+('Análisis de la Realidad Nacional', 'Ing. Industrial'),
 ('Cálculo Diferencial', 'Ing. Industrial'),
 ('Cálculo Integral', 'Ing. Industrial'),
 ('Cálculo Vectorial', 'Ing. Industrial'),
@@ -468,30 +468,30 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Taller de Liderazgo', 'Ing. Industrial'),
 ('Administración y Contabilidad', 'Ing. Mecatronica'),
 ('Álgebra Lineal', 'Ing. Mecatronica'),
-('Análisis de Circuitos Eléctricos', 'Ing. Mecatronica'),
-('Análisis de Fluidos', 'Ing. Mecatronica'),
+('Análisis de Circuitos Eléctricos', 'Ing. Mecatronica'),
+('Análisis de Fluidos', 'Ing. Mecatronica'),
 ('Cálculo Diferencial', 'Ing. Mecatronica'),
 ('Cálculo Integral', 'Ing. Mecatronica'),
 ('Cálculo Vectorial', 'Ing. Mecatronica'),
 ('Ciencia e Ingeniería de Materiales', 'Ing. Mecatronica'),
-('Circuitos Hidráulicos y Neumáticos', 'Ing. Mecatronica'),
+('Circuitos Hidráulicos y Neumáticos', 'Ing. Mecatronica'),
 ('Control', 'Ing. Mecatronica'),
 ('Controladores Lógicos Programables', 'Ing. Mecatronica'),
 ('Desarrollo Sustentable', 'Ing. Mecatronica'),
 ('Dibujo Asistido por Computadora', 'Ing. Mecatronica'),
-('Dinámica', 'Ing. Mecatronica'),
-('Dinámica de Sistemas', 'Ing. Mecatronica'),
-('Diseño de Elementos Mecánicos', 'Ing. Mecatronica'),
+('Dinámica', 'Ing. Mecatronica'),
+('Dinámica de Sistemas', 'Ing. Mecatronica'),
+('Diseño de Elementos Mecánicos', 'Ing. Mecatronica'),
 ('Ecuaciones Diferenciales', 'Ing. Mecatronica'),
 ('Electromagnetismo', 'Ing. Mecatronica'),
 ('Electrónica Analógica', 'Ing. Mecatronica'),
 ('Electrónica de Potencia Aplicada', 'Ing. Mecatronica'),
 ('Electrónica Digital', 'Ing. Mecatronica'),
 ('Estadística y Control de Calidad', 'Ing. Mecatronica'),
-('Estática', 'Ing. Mecatronica'),
+('Estática', 'Ing. Mecatronica'),
 ('Formulación y Evaluación de Proyectos', 'Ing. Mecatronica'),
 ('Fundamentos de Investigación', 'Ing. Mecatronica'),
-('Fundamentos de Termodinámica', 'Ing. Mecatronica'),
+('Fundamentos de Termodinámica', 'Ing. Mecatronica'),
 ('Instrumentación', 'Ing. Mecatronica'),
 ('Instrumentación Biomédica', 'Ing. Mecatronica'),
 ('Internet de las Cosas (IOT)', 'Ing. Mecatronica'),
@@ -499,25 +499,25 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Mantenimiento de Sistemas Mecatrónicos', 'Ing. Mecatronica'),
 ('Manufactura Avanzada', 'Ing. Mecatronica'),
 ('Manufactura Avanzada II', 'Ing. Mecatronica'),
-('Máquinas Eléctricas', 'Ing. Mecatronica'),
+('Máquinas Eléctricas', 'Ing. Mecatronica'),
+('Mecánica de Materiales', 'Ing. Mecatronica'),
 ('Mecanismos', 'Ing. Mecatronica'),
-('Mecánica de Materiales', 'Ing. Mecatronica'),
 ('Métodos Numéricos', 'Ing. Mecatronica'),
 ('Metrología y Normalización', 'Ing. Mecatronica'),
 ('Microcontroladores', 'Ing. Mecatronica'),
 ('Procesos de Fabricación', 'Ing. Mecatronica'),
 ('Programación Avanzada', 'Ing. Mecatronica'),
-('Programación Básica', 'Ing. Mecatronica'),
+('Programación Básica', 'Ing. Mecatronica'),
 ('Química', 'Ing. Mecatronica'),
 ('Redes Industriales, Protocolos de Comunicación y Buses de Campo', 'Ing. Mecatronica'),
 ('Robótica', 'Ing. Mecatronica'),
 ('Taller de Ética', 'Ing. Mecatronica'),
 ('Taller de Investigación I', 'Ing. Mecatronica'),
 ('Taller de Investigación II', 'Ing. Mecatronica'),
-('Vibraciones Mecánicas', 'Ing. Mecatronica'),
+('Vibraciones Mecánicas', 'Ing. Mecatronica'),
 ('Álgebra Lineal', 'Ing. Quimica'),
-('Análisis de Datos Experimentales', 'Ing. Quimica'),
-('Análisis Instrumental', 'Ing. Quimica'),
+('Análisis de Datos Experimentales', 'Ing. Quimica'),
+('Análisis Instrumental', 'Ing. Quimica'),
 ('Auditoría Ambiental', 'Ing. Quimica'),
 ('Balance de Materia y Energía', 'Ing. Quimica'),
 ('Balance de Momento, Calor y Masa', 'Ing. Quimica'),
@@ -542,17 +542,17 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Laboratorio Integral II', 'Ing. Quimica'),
 ('Laboratorio Integral III', 'Ing. Quimica'),
 ('Manejo Integral de Residuos Sólidos Peligrosos', 'Ing. Quimica'),
+('Mecánica Clásica', 'Ing. Quimica'),
 ('Mecanismos de Transferencia', 'Ing. Quimica'),
-('Mecánica Clásica', 'Ing. Quimica'),
 ('Métodos Numéricos', 'Ing. Quimica'),
 ('Procesos de Separación I', 'Ing. Quimica'),
 ('Procesos de Separación II', 'Ing. Quimica'),
 ('Procesos de Separación III', 'Ing. Quimica'),
 ('Programación', 'Ing. Quimica'),
 ('Química Analítica', 'Ing. Quimica'),
-('Química Inorgánica', 'Ing. Quimica'),
-('Química Orgánica I', 'Ing. Quimica'),
-('Química Orgánica II', 'Ing. Quimica'),
+('Química Inorgánica', 'Ing. Quimica'),
+('Química Orgánica I', 'Ing. Quimica'),
+('Química Orgánica II', 'Ing. Quimica'),
 ('Reactores Químicos', 'Ing. Quimica'),
 ('Salud y Seguridad en el Trabajo', 'Ing. Quimica'),
 ('Simulación de Procesos', 'Ing. Quimica'),
@@ -561,7 +561,7 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Taller de Ética', 'Ing. Quimica'),
 ('Taller de Investigación I', 'Ing. Quimica'),
 ('Taller de Investigación II', 'Ing. Quimica'),
-('Termodinámica', 'Ing. Quimica'),
+('Termodinámica', 'Ing. Quimica'),
 ('Tratamiento de Aguas Residuales', 'Ing. Quimica'),
 ('Administración de Base de Datos', 'Ing. Sistemas Computacionales'),
 ('Administración de Redes', 'Ing. Sistemas Computacionales'),
@@ -595,7 +595,7 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Lenguajes de Interfaz', 'Ing. Sistemas Computacionales'),
 ('Lenguajes y Autómatas I', 'Ing. Sistemas Computacionales'),
 ('Lenguajes y Autómatas II', 'Ing. Sistemas Computacionales'),
-('Matemáticas Discretas', 'Ing. Sistemas Computacionales'),
+('Matemáticas Discretas', 'Ing. Sistemas Computacionales'),
 ('Métodos Numéricos', 'Ing. Sistemas Computacionales'),
 ('Principios Eléctricos y Aplicaciones Digitales', 'Ing. Sistemas Computacionales'),
 ('Probabilidad y Estadística', 'Ing. Sistemas Computacionales'),
@@ -630,7 +630,7 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Desarrollo Organizacional', 'Lic. Administracion'),
 ('Desarrollo Sustentable', 'Lic. Administracion'),
 ('Diagnóstico y Evaluación Empresarial', 'Lic. Administracion'),
-('Dinámica Social', 'Lic. Administracion'),
+('Dinámica Social', 'Lic. Administracion'),
 ('Economía Empresarial', 'Lic. Administracion'),
 ('Economía Internacional', 'Lic. Administracion'),
 ('Estadística para la Administración I', 'Lic. Administracion'),
@@ -644,11 +644,11 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 ('Gestión de la Retribución', 'Lic. Administracion'),
 ('Gestión Estratégica del Capital Humano I', 'Lic. Administracion'),
 ('Gestión Estratégica del Capital Humano II', 'Lic. Administracion'),
-('Informática para la Administración', 'Lic. Administracion'),
+('Informática para la Administración', 'Lic. Administracion'),
 ('Innovación y Emprendedurismo', 'Lic. Administracion'),
 ('Macroeconomía', 'Lic. Administracion'),
-('Matemáticas Aplicadas a la Administración', 'Lic. Administracion'),
-('Matemáticas Financieras', 'Lic. Administracion'),
+('Matemáticas Aplicadas a la Administración', 'Lic. Administracion'),
+('Matemáticas Financieras', 'Lic. Administracion'),
 ('Mercadotecnia Digital', 'Lic. Administracion'),
 ('Métodos Cuantitativos para la Administración', 'Lic. Administracion'),
 ('Mezcla de Mercadotecnia', 'Lic. Administracion'),
@@ -684,7 +684,7 @@ CREATE TABLE IF NOT EXISTS `publicacion` (
   `archivo_Pub` varchar(100) NOT NULL,
   PRIMARY KEY (`idPub`),
   KEY `fk_Publicacion_Usuario1_idx` (`id_Usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `publicacion`
@@ -698,13 +698,37 @@ INSERT INTO `publicacion` (`idPub`, `id_Usuario`, `titulo_Pub`, `fecha_Pub`, `de
 (5, 1, 'Metodologia SCRUM', '2024-03-18', 'Lo que debes saber sobre la Metodologia Scrum', '10', 'Ing. Sistemas Computacionales', 'Ingeniería de Software', 'Apuntes y Tareas', '../Publicacion.pdf'),
 (6, 10, 'Publicacion de prueba', '2024-04-22', 'Ejemplo 6', '0', 'Ing. Mecatronica', 'Electrónica de Potencia Aplicada', 'Recurso Bibliografico', '../repo_archivos/10/La Biblia del Diablo.pdf'),
 (7, 10, 'Publicacion de Prueba PARTE 2', '2024-04-22', 'PARTE 2', '0', 'Lic. Administracion', 'Comunicación Corporativa', 'Recurso Bibliografico', '../repo_archivos/10/4.1DefiniciónEconomía.pdf'),
-(8, 10, 'dsdssdsd', '2024-04-22', 'sdsdsdssd', '0', 'Ing. Gestion Empresarial', 'Administración de la Salud y Seguridad Ocupacional', 'Apuntes y Tareas', '../repo_archivos/10/La Biblia del Diablo.pdf'),
 (9, 10, 'fgfgfg', '2024-04-22', 'gfgfgfg', '0', 'Ing. Quimica', 'Fisicoquímica II', 'Recurso Bibliografico', '../repo_archivos/10/La Biblia del Diablo.pdf'),
 (10, 10, 'fgfgfg', '2024-04-22', 'gfgfgfg', '0', 'Ing. Quimica', 'Fisicoquímica II', 'Recurso Bibliografico', '../repo_archivos/10/La Biblia del Diablo.pdf'),
 (11, 10, 'bbbb', '2024-04-22', 'bbbbbbb', '0', 'Arquitectura', 'Administración de Empresas Constructoras I', 'Recurso Bibliografico', '..%2Frepo_archivos%2F10%2FEl+guardian+de+la+Biblia+del+Diablo.pdf'),
 (12, 10, 'f', '2024-04-22', 'f', '0', 'Ing. Electrica', 'Auditoría Energética', 'Recurso Bibliografico', '../repo_archivos/10/La+Biblia+del+Diablo.pdf'),
 (13, 10, 'a', '2024-04-22', 'a', '0', 'Ing. Mecatronica', 'Electrónica de Potencia Aplicada', 'Recurso Bibliografico', '../repo_archivos/10/La+Biblia+del+Diablo.pdf'),
-(14, 10, 'dsdssdsd', '2024-04-22', 'tyt', '0', 'Lic. Administracion', 'Administración de la Calidad', 'Recurso Bibliografico', '../repo_archivos/10/EJERCICIO+DE+TAREA+9+VLANS.docx');
+(14, 10, 'dsdssdsd', '2024-04-22', 'tyt', '0', 'Lic. Administracion', 'Administración de la Calidad', 'Recurso Bibliografico', '../repo_archivos/10/EJERCICIO+DE+TAREA+9+VLANS.docx'),
+(15, 10, 'COMENTEN SI LES GUSTO ESTA PUBLICACION', '2024-04-24', 'HOLA BUENAS', '0', 'Ing. Quimica', 'Gestión de la Calidad', 'Trabajos y tareas', '../repo_archivos/10/Publicacion.pdf');
+
+--
+-- Disparadores `publicacion`
+--
+DROP TRIGGER IF EXISTS `borrado_publicacion`;
+DELIMITER $$
+CREATE TRIGGER `borrado_publicacion` BEFORE DELETE ON `publicacion` FOR EACH ROW BEGIN
+    -- Eliminar calificaciones relacionadas
+    DELETE FROM calificacion_detalle WHERE idPub = OLD.idPub;
+
+    -- Eliminar comentarios relacionados
+    DELETE FROM comentario WHERE idPub = OLD.idPub;
+
+    -- Eliminar reportes de comentarios relacionados
+    DELETE FROM reportecomentario WHERE idComent IN (SELECT idComent FROM comentario WHERE idPub = OLD.idPub);
+
+    -- Eliminar reportes de publicaciones relacionados
+    DELETE FROM reportepublicación WHERE idPub = OLD.idPub;
+
+    -- Eliminar etiquetas relacionadas
+    DELETE FROM tag_publicacion WHERE idPub = OLD.idPub;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -786,6 +810,28 @@ INSERT INTO `reportepublicación` (`idReporte`, `idPub`, `fecha_Report`, `motivo
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tag_publicacion`
+--
+
+DROP TABLE IF EXISTS `tag_publicacion`;
+CREATE TABLE IF NOT EXISTS `tag_publicacion` (
+  `idPub` int NOT NULL,
+  `nombreTag` varchar(100) NOT NULL,
+  PRIMARY KEY (`idPub`,`nombreTag`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Volcado de datos para la tabla `tag_publicacion`
+--
+
+INSERT INTO `tag_publicacion` (`idPub`, `nombreTag`) VALUES
+(5, 'LecturaRapida'),
+(5, 'LoMasImportante'),
+(5, 'Resumen');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuario`
 --
 
@@ -800,7 +846,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `contra_Us` varchar(60) NOT NULL,
   PRIMARY KEY (`idUsuario`),
   KEY `carrera_Us` (`carrera_Us`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `usuario`
@@ -813,6 +859,21 @@ INSERT INTO `usuario` (`idUsuario`, `nom_Us`, `apell_Us`, `carrera_Us`, `semestr
 (4, 'Rebeca', 'Ramirez', 'Ing. Sistemas Computacionales', '6', 'Rebeca@ittepic.edu.mx', '$2y$10$gLoihHD8cQm7tBTvR8oN/.MlbnU8XjGEKWpK0.ZuSEMN/snUcWyDi'),
 (5, 'Yvan', 'Acosta', 'Ing. Sistemas Computacionales', '6', 'yvfeacostaca@ittepic.edu.mx', '$2y$10$gLoihHD8cQm7tBTvR8oN/.MlbnU8XjGEKWpK0.ZuSEMN/snUcWyDi'),
 (10, 'Jorge', 'Mendoza', 'Ing. Sistemas Computacionales', '8', 'joluvargaspa@ittepic.edu.mx', '$2y$10$KV8tBYdz5GKrauJb4hFp6uaOPWvjkBv8SxAB2AwQ1WxgVZlvrvvUe');
+
+--
+-- Disparadores `usuario`
+--
+DROP TRIGGER IF EXISTS `borrado_usuario`;
+DELIMITER $$
+CREATE TRIGGER `borrado_usuario` BEFORE DELETE ON `usuario` FOR EACH ROW BEGIN
+    -- Eliminar publicaciones del usuario
+    DELETE FROM publicacion WHERE id_Usuario = OLD.idUsuario;
+
+    -- Eliminar registros de usuario_insignia relacionados
+    DELETE FROM usuario_insignia WHERE idUsuario = OLD.idUsuario;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -889,6 +950,12 @@ ALTER TABLE `reportecomentario`
 --
 ALTER TABLE `reportepublicación`
   ADD CONSTRAINT `fk_ReportePublicación_Publicacion1` FOREIGN KEY (`idPub`) REFERENCES `publicacion` (`idPub`);
+
+--
+-- Filtros para la tabla `tag_publicacion`
+--
+ALTER TABLE `tag_publicacion`
+  ADD CONSTRAINT `tag_publicacion_ibfk_1` FOREIGN KEY (`idPub`) REFERENCES `publicacion` (`idPub`);
 
 --
 -- Filtros para la tabla `usuario`
