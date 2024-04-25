@@ -23,17 +23,27 @@ if (!$res) {
 
 // Inicio Aless
 
+
 // Verifica si se ha enviado el ID de la publicación a editar
 if (isset($_GET['id'])) {
   $idPublicacion = $_GET['id'];
 
   $consultacarrera = "SELECT carrera_Pub FROM publicacion WHERE idPub = $idPublicacion";
   $resultadoCarrera = $link->query($consultacarrera);
+  // Consulta para obtener el tipo de publicación de la publicación actual
+  $consultaTipo = "SELECT tipo_pub FROM publicacion WHERE idPub = $idPublicacion";
+  $resultadoTipo = $link->query($consultaTipo);
 
+  $consultaRutaArchivo = "SELECT archivo_Pub FROM publicacion WHERE idPub = $idPublicacion";
+  $resultadoRutaArchivo = mysqli_query($link, $consultaRutaArchivo);
   // Verificar si se obtuvo algún resultado
   if ($resultadoCarrera->num_rows > 0) {
       $filaCarrera = $resultadoCarrera->fetch_assoc();
       $carreraSeleccionada = $filaCarrera['carrera_Pub'];
+      $filaTipo = $resultadoTipo->fetch_assoc();
+      $tipoSeleccionado = $filaTipo['tipo_pub'];
+      $filaRutaArchivo = mysqli_fetch_assoc($resultadoRutaArchivo);
+      $rutaArchivo = $filaRutaArchivo['archivo_Pub'];
   } else {
       // Si no se encuentra ninguna carrera, establecer un valor predeterminado o manejar el caso según sea necesario
       $carreraSeleccionada = "No encontrada";
@@ -240,7 +250,7 @@ if (isset($_GET['id'])) {
           </h2>
           <div class="linea-delgada"></div>
 
-          <form class="row g-3  mt-2 mb-2vmax" method="POST" action="publicar_control.php" enctype="multipart/form-data">
+          <form class="row g-3  mt-2 mb-2vmax" method="POST" action="actualizar_publicacion.php" enctype="multipart/form-data">
             <div class="col-md-8 mt-0">
               <label for="inputEmail4" class="form-label" id="letraform"><b>Título * :</b></label>
               <input type="text" value="<?php echo $publicacion['titulo_Pub']; ?>" name="titulo" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);">
@@ -252,7 +262,7 @@ if (isset($_GET['id'])) {
 
             <div class="mb-2 mt-3">
               <label for="exampleFormControlTextarea1" class="form-label" id="letraform"><b>Descripción (en caso de ser Recurso Bibliográfico agregar aqui los datos de referencia) :</b></label>
-              <textarea class="form-control" name="descripcion" placeholder="Ej. Autor del libro: Ramirez, M. (2008)" id="floatingTextarea2" style="height: 100px"><?php echo $publicacion['descrip_Pub']; ?></textarea>
+              <textarea class="form-control" name="descripcion" placeholder="Ej. Autor del libro: Ramirez, M. (2008)" id="floatingTextarea2 descrip_Pub" style="height: 100px"><?php echo $publicacion['descrip_Pub']; ?></textarea>
             </div>
 
 
@@ -283,13 +293,13 @@ if (isset($_GET['id'])) {
               <legend class="col-form-label col-sm-2 pt-0 " id="letraradio" style="margin-left: 0.2%;"><b>Tipo de Publicación* :</b></legend>
               <div class="col-md-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="tipo" id="gridRadios1" style="border-color: rgb(179, 179, 179); margin-left: 1%;" value="Recurso Bibliografico" checked>
+                  <input class="form-check-input" type="radio" name="tipo" id="gridRadios1" style="border-color: rgb(179, 179, 179); margin-left: 1%;" value="Recurso Bibliografico" <?php echo ($tipoSeleccionado == "Recurso Bibliográfico") ? "checked" : ""; ?>>
                   <label class="form-check-label" for="gridRadios1" id="letraradio">
                     Recurso Bibliográfico
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" style="border-color: rgb(179, 179, 179); margin-left: 1%;" name="tipo"  id="gridRadios2" value="Trabajos y tareas">
+                  <input class="form-check-input" type="radio" style="border-color: rgb(179, 179, 179); margin-left: 1%;" name="tipo"  id="gridRadios2" value="Trabajos y tareas" <?php echo ($tipoSeleccionado == "Trabajos y tareas") ? "checked" : ""; ?>>
                   <label class="form-check-label" for="gridRadios2" id="letraradio">
                     Trabajos y tareas
                   </label>
@@ -298,13 +308,20 @@ if (isset($_GET['id'])) {
             
 
             <div class="mb-3 mt-1">
-              <label for="formFileLg" class="form-label" id="letraform"><b>Documento* :</b></label>
+              <label for="formFileLg" class="form-label" id="letraform"><b>Documento anexado :</b></label>
+              <input type="hidden" name="ruta_archivo" value="<?php echo $rutaArchivo; ?>">
+    <p><?php echo basename($rutaArchivo); ?></p>
+    <!--
               <input class="form-control form-control-lg"  accept=" .pdf, .doc, .docx, .ppt, .ccv"
                        name="archivo" type="file" id="formFileLg" style="border-color: rgb(179, 179, 179);">
-            </div>
-
+            
+                  -->
+                  </div>
             <div class="d-grid gap-1 col-6 mx-auto mb-4">
               <input class="btn btn-primary btn" type="submit" value="Guardar" id="letrabuton">
+              <!-- Mandarle la info a actualizar -->
+              <input type="hidden" name="idPub" value="<?php echo $publicacion['idPub']; ?>">
+      
             </div>
 
           </form>
@@ -313,6 +330,17 @@ if (isset($_GET['id'])) {
     </div>
   </div>
   <script src="../js/fadeout.js"></script>
+  <script>
+    // Espera a que el documento esté completamente cargado
+    document.addEventListener("DOMContentLoaded", function() {
+        // Obtiene el valor de la ruta del archivo
+        var rutaArchivo = "<?php echo $rutaArchivo; ?>";
+        // Obtiene el input de tipo archivo
+        var inputArchivo = document.getElementById("formFileLg");
+        // Establece la ruta del archivo como valor predeterminado
+        inputArchivo.value = rutaArchivo;
+    });
+</script>
   <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
     <div class="container">
       <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
