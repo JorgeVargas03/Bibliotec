@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
 
 
     //Query para obtener el promedio de calificaciones de esta publicacion
-    $qcalif = "SELECT AVG(`calificacion`) as promedio from calificacion_detalle cd 
+    $qcalif = "SELECT AVG(`calificacion`) as 'promedio' from calificacion_detalle cd 
                 join usuario u on u.idUsuario = cd.id_Usuario 
                 join publicacion p on p.idPub = cd.idPub 
                 where cd.idPub = $idPub;";
@@ -323,12 +323,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                                                             <?php
                                                             // Calificación actual de la publicación
-                                                            if ($consultaCal == null) {
+                                                            if ($consultaCal['promedio'] === null) {
                                                                 $calificacion = 0;
+                                                                echo '<span> ' . 'NA' . '</span> </b></p>';
                                                             } else {
                                                                 $calificacion = $consultaCal['promedio'];
+                                                                echo '<span> ' . round($calificacion, 2) . '</span> / 5 </b></p>';
                                                             }
-                                                            echo '<span> ' . round($calificacion, 2) . '</span> / 5 </b></p>';
+                                                            
 
                                                             // Convertir calificación de 1-5
                                                             $calificacion_estrellas = ceil($calificacion / 1);
