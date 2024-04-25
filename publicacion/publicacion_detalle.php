@@ -265,7 +265,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     </li>
                     <hr class="my-2"> <!-- Línea divisora -->
                     <li class="mb-1 mt-3">
-                        <a class="nav-link align-items-center" name="fade" href="publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
+                        <a class="nav-link align-items-center" name="fade" href="../publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
                     </li>
 
                     <hr class="my-2"> <!-- Línea divisora -->
