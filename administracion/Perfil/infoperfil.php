@@ -100,7 +100,7 @@ mysqli_close($link);
         .badge {
             width: 200px;
             /* Tamaño fijo para el cuadro */
-            height: 150px;
+            height: 180px;
             /* Tamaño fijo para el cuadro */
             overflow: hidden;
             /* Para ocultar el texto que desborde el contenedor */
@@ -123,8 +123,8 @@ mysqli_close($link);
         }
 
         .trophy-icon {
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height: 120px;
         }
 
         .badge-title {
@@ -362,25 +362,33 @@ mysqli_close($link);
                             <div class="row justify-content-center">
                                 <div class="col-md-4">
                                     <div class="badge text-center">
-                                        <img class="trophy-icon" src="..\..\images\icons\medalla.png" alt="Trophy Icon">
+                                        <img class="trophy-icon" src="..\..\images\icons\tigre sabio.PNG" alt="Trophy Icon">
                                         <div class="badge-content">
-                                            <span class="badge-title">Tigre Creativo</span>
+                                            <span class="badge-title">Tigre Sabio</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="badge text-center">
-                                        <img class="trophy-icon" src="..\..\images\icons\medalla.png" alt="Trophy Icon">
+                                        <img class="trophy-icon" src="..\..\images\icons\huelladecalidad.PNG" alt="Trophy Icon">
                                         <div class="badge-content">
-                                            <span class="badge-title">Tigre Contribuidor</span>
+                                            <span class="badge-title">Huella de Calidad</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="badge text-center">
-                                        <img class="trophy-icon" src="..\..\images\icons\medalla.png" alt="Trophy Icon">
+                                        <img class="trophy-icon" src="..\..\images\icons\tigre Amigo.PNG" alt="Trophy Icon">
                                         <div class="badge-content">
-                                            <span class="badge-title">Tigre Nuevo</span>
+                                            <span class="badge-title">Tigre Amigo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="badge text-center">
+                                        <img class="trophy-icon" src="..\..\images\icons\tigre veterano.png" alt="Trophy Icon">
+                                        <div class="badge-content">
+                                            <span class="badge-title">Tigre Veterano</span>
                                         </div>
                                     </div>
                                 </div>
