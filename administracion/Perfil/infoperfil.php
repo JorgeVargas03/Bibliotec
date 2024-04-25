@@ -7,25 +7,25 @@ session_start();
 
 // Verificar si el usuario no ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-  header("location: ../../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
-  exit;
+    header("location: ../../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
+    exit;
 }
 
 // Verificar si se ha enviado una solicitud para cerrar sesión
 if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
-  // Destruir todas las variables de sesión
-  session_unset();
+    // Destruir todas las variables de sesión
+    session_unset();
 
-  // Destruir la sesión
-  session_destroy();
+    // Destruir la sesión
+    session_destroy();
 
-  // Redirigir al usuario al inicio de sesión
-  header("location: ../../index.php");
-  exit; 
+    // Redirigir al usuario al inicio de sesión
+    header("location: ../../index.php");
+    exit;
 }
 
 
-$idUsuario= $_SESSION['idU'];
+$idUsuario = $_SESSION['idU'];
 // Consulta a la base de datos
 /*$consulta = "SELECT * FROM publicacion
 WHERE carrera_Pub = '$carrera'
@@ -38,7 +38,7 @@ $registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida de
 
 // Verifica si la consulta se ejecutó correctamente
 if (!$registros) {
-  die('Error en la consulta: ' . mysqli_error($link));
+    die('Error en la consulta: ' . mysqli_error($link));
 }
 
 // Cierra la conexión después de realizar la consulta
@@ -64,22 +64,15 @@ mysqli_close($link);
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!--Inicia Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!--Termmina Bootstrap-->
     <!--iconos-->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
 
     <style>
         .contenedor {
@@ -93,69 +86,77 @@ mysqli_close($link);
             height: 180px;
             margin-right: 93px;
         }
-      
+
         .material-symbols-outlined {
-        font-variation-settings:
-        'FILL' 0,
-        'wght' 300,
-        'GRAD' 0,
-        'opsz' 22
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 300,
+                'GRAD' 0,
+                'opsz' 22
         }
     </style>
 
     <style>
-    .badge {
-    width: 200px; /* Tamaño fijo para el cuadro */
-    height: 150px; /* Tamaño fijo para el cuadro */
-    overflow: hidden; /* Para ocultar el texto que desborde el contenedor */
-    text-overflow: ellipsis; /* Para mostrar puntos suspensivos (...) cuando el texto desborde el contenedor */
-    white-space: nowrap; /* Para evitar que el texto se divida en múltiples líneas */
-    display: inline-block;
-    margin-right: 20px;
-    border: 2px solid #007bff; /* blue border */
-    border-radius: 20px; /* oval shape */
-    padding: 10px;
-    text-align: center;
-}
+        .badge {
+            width: 200px;
+            /* Tamaño fijo para el cuadro */
+            height: 150px;
+            /* Tamaño fijo para el cuadro */
+            overflow: hidden;
+            /* Para ocultar el texto que desborde el contenedor */
+            text-overflow: ellipsis;
+            /* Para mostrar puntos suspensivos (...) cuando el texto desborde el contenedor */
+            white-space: nowrap;
+            /* Para evitar que el texto se divida en múltiples líneas */
+            display: inline-block;
+            margin-right: 20px;
+            border: 2px solid #007bff;
+            /* blue border */
+            border-radius: 20px;
+            /* oval shape */
+            padding: 10px;
+            text-align: center;
+        }
 
-.badge-content {
-    margin-top: 20px;
-}
+        .badge-content {
+            margin-top: 20px;
+        }
 
-.trophy-icon {
-    width: 80px; 
-    height: 80px; 
-}
+        .trophy-icon {
+            width: 80px;
+            height: 80px;
+        }
 
-.badge-title {
-    font-weight: bold;
-    color: #007bff; 
-}
-        
+        .badge-title {
+            font-weight: bold;
+            color: #007bff;
+        }
 
-#guardarBtn, #cancelarBtn {
-    background-color: blue;
-    color: white;
-    border: 2px solid blue;
-    border-radius: 8px; 
-    padding: 2px 5px;
-    margin-right: 5px; 
-    cursor: pointer; 
-}
 
-#guardarBtn:hover, #cancelarBtn:hover {
-    background-color: darkblue; 
-    border-color: darkblue; 
-}
-</style>
+        #guardarBtn,
+        #cancelarBtn {
+            background-color: blue;
+            color: white;
+            border: 2px solid blue;
+            border-radius: 8px;
+            padding: 2px 5px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        #guardarBtn:hover,
+        #cancelarBtn:hover {
+            background-color: darkblue;
+            border-color: darkblue;
+        }
+    </style>
 </head>
 
 <!--IMAGEN DE CONTACTO-->
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
     <symbol id="people-circle" viewBox="0 0 16 16">
         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-        <path fill-rule="evenodd"
-            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
     </symbol>
 </svg>
 
@@ -180,267 +181,282 @@ mysqli_close($link);
     <div class="container-fluid">
         <div class="row">
             <!-- Barra de navegación izquierda -->
-             <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
-        <ul class="list-unstyled" id="menu-lateral">
-          <li class="mb-2 mt-2">
-            <a class="nav-link align-items-center" href="../../home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
-          </li>
-          <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
-              Carreras
-            </button>
-            <div class="collapse" id="dashboard-collapse">
-              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="../search.php?carrera=Arquitectura" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
-                <li><a href="../search.php?carrera=Ing. Bioquimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
-                <li><a href="../search.php?carrera=Ing. Civil" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
-                <li><a href="../search.php?carrera=Ing. Electrica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
-                <li><a href="../search.php?carrera=Ing. Gestion Empresarial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
-                <li><a href="../search.php?carrera=Ing. Sistemas Computacionales" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
-                <li><a href="../search.php?carrera=Ing. Industrial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
-                <li><a href="../search.php?carrera=Ing. Mecatronica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
-                <li><a href="../search.php?carrera=Ing. Quimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
-                <li><a href="../search.php?carrera=Lic. Administracion" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#contacto-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
-              Contacto
-            </button>
-            <div class="collapse" id="contacto-collapse">
-              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
-              </ul>
-            </div>
-          </li>
-          <hr class="my-2"> <!-- Línea divisora -->
-          <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#cuenta-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
-              <svg class="bi pe-none" width="1.3vmax" height="1.3vmax">
-                <use xlink:href="#people-circle" />
-              </svg>
-              <span style="margin-top:0.3vmax; margin-left: 0.4vmax;">Cuenta</span>
-            </button>
-            <div class="collapse" id="cuenta-collapse">
-              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="infoperfil.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
-                <a href="../../home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a>
-              </ul>
-            </div>
-          </li>
-          <hr class="my-2"> <!-- Línea divisora -->
-          <li class="mb-1 mt-3">
-            <a class="nav-link align-items-center" name="fade" href="../../publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
-          </li>
+            <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
+                <ul class="list-unstyled" id="menu-lateral">
+                    <li class="mb-2 mt-2">
+                        <a class="nav-link align-items-center" href="../../home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
+                    </li>
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+                            Carreras
+                        </button>
+                        <div class="collapse" id="dashboard-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="../search.php?carrera=Arquitectura" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
+                                <li><a href="../search.php?carrera=Ing. Bioquimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
+                                <li><a href="../search.php?carrera=Ing. Civil" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
+                                <li><a href="../search.php?carrera=Ing. Electrica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
+                                <li><a href="../search.php?carrera=Ing. Gestion Empresarial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
+                                <li><a href="../search.php?carrera=Ing. Sistemas Computacionales" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
+                                <li><a href="../search.php?carrera=Ing. Industrial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
+                                <li><a href="../search.php?carrera=Ing. Mecatronica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
+                                <li><a href="../search.php?carrera=Ing. Quimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
+                                <li><a href="../search.php?carrera=Lic. Administracion" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#contacto-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+                            Contacto
+                        </button>
+                        <div class="collapse" id="contacto-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <hr class="my-2"> <!-- Línea divisora -->
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#cuenta-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
+                            <svg class="bi pe-none" width="1.3vmax" height="1.3vmax">
+                                <use xlink:href="#people-circle" />
+                            </svg>
+                            <span style="margin-top:0.3vmax; margin-left: 0.4vmax;">Cuenta</span>
+                        </button>
+                        <div class="collapse" id="cuenta-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="infoperfil.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
+                                <a href="../../home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a>
+                            </ul>
+                        </div>
+                    </li>
+                    <hr class="my-2"> <!-- Línea divisora -->
+                    <li class="mb-1 mt-3">
+                        <a class="nav-link align-items-center" name="fade" href="../../publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
+                    </li>
 
-          <hr class="my-2"> <!-- Línea divisora -->
-          <li class="mb-1 mt-3">
-            <a class="nav-link align-items-center" href="#" id="letrabardos" style="margin-left:10px"><?php echo "Hola " . $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></a>
-          </li>
-        </ul>
-      </div>
+                    <hr class="my-2"> <!-- Línea divisora -->
+                    <li class="mb-1 mt-3">
+                        <a class="nav-link align-items-center" href="#" id="letrabardos" style="margin-left:10px"><?php echo "Hola " . $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></a>
+                    </li>
+                </ul>
+            </div>
 
             <!-- Contenido principal -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="contenedor">
-                    <script>
-                        // Obtener parámetros de la URL
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const username = urlParams.get('username');
-                        const photo = urlParams.get('photo');
-
-                        // Actualizar nombre de usuario y foto si los parámetros están presentes
-                        if (username && photo) {
-                            document.getElementById("username").textContent = username;
-                            document.getElementById("profilePic").src = photo;
-                        }
-                    </script>
                     <h1><img id="profilePic" src="..\..\images\icons\perfil.png"></h1>
 
-<h2>
-    <span id="nombreApellido"><?php echo $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></span>
-    <img src="..\..\images\icons\editar.png" height="25" id="editarBtn">
-</h2>
-<div id="formularioEdicion" style="display: none;">
-    <input type="text" id="nuevoNombre" placeholder="Nuevo nombre">
-    <input type="text" id="nuevoApellido" placeholder="Nuevo apellido">
-    <button id="guardarBtn">Guardar</button>
-    <button id="cancelarBtn">Cancelar</button>
-</div>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const nombreApellido = document.getElementById('nombreApellido');
-    const editarBtn = document.getElementById('editarBtn');
-    const formularioEdicion = document.getElementById('formularioEdicion');
-    const nuevoNombre = document.getElementById('nuevoNombre');
-    const nuevoApellido = document.getElementById('nuevoApellido');
-    const guardarBtn = document.getElementById('guardarBtn');
-    const cancelarBtn = document.getElementById('cancelarBtn');
+                    <h2>
+                        <span id="nombreApellido"><?php echo $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></span>
+                        <a href="#" class="editar-btn" data-toggle="modal" data-target="#editarNombreModal">
+                            <img src="..\..\images\icons\editar.png" height="25">
+                        </a>
+                    </h2>
 
-    // Mostrar formulario de edición al hacer clic en la imagen de edición
-    editarBtn.addEventListener('click', function () {
-        formularioEdicion.style.display = 'block';
-        const nombreApellidoSplit = nombreApellido.textContent.split(' ');
-        nuevoNombre.value = nombreApellidoSplit[0];
-        nuevoApellido.value = nombreApellidoSplit.slice(1).join(' ');
-        nombreApellido.style.display = 'none';
-    });
+                    <h5>
+                        <span id="nombreCarrera"><?php echo $_SESSION['carrera'] ?></span>
+                        <a href="#" class="editar-btn" data-toggle="modal" data-target="#editarCarreraModal">
+                            <img src="..\..\images\icons\editar.png" height="25">
+                        </a>
+                    </h5>
 
-    // Guardar los cambios al hacer clic en el botón de guardar
-    guardarBtn.addEventListener('click', function () {
-        const nuevoNombreValor = nuevoNombre.value.trim();
-        const nuevoApellidoValor = nuevoApellido.value.trim();
-        if (nuevoNombreValor !== '' && nuevoApellidoValor !== '') {
-            // Aquí puedes enviar los nuevos valores al servidor mediante AJAX o cualquier otra forma
-            // Por simplicidad, actualizaremos solo el nombre y apellido en el DOM
-            nombreApellido.textContent = nuevoNombreValor + ' ' + nuevoApellidoValor;
-            nombreApellido.style.display = 'inline';
-            formularioEdicion.style.display = 'none';
-        } else {
-            alert('Por favor ingresa un nombre y un apellido válidos.');
-        }
-    });
+                    <!-- Modales de edición -->
+                    <div class="modal fade" id="editarNombreModal" tabindex="-1" role="dialog" aria-labelledby="editarNombreModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editarNombreModalLabel">Editar Nombre</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Contenido del formulario de edición de nombre -->
+                                    <form action="PerfilEdit.php" method="POST">
+                                        <div class="form-group">
+                                            <label for="nuevoNombre">Nuevo Nombre:</label>
+                                            <input type="text" class="form-control" id="nuevoNombre" name="nuevoNombre" placeholder="Nuevo nombre" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nuevoApellido">Nuevo Apellido:</label>
+                                            <input type="text" class="form-control" id="nuevoApellido" name="nuevoApellido" placeholder="Nuevo apellido" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-2" id="guardarNombreBtn">Guardar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-    // Cancelar la edición al hacer clic en el botón de cancelar
-    cancelarBtn.addEventListener('click', function () {
-        nombreApellido.style.display = 'inline';
-        formularioEdicion.style.display = 'none';
-    });
-});
-</script>
-                    
-<h5>
-    <span id="nombreCarrera"><?php echo $_SESSION['carrera'] ?></span>
-    <img src="..\..\images\icons\editar.png" height="25" id="editarBtn" onclick="mostrarCombo()">
-</h5>
+                    <div class="modal fade" id="editarCarreraModal" tabindex="-1" role="dialog" aria-labelledby="editarCarreraModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editarCarreraModalLabel">Editar Carrera</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Contenido del formulario de edición de carrera -->
+                                    <form action="PerfilEdit.php" method="POST">
+                                        <div class="form-group">
+                                            <label for="nuevaCarrera">Nueva Carrera:</label>
+                                            <select class="form-control" id="nuevaCarrera" name="nuevaCarrera" required>
+                                                <option value="Arquitectura">Arquitectura</option>
+                                                <option value="Ing. Bioquímica">Ingeniería Bioquímica</option>
+                                                <option value="Ing. Civil">Ingeniería Civil</option>
+                                                <option value="Ing. Eléctrica">Ingeniería Eléctrica</option>
+                                                <option value="Ing. Gestión Empresarial">Ingeniería en Gestión Empresarial</option>
+                                                <option value="Ing. Sistemas Computacionales">Ingeniería en Sistemas Computacionales</option>
+                                                <option value="Ing. Mecatrónica">Ingeniería Mecatrónica</option>
+                                                <option value="Ing. Industrial">Ingeniería Industrial</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-2" id="guardarCarreraBtn">Guardar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-<div id="comboCarreras" style="display: none;">
-    <select id="selectCarrera" onchange="cambiarCarrera()">
-        <option value="Arquitectura">Arquitectura</option>
-        <option value="Ingeniería Bioquímica">Ingeniería Bioquímica</option>
-        <option value="Ingeniería Civil">Ingeniería Civil</option>
-        <option value="Ingeniería Eléctrica">Ingeniería Eléctrica</option>
-        <option value="Ingeniería en Gestión Empresarial">Ingeniería en Gestión Empresarial</option>
-        <option value="Ingeniería en Sistemas Computacionales">Ingeniería en Sistemas Computacionales</option>
-        <option value="Ingeniería Mecatrónica">Ingeniería Mecatrónica</option>
-        <option value="Ingeniería Industrial">Ingeniería Industrial</option>
-    </select>
-</div>
+                    <script>
+                        // Obtener los botones de editar
+                        const editarNombreBtn = document.querySelector('.editar-btn[data-target="#editarNombreModal"]');
+                        const editarCarreraBtn = document.querySelector('.editar-btn[data-target="#editarCarreraModal"]');
 
-<script>
-    function mostrarCombo() {
-        document.getElementById("comboCarreras").style.display = "block";
-    }
+                        // Añadir evento de clic a los botones de editar
+                        editarNombreBtn.addEventListener('click', function() {
+                            // Mostrar el modal de edición de nombre
+                            $('#editarNombreModal').modal('show');
+                        });
 
-    function cambiarCarrera() {
-        var select = document.getElementById("selectCarrera");
-        var carrera = select.options[select.selectedIndex].text;
-        // Reemplazar "Ingeniería" por "Ing."
-        carrera = carrera.replace("Ingeniería", "Ing.");
-        // Actualizar el texto en el span
-        document.getElementById("nombreCarrera").textContent = carrera;
-        // Ocultar el combo box
-        document.getElementById("comboCarreras").style.display = "none";
-    }
-</script>
+                        editarCarreraBtn.addEventListener('click', function() {
+                            // Mostrar el modal de edición de carrera
+                            $('#editarCarreraModal').modal('show');
+                        });
 
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                        <div class="container mt-3">
-                            <hr noshade="noshade"><br>                       
+                        // Validación de campos antes de enviar el formulario
+                        document.getElementById('guardarNombreBtn').addEventListener('click', function() {
+                            const nuevoNombre = document.getElementById('nuevoNombre').value.trim();
+                            const nuevoApellido = document.getElementById('nuevoApellido').value.trim();
 
- <h3>
-    <div class="badge">
-        <img class="trophy-icon" src="..\..\images\icons\medalla.png" alt="Trophy Icon">
-        <div class="badge-content">
-            <span class="badge-title">Tigre Creativo</span>
-        </div>
-    </div>
-    
-    <div class="badge">
-        <img class="trophy-icon" src="..\..\images\icons\medalla.png" alt="Trophy Icon">
-        <div class="badge-content">
-            <span class="badge-title">Tigre Contribuidor</span>
-        </div>
-    </div>
-    
-    <div class="badge">
-        <img class="trophy-icon" src="..\..\images\icons\medalla.png" alt="Trophy Icon">
-        <div class="badge-content">
-            <span class="badge-title">Tigre Nuevo</span>
-        </div>
-    </div>
-</h3>
+                            if (nuevoNombre === '' || nuevoApellido === '') {
+                                alert('Por favor, complete todos los campos.');
+                                event.preventDefault();
+                            }
+                        });
+
+                        document.getElementById('guardarCarreraBtn').addEventListener('click', function() {
+                            const nuevaCarrera = document.getElementById('nuevaCarrera').value;
+
+                        });
+                    </script>
 
 
-
-                   
-                            <hr noshade="noshade"><br>
-                            <h3 class="mb-5">Historial de Publicaciones</h3>
+                    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                        <div class="container mt-2">
+                            <hr noshade="noshade">
+                            <h3 class="text-center" style="margin-bottom: 20px;">Insignias</h3>
+                            <div class="row justify-content-center">
+                                <div class="col-md-4">
+                                    <div class="badge text-center">
+                                        <img class="trophy-icon" src="..\..\images\icons\medalla.png" alt="Trophy Icon">
+                                        <div class="badge-content">
+                                            <span class="badge-title">Tigre Creativo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="badge text-center">
+                                        <img class="trophy-icon" src="..\..\images\icons\medalla.png" alt="Trophy Icon">
+                                        <div class="badge-content">
+                                            <span class="badge-title">Tigre Contribuidor</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="badge text-center">
+                                        <img class="trophy-icon" src="..\..\images\icons\medalla.png" alt="Trophy Icon">
+                                        <div class="badge-content">
+                                            <span class="badge-title">Tigre Nuevo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <?php while ($fila = mysqli_fetch_array($registros)) : ?>
-                        <div class="publicacion card mb-3">
+
+
+
+
+                        <hr noshade="noshade"><br>
+                        <h3 class="mb-5">Historial de Publicaciones</h3>
+                </div>
+
+                <?php while ($fila = mysqli_fetch_array($registros)) : ?>
+                    <div class="publicacion card mb-3">
                         <div class="card-body">
-                         
-                        <!-- Boton editar --> 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-0"> 
-                             <a id="idEditar" class="btn btn-outline-warning" href="../../publicacion/editar_interfaz.php?id=<?php echo $fila['idPub']; ?>" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
-                            <span class="material-symbols-outlined">
-                             edit_square
-                            </span>
-                            </a>
 
-                            <!-- Boton eliminar y modal -->
-                             <a data-idpub="<?php echo $fila['idPub']; ?>" id="idEliminar" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#reg-modal" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" >
-                            <span class="material-symbols-outlined">
+                            <!-- Boton editar -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-0">
+                                <a id="idEditar" class="btn btn-outline-warning" href="../../publicacion/editar_interfaz.php?id=<?php echo $fila['idPub']; ?>" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
+                                    <span class="material-symbols-outlined">
+                                        edit_square
+                                    </span>
+                                </a>
+
+                                <!-- Boton eliminar y modal -->
+                                <a data-idpub="<?php echo $fila['idPub']; ?>" id="idEliminar" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#reg-modal" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
+                                    <span class="material-symbols-outlined">
                                         delete
-                            </span>
-                            </a> 
-                             
-                        </div>
+                                    </span>
+                                </a>
+
+                            </div>
 
                             <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
-                            
+
                             <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
 
                             <a name="fade" href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary btn-sm"><b>Leer más</b></a>
                         </div>
                         <div class="card-footer d-flex text-muted justify-content-between align-items-end">
-                        <span class="card-text comment-date mb-0 ">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
+                            <span class="card-text comment-date mb-0 ">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
                             <span class="card-text comment-date mb-0"><?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
                         </div>
-                         </div>
-                     <?php endwhile; ?>
-                    </main>
-                    <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title"
-                            aria-hidden="true">
-                                <div class="modal.dialog">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modal-title">Confirmar Eliminar</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p> ¿Estas seguro de querer eliminar esta publicación?</p>
-                                        </div>
-                                        <div class="modal-footer" >
-                                            <button class="btn btn-primary" id="ConfirmarEliminar">Eliminar</button>
-                                    </div>
-                                </div>   
+                    </div>
+                <?php endwhile; ?>
+            </main>
+            </main>
+            <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+                <div class="modal.dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modal-title">Confirmar Eliminar</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <script src="../../publicacion/eliminar2.js">
-                            </script>
+                            <div class="modal-body">
+                                <p> ¿Estas seguro de querer eliminar esta publicación?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" id="ConfirmarEliminar">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <script src="../../publicacion/eliminar2.js">
+                    </script>
                 </div>
+            </div>
         </div>
-    </div>
-    <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
-        <div class="container">
-            <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
-        </div>
-    </footer>
+
+        <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
+            <div class="container">
+                <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
+            </div>
+        </footer>
 </body>
 
 </html>

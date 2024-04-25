@@ -38,7 +38,7 @@ if (isset($_GET['carrera'])) {
             echo '<div class="card-body">';
             echo '<h3 class="card-title display-6"><b>' . $fila['titulo_Pub'] . '</b></h3>';
             echo '<p class="card-text lead">' . $fila['descrip_Pub'] . '</p>';
-            echo '<a name="fade" href="publicacion/publicacion_detalle.php?id=' . $fila['idPub'] . '" class="btn btn-primary btn-sm"><b>Leer más</b></a>';
+            echo '<a name="fade" href="../publicacion/publicacion_detalle.php?id=' . $fila['idPub'] . '" class="btn btn-primary btn-sm"><b>Leer más</b></a>';
             echo '</div>';
             echo '<div class="card-footer d-flex text-muted justify-content-between align-items-end">';
             echo '<span class="card-text comment-date mb-0">Publicado por: ' . $fila['nom_Us'] . ' ' . $fila['apell_Us'] . '</span>';
