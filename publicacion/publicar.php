@@ -190,7 +190,7 @@ if (!$res) {
             <!-- Título -->
             <div class="col-md-8 mt-0">
               <label for="inputEmail4" class="form-label" id="letraform"><b>Título * :</b></label>
-              <input type="text" name="titulo" id="validationCustom07" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);" required>
+              <input type="text" autocomplete="off" name="titulo" id="validationCustom07" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);" required>
               <div class="invalid-feedback">
                 Ingrese un título para esta publicación.
               </div>
@@ -204,7 +204,7 @@ if (!$res) {
             <!-- Descripción -->
             <div class="mb-2 mt-3">
               <label for="exampleFormControlTextarea1" class="form-label" id="letraform"><b>Descripción (en caso de ser Recurso Bibliográfico agregar aquí los datos de referencia) :</b></label>
-              <textarea class="form-control" name="descripcion" placeholder="Ej. Autor del libro: Ramirez, M. (2008)" id="floatingTextarea2" style="height: 100px; resize: none;"></textarea>
+              <textarea class="form-control" name="descripcion" autocomplete="off" placeholder="Ej. Autor del libro: Ramirez, M. (2008)" id="floatingTextarea2" style="height: 100px; resize: none;"></textarea>
             </div>
 
             <!-- Carrera -->
@@ -239,7 +239,7 @@ if (!$res) {
             <!-- Etiquetas -->
             <div class="col-md-8 mt-3 mb-2">
               <label for="inputEmail4" class="form-label" id="letraform"><b>Etiquetas (hasta 5, separadas por #) * :</b></label>
-              <input value="#" type="text" name="etiquetas" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);" required>
+              <input value="#" type="text" name="etiquetas" autocomplete="off" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);" required>
               <div class="invalid-feedback">
                 Debes ingresar al menos una etiqueta y no más de 5, separadas por '#'.
               </div>
@@ -274,7 +274,7 @@ if (!$res) {
                   <span class="material-symbols-outlined">help </span>
                 </button>
               </label>
-              <input class="form-control form-control-lg" onchange="checkFileSize(this)" accept=".pdf, .doc, .docx, .ppt, .ccv" name="archivo" type="file" id="formFileLg" style="border-color: rgb(179, 179, 179);" required>
+              <input class="form-control form-control-lg" onchange="checkFileSize(this)" accept=".pdf, .doc, .docx, .pptx, .ccv, .iso" name="archivo" type="file" id="formFileLg" style="border-color: rgb(179, 179, 179);" required>
               <div class="invalid-feedback">
                 Por favor selecciona un archivo.
               </div>
@@ -344,11 +344,11 @@ if (!$res) {
           <!--Script para validar tamaño-->
           <script>
             function checkFileSize(input) {
-              var maxSize = 2 * 1024 * 1024; // Tamaño máximo permitido en bytes (2 MB)
+              var maxSize = 100 * 1024 * 1024; // Tamaño máximo permitido en bytes (2 MB)
               if (input.files && input.files[0]) {
                 var fileSize = input.files[0].size;
                 if (fileSize > maxSize) {
-                  document.getElementById('errorMessage').innerText = 'El tamaño del archivo excede el límite permitido (2 MB).';
+                  document.getElementById('errorMessage').innerText = 'El tamaño del archivo excede el límite permitido (100 MB).';
                   input.value = ''; // Limpiar el valor del input file
                 } else {
                   document.getElementById('errorMessage').innerText = '';
