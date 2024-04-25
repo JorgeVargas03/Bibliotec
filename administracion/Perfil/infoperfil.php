@@ -382,9 +382,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         <?php while ($fila = mysqli_fetch_array($registros)) : ?>
                         <div class="publicacion card mb-3">
                         <div class="card-body">
-                            
+                         
+                        <!-- Boton editar --> 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-0"> 
-                             <a class="btn btn-outline-warning" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
+                             <a id="idEditar" class="btn btn-outline-warning" href="../../publicacion/editar_interfaz.php?id=<?php echo $fila['idPub']; ?>" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
                             <span class="material-symbols-outlined">
                              edit_square
                             </span>

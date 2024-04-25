@@ -20,6 +20,41 @@ $res = mysqli_query($link,$queryCarrera); // Utiliza la conexión obtenida desde
 if (!$res) {
   die('Error en la consulta: ' . mysqli_error($link));
 }
+
+// Inicio Aless
+
+// Verifica si se ha enviado el ID de la publicación a editar
+if (isset($_GET['id'])) {
+  $idPublicacion = $_GET['id'];
+
+  $consultacarrera = "SELECT carrera_Pub FROM publicacion WHERE idPub = $idPublicacion";
+  $resultadoCarrera = $link->query($consultacarrera);
+
+  // Verificar si se obtuvo algún resultado
+  if ($resultadoCarrera->num_rows > 0) {
+      $filaCarrera = $resultadoCarrera->fetch_assoc();
+      $carreraSeleccionada = $filaCarrera['carrera_Pub'];
+  } else {
+      // Si no se encuentra ninguna carrera, establecer un valor predeterminado o manejar el caso según sea necesario
+      $carreraSeleccionada = "No encontrada";
+  }
+
+  // Consulta SQL para recuperar la información de la publicación
+  $consulta = "SELECT * FROM publicacion WHERE idPub = $idPublicacion";
+  $resultado = mysqli_query($link, $consulta);
+
+  if (mysqli_num_rows($resultado) > 0) {
+      $publicacion = mysqli_fetch_assoc($resultado);
+  } else {
+      echo "Publicación no encontrada";
+      exit();
+  }
+} else {
+  echo "ID de publicación no proporcionado";
+  exit();
+}
+
+// Final Aless
 ?>
 
 <!DOCTYPE html>
@@ -52,18 +87,48 @@ if (!$res) {
   <script language="javascript" src="../js/jquery-3.1.1.min.js"></script>
 
   <script language="javascript">
-			$(document).ready(function(){
-				$("#cbx_carrera").change(function (){
-					
-					$("#cbx_carrera option:selected").each(function () {
-						nomCarrera = $(this).val();
-						$.post("../php/materia.php", { nomCarrera: nomCarrera }, function(data){
-							$("#cbx_materia").html(data);
-						});            
-					});
-				})
-			});
-		</script>
+    $(document).ready(function(){
+        // Función para cargar las materias al cargar la página
+        cargarMaterias();
+
+        // Función para cargar las materias cuando se cambie la selección de la carrera
+        $("#cbx_carrera").change(function (){
+            cargarMaterias();
+        });
+
+        // Función para cargar las materias
+        function cargarMaterias() {
+            $("#cbx_carrera option:selected").each(function () {
+                var nomCarrera = $(this).val();
+                $.post("../php/materia.php", { nomCarrera: nomCarrera }, function(data){
+                    $("#cbx_materia").html(data);
+
+                    // Obtener la materia de la publicación y seleccionarla automáticamente
+                    <?php
+                    // Verificar si se ha enviado el ID de la publicación
+                    if (isset($_GET['id'])) {
+                        $idPublicacion = $_GET['id'];
+
+                        // Consulta para obtener la materia de la publicación
+                        $consultaMateria = "SELECT materia_Pub FROM publicacion WHERE idPub = $idPublicacion";
+                        $resultadoMateria = $link->query($consultaMateria);
+
+                        // Verificar si se obtuvo algún resultado
+                        if ($resultadoMateria->num_rows > 0) {
+                            $filaMateria = $resultadoMateria->fetch_assoc();
+                            $materiaSeleccionada = $filaMateria['materia_Pub'];
+                    ?>
+                            // Seleccionar automáticamente la materia obtenida
+                            $("#cbx_materia").val("<?php echo $materiaSeleccionada; ?>");
+                    <?php
+                        }
+                    }
+                    ?>
+                });
+            });
+        }
+    });
+</script>
 		
 
 </head>
@@ -178,7 +243,7 @@ if (!$res) {
           <form class="row g-3  mt-2 mb-2vmax" method="POST" action="publicar_control.php" enctype="multipart/form-data">
             <div class="col-md-8 mt-0">
               <label for="inputEmail4" class="form-label" id="letraform"><b>Título * :</b></label>
-              <input type="text" name="titulo" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);">
+              <input type="text" value="<?php echo $publicacion['titulo_Pub']; ?>" name="titulo" class="form-control bs-primary-rgb" style="border-color: rgb(179, 179, 179);">
             </div>
             <div class="col-md-4 mt-0 mb-1">
               <label for="inputPassword4" class="form-label" id="letraform"><b>Usuario * :</b></label>
@@ -187,7 +252,7 @@ if (!$res) {
 
             <div class="mb-2 mt-3">
               <label for="exampleFormControlTextarea1" class="form-label" id="letraform"><b>Descripción (en caso de ser Recurso Bibliográfico agregar aqui los datos de referencia) :</b></label>
-              <textarea class="form-control" name="descripcion" placeholder="Ej. Autor del libro: Ramirez, M. (2008)" id="floatingTextarea2" style="height: 100px"></textarea>
+              <textarea class="form-control" name="descripcion" placeholder="Ej. Autor del libro: Ramirez, M. (2008)" id="floatingTextarea2" style="height: 100px"><?php echo $publicacion['descrip_Pub']; ?></textarea>
             </div>
 
 
@@ -196,9 +261,9 @@ if (!$res) {
               <div class="col-sm-12">
                 <select class="form-select" id="cbx_carrera" name="cbx_carrera" aria-label="Default select example" style="border-color: rgb(179, 179, 179);">
                   <option value="0">Selecciona carrera...</option>
-                   <?php WHILE ($ROW = $res ->fetch_assoc() ){ ?>
-                    <option value="<?php echo $ROW['nomCarrera']; ?>"><?php echo $ROW['nomCarrera']; ?></option>
-                  <?php } ?>
+                  <?php while ($row = $res->fetch_assoc()) { ?>
+                <option value="<?php echo $row['nomCarrera']; ?>" <?php echo ($carreraSeleccionada == $row['nomCarrera']) ? "selected" : ""; ?>><?php echo $row['nomCarrera']; ?></option>
+            <?php } ?>
                 </select>
               </div>
             </div>
@@ -207,7 +272,7 @@ if (!$res) {
              <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm" id="letraform"><b>Materia * :</b></label>
              <div class="col-sm-13">
                 <select class="form-select"  id="cbx_materia" name="cbx_materia" aria-label="Default select example" style="border-color: rgb(179, 179, 179);">   
-                <option value="0">Selecciona carrera...</option>     
+                <option value="0">Selecciona materia...</option>     
                 </select>
               </div>
             </div>

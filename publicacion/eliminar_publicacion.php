@@ -1,6 +1,6 @@
 <?php
 // Incluye el archivo de conexión a la base de datos
-$conexion = include('../../php/conexion.php');
+$conexion = include('../php/conexion.php');
 
 // Verifica si se ha enviado el ID de la publicación a eliminar
 if (isset($_POST['idpub'])) {
