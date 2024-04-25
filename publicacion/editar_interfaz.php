@@ -321,7 +321,6 @@ if (isset($_GET['id'])) {
               <input class="btn btn-primary btn" type="submit" value="Guardar" id="letrabuton">
               <!-- Mandarle la info a actualizar -->
               <input type="hidden" name="idPub" value="<?php echo $publicacion['idPub']; ?>">
-              <input type="hidden" name="titulo_Pub" value="<?php echo $publicacion['titulo_Pub']; ?>">
       
             </div>
 
