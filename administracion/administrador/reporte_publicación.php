@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
     $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
               JOIN usuario u ON p.id_Usuario = u.idUsuario
               WHERE p.idPub = $idPub";
-    $query2 = "SELECT * FROM 	reportepublicación WHERE idPub = $idPub";
+    $query2 = "SELECT * FROM reportepublicación WHERE idPub = $idPub ORDER BY `idReporte` DESC";
     $result = mysqli_query($link, $query);
     $registro = mysqli_query($link, $query2);
     $fila = mysqli_fetch_array($registro);
@@ -34,7 +34,8 @@ if (isset($_GET['id'])) {
 mysqli_close($link);
 
 // Iniciar sesión
-session_start();?>
+session_start();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,8 +43,6 @@ session_start();?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bibliotec - Reporte publicación</title>
-
-   
 
     <!--En esta seccion se incluyen las hojas de estilos-->
     <link rel="icon" href="../../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
@@ -87,7 +86,7 @@ session_start();?>
     <header class="bg-primary py-2">
         <div class="container" style="margin-left:7.8vmax;">
             <!-- Logo y título -->
-            <div class="logo col-5" >
+            <div class="logo col-11" >
                 <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
                 <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span>
                 <span>- Reportes de publicaciones</span></b></h4>
@@ -140,7 +139,7 @@ session_start();?>
                                     <div class="row">
                                         <div class="col mt-1 mb-2" >
                                             <h3 class="pl-1  mb-2" style="margin-left: 2vmax;"> Reporte de publicación</h3>
-                                            <h5><Span style="margin-left: 2vmax;"><b>Tipo de reporte: </b><?php echo $fila['motivo_Report'];?></Span><span></span></h5> 
+                                            <h5 class="row"><Span style="margin-left: 2vmax;"><b>Motivo de reporte: </b><?php echo $fila['motivo_Report'];?></Span><span></span></h5> 
                                         </div>
                                         <div class="col text-end mt-4 mb-3  align-items-end" style="margin-right: 2vmax;">
                                             <a href="#"  class="btn btn-success btn-sm">
@@ -150,7 +149,9 @@ session_start();?>
                                                 <i class="bi bi-trash3 mr-2"></i> Eliminar publicacion
                                             </a>
                                         </div>
+
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -165,7 +166,7 @@ session_start();?>
                             <div class="col-md-8" style="width: 92%; margin-left: 4%;">
                                 <!-- Detalles de la publicación -->
                                 <div class="card card-details">
-                                    <div class="card-header bg-primary text-light">
+                                    <div class="card-header  text-light" style="background-color: rgba(167, 4, 4, .8);">
                                         <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
                                         <p class="card-text mb-0">Por:<b> <?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></p>
                                     </div>

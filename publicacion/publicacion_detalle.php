@@ -515,9 +515,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <label for="inputState validationCustom01 " class="form-label">Motivo</label>
                         <select id="inputState validationCustom01 " class="form-select selecom" name="motivo">
                             <option selected>Seleccionar</option>
-                            <option>Contenido inapropiado</option>
                             <option>Spam</option>
-                            <option>No cumple con las normas de referenciado</option>
+                            <option>Violencia</option>
+                            <option>Acoso</option>
+                            <option>Lenguaje inapropiado</option>
                         </select>
                         <br>
                         <label for="textAreaRp">Comentario</label>

@@ -1,13 +1,19 @@
 <?php
 $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
+include('../../php/functions.php');
 
 // Consulta a la base de datos
-$query_rc = "SELECT * FROM 	reportecomentario ORDER BY idReporteCom DESC LIMIT 3";
-$query_c = "SELECT * FROM comentario WHERE idComent IN (SELECT idComent FROM reportecomentario)";
-$query_u = "SELECT nom_Us, apell_Us FROM usuario WHERE idUsuario = (SELECT idUsuario FROM comentario WHERE idComent IN (SELECT idComent FROM reportecomentario))";
+$query_rc = "SELECT * FROM 	reportecomentario ORDER BY idReporteCom DESC";
+$query_c = "SELECT c.*, u.nom_Us, u.apell_Us FROM comentario c
+            JOIN usuario u ON c.idUsuario = u.idUsuario
+            WHERE c.idComent IN (SELECT idComent FROM reportecomentario)
+            ORDER BY c.idComent DESC ";
+
+
+
 $registros_rc = mysqli_query($link, $query_rc); // Utiliza la conexión obtenida desde el archivo de conexión
 $registros_c = mysqli_query($link, $query_c);
-$registros_u = mysqli_query($link, $query_u);
+
 // Verifica si la consulta se ejecutó correctamente
 if (!$registros_rc) {
   die('Error en la consulta: ' . mysqli_error($link));
@@ -15,9 +21,7 @@ if (!$registros_rc) {
 if (!$registros_c) {
   die('Error en la consulta: ' . mysqli_error($link));
 }
-if (!$registros_u) {
-  die('Error en la consulta: ' . mysqli_error($link));
-}
+
 // Cierra la conexión después de realizar la consulta
 mysqli_close($link);
 
@@ -76,7 +80,7 @@ session_start();
     </div>
   </header>
 
-  <div class="container-fluid" >
+  <div class="container-fluid">
     <div class="row" >
         <!-- Barra de navegación izquierda -->
         <div class="flex-shrink-0 p-3 hola" style="width: 15%; background-color: #F07B12; ">
@@ -94,7 +98,7 @@ session_start();
                         <li><a href="rep_publicacion_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
                       </ul>
                     </div>
-                  </li>
+                </li>
                 <hr class="my-2"> <!-- Línea divisora -->
                 <li class="mb-1">
                     <button class="btn d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" style="color: black; font-weight: bold;">
@@ -104,27 +108,36 @@ session_start();
                 <hr class="my-2"> <!-- Línea divisora -->
             </ul>
         </div>
-      
+  
       <!-- Contenido principal -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <!-- REPORTE PUBLICACION -->
+        <!-- REPORTE COMENTARIO -->
         <div class="container mt-3">
           <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
           margin-top: 0.5vmax;"><b>Comentarios Reportados</b></h2>
+          <br>
           <?php
-          while ($fila = mysqli_fetch_array($registros_rc) and $fila2 = mysqli_fetch_array($registros_c) and $fila3 = mysqli_fetch_array($registros_u)) {
+          while ($fila = mysqli_fetch_array($registros_rc) and $fila2 = mysqli_fetch_array($registros_c)) {
           ?>
-            <div class="publicacion reportada">
-              <p>Usuario: <?php echo $fila3['nom_Us']; ?>  <?php echo $fila3['apell_Us'];?></p>
-              <p>Comentario: <?php echo ($fila2['text_Coment']); ?></p>
-              <p>Motivo: <?php echo ($fila['motivo_Report']); ?></p>
-              <p>Fecha de Reporte: <?php echo ($fila['fecha_Report']); ?></p>
-              <!-- Botón Ver más que despliega los detalles -->
-              <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
-              <a name ="fade" href="reporte_comentario.php?id=<?php echo $fila['idComent']; ?>" class="btn btn-primary">Revisar</a>
-              <!-- Detalles de la publicación dentro de un acordeón -->
-              <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
+          <div class="publicacion card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-end" style="background-color: #FF3511; color: #000000;">
+                Reporte 
+              <div class="col text-end align-items-end mx-auto">
+                <a class="col-sm-1.5" style="background-color: #2A88FF; color: #FFFFFF; font-size: small;" name="fade" href="reporte_comentario.php?id=<?php echo $fila['idComent']; ?>"  class="btn btn-primary my-0 ">
+                Revisar</a>
+              </div>
             </div>
+              <div class="card-body">
+                <h3 class="card-title display-6">Usuario: <?php echo $fila2['nom_Us']; ?>  <?php echo $fila2['apell_Us'];?></b></h3>
+                <p class="card-text lead">Comentario: <?php echo ($fila2['text_Coment']); ?></p>
+                <p class="card-text" style="color: red;">Motivo: <?php echo ($fila['motivo_Report']); ?></p>
+              </div>
+              <div class="card-footer d-flex text-muted justify-content-between align-items-end">
+                <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila2['nom_Us'] . " " . $fila2['apell_Us']; ?></span>
+                <span class="card-text comment-date mb-0">Fecha de reporte: <?php echo functions::convertirFecha($fila['fecha_Report']); ?></span>
+              </div>
+          </div>
+            
           <?php
           }
           ?>
