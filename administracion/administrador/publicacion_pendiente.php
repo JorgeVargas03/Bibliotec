@@ -1,4 +1,5 @@
 <?php
+include('../../php/functions.php');
 $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Consulta a la base de datos
@@ -9,37 +10,105 @@ if (isset($_GET['id'])) {
     $idPub = $_GET['id'];
 
     // Consultar la base de datos para obtener la información completa de la publicación
-    $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicaciones_pendientes p
+    $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
               JOIN usuario u ON p.id_Usuario = u.idUsuario
-              WHERE p.idPub = $idPub";
+              WHERE p.idPub = $idPub AND estado_Pub = 0";
     $result = mysqli_query($link, $query);
+
 
     // Verificar si se encontró la publicación
     if (mysqli_num_rows($result) == 1) {
         $publicacion = mysqli_fetch_assoc($result);
-
-        // Consultar los comentarios asociados a esta publicación
-        $query_comentarios = "SELECT c.*, u.nom_Us, u.apell_Us FROM comentario c
-                              JOIN usuario u ON c.idUsuario = u.idUsuario
-                              WHERE c.idPub = $idPub";
-        $result_comentarios = mysqli_query($link, $query_comentarios);
+        
+    //CONSULTAR LAS ETIQUETAS DE LA PUBLICACION
+    $consultaEtiquetas = "SELECT nombreTag FROM tag_publicacion WHERE idPub = $idPub LIMIT 5";
+    $resultEtiquetas = mysqli_query($link, $consultaEtiquetas);
     } else {
-        // Si no se encontró la publicación, redireccionar a la página principal
-       //header("Location: ../home.php");
         exit();
     }
 } else {
-    // Si no se proporcionó un ID de publicación, redireccionar a la página principal
-    //header("Location: ../home.php");
     exit();
 }
+
+//Actualización del estado
+
+// Verifica si se envió el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['Enviar'])) {
+    // Actualizar el estado de la publicación
+    $query = "UPDATE publicacion SET estado_Pub = 1 WHERE idPub = $idPub";
+
+    if (mysqli_query($link, $query)) {
+        // Redirigir al usuario a la página de publicaciones pendientes
+        header("Location: admin_home.php");
+        exit;
+    } else {
+        header("Location: publicaciones_pendientes.php?error=true");
+    }
+}
+
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['eliminar_archivo'])) {
+    $rutaArchivo = "../".$publicacion['archivo_Pub'];
+  
+    if (file_exists($rutaArchivo)) {     
+        if (unlink($rutaArchivo)) {
+            $sql = "DELETE FROM publicacion WHERE idPub = $idPub";
+           if (mysqli_query($link,$sql)) {
+                // Eliminar los tags asociados a la publicación de la tabla 'tag_publicacion'
+                $sqlTags = "DELETE FROM tag_publicacion WHERE idPub = $idPub";
+  
+                if (mysqli_query($link,$sqlTags)) {
+                    echo "El archivo y la publicación se han eliminado correctamente.";
+                    header("Location: admin_home.php");
+                } else {
+                    echo "Error al intentar eliminar los tags de la publicación: " . $conexion->error;
+                }
+            } else {
+                echo "Error al intentar eliminar la publicación: " . $conexion->error;
+            }
+        } else {
+            // Error al intentar eliminar el archivo
+            echo "Error al intentar eliminar el archivo.";
+        }
+    } else {
+        // El archivo no existe
+        echo "El archivo no existe.";
+    }
+    exit;
+  }
+
 
 // Cierra la conexión después de realizar la consulta
 mysqli_close($link);
 
 // Inicia la sesión después de cerrar la conexión
 session_start();
+
+
+// Verificar si el usuario no ha iniciado sesión
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["rol"] !== "admin") {
+  header("location: ../../index.php");
+  exit;
+}
+
+// Verificar si se ha enviado una solicitud para cerrar sesión
+if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
+  // Destruir todas las variables de sesión
+  session_unset();
+  
+  // Destruir la sesión
+  session_destroy();
+  
+  // Redirigir al usuario al inicio de sesión
+  header("location: ../../index.php");
+  exit;
+}
+
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,11 +203,11 @@ session_start();
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="font-weight:normal; margin-left: 1%;">
                 
-                    <div class="container mt-5 mb-5" >
-                        <div class="row" >
-                            <div class="col-md-11" style="margin-left: 4%;">
-                                <!-- Detalles de la publicación -->
-                                <div class="card card-details" style="background-color: rgba(255, 166, 0, 0.281);">
+                    <div class="container mt-4 mb-3 ml-1" >
+                        <div class="row " >
+                            <div class="col-md-12 ">
+                                <!-- Decision de publicacion -->
+                                <div class="card card-details mb-3" style="background-color: rgba(255, 166, 0, 0.281);">
                                     <div class="card-header " style="background-color: rgb(252, 146, 7);">
                                     </div>
                                     
@@ -148,10 +217,10 @@ session_start();
                                             <h3 class="pl-1 mb-2 mt-3" style="margin-left: 2vmax;"> <b>Publicación pendiente</b></h3> 
                                         </div>
                                         <div class="col text-end mt-4 mb-4  align-items-end" style="margin-right: 2vmax;">
-                                            <a href="#"  class="btn btn-success btn-sm">
+                                            <a class="btn btn-success btn-sm"  data-bs-target="#staticBackdrop"   data-bs-toggle="modal">
                                                 <i class="bi bi-check2 mr-2"></i> Aprobar
                                             </a>
-                                            <a href="#" class="btn btn-danger btn-sm">
+                                            <a  data-bs-target="#staticBackdrop2"   data-bs-toggle="modal" class="btn btn-danger btn-sm">
                                                 <i class="bi bi-trash3 mr-2"></i> Rechazar
                                             </a>
                                         </div>
@@ -164,16 +233,17 @@ session_start();
 
                     <!--PUBLICACIÓN-->
 
-
-                    <div class="container mt-4 mb-5">
-                        <div class="row" >
-                            <div class="col-md-8" style="width: 92%; margin-left: 4%;">
-                                <!-- Detalles de la publicación -->
-                                <div class="card card-details">
-                                    <div class="card-header bg-primary text-light">
-                                        <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
-                                        <p class="card-text mb-0">Por:<b> <?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></p>
+                    <!-- Detalles de la publicación -->
+                    <div class="card card-details mb-5">
+                                    <div class="card-header bg-primary text-light d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
+                                            <p class="card-text mb-0">Por:<b> <?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></p>
+                                        </div>
+                                        <div>
+                                        </div>
                                     </div>
+
                                     <div class="card-body">
                                         <!-- Descripción de la publicación -->
                                         <div class="row mb-4">
@@ -192,13 +262,17 @@ session_start();
                                             </div>
                                             <div class="col-md-6">
                                                 <!-- Calificación con estrellas -->
+                                                <div class="rating mt-3">
+                                                    <p class="card-text"><b>Calificación:
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Botón para ver archivo adjunto -->
-                                    <div class="row">
-                                        <div class="col text-center mt-3 mb-3">
-                                            <a href="<?php echo $publicacion['archivo_Pub']; ?>" target="_blank" class="btn btn-primary btn-lg">
+                                    <!-- Botones para ver y descargar archivo adjunto -->
+                                    <div class="card-footer d-flex justify-content-center align-items-center">
+                                        <div class="mx-3">.
+                                            <a href="<?php echo "../". $publicacion['archivo_Pub']; ?>" target="_blank" class="btn btn-primary btn-lg">
                                                 <i class="bi bi-file-pdf-fill mr-2"></i> Ver Archivo Adjunto
                                             </a>
                                         </div>
@@ -206,23 +280,86 @@ session_start();
                                     <!-- Etiquetas -->
                                     <div class="card-footer d-flex justify-content-between align-items-end">
                                         <?php
-                                        // Etiquetas por defecto y colores asignados
-                                        $etiquetas = array("Etiqueta1", "Etiqueta2", "Etiqueta3");
-                                        $colores = array("bg-danger", "bg-success", "bg-info");
+                                        // Colores predefinidos para las etiquetas
+                                        $colores = array("bg-danger", "bg-success", "bg-info", "bg-warning", "bg-primary");
 
-                                        // Iterar sobre las etiquetas y mostrarlas
-                                        foreach ($etiquetas as $index => $etiqueta) {
-                                            echo '<span class="badge ' . $colores[$index % count($colores)] . ' mr-1">' . $etiqueta . '</span>';
+                                        // Contador para asignar colores
+                                        $colorIndex = 0;
+
+                                        // Mostrar las etiquetas obtenidas
+                                        while ($etiqueta = mysqli_fetch_assoc($resultEtiquetas)) {
+                                            echo '<span class="badge ' . $colores[$colorIndex] . ' mr-1">' . $etiqueta['nombreTag'] . '</span>';
+
+                                            // Incrementar el índice de color (cíclico)
+                                            $colorIndex = ($colorIndex + 1) % count($colores);
                                         }
                                         ?>
-                                        <!-- Fecha de Publicación -->
-                                        <p class="card-text comment-date mb-0 align-self-end">Fecha: <?php echo $publicacion['fecha_Pub']; ?></p>
-                                    </div>
+                                    <!-- Fecha de Publicación -->
+                                    <p class="card-text comment-date mb-0 align-self-end">Fecha: <?php echo functions::convertirFecha($publicacion['fecha_Pub']); ?></p>
                                 </div>
-
-
+                            </div>
+                        </div>
+                     </div>
             </main>
-    
+                                    
+             <!-- POPUP 1-->
+             <form method="post"> 
+             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Publicación pendiente</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    ¿Estas seguro de aprobar esta publicación?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" value="Enviar"  name="Enviar" class="btn btn-primary" data-bs-dismiss="modal">Sí, publicar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+
+
+          <!-- POPUP 2-->
+          <form method="post" name="eliminar_archivo"> 
+             <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Publicación pendiente</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    ¿Estas seguro de rechazar esta publicación?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="eliminar_archivo"  value="eliminar_archivo" class="btn btn-primary" data-bs-dismiss="modal">Sí, rechazar y eliminar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+
+          <!-- PHP PARA MOSTAR MENSAJE DE ERROR-->
+
+
+            <?php
+            // Verificar si ha ocurrido un error durante la actualización del estado de la publicación
+            if (isset($_GET['error']) && $_GET['error'] === 'true') {
+                // Mostrar un script JavaScript para mostrar el toast de error
+                echo "<script>$(document).ready(function() { 
+                    toastr.error('Ha ocurrido un error al actualizar el estado de la publicación.');
+                });</script>";
+            }
+            ?>
+
 
    
      <script src ="../../js/fadeout.js"></script>
@@ -234,3 +371,5 @@ session_start();
     </footer>
 </body>
 </html>
+
+

@@ -38,10 +38,10 @@ if (move_uploaded_file($archivoTemporal, $rutaArchivo)) {
     $arrayEtiquetas = explode(' ', $etiquetas);
 
     // insercion
-    $inserta = "INSERT INTO publicacion (id_Usuario, titulo_Pub, fecha_pub, descrip_Pub, calif_Pub, carrera_Pub, materia_Pub, tipo_pub, archivo_Pub) VALUES (?,?,?,?,?,?,?,?,?)";
+    $inserta = "INSERT INTO publicacion (id_Usuario, titulo_Pub, fecha_pub, descrip_Pub, calif_Pub, carrera_Pub, materia_Pub, tipo_pub, estado_Pub, archivo_Pub) VALUES (?,?,?,?,?,?,?,?,?,?)";
     if ($stmt = $link->prepare($inserta)) {
         // Vincular parámetros
-        $stmt->bind_param("issssssss", $idUsuario, $titulo, $fechaActual ,$descripcion, $nulo, $carrera, $materia, $tipo, $rutaArchivo);
+        $stmt->bind_param("isssssssss", $idUsuario, $titulo, $fechaActual ,$descripcion, $nulo, $carrera, $materia, $tipo, $nulo, $rutaArchivo);
 
         // Ejecutar la consulta
         if ($stmt->execute()) {

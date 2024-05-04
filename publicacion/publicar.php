@@ -283,7 +283,7 @@ if (!$res) {
 
             <!-- Botón Publicar -->
             <div class="d-grid gap-1 col-6 mx-auto mb-2">
-              <input class="btn btn-primary btn" type="button" value="Publicar" id="letrabuton" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              <input class="btn btn-primary btn mb-3" type="button" value="Publicar" id="letrabuton" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             </div>
 
             <!-- POPUP-->

@@ -32,7 +32,7 @@ WHERE carrera_Pub = '$carrera'
 ORDER BY idPub DESC LIMIT 3";*/
 $consulta = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
               JOIN usuario u ON p.id_Usuario = u.idUsuario
-              WHERE carrera_Pub = '$carrera'
+              WHERE carrera_Pub = '$carrera' and estado_Pub = 1
               ORDER BY p.idPub DESC LIMIT 3";
 
 $registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
@@ -204,6 +204,8 @@ mysqli_close($link);
       </main>
     </div>
   </div>
+
+
   <script src="js/fadeout.js"></script>
   <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
     <div class="container">

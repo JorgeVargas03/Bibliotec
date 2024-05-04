@@ -1,8 +1,12 @@
 <?php
+include('../../php/functions.php');
 $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Consulta a la base de datos
-$consulta = "SELECT * FROM publicaciones_pendientes ORDER BY idPub DESC LIMIT 3";
+$consulta = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+              JOIN usuario u ON p.id_Usuario = u.idUsuario
+              WHERE estado_Pub = 0
+              ORDER BY p.idPub DESC";
 $registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
 
 // Verifica si la consulta se ejecutó correctamente
@@ -36,7 +40,9 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
   exit;
 }
 
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -60,6 +66,7 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
   <!--Termmina Bootstrap-->
   <!--iconos-->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -80,6 +87,9 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
 
 
 <body>
+
+
+
   <header class="bg-primary py-2">
     <div class="container" style="margin-left:7.8vmax;" >
       <!-- Logo y título -->
@@ -119,25 +129,27 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
         </div>
       
       <!-- Contenido principal -->
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <div class="container mt-3">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 mt-2">
+      <div class="container mt-2 mb-3">
           <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
-          margin-top: 0.5vmax;"><b>Publicaciones Pendientes</b></h2>
-          <?php
-          while ($fila = mysqli_fetch_array($registros)) {
-          ?>
-            <div class="publicacion">
-              <h3><?php echo ($fila['titulo_Pub']); ?></h3>
-              <p><?php echo ($fila['descrip_Pub']); ?></p>
-              <!-- Botón Ver más que despliega los detalles -->
-              <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
-              <a href="publicacion_pendiente.php?id=<?php echo ($fila['idPub']); ?>" class="btn btn-link mb-2 mt-3"><b>Revisar</b></a>
-              <!-- Detalles de la publicación dentro de un acordeón -->
-              <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
+          margin-top: 0.5vmax;"><b>Publicaciones pendientes</b></h2>
+          <?php while ($fila = mysqli_fetch_array($registros)) : ?>
+            <div class="publicacion card mb-4 mt-4">
+              <div class="card-body ">
+              <div class="card-header d-flex justify-content-between align-items-end" style="background-color: #F7C200; color: #000000;">
+                Pendiente 
+                 <a class="col-sm-1.5" style="background-color: #2A88FF ; color: #FFFFFF;" name="fade" href="publicacion_pendiente.php?id=<?php echo ($fila['idPub']); ?>" class="btn btn-primary btn-sm">
+                Revisar</a>
+                </div>
+                <h3 class="card-title display-6 mt-2"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
+                <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
+              </div>
+              <div class="card-footer d-flex text-muted justify-content-between align-items-end">
+                <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
+                <span class="card-text comment-date mb-0">Fecha de publicación: <?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
+              </div>
             </div>
-          <?php
-          }
-          ?>
+          <?php endwhile; ?>
         </div>
       </main>
     </div>
