@@ -1,9 +1,14 @@
 <?php
 $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
+include('../../php/functions.php');
 
 // Consulta a la base de datos
-$query_rp = "SELECT * FROM 	reportepublicación ORDER BY idReporte DESC LIMIT 3";
-$query_p = "SELECT * FROM 	publicacion WHERE idPub IN (SELECT idPub FROM reportepublicación)";
+$query_rp = "SELECT * FROM 	reportepublicación ORDER BY idReporte DESC ";
+$query_p = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
+            JOIN usuario u ON p.id_Usuario = u.idUsuario
+            WHERE p.idPub IN (SELECT idPub FROM reportepublicación)
+            ORDER BY p.idPub DESC ";
+
 $registros_rp = mysqli_query($link, $query_rp); // Utiliza la conexión obtenida desde el archivo de conexión
 $registros_p = mysqli_query($link, $query_p);
 // Verifica si la consulta se ejecutó correctamente
@@ -99,26 +104,37 @@ session_start();
                 <hr class="my-2"> <!-- Línea divisora -->
             </ul>
         </div>
-      
+
       <!-- Contenido principal -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
         <!-- REPORTE PUBLICACION -->
         <div class="container mt-3">
           <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
           margin-top: 0.5vmax;"><b>Publicaciones Reportadas</b></h2>
+          <br>
           <?php
           while ($fila = mysqli_fetch_array($registros_rp) and $fila2 = mysqli_fetch_array($registros_p)) {
           ?>
-            <div class="publicacion reportada">
-              <p>Publicación: <?php echo ($fila2['titulo_Pub']); ?></p>
-              <p>Motivo: <?php echo ($fila['motivo_Report']); ?></p>
-              <p>Fecha de reporte: <?php echo ($fila['fecha_Report']); ?></p>
-              <!-- Botón Ver más que despliega los detalles -->
-              <!-- Botón Ver más que redirige a la página de detalles de la publicación -->
-              <a name ="fade" href="reporte_publicación.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary">Revisar</a>
-              <!-- Detalles de la publicación dentro de un acordeón -->
-              <!-- AQUI ESTABAN LOS DETALLES DE LA PUBLICACION -->
+          <div class="publicacion card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-end" style="background-color: #FF3511; color: #000000;">
+                Reporte 
+              <div class="col text-end align-items-end mx-auto">
+                <a class="col-sm-1.5" style="background-color: #2A88FF; color: #FFFFFF; font-size: small;" name="fade" href="reporte_publicación.php?id=<?php echo $fila['idPub']; ?>"  class="btn btn-sm my-0 ">
+                Revisar</a>
+              </div>
             </div>
+              <div class="card-body">
+                <h3 class="card-title display-6"><b><?php echo $fila2['titulo_Pub']; ?></b></h3>
+                <p class="card-text lead"><?php echo $fila2['descrip_Pub']; ?></p>
+                <p class="card-text" style="color: red;">Motivo: <?php echo ($fila['motivo_Report']); ?></p>
+                
+              </div>
+              <div class="card-footer d-flex text-muted justify-content-between align-items-end">
+                <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila2['nom_Us'] . " " . $fila2['apell_Us']; ?></span>
+                <span class="card-text comment-date mb-0">Fecha de reporte: <?php echo functions::convertirFecha($fila['fecha_Report']); ?></span>
+              </div>
+          </div>
+            
           <?php
           }
           ?>
