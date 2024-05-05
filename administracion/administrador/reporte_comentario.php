@@ -149,9 +149,11 @@ session_start();?>
                                             <a href="#" class="btn btn-danger btn-sm">
                                                 <i class="bi bi-trash3 mr-2"></i> Eliminar comentario
                                             </a>
-                                            <a href="#" class="btn btn-info btn-sm">
-                                                <i class="bi bi-arrow mr-2"></i> Ir a la publicacion
+                                            <a href="../../publicacion/publicacion_detalle.php?id=<?php echo $fila['idComent']; ?>" class="btn btn-info btn-sm">
+                                            <i class="bi bi-arrow mr-2"></i> Ir a la publicacion
                                             </a>
+                                            
+
                                         </div>
                                     </div>
                                 </div>
