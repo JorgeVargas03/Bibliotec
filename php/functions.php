@@ -1,12 +1,15 @@
 <?php
 
+use function PHPSTORM_META\type;
+
 class functions
 {
-    public static function convertirFecha($fecha) {
+    public static function convertirFecha($fecha)
+    {
         $fecha_timestamp = strtotime($fecha);
         $hoy = strtotime('today');
         $ayer = strtotime('yesterday');
-    
+
         // Si la fecha es hoy
         if ($fecha_timestamp >= $hoy) {
             return 'Hoy';
@@ -18,12 +21,11 @@ class functions
         // Si la fecha es hace X días
         else {
             $diferencia = floor((time() - $fecha_timestamp) / (60 * 60 * 24));
-            if($diferencia <=7){
+            if ($diferencia <= 7) {
                 return "Hace $diferencia días";
-            }else{
+            } else {
                 return self::fechaCompleta($fecha);
             }
-            
         }
     }
 
@@ -84,6 +86,28 @@ class functions
             case '12':
                 return 'Diciembre';
                 break;
+        }
+    }
+
+    public static function conversionTexto($numResultados, $typeR)
+    {
+        if ($typeR == "P") {
+            if ($numResultados == 0) {
+                return "Publicaciones encontradas ";
+            } elseif ($numResultados > 1) {
+                return "Se encontraron $numResultados publiaciones ";
+            } else {
+                return "Se encontró $numResultados publiación ";
+            }
+        } else {
+            if ($numResultados < 1) {
+                return "Usuarios encontrados ";
+            }
+            elseif ($numResultados > 1) {
+                return "Se encontraron $numResultados usuarios ";
+            } else {
+                return "Se encontró $numResultados usuario ";
+            }
         }
     }
 }
