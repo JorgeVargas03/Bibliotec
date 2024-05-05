@@ -31,21 +31,19 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
     // Consulta para buscar coincidencias con usuarios
     $consultaUsuarios = "SELECT * FROM usuario
-                         WHERE nom_Us LIKE '%$searchTerm%'
-                         OR apell_Us LIKE '%$searchTerm%'";
+    WHERE CONCAT(nom_Us, ' ', apell_Us) LIKE '%$searchTerm%'";
 
     $resultUsuarios = mysqli_query($link, $consultaUsuarios); // Utiliza la conexión obtenida desde el archivo de conexión
 
     // Consulta para buscar coincidencias en publicaciones
     $consultaPublicaciones = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
-                              JOIN usuario u ON p.id_Usuario = u.idUsuario
-                              WHERE p.titulo_Pub LIKE '%$searchTerm%'
-                              OR u.nom_Us LIKE '%$searchTerm%'
-                              OR u.apell_Us LIKE '%$searchTerm%'
-                              OR p.idPub IN (
-                                  SELECT idPub FROM tag_publicacion WHERE nombreTag LIKE '%$searchTerm%'
-                              )
-                              ORDER BY p.idPub DESC";
+     JOIN usuario u ON p.id_Usuario = u.idUsuario
+     WHERE p.titulo_Pub LIKE '%$searchTerm%'
+     OR CONCAT(u.nom_Us, ' ', u.apell_Us) LIKE '%$searchTerm%'
+     OR p.idPub IN (
+         SELECT idPub FROM tag_publicacion WHERE nombreTag LIKE '%$searchTerm%'
+     )
+     ORDER BY p.idPub DESC";
 
     $resultPublicaciones = mysqli_query($link, $consultaPublicaciones); // Utiliza la conexión obtenida desde el archivo de conexión
 
