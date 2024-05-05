@@ -128,7 +128,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 ?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -288,12 +287,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                     <div class="card-header bg-primary text-light d-flex justify-content-between">
                                         <div>
                                             <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
-                                            <p class="card-text mb-0">Por:<b> <?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></p>
+                                            <p class="card-text mb-0">Por: <a class="link-light link-underline link-underline-opacity-0" href="../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $publicacion['id_Usuario']; ?>"><b><?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></a></p>
                                         </div>
                                         <div>
                                             <!-- Botón de reportar -->
                                             <a class="btn btn-danger btn-sm shadow" id="reportarPub" data-bs-toggle="modal" data-bs-target="#modal_report_p">
                                                 <i class="bi bi-flag-fill"></i>
+                                            </a>
+                                            <a class="btn btn-info btn-sm shadow" href = "../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $publicacion['id_Usuario']; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Perfil">
+                                                <i class="bi bi-person-fill"></i>
                                             </a>
                                         </div>
                                     </div>
@@ -431,6 +433,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                 <a class="btn btn-sm btn-outline-danger " id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c" data-comid="<?php echo $comentario['idComent'] ?>">
                                                     <i class="bi bi-flag-fill"></i>
                                                 </a>
+                                                <!-- Botón para ver perfil -->
+                                                <a class="btn btn-outline-info btn-sm shadow" href = "../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $comentario['idUsuario']; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Perfil">
+                                                    <i class="bi bi-person-fill"></i>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -445,7 +451,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="col">
-                                                    <h6 class="mb-1"><?php echo $comentario['nom_Us'] . " " . $comentario['apell_Us']; ?></h6>
+                                                    <h6 class="mb-1"><a class="link-dark link-underline link-underline-opacity-0" href="../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $comentario['idUsuario']; ?>"><?php echo $comentario['nom_Us'] . " " . $comentario['apell_Us']; ?></a></h6>
                                                     <pre class="mb-1"><?php echo $comentario['text_Coment']; ?></pre>
                                                     <small class="text-muted"><?php echo functions::convertirFecha($comentario['fecha_Coment']); ?></small>
                                                 </div>

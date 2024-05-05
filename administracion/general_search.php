@@ -193,79 +193,99 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
             <!-- Contenido principal -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <!-- Pestañas -->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="publicaciones-tab" data-bs-toggle="tab" data-bs-target="#publicaciones" type="button" role="tab" aria-controls="publicaciones" aria-selected="true">Publicaciones</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="usuarios-tab" data-bs-toggle="tab" data-bs-target="#usuarios" type="button" role="tab" aria-controls="usuarios" aria-selected="false">Usuarios</button>
+                    </li>
+                </ul>
 
-                <!--PUBLICACIONES -->
-                <div class="container mt-3">
-                    <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4); margin-top: 0.5vmax;"><b><?php echo functions::conversionTexto($numResultadosPublicaciones, "P") . "para: \"$searchTerm\"" ?></b></h2>
-                    <?php if (mysqli_num_rows($resultPublicaciones) > 0) : ?>
-                        <?php while ($fila = mysqli_fetch_array($resultPublicaciones)) : ?>
-                            <div class="publicacion mt-4 card mb-4">
-                                <div class="card-body">
-                                    <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
-                                    <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
-                                    <a name="fade" href="../publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary btn-sm"><b>Leer más</b></a>
-                                </div>
-                                <div class="card-footer d-flex text-muted justify-content-between align-items-end">
-                                    <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
-                                    <span class="card-text comment-date mb-0">Fecha de publicación: <?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
-                                </div>
-                            </div>
-                        <?php endwhile; ?>
-                    <?php else : ?>
-                        <div class="alert alert-warning" role="alert">
-                            No se encontraron publicaciones.
-                        </div>
-                    <?php endif; ?>
-                </div>
-
-                <!-- Arreglo de rutas de imágenes aleatorias -->
-                <?php
-                $imagenes_aleatorias = array();
-
-                // Ruta base de las imágenes
-                $ruta_base = "../images/tigers/";
-
-                // Generar el arreglo de rutas de imágenes
-                for ($i = 1; $i <= 15; $i++) {
-                    $ruta_imagen = $ruta_base . "a" . $i . ".png";
-                    $imagenes_aleatorias[] = $ruta_imagen;
-                }
-
-                // Contador para alternar entre las imágenes aleatorias y los avatares
-                $contador = 0;
-                ?>
-                <!--USUARIOS -->
-                <div class="container mt-3 mb-5">
-                    <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4); margin-top: 0.5vmax;"><b><?php echo functions::conversionTexto($numResultadosUsuarios, "U") . "para: \"$searchTerm\"" ?></b></h2>
-                    <?php if (mysqli_num_rows($resultUsuarios) > 0) : ?>
-                        <?php while ($fila = mysqli_fetch_array($resultUsuarios)) : ?>
-                            <div class="card mt-4">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-auto">
-                                            <!-- Mostrar imagen aleatoria -->
-                                            <img src="<?php echo $imagenes_aleatorias[array_rand($imagenes_aleatorias)]; ?>" alt="Imagen Aleatoria" class="rounded-circle" width="50">
+                <!-- Contenido de las pestañas -->
+                <div class="tab-content" id="myTabContent">
+                    <!-- Pestaña de Publicaciones -->
+                    <div class="tab-pane fade show active" id="publicaciones" role="tabpanel" aria-labelledby="publicaciones-tab">
+                        <div class="container mt-3">
+                            <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4); margin-top: 0.5vmax;"><b><?php echo functions::conversionTexto($numResultadosPublicaciones, "P") . "para: \"$searchTerm\"" ?></b></h2>
+                            <!-- Contenido de las publicaciones -->
+                            <?php if (mysqli_num_rows($resultPublicaciones) > 0) : ?>
+                                <?php while ($fila = mysqli_fetch_array($resultPublicaciones)) : ?>
+                                    <div class="publicacion mt-4 card mb-4">
+                                        <div class="card-body">
+                                            <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
+                                            <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
+                                            <a name="fade" href="../publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary btn-sm"><b>Leer más</b></a>
                                         </div>
-                                        <div class="col">
-                                            <h6 class="mb-1"><?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></h6>
-                                        </div>
-                                        <div class="col-auto">
-                                            <!-- Botón para ir al perfil con icono de usuario -->
-                                            <a href="administracion/Perfil/infoperfil.php?id=<?php echo $fila['idUsuario']; ?>" class="btn btn-primary btn-sm">
-                                                <i class="bi bi-person"></i> Ver Perfil
-                                            </a>
+                                        <div class="card-footer d-flex text-muted justify-content-between align-items-end">
+                                            <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
+                                            <span class="card-text comment-date mb-0">Fecha de publicación: <?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
                                         </div>
                                     </div>
+                                <?php endwhile; ?>
+                            <?php else : ?>
+                                <div class="alert alert-warning" role="alert">
+                                    No se encontraron publicaciones.
                                 </div>
-                            </div>
-                        <?php endwhile; ?>
-                    <?php else : ?>
-                        <div class="alert alert-warning" role="alert">
-                            No se encontraron usuarios.
+                            <?php endif; ?>
                         </div>
-                    <?php endif; ?>
+                    </div>
+
+                    <!-- Arreglo de rutas de imágenes aleatorias -->
+                    <?php
+                    $imagenes_aleatorias = array();
+
+                    // Ruta base de las imágenes
+                    $ruta_base = "../images/tigers/";
+
+                    // Generar el arreglo de rutas de imágenes
+                    for ($i = 1; $i <= 15; $i++) {
+                        $ruta_imagen = $ruta_base . "a" . $i . ".png";
+                        $imagenes_aleatorias[] = $ruta_imagen;
+                    }
+
+                    // Contador para alternar entre las imágenes aleatorias y los avatares
+                    $contador = 0;
+                    ?>
+
+                    <!-- Pestaña de Usuarios -->
+                    <div class="tab-pane fade" id="usuarios" role="tabpanel" aria-labelledby="usuarios-tab">
+                        <div class="container mt-3">
+                            <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4); margin-top: 0.5vmax;"><b><?php echo functions::conversionTexto($numResultadosUsuarios, "U") . "para: \"$searchTerm\"" ?></b></h2>
+                            <!-- Contenido de los usuarios -->
+                            <?php if (mysqli_num_rows($resultUsuarios) > 0) : ?>
+                                <?php while ($fila = mysqli_fetch_array($resultUsuarios)) : ?>
+                                    <div class="card mb-4 mt-4">
+                                        <div class="card-body">
+                                            <div class="row align-items-center">
+                                                <div class="col-auto">
+                                                    <!-- Mostrar imagen aleatoria -->
+                                                    <img src="<?php echo $imagenes_aleatorias[array_rand($imagenes_aleatorias)]; ?>" alt="Imagen Aleatoria" class="rounded-circle" width="50">
+                                                </div>
+                                                <div class="col">
+                                                    <h6 class="mb-1"><?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></h6>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <!-- Botón para ir al perfil con icono de usuario -->
+                                                    <a href="administracion/Perfil/infoperfil.php?id=<?php echo $fila['idUsuario']; ?>" class="btn btn-primary btn-sm">
+                                                        <i class="bi bi-person"></i> Ver Perfil
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endwhile; ?>
+                            <?php else : ?>
+                                <div class="alert alert-warning" role="alert">
+                                    No se encontraron usuarios.
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
             </main>
+
 
         </div>
     </div>
