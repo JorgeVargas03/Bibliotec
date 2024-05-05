@@ -165,16 +165,17 @@ mysqli_close($link);
         <div class="container d-flex align-items-center">
             <!-- Logo y título -->
             <div class="logo">
-                <img src="..\..\images\icons\flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
+                <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
                 <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
 
-                <form class="position-relative search-field " style="margin-top: -0.8%;">
-                    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-                    <a href='#'><i class="bi bi-search search-icon"></i></a>
-
-                </form>
+                <!-- BARRA DE BUSQUEDA  -->
             </div>
-        </div>
+            <form action="../general_search.php" method="GET" id="searchForm" class="position-relative search-field">
+                <input id="searchInput" name="dataSearch" class="form-control me-2" type="search" autocomplete="off" required placeholder="Buscar" aria-label="Search">
+                <button id="searchButton" type="button">
+                    <i class="bi bi-search search-icon"></i>
+                </button>
+            </form>
     </header>
 
 
