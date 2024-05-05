@@ -32,6 +32,7 @@ if (!$res) {
   <!--En esta seccion se incluyen las hojas de estilos-->
   <link rel="icon" href="../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
   <link rel="stylesheet" href="../css/normalizar.css">
+  <link rel="stylesheet" href="../css/estilos.css">
   <link rel="stylesheet" href="../css/estilospublicar.css">
   <link rel="stylesheet" href="../css/hover-min.css">
   <link rel="stylesheet" href="../css/animate.css">
