@@ -7,13 +7,6 @@
 
 /*  FIN GENERALES   */
 
-.cabecera {
-    background-color: #004aad;
-    height: 108px;
-    /*background-image: url('../header/header (7).jpg');*/
-    background-size: 40%;
-}
-
 .logo{
     width: 55px;
     text-decoration: none;
@@ -50,24 +43,9 @@
 }
 
 
-.search-field {
-    margin-top: 35px;
-    width: 340px;
-    margin-left: 30%;
-}
-
 .pos-btn{
     margin-left: 900px;
     align-self: center;
-}
-
-
-.search-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #6c757d;
 }
 
 /* CONTENIDO*/

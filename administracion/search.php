@@ -78,17 +78,15 @@ session_start();
       <div class="logo">
         <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
         <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
-        <form class="position-relative search-field " style="margin-top: -0.8%;">
-          <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-          <a href='search.php'><i class="bi bi-search search-icon"></i></a>
 
-        </form>
+        <!-- BARRA DE BUSQUEDA  -->
       </div>
-      <!-- Campo de búsqueda -->
-
-      <!-- Ícono de notificaciones -->
-
-    </div>
+      <form action="general_search.php" method="GET" id="searchForm" class="position-relative search-field">
+        <input id="searchInput" name="dataSearch" class="form-control me-2" type="search" autocomplete="off" required placeholder="Buscar" aria-label="Search">
+        <button id="searchButton" type="button">
+          <i class="bi bi-search search-icon"></i>
+        </button>
+      </form>
   </header>
   <!--Aqui se muestra un apartado para los productos que se venderan-->
 
@@ -246,31 +244,31 @@ session_start();
   <!-- Script para el autocompletado y el envío del formulario de búsqueda -->
   <script>
     $(document).ready(function() {
-    // Función para manejar el autocompletado en el textfield
-    $('#materiaInput').on('input', function() {
+      // Función para manejar el autocompletado en el textfield
+      $('#materiaInput').on('input', function() {
         var inputText = $(this).val();
         if (inputText.length >= 2) {
-            $.ajax({
-                type: 'GET',
-                url: 'suggest.php',
-                data: {
-                    input: inputText,
-                    carrera: '<?php echo $carrera; ?>'
-                },
-                success: function(response) {
-                    $('#suggestions').html(response);
-                    // Mostrar la lista de sugerencias
-                    $('#suggestions').show();
-                }
-            });
+          $.ajax({
+            type: 'GET',
+            url: 'suggest.php',
+            data: {
+              input: inputText,
+              carrera: '<?php echo $carrera; ?>'
+            },
+            success: function(response) {
+              $('#suggestions').html(response);
+              // Mostrar la lista de sugerencias
+              $('#suggestions').show();
+            }
+          });
         } else {
-            // Si el texto de entrada es corto, ocultar la lista de sugerencias
-            $('#suggestions').hide();
+          // Si el texto de entrada es corto, ocultar la lista de sugerencias
+          $('#suggestions').hide();
         }
-    });
+      });
 
-    // Agregar evento de clic a los elementos de la lista de sugerencias
-    $('#suggestions').on('click', 'li', function(e) {
+      // Agregar evento de clic a los elementos de la lista de sugerencias
+      $('#suggestions').on('click', 'li', function(e) {
         // Obtener el texto del elemento seleccionado
         var selectedText = $(this).text().trim();
         // Asignar el texto seleccionado al input
@@ -279,45 +277,44 @@ session_start();
         $('#suggestions').html('');
         // Ocultar la lista de sugerencias
         $('#suggestions').hide();
-    });
+      });
 
-    // Función para ocultar la lista de sugerencias cuando se hace clic fuera de ella
-    $(document).on('click', function(e) {
+      // Función para ocultar la lista de sugerencias cuando se hace clic fuera de ella
+      $(document).on('click', function(e) {
         if (!$(e.target).closest('#suggestions').length && !$(e.target).is('#materiaInput')) {
-            $('#suggestions').hide();
+          $('#suggestions').hide();
         }
-    });
+      });
 
-    // Función para mostrar la lista de sugerencias cuando se hace clic en el campo de texto
-    $('#materiaInput').on('click', function() {
+      // Función para mostrar la lista de sugerencias cuando se hace clic en el campo de texto
+      $('#materiaInput').on('click', function() {
         var inputText = $(this).val();
         if (inputText.length >= 2) {
-            $('#suggestions').show();
+          $('#suggestions').show();
         }
-    });
+      });
 
-    // Función para enviar los parámetros del formulario de filtro a filter.php y mostrar las publicaciones filtradas
-    $('#filterForm').submit(function(event) {
+      // Función para enviar los parámetros del formulario de filtro a filter.php y mostrar las publicaciones filtradas
+      $('#filterForm').submit(function(event) {
         event.preventDefault();
         var materia = $('#materiaInput').val();
         var tipo = $('#typeSelect').val();
         var carrera = '<?php echo $carrera; ?>';
         // Realizar la petición AJAX
         $.ajax({
-            type: 'GET',
-            url: 'filter.php',
-            data: {
-                carrera: carrera,
-                materia: materia,
-                tipo: tipo
-            },
-            success: function(response) {
-                $('#filteredPublications').html(response);
-            }
+          type: 'GET',
+          url: 'filter.php',
+          data: {
+            carrera: carrera,
+            materia: materia,
+            tipo: tipo
+          },
+          success: function(response) {
+            $('#filteredPublications').html(response);
+          }
         });
+      });
     });
-});
-
   </script>
 
 </body>

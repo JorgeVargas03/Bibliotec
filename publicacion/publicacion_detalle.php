@@ -182,24 +182,22 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 
 <body>
-    <header class="bg-primary py-2">
-        <div class="container d-flex align-items-center">
-            <!-- Logo y título -->
-            <div class="logo">
-                <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
-                <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
-                <form class="position-relative search-field " style="margin-top: -0.8%;">
-                    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-                    <a href='search.php'><i class="bi bi-search search-icon"></i></a>
+<header class="bg-primary py-2">
+    <div class="container d-flex align-items-center">
+      <!-- Logo y título -->
+      <div class="logo">
+        <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
+        <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
 
-                </form>
-            </div>
-            <!-- Campo de búsqueda -->
-
-            <!-- Ícono de notificaciones -->
-
-        </div>
-    </header>
+        <!-- BARRA DE BUSQUEDA  -->
+    </div>
+    <form action="../administracion/general_search.php" method="GET" id="searchForm" class="position-relative search-field">
+          <input id="searchInput" name="dataSearch" class="form-control me-2" type="search" autocomplete="off" required placeholder="Buscar" aria-label="Search">
+          <button id="searchButton" type="button">
+            <i class="bi bi-search search-icon"></i>
+          </button>
+        </form>
+  </header>
     <!--Aqui se muestra un apartado para los productos que se venderan-->
 
     <!--IMAGEN DE CONTACTO-->
