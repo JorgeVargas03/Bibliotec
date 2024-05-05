@@ -116,6 +116,28 @@ session_start();
           <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
           margin-top: 0.5vmax;"><b>Comentarios Reportados</b></h2>
           <br>
+
+          <!--
+          <div class="publicacion card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-end" style="background-color: #FF3511; color: #000000;">
+                Reporte 
+              <div class="col text-end align-items-end mx-auto">
+                <a class="col-sm-1.5" style="background-color: #2A88FF; color: #FFFFFF; font-size: small;" name="fade" href="reporte_publicación.php?id=<?php echo $fila['idPub']; ?>"  class="btn btn-sm my-0 ">
+                Revisar</a>
+              </div>
+            </div>
+              <div class="card-body">
+                <h3 class="card-title display-6"><b><?php echo $fila2['titulo_Pub']; ?></b></h3>
+                <p class="card-text lead"><?php echo $fila2['descrip_Pub']; ?></p>
+                <p class="card-text" style="color: red;">Motivo: <?php echo ($fila['motivo_Report']); ?></p>
+                
+              </div>
+              <div class="card-footer d-flex text-muted justify-content-between align-items-end">
+                <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila2['nom_Us'] . " " . $fila2['apell_Us']; ?></span>
+                <span class="card-text comment-date mb-0">Fecha de reporte: <?php echo functions::convertirFecha($fila['fecha_Report']); ?></span>
+              </div>
+          </div>
+          -->
           <?php
           while ($fila = mysqli_fetch_array($registros_rc) and $fila2 = mysqli_fetch_array($registros_c)) {
           ?>
@@ -128,7 +150,7 @@ session_start();
               </div>
             </div>
               <div class="card-body">
-                <h3 class="card-title display-6">Usuario: <?php echo $fila2['nom_Us']; ?>  <?php echo $fila2['apell_Us'];?></b></h3>
+                <h3 class="card-title display-6"><b>Usuario: <?php echo $fila2['nom_Us']; ?>  <?php echo $fila2['apell_Us'];?></b></h3>
                 <p class="card-text lead">Comentario: <?php echo ($fila2['text_Coment']); ?></p>
                 <p class="card-text" style="color: red;">Motivo: <?php echo ($fila['motivo_Report']); ?></p>
               </div>

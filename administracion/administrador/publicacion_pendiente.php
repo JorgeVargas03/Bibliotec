@@ -271,7 +271,7 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
                                     </div>
                                     <!-- Botones para ver y descargar archivo adjunto -->
                                     <div class="card-footer d-flex justify-content-center align-items-center">
-                                        <div class="mx-3">.
+                                        <div class="mx-3">
                                             <a href="<?php echo "../". $publicacion['archivo_Pub']; ?>" target="_blank" class="btn btn-primary btn-lg">
                                                 <i class="bi bi-file-pdf-fill mr-2"></i> Ver Archivo Adjunto
                                             </a>
