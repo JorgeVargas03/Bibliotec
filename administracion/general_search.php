@@ -264,11 +264,11 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                                                     <img src="<?php echo $imagenes_aleatorias[array_rand($imagenes_aleatorias)]; ?>" alt="Imagen Aleatoria" class="rounded-circle" width="50">
                                                 </div>
                                                 <div class="col">
-                                                    <h6 class="mb-1"><?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></h6>
+                                                    <h6 class="mb-1"><a class="link-dark link-underline link-underline-opacity-0" href="../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $fila['idUsuario']; ?>"><?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></a></h6>
                                                 </div>
                                                 <div class="col-auto">
                                                     <!-- Botón para ir al perfil con icono de usuario -->
-                                                    <a href="administracion/Perfil/infoperfil.php?id=<?php echo $fila['idUsuario']; ?>" class="btn btn-primary btn-sm">
+                                                    <a href="Perfil/UsuarioDetalle.php?id=<?php echo $fila['idUsuario']; ?>" class="btn btn-primary btn-sm">
                                                         <i class="bi bi-person"></i> Ver Perfil
                                                     </a>
                                                 </div>
