@@ -109,7 +109,7 @@ if (isset($_GET['id'])) {
     }
 } else {
     // Si no se proporcionó un ID de publicación, redireccionar a la página principal
-    header("Location: ../home.php");
+    header("Location: ../../home.php");
     exit();
 }
 
@@ -121,7 +121,7 @@ mysqli_close($link);
 
 // Verificar si el usuario no ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: ../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
+    header("location: ../../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
     exit;
 }
 
@@ -157,7 +157,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <style>
         @font-face {
             font-family: 'Agrandir';
-            src: url('../css/Agrandir.otf') format('otf');
+            src: url('../../css/Agrandir.otf') format('otf');
         }
 
         pre {
