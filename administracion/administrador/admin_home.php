@@ -6,7 +6,7 @@ $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y 
 $consulta = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
               JOIN usuario u ON p.id_Usuario = u.idUsuario
               WHERE estado_Pub = 0
-              ORDER BY p.idPub DESC";
+              ORDER BY p.idPub ASC";
 $registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
 
 // Verifica si la consulta se ejecutó correctamente
