@@ -2,37 +2,32 @@
 include('../../php/functions.php');
 $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
-// Inicia la sesión después de cerrar la conexión
-session_start();
+// Verificar si se proporcionó un ID de publicación
+if (isset($_GET['id'])) {
+    // Obtener el ID de la publicación desde el parámetro GET
+    $idUs = $_GET['id'];
 
-// Verificar si el usuario no ha iniciado sesión
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: ../../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
-    exit;
+    // Consultar la base de datos para obtener la información completa de la publicación
+    $query = "SELECT u.idUsuario, u.nom_Us, u.apell_Us, u.carrera_Us FROM usuario u WHERE u.idUsuario = $idUs";
+    $consulta = "SELECT * FROM publicacion
+                            WHERE id_Usuario = '$idUs' and estado_Pub = 1";
+    $result = mysqli_query($link, $query);
+    $registro = mysqli_query($link, $consulta);
+    $usuario = mysqli_fetch_assoc($result);
+
+    // Verificar si se encontró la publicación
+    if (mysqli_num_rows($result) == 1) {
+        $publicacion = mysqli_fetch_assoc($result);
+    } else {
+        // Si no se encontró la publicación, redireccionar a la página principal
+        header("Location: ../home.php");
+        exit();
+    }
+} else {
+    // Si no se proporcionó un ID de publicación, redireccionar a la página principal
+    header("Location: ../home.php");
+    exit();
 }
-
-// Verificar si se ha enviado una solicitud para cerrar sesión
-if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
-    // Destruir todas las variables de sesión
-    session_unset();
-
-    // Destruir la sesión
-    session_destroy();
-
-    // Redirigir al usuario al inicio de sesión
-    header("location: ../../index.php");
-    exit;
-}
-
-
-$idUsuario = $_SESSION['idU'];
-// Consulta a la base de datos
-/*$consulta = "SELECT * FROM publicacion
-WHERE carrera_Pub = '$carrera'
-ORDER BY idPub DESC LIMIT 3";*/
-$consulta = $consulta = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
-                    JOIN usuario u ON p.id_Usuario = u.idUsuario
-                    WHERE id_Usuario = '$idUsuario' and estado_Pub = 1";
 
 $registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
 
@@ -40,9 +35,11 @@ $registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida de
 if (!$registros) {
     die('Error en la consulta: ' . mysqli_error($link));
 }
-
-// Cierra la conexión después de realizar la consulta
+// Cerrar la conexión a la base de datos
 mysqli_close($link);
+
+// Iniciar sesión
+session_start();
 
 ?>
 
@@ -165,17 +162,16 @@ mysqli_close($link);
         <div class="container d-flex align-items-center">
             <!-- Logo y título -->
             <div class="logo">
-                <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
+                <img src="..\..\images\icons\flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
                 <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
 
-                <!-- BARRA DE BUSQUEDA  -->
+                <form class="position-relative search-field " style="margin-top: -0.8%;">
+                    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+                    <a href='#'><i class="bi bi-search search-icon"></i></a>
+
+                </form>
             </div>
-            <form action="../general_search.php" method="GET" id="searchForm" class="position-relative search-field">
-                <input id="searchInput" name="dataSearch" class="form-control me-2" type="search" autocomplete="off" required placeholder="Buscar" aria-label="Search">
-                <button id="searchButton" type="button">
-                    <i class="bi bi-search search-icon"></i>
-                </button>
-            </form>
+        </div>
     </header>
 
 
@@ -249,16 +245,12 @@ mysqli_close($link);
                     <h1><img id="profilePic" src="..\..\images\icons\perfil.png"></h1>
 
                     <h2>
-                        <span id="nombreApellido"><?php echo $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></span>
-                        <a href="#" class="editar-btn" data-toggle="modal" data-target="#editarNombreModal">
-                            <img src="..\..\images\icons\editar.png" height="25">
+                        <span id="nombreApellido"><?php echo $usuario['nom_Us'] . " " . $usuario['apell_Us'] ?></span>
                         </a>
                     </h2>
 
                     <h5>
-                        <span id="nombreCarrera"><?php echo $_SESSION['carrera'] ?></span>
-                        <a href="#" class="editar-btn" data-toggle="modal" data-target="#editarCarreraModal">
-                            <img src="..\..\images\icons\editar.png" height="25">
+                        <span id="nombreCarrera"><?php echo $usuario['carrera_Us'] ?></span>
                         </a>
                     </h5>
 
@@ -274,17 +266,6 @@ mysqli_close($link);
                                 </div>
                                 <div class="modal-body">
                                     <!-- Contenido del formulario de edición de nombre -->
-                                    <form action="PerfilEdit.php" method="POST">
-                                        <div class="form-group">
-                                            <label for="nuevoNombre">Nuevo Nombre:</label>
-                                            <input type="text" class="form-control" id="nuevoNombre" name="nuevoNombre" placeholder="Nuevo nombre" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="nuevoApellido">Nuevo Apellido:</label>
-                                            <input type="text" class="form-control" id="nuevoApellido" name="nuevoApellido" placeholder="Nuevo apellido" required>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary mt-2" id="guardarNombreBtn">Guardar</button>
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -301,59 +282,11 @@ mysqli_close($link);
                                 </div>
                                 <div class="modal-body">
                                     <!-- Contenido del formulario de edición de carrera -->
-                                    <form action="PerfilEdit.php" method="POST">
-                                        <div class="form-group">
-                                            <label for="nuevaCarrera">Nueva Carrera:</label>
-                                            <select class="form-control" id="nuevaCarrera" name="nuevaCarrera" required>
-                                                <option value="Arquitectura">Arquitectura</option>
-                                                <option value="Ing. Bioquímica">Ingeniería Bioquímica</option>
-                                                <option value="Ing. Civil">Ingeniería Civil</option>
-                                                <option value="Ing. Eléctrica">Ingeniería Eléctrica</option>
-                                                <option value="Ing. Gestión Empresarial">Ingeniería en Gestión Empresarial</option>
-                                                <option value="Ing. Sistemas Computacionales">Ingeniería en Sistemas Computacionales</option>
-                                                <option value="Ing. Mecatrónica">Ingeniería Mecatrónica</option>
-                                                <option value="Ing. Industrial">Ingeniería Industrial</option>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary mt-2" id="guardarCarreraBtn">Guardar</button>
-                                    </form>
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <script>
-                        // Obtener los botones de editar
-                        const editarNombreBtn = document.querySelector('.editar-btn[data-target="#editarNombreModal"]');
-                        const editarCarreraBtn = document.querySelector('.editar-btn[data-target="#editarCarreraModal"]');
-
-                        // Añadir evento de clic a los botones de editar
-                        editarNombreBtn.addEventListener('click', function() {
-                            // Mostrar el modal de edición de nombre
-                            $('#editarNombreModal').modal('show');
-                        });
-
-                        editarCarreraBtn.addEventListener('click', function() {
-                            // Mostrar el modal de edición de carrera
-                            $('#editarCarreraModal').modal('show');
-                        });
-
-                        // Validación de campos antes de enviar el formulario
-                        document.getElementById('guardarNombreBtn').addEventListener('click', function() {
-                            const nuevoNombre = document.getElementById('nuevoNombre').value.trim();
-                            const nuevoApellido = document.getElementById('nuevoApellido').value.trim();
-
-                            if (nuevoNombre === '' || nuevoApellido === '') {
-                                alert('Por favor, complete todos los campos.');
-                                event.preventDefault();
-                            }
-                        });
-
-                        document.getElementById('guardarCarreraBtn').addEventListener('click', function() {
-                            const nuevaCarrera = document.getElementById('nuevaCarrera').value;
-
-                        });
-                    </script>
 
 
                     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
@@ -401,29 +334,14 @@ mysqli_close($link);
 
 
                         <hr noshade="noshade"><br>
-                        <h3 class="mb-5">Historial de Publicaciones</h3>
+                        <h3 class="mb-5">Publicaciones de <?php echo $usuario['nom_Us'] . " " . $usuario['apell_Us'] ?></h3>
                 </div>
 
-                <?php while ($fila = mysqli_fetch_array($registros)) : ?>
+                <?php while ($fila = mysqli_fetch_array($registro)) : ?>
                     <div class="publicacion card mb-3">
                         <div class="card-body">
 
                             <!-- Boton editar -->
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-0">
-                                <a id="idEditar" class="btn btn-outline-warning" href="../../publicacion/editar_interfaz.php?id=<?php echo $fila['idPub']; ?>" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
-                                    <span class="material-symbols-outlined">
-                                        edit_square
-                                    </span>
-                                </a>
-
-                                <!-- Boton eliminar y modal -->
-                                <a data-idpub="<?php echo $fila['idPub']; ?>" id="idEliminar" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#reg-modal" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
-                                    <span class="material-symbols-outlined">
-                                        delete
-                                    </span>
-                                </a>
-
-                            </div>
 
                             <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
 
@@ -432,7 +350,7 @@ mysqli_close($link);
                             <a name="fade" href="../../publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary btn-sm"><b>Leer más</b></a>
                         </div>
                         <div class="card-footer d-flex text-muted justify-content-between align-items-end">
-                            <span class="card-text comment-date mb-0 ">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
+                            <span class="card-text comment-date mb-0 ">Publicado por: <?php echo $usuario['nom_Us'] . " " . $usuario['apell_Us']; ?></span>
                             <span class="card-text comment-date mb-0"><?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
                         </div>
                     </div>

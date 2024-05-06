@@ -7,13 +7,6 @@
 
 /*  FIN GENERALES   */
 
-.cabecera {
-    background-color: #004aad;
-    height: 108px;
-    /*background-image: url('../header/header (7).jpg');*/
-    background-size: 40%;
-}
-
 .logo{
     width: 55px;
     text-decoration: none;
@@ -51,8 +44,7 @@
 
 
 .search-field {
-    margin-top: 35px;
-    width: 340px;
+    width: 30em;
     margin-left: 30%;
 }
 
@@ -64,10 +56,28 @@
 
 .search-icon {
     position: absolute;
-    right: 10px;
+    right: 50px;
     top: 50%;
     transform: translateY(-50%);
     color: #6c757d;
+}
+
+/* BARRA DE BUSQUEDA */
+#searchForm {
+    display: flex; /* Usamos flexbox para alinear los elementos horizontalmente */
+    align-items: center; /* Centramos verticalmente los elementos */
+}
+
+#searchInput {
+    flex: 1; /* Hacemos que el campo de texto se expanda para ocupar todo el espacio disponible */
+    margin-right: 5px; /* Añadimos un pequeño margen entre el campo de texto y el botón de búsqueda */
+}
+
+#searchButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 15px; /* Añadimos un pequeño margen entre el botón de búsqueda y el campo de texto */
 }
 
 /*  CONTENIDO   */

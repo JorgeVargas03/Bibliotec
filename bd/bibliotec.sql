@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 24-04-2024 a las 19:00:38
+-- Tiempo de generación: 05-05-2024 a las 05:37:26
 -- Versión del servidor: 8.0.32
 -- Versión de PHP: 8.0.26
 
@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `bibliotec`
 --
-CREATE DATABASE IF NOT EXISTS `bibliotec` DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci;
+CREATE DATABASE IF NOT EXISTS `bibliotec` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `bibliotec`;
 
 -- --------------------------------------------------------
@@ -64,6 +64,8 @@ CREATE TABLE IF NOT EXISTS `calificacion_detalle` (
 --
 
 INSERT INTO `calificacion_detalle` (`id_Usuario`, `idPub`, `calificacion`) VALUES
+(4, 5, '5.00'),
+(4, 11, '4.00'),
 (10, 5, '2.00');
 
 -- --------------------------------------------------------
@@ -111,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `comentario` (
   PRIMARY KEY (`idComent`),
   KEY `fk_Comentario_Publicacion_idx` (`idPub`),
   KEY `fk_Comentario_Usuario1_idx` (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `comentario`
@@ -125,7 +127,8 @@ INSERT INTO `comentario` (`idComent`, `idPub`, `idUsuario`, `text_Coment`, `fech
 (13, 4, 5, 'Ya jalan los comentarios yeeeiiii :)\r\nPD: Buen aporte', '2023-04-03'),
 (14, 4, 4, 'WOW Joorgeee eres un crackkkk. ', '2023-04-03'),
 (15, 5, 10, 'Excelente aporte amigo ', '2024-04-03'),
-(16, 5, 10, 'Excelente', '2024-04-14');
+(16, 5, 10, 'Excelente', '2024-04-14'),
+(19, 5, 4, 'esta muy bueno el contenido', '2024-04-25');
 
 -- --------------------------------------------------------
 
@@ -682,29 +685,30 @@ CREATE TABLE IF NOT EXISTS `publicacion` (
   `materia_Pub` varchar(60) NOT NULL,
   `tipo_pub` varchar(45) NOT NULL,
   `archivo_Pub` varchar(100) NOT NULL,
+  `estado_Pub` tinyint(1) NOT NULL,
   PRIMARY KEY (`idPub`),
   KEY `fk_Publicacion_Usuario1_idx` (`id_Usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `publicacion`
 --
 
-INSERT INTO `publicacion` (`idPub`, `id_Usuario`, `titulo_Pub`, `fecha_Pub`, `descrip_Pub`, `calif_Pub`, `carrera_Pub`, `materia_Pub`, `tipo_pub`, `archivo_Pub`) VALUES
-(1, 1, 'Mi primera publicacion', '2024-03-18', 'Hola a todos amigos, mi primer aporte :)', '5', 'Ing. Sistemas Computacionales', 'Ingeniería de Software', 'Recurso Bibliográfico', 'libroHTML.pdf'),
-(2, 1, 'Curso de Cocina de Benigno', '2024-03-18', 'Hola a todos amigos, mi segundo aporte :)', '7', 'Ing. Sistemas Computacionales', 'Ingeniería de Software', 'Recurso Bibliográfico', 'RecetasBenigno.pdf'),
-(3, 1, 'Como resolver una Ecuacion Diferencial', '2024-03-18', 'Hola a todos amigos, mi tercer aporte :)', '10', 'Ing. Sistemas Computacionales', 'Ecuaciones Diferenciales', 'Recurso Bibliográfico', 'EcuacionesDiferenciales.pdf'),
-(4, 1, 'Curso de HTML+PHP', '2024-03-18', 'Les comparto mi libro de HTML', '10', 'Ing. Sistemas Computacionales', 'Programación Web', 'Apuntes y Tareas', 'libroHTML.pdf'),
-(5, 1, 'Metodologia SCRUM', '2024-03-18', 'Lo que debes saber sobre la Metodologia Scrum', '10', 'Ing. Sistemas Computacionales', 'Ingeniería de Software', 'Apuntes y Tareas', '../Publicacion.pdf'),
-(6, 10, 'Publicacion de prueba', '2024-04-22', 'Ejemplo 6', '0', 'Ing. Mecatronica', 'Electrónica de Potencia Aplicada', 'Recurso Bibliografico', '../repo_archivos/10/La Biblia del Diablo.pdf'),
-(7, 10, 'Publicacion de Prueba PARTE 2', '2024-04-22', 'PARTE 2', '0', 'Lic. Administracion', 'Comunicación Corporativa', 'Recurso Bibliografico', '../repo_archivos/10/4.1DefiniciónEconomía.pdf'),
-(9, 10, 'fgfgfg', '2024-04-22', 'gfgfgfg', '0', 'Ing. Quimica', 'Fisicoquímica II', 'Recurso Bibliografico', '../repo_archivos/10/La Biblia del Diablo.pdf'),
-(10, 10, 'fgfgfg', '2024-04-22', 'gfgfgfg', '0', 'Ing. Quimica', 'Fisicoquímica II', 'Recurso Bibliografico', '../repo_archivos/10/La Biblia del Diablo.pdf'),
-(11, 10, 'bbbb', '2024-04-22', 'bbbbbbb', '0', 'Arquitectura', 'Administración de Empresas Constructoras I', 'Recurso Bibliografico', '..%2Frepo_archivos%2F10%2FEl+guardian+de+la+Biblia+del+Diablo.pdf'),
-(12, 10, 'f', '2024-04-22', 'f', '0', 'Ing. Electrica', 'Auditoría Energética', 'Recurso Bibliografico', '../repo_archivos/10/La+Biblia+del+Diablo.pdf'),
-(13, 10, 'a', '2024-04-22', 'a', '0', 'Ing. Mecatronica', 'Electrónica de Potencia Aplicada', 'Recurso Bibliografico', '../repo_archivos/10/La+Biblia+del+Diablo.pdf'),
-(14, 10, 'dsdssdsd', '2024-04-22', 'tyt', '0', 'Lic. Administracion', 'Administración de la Calidad', 'Recurso Bibliografico', '../repo_archivos/10/EJERCICIO+DE+TAREA+9+VLANS.docx'),
-(15, 10, 'COMENTEN SI LES GUSTO ESTA PUBLICACION', '2024-04-24', 'HOLA BUENAS', '0', 'Ing. Quimica', 'Gestión de la Calidad', 'Trabajos y tareas', '../repo_archivos/10/Publicacion.pdf');
+INSERT INTO `publicacion` (`idPub`, `id_Usuario`, `titulo_Pub`, `fecha_Pub`, `descrip_Pub`, `calif_Pub`, `carrera_Pub`, `materia_Pub`, `tipo_pub`, `archivo_Pub`, `estado_Pub`) VALUES
+(1, 1, 'Mi primera publicacion', '2024-03-18', 'Hola a todos amigos, mi primer aporte :)', '5', 'Ing. Sistemas Computacionales', 'Ingeniería de Software', 'Recurso Bibliográfico', 'libroHTML.pdf', 1),
+(2, 1, 'Curso de Cocina de Benigno', '2024-03-18', 'Hola a todos amigos, mi segundo aporte :)', '7', 'Ing. Sistemas Computacionales', 'Ingeniería de Software', 'Recurso Bibliográfico', 'RecetasBenigno.pdf', 1),
+(3, 1, 'Como resolver una Ecuacion Diferencial', '2024-03-18', 'Hola a todos amigos, mi tercer aporte :)', '10', 'Ing. Sistemas Computacionales', 'Ecuaciones Diferenciales', 'Recurso Bibliográfico', 'EcuacionesDiferenciales.pdf', 1),
+(4, 1, 'Curso de HTML+PHP', '2024-03-18', 'Les comparto mi libro de HTML', '10', 'Ing. Sistemas Computacionales', 'Programación Web', 'Apuntes y Tareas', 'libroHTML.pdf', 1),
+(5, 1, 'Metodologia SCRUM', '2024-03-18', 'Lo que debes saber sobre la Metodologia Scrum', '10', 'Ing. Sistemas Computacionales', 'Ingeniería de Software', 'Apuntes y Tareas', '../Publicacion.pdf', 1),
+(6, 10, 'Publicacion de prueba 2', '2024-04-22', 'Ejemplo 6', '0', 'Ing. Mecatronica', 'Electrónica Analógica', '', '../repo_archivos/10/La Biblia del Diablo.pdf', 1),
+(7, 10, 'Publicacion de Prueba PARTE 2', '2024-04-22', 'PARTE 2', '0', 'Lic. Administracion', 'Comunicación Corporativa', 'Recurso Bibliografico', '../repo_archivos/10/4.1DefiniciónEconomía.pdf', 1),
+(9, 10, 'fgfgfg', '2024-04-22', 'gfgfgfg', '0', 'Ing. Quimica', 'Fisicoquímica II', 'Recurso Bibliografico', '../repo_archivos/10/La Biblia del Diablo.pdf', 1),
+(10, 10, 'fgfgfg', '2024-04-22', 'gfgfgfg', '0', 'Ing. Quimica', 'Fisicoquímica II', 'Recurso Bibliografico', '../repo_archivos/10/La Biblia del Diablo.pdf', 1),
+(11, 10, 'bbbb', '2024-04-22', 'bbbbbbb', '0', 'Arquitectura', 'Administración de Empresas Constructoras I', 'Recurso Bibliografico', '..%2Frepo_archivos%2F10%2FEl+guardian+de+la+Biblia+del+Diablo.pdf', 1),
+(12, 10, 'f', '2024-04-22', 'f', '0', 'Ing. Electrica', 'Auditoría Energética', 'Recurso Bibliografico', '../repo_archivos/10/La+Biblia+del+Diablo.pdf', 1),
+(13, 10, 'a', '2024-04-22', 'a', '0', 'Ing. Mecatronica', 'Electrónica de Potencia Aplicada', 'Recurso Bibliografico', '../repo_archivos/10/La+Biblia+del+Diablo.pdf', 1),
+(14, 10, 'dsdssdsd', '2024-04-22', 'tyt', '0', 'Lic. Administracion', 'Administración de la Calidad', 'Recurso Bibliografico', '../repo_archivos/10/EJERCICIO+DE+TAREA+9+VLANS.docx', 1),
+(15, 10, 'COMENTEN SI LES GUSTO ESTA PUBLICACION', '2024-04-24', 'HOLA BUENAS', '0', 'Ing. Quimica', 'Gestión de la Calidad', 'Trabajos y tareas', '../repo_archivos/10/Publicacion.pdf', 0);
 
 --
 -- Disparadores `publicacion`
@@ -733,35 +737,6 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `publicaciones_pendientes`
---
-
-DROP TABLE IF EXISTS `publicaciones_pendientes`;
-CREATE TABLE IF NOT EXISTS `publicaciones_pendientes` (
-  `idPub` int NOT NULL AUTO_INCREMENT,
-  `id_Usuario` int NOT NULL,
-  `titulo_Pub` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `fecha_Pub` date NOT NULL,
-  `descrip_Pub` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `calif_Pub` decimal(10,2) NOT NULL,
-  `carrera_Pub` varchar(45) NOT NULL,
-  `materia_Pub` varchar(60) NOT NULL,
-  `tipo_pub` varchar(45) NOT NULL,
-  `archivo_Pub` varchar(100) NOT NULL,
-  `estado_Pub` tinyint(1) NOT NULL,
-  PRIMARY KEY (`idPub`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
-
---
--- Volcado de datos para la tabla `publicaciones_pendientes`
---
-
-INSERT INTO `publicaciones_pendientes` (`idPub`, `id_Usuario`, `titulo_Pub`, `fecha_Pub`, `descrip_Pub`, `calif_Pub`, `carrera_Pub`, `materia_Pub`, `tipo_pub`, `archivo_Pub`, `estado_Pub`) VALUES
-(1, 3, 'Eclipses', '2024-04-01', 'Mi aporte acerca de lo impresionantes que son los eclipses solares, y el como poder observarlos', '4.00', 'Ing. Civil', 'Dinamica de Materiales', 'Informativa', 'eclipses.png', 0);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `reportecomentario`
 --
 
@@ -774,14 +749,15 @@ CREATE TABLE IF NOT EXISTS `reportecomentario` (
   `estado_Report` tinyint NOT NULL,
   PRIMARY KEY (`idReporteCom`),
   KEY `fk_ReporteComentario_Comentario1_idx` (`idComent`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `reportecomentario`
 --
 
 INSERT INTO `reportecomentario` (`idReporteCom`, `idComent`, `fecha_Report`, `motivo_Report`, `estado_Report`) VALUES
-(1, 1, '2024-03-28', 'Lenguaje inapropiado', 0);
+(1, 1, '2024-03-28', 'Lenguaje inapropiado', 0),
+(2, 10, '2024-04-25', 'Contenido inapropiado', 0);
 
 -- --------------------------------------------------------
 
@@ -798,14 +774,16 @@ CREATE TABLE IF NOT EXISTS `reportepublicación` (
   `estado_Report` tinyint(1) NOT NULL,
   PRIMARY KEY (`idReporte`),
   KEY `fk_ReportePublicación_Publicacion1_idx` (`idPub`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `reportepublicación`
 --
 
 INSERT INTO `reportepublicación` (`idReporte`, `idPub`, `fecha_Report`, `motivo_Report`, `estado_Report`) VALUES
-(1, 3, '2024-04-03', 'Se registró contenido plagiado.', 0);
+(1, 3, '2024-04-03', 'Se registró contenido plagiado.', 0),
+(2, 5, '2024-04-25', 'Spam', 0),
+(3, 5, '2024-04-25', 'Spam', 0);
 
 -- --------------------------------------------------------
 
@@ -825,9 +803,22 @@ CREATE TABLE IF NOT EXISTS `tag_publicacion` (
 --
 
 INSERT INTO `tag_publicacion` (`idPub`, `nombreTag`) VALUES
+(1, 'Ejemplo1'),
+(2, 'Ejemplo1'),
+(2, 'Ejemplo2'),
+(2, 'Ejemplo3'),
+(3, 'Ejercicios'),
+(3, 'OmarEdel'),
+(3, 'Unidad1'),
+(4, 'MEPU'),
+(4, 'Resumen'),
+(4, 'WEB'),
 (5, 'LecturaRapida'),
 (5, 'LoMasImportante'),
-(5, 'Resumen');
+(5, 'Resumen'),
+(6, 'Ejemplo1'),
+(6, 'Ejemplo2'),
+(6, 'Ejemplo3');
 
 -- --------------------------------------------------------
 
@@ -856,7 +847,7 @@ INSERT INTO `usuario` (`idUsuario`, `nom_Us`, `apell_Us`, `carrera_Us`, `semestr
 (1, 'Jorge', 'Vargas', 'Ing. Sistemas Computacionales', '6', 'jorge@gmail.com', '12345678'),
 (2, 'Maria', 'DB', 'Arquitectura', '7', 'mariadb@ittepic.edu.mx', '12345678'),
 (3, 'Javier', 'DB', 'Ing. Civil', '8', 'javierdb@ittepic.edu.mx', '$2y$10$gLoihHD8cQm7tBTvR8oN/.MlbnU8XjGEKWpK0.ZuSEMN/snUcWyDi'),
-(4, 'Rebeca', 'Ramirez', 'Ing. Sistemas Computacionales', '6', 'Rebeca@ittepic.edu.mx', '$2y$10$gLoihHD8cQm7tBTvR8oN/.MlbnU8XjGEKWpK0.ZuSEMN/snUcWyDi'),
+(4, 'Lia', 'Velazquez', 'Ing. Sistemas Computacionales', '6', 'Rebeca@ittepic.edu.mx', '$2y$10$gLoihHD8cQm7tBTvR8oN/.MlbnU8XjGEKWpK0.ZuSEMN/snUcWyDi'),
 (5, 'Yvan', 'Acosta', 'Ing. Sistemas Computacionales', '6', 'yvfeacostaca@ittepic.edu.mx', '$2y$10$gLoihHD8cQm7tBTvR8oN/.MlbnU8XjGEKWpK0.ZuSEMN/snUcWyDi'),
 (10, 'Jorge', 'Mendoza', 'Ing. Sistemas Computacionales', '8', 'joluvargaspa@ittepic.edu.mx', '$2y$10$KV8tBYdz5GKrauJb4hFp6uaOPWvjkBv8SxAB2AwQ1WxgVZlvrvvUe');
 
@@ -889,86 +880,6 @@ CREATE TABLE IF NOT EXISTS `usuario_insignia` (
   KEY `fk_Usuario_Insignia_Insignia1_idx` (`idInsignia`),
   KEY `fk_Usuario_Insignia_Usuario1_idx` (`idUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuario_temp`
---
-
-DROP TABLE IF EXISTS `usuario_temp`;
-CREATE TABLE IF NOT EXISTS `usuario_temp` (
-  `idUsuario` int NOT NULL AUTO_INCREMENT,
-  `nom_Us` varchar(50) NOT NULL,
-  `apell_Us` varchar(50) NOT NULL,
-  `carrera_Us` varchar(60) NOT NULL,
-  `semestre_Us` varchar(50) NOT NULL,
-  `correo_Us` varchar(100) NOT NULL,
-  `contra_Us` varchar(60) NOT NULL,
-  `token` varchar(5) NOT NULL,
-  PRIMARY KEY (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `calificacion_detalle`
---
-ALTER TABLE `calificacion_detalle`
-  ADD CONSTRAINT `calificacion_detalle_ibfk_1` FOREIGN KEY (`id_Usuario`) REFERENCES `usuario` (`idUsuario`),
-  ADD CONSTRAINT `calificacion_detalle_ibfk_2` FOREIGN KEY (`idPub`) REFERENCES `publicacion` (`idPub`);
-
---
--- Filtros para la tabla `comentario`
---
-ALTER TABLE `comentario`
-  ADD CONSTRAINT `fk_Comentario_Publicacion` FOREIGN KEY (`idPub`) REFERENCES `publicacion` (`idPub`),
-  ADD CONSTRAINT `fk_Comentario_Usuario1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
-
---
--- Filtros para la tabla `materia`
---
-ALTER TABLE `materia`
-  ADD CONSTRAINT `materia_ibfk_1` FOREIGN KEY (`nomCarrera`) REFERENCES `carrera` (`nomCarrera`);
-
---
--- Filtros para la tabla `publicacion`
---
-ALTER TABLE `publicacion`
-  ADD CONSTRAINT `fk_Publicacion_Usuario1` FOREIGN KEY (`id_Usuario`) REFERENCES `usuario` (`idUsuario`);
-
---
--- Filtros para la tabla `reportecomentario`
---
-ALTER TABLE `reportecomentario`
-  ADD CONSTRAINT `fk_ReporteComentario_Comentario1` FOREIGN KEY (`idComent`) REFERENCES `comentario` (`idComent`);
-
---
--- Filtros para la tabla `reportepublicación`
---
-ALTER TABLE `reportepublicación`
-  ADD CONSTRAINT `fk_ReportePublicación_Publicacion1` FOREIGN KEY (`idPub`) REFERENCES `publicacion` (`idPub`);
-
---
--- Filtros para la tabla `tag_publicacion`
---
-ALTER TABLE `tag_publicacion`
-  ADD CONSTRAINT `tag_publicacion_ibfk_1` FOREIGN KEY (`idPub`) REFERENCES `publicacion` (`idPub`);
-
---
--- Filtros para la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`carrera_Us`) REFERENCES `carrera` (`nomCarrera`);
-
---
--- Filtros para la tabla `usuario_insignia`
---
-ALTER TABLE `usuario_insignia`
-  ADD CONSTRAINT `fk_Usuario_Insignia_Insignia1` FOREIGN KEY (`idInsignia`) REFERENCES `insignia` (`idInsignia`),
-  ADD CONSTRAINT `fk_Usuario_Insignia_Usuario1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

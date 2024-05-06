@@ -1,9 +1,9 @@
 <?php
-include('../php/functions.php');
+include('../../php/functions.php');
 //include('../php/sesion.php');
 session_start();
 // Incluir el archivo de conexión a la base de datos
-$link = include('../php/conexion.php');
+$link = include('../../php/conexion.php');
 
 // Verificar si se proporcionó un ID de publicación
 if (isset($_GET['id'])) {
@@ -109,7 +109,7 @@ if (isset($_GET['id'])) {
     }
 } else {
     // Si no se proporcionó un ID de publicación, redireccionar a la página principal
-    header("Location: ../home.php");
+    header("Location: ../../home.php");
     exit();
 }
 
@@ -121,7 +121,7 @@ mysqli_close($link);
 
 // Verificar si el usuario no ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: ../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
+    header("location: ../../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
     exit;
 }
 
@@ -157,7 +157,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <style>
         @font-face {
             font-family: 'Agrandir';
-            src: url('../css/Agrandir.otf') format('otf');
+            src: url('../../css/Agrandir.otf') format('otf');
         }
 
         pre {
@@ -182,20 +182,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 <body>
 <header class="bg-primary py-2">
-    <div class="container d-flex align-items-center">
-      <!-- Logo y título -->
-      <div class="logo">
-        <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
-        <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
-
-        <!-- BARRA DE BUSQUEDA  -->
-    </div>
-    <form action="../administracion/general_search.php" method="GET" id="searchForm" class="position-relative search-field">
-          <input id="searchInput" name="dataSearch" class="form-control me-2" type="search" autocomplete="off" required placeholder="Buscar" aria-label="Search">
-          <button id="searchButton" type="button">
-            <i class="bi bi-search search-icon"></i>
-          </button>
-        </form>
+<div class="container d-flex align-items-right" style="margin-left:0.1vmax;">
+            <!-- Logo y título -->
+            <div class="logo col-5">
+                <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2" width="55" height="80">
+                <b><span class="col-1">Biblio</span><span class="col-2">Tec</span>
+                <span> - Publicacion del comentario reportado</span></b>
+            </div>
+    
   </header>
     <!--Aqui se muestra un apartado para los productos que se venderan-->
 
@@ -211,69 +205,32 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <div class="container-fluid">
         <div class="row">
             <!-- Barra de navegación izquierda -->
-            <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
+            <div class="flex-shrink-0 p-3 hola" style="width: 15%; background-color: #F07B12; ">
                 <ul class="list-unstyled" id="menu-lateral">
-                    <li class="mb-2 mt-2">
-                        <a class="nav-link align-items-center" href="../home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
-                    </li>
+                <li class="mb-1">
+                  <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
+                </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
-                            Carreras
+                          Reportes
                         </button>
                         <div class="collapse" id="dashboard-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="../administracion/search.php?carrera=Arquitectura" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Arquitectura</a></li>
-                                <li><a href="../administracion/search.php?carrera=Ing. Bioquimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Ingeniería Bioquímica</a></li>
-                                <li><a href="../administracion/search.php?carrera=Ing. Civil" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Civil</a></li>
-                                <li><a href="../administracion/search.php?carrera=Ing. Electrica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Eléctrica</a></li>
-                                <li><a href="../administracion/search.php?carrera=Ing. Gestion Empresarial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Gestión Empresarial</a></li>
-                                <li><a href="../administracion/search.php?carrera=Ing. Sistemas Computacionales" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ing. en Sistemas Computacionales</a></li>
-                                <li><a href="../administracion/search.php?carrera=Ing. Industrial" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Industrial</a></li>
-                                <li><a href="../administracion/search.php?carrera=Ing. Mecatronica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Mecatrónica</a></li>
-                                <li><a href="../administracion/search.php?carrera=Ing. Quimica" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Ingeniería Química</a></li>
-                                <li><a href="../administracion/search.php?carrera=Lic. Administracion" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Licenciatura en Administración</a></li>
-                            </ul>
+                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="rep_comentario_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Comentarios</a></li>
+                                <li><a href="rep_publicacion_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
+                      </ul>
                         </div>
-                    </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#contacto-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
-                            Contacto
-                        </button>
-                        <div class="collapse" id="contacto-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
-                            </ul>
-                        </div>
-                    </li>
+                      </li>
                     <hr class="my-2"> <!-- Línea divisora -->
                     <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#cuenta-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
-                            <svg class="bi pe-none" width="1.3vmax" height="1.3vmax">
-                                <use xlink:href="#people-circle" />
-                            </svg>
-                            <span style="margin-top:0.3vmax; margin-left: 0.4vmax;">Cuenta</span>
+                        <button class="btn d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" style="color: black; font-weight: bold;">
+                        <a class="nav-link align-items-center" href="admin_home.php?logout=true" id="letrabar">Cerrar sesión</a>
                         </button>
-                        <div class="collapse" id="cuenta-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="../administracion/Perfil/infoperfil.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
-                                <a href="home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a>
-                            </ul>
-                        </div>
                     </li>
                     <hr class="my-2"> <!-- Línea divisora -->
-                    <li class="mb-1 mt-3">
-                        <a class="nav-link align-items-center" name="fade" href="../publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
-                    </li>
-
-                    <hr class="my-2"> <!-- Línea divisora -->
-                    <li class="mb-1 mt-3">
-                        <a class="nav-link align-items-center" href="#" id="letrabardos" style="margin-left:10px"><?php echo "Hola " . $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></a>
-                    </li>
                 </ul>
             </div>
             <!-- Contenido principal -->
-
-
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="font-weight:normal; margin-left: 1.5%">
                 <h3 style=" margin-left: 1.5% ; margin-top: 35px;">
                     <b class="textogran" style="font-size: 2vmax; text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
@@ -365,6 +322,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         <div class="mx-3">
                                             <a href="<?php echo $publicacion['archivo_Pub']; ?>" download class="btn btn-success">
                                                 <i class="bi bi-cloud-arrow-down mr-2" style="font-size: 1.5em;"></i> <!-- Cambiar a otro icono de descarga -->
+                                            </a>
+                                        </div>
+                                        <div class="mx-3">
+                                            <a href="reporte_comentario.php?id=<?php echo $publicacion['idPub']; ?>" class="btn btn-info">
+                                                <i class="bi bi-box-arrow-up-right mr-2" style="font-size: 1.5em;"></i> Regresar al reporte
                                             </a>
                                         </div>
                                     </div>

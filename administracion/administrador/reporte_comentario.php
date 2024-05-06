@@ -79,8 +79,6 @@ session_start();?>
             'GRAD' 100,
             'opsz' 424
     }
-
-    
 </style>
 
 
@@ -148,6 +146,9 @@ session_start();?>
                                             </a>
                                             <a href="#" class="btn btn-danger btn-sm">
                                                 <i class="bi bi-trash3 mr-2"></i> Eliminar comentario
+                                            </a>
+                                            <a href="publicacion_detalle_admin.php?id=<?php echo $fila['idComent']; ?>" class="btn btn-link btn-sm">
+                                            <i class="bi bi-file-earmark mr-2"></i> Ir a la publicacion
                                             </a>
                                         </div>
                                     </div>
