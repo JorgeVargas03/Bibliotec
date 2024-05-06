@@ -30,6 +30,36 @@ if (isset($_GET['id'])) {
     exit();
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['ConfirmarEliminar2'])) {
+    $rutaArchivo = "../".$publicacion['archivo_Pub'];
+
+    if (file_exists($rutaArchivo)) {
+        if (unlink($rutaArchivo)) {
+            $sql = "DELETE FROM publicacion WHERE idPub = $idPub";
+           if (mysqli_query($link,$sql)) {
+                // Eliminar los tags asociados a la publicación de la tabla 'tag_publicacion'
+                $sqlTags = "DELETE FROM tag_publicacion WHERE idPub = $idPub";
+
+                if (mysqli_query($link,$sqlTags)) {
+                    echo "El archivo y la publicación se han eliminado correctamente.";
+                    header("Location: admin_home.php");
+                } else {
+                    echo "Error al intentar eliminar los tags de la publicación: " . $conexion->error;
+                }
+            } else {
+                echo "Error al intentar eliminar la publicación: " . $conexion->error;
+            }
+        } else {
+            // Error al intentar eliminar el archivo
+            echo "Error al intentar eliminar el archivo.";
+        }
+    } else {
+        // El archivo no existe
+        echo "El archivo no existe.";
+    }
+    exit;
+  }
+
 // Cerrar la conexión a la base de datos
 mysqli_close($link);
 
@@ -145,9 +175,10 @@ session_start();
                                             <a href="#"  class="btn btn-success btn-sm">
                                                 <i class="bi bi-check2 mr-2"></i> Rechazar reporte
                                             </a>
-                                            <a href="#" class="btn btn-danger btn-sm">
+                                            <a id = "idEliminar2" data-bs-toggle="modal" data-bs-target="#reg-modal"  href="#" class="btn btn-danger btn-sm">
                                                 <i class="bi bi-trash3 mr-2"></i> Eliminar publicacion
                                             </a>
+
                                         </div>
 
                                     </div>
@@ -237,8 +268,29 @@ session_start();
 
 
             </main>
-    
-
+            <!-- Modal -->
+            <form method="post">
+            <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+                <div class="modal.dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="modal-title">Confirmar Eliminar</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                                <div class="modal-body">
+                                <p> ¿Estas seguro de querer eliminar esta publicación?</p>
+                                </div>
+                                    <div class="modal-footer">
+                                    <button class="btn btn-primary" id="ConfirmarEliminar2">Eliminar</button>
+                                    </div>
+                        </div>
+                    </div>
+                    <script src="../../publicacion/eliminar2.js">
+                    </script>
+                </div>
+            </div>
+            </form>
    
      <script src ="../../js/fadeout.js"></script>
             
