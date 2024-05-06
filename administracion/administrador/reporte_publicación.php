@@ -15,21 +15,8 @@ if (isset($_GET['id'])) {
     $result = mysqli_query($link, $query);
     $registro = mysqli_query($link, $query2);
     $fila = mysqli_fetch_array($registro);
-
-    // Verificar si se encontró la publicación
-    if (mysqli_num_rows($result) == 1) {
-        $publicacion = mysqli_fetch_assoc($result);
-    } else {
-        // Si no se encontró la publicación, redireccionar a la página principal
-        header("Location: ../home.php");
-        exit();
-    }
-} else {
-    // Si no se proporcionó un ID de publicación, redireccionar a la página principal
-    header("Location: ../home.php");
-    exit();
+    $publicacion = mysqli_fetch_array($result);
 }
-
 if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['ConfirmarEliminar2'])) {
     $rutaArchivo = "../".$publicacion['archivo_Pub'];
 
@@ -42,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['ConfirmarEliminar2'])
 
                 if (mysqli_query($link,$sqlTags)) {
                     echo "El archivo y la publicación se han eliminado correctamente.";
-                    header("Location: admin_home.php");
+                    header("Location: rep_publicacion_pendiente.php");
                 } else {
                     echo "Error al intentar eliminar los tags de la publicación: " . $conexion->error;
                 }
@@ -60,11 +47,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['ConfirmarEliminar2'])
     exit;
   }
 
-// Cerrar la conexión a la base de datos
-mysqli_close($link);
+  mysqli_close($link);
 
-// Iniciar sesión
-session_start();
+  // Inicia la sesión después de cerrar la conexión
+  session_start();
+  
+  // Verificar si el usuario no ha iniciado sesión
+  if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["rol"] !== "admin") {
+    header("location: ../../index.php");
+    exit;
+  }
+  
+  // Verificar si se ha enviado una solicitud para cerrar sesión
+  if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
+    // Destruir todas las variables de sesión
+    session_unset();
+  
+    // Destruir la sesión
+    session_destroy();
+  
+    // Redirigir al usuario al inicio de sesión
+    header("location: ../../index.php");
+    exit;
+  }
 ?>
 
 <!DOCTYPE html>
@@ -244,7 +249,7 @@ session_start();
                                     <!-- Botón para ver archivo adjunto -->
                                     <div class="row">
                                         <div class="col text-center mt-3 mb-3">
-                                            <a href="<?php echo $publicacion['archivo_Pub']; ?>" target="_blank" class="btn btn-primary btn-lg">
+                                            <a href="../<?php echo $publicacion['archivo_Pub']; ?>" target="_blank" class="btn btn-primary btn-lg">
                                                 <i class="bi bi-file-pdf-fill mr-2"></i> Ver Archivo Adjunto
                                             </a>
                                         </div>
@@ -269,7 +274,7 @@ session_start();
 
             </main>
             <!-- Modal -->
-            <form method="post">
+            <form method="POST" name="ConfirmarEliminar2">
             <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
                 <div class="modal.dialog">
                     <div class="modal-dialog">
@@ -282,12 +287,10 @@ session_start();
                                 <p> ¿Estas seguro de querer eliminar esta publicación?</p>
                                 </div>
                                     <div class="modal-footer">
-                                    <button class="btn btn-primary" id="ConfirmarEliminar2">Eliminar</button>
+                                    <button class="btn btn-primary" name="ConfirmarEliminar2">Eliminar</button>
                                     </div>
                         </div>
                     </div>
-                    <script src="../../publicacion/eliminar2.js">
-                    </script>
                 </div>
             </div>
             </form>

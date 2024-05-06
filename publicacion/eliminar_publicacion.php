@@ -18,7 +18,7 @@ if (isset($_POST['idpub'])) {
         $nombre_archivo = $fila['archivo_Pub'];
 
         // Elimina el archivo adjunto del sistema de archivos
-        if (unlink('../../repo_archivos/' . $nombre_archivo)) {
+        if (unlink('../' . $nombre_archivo)) {
             // Prepara la consulta SQL para eliminar la publicación
             $consulta = "DELETE FROM `publicacion` WHERE `idPub` = $idPublicacion";
 
