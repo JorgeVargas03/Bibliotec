@@ -429,7 +429,7 @@ mysqli_close($link);
 
                             <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
 
-                            <a name="fade" href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary btn-sm"><b>Leer más</b></a>
+                            <a name="fade" href="../../publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary btn-sm"><b>Leer más</b></a>
                         </div>
                         <div class="card-footer d-flex text-muted justify-content-between align-items-end">
                             <span class="card-text comment-date mb-0 ">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>

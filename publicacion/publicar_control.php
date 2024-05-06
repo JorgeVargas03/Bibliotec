@@ -11,16 +11,6 @@ if (!is_dir($carpetaUsuario)) {
     }
 }
 
-// Archivo 
-// Obtener nombre temporal y nombre de archivo
-$archivoTemporal = $_FILES['archivo']['tmp_name'];
-$nombreArchivo = $_FILES['archivo']['name'];
-
-$rutaArchivo = $carpetaUsuario . '/' . $nombreArchivo;
-
-// Verificar si el archivo se ha subido correctamente
-if (move_uploaded_file($archivoTemporal, $rutaArchivo)) {
-    echo "El archivo se ha subido correctamente.";
 
     // Insertar en la base de datos solo si el archivo se ha subido correctamente
     $titulo = $_POST['titulo'];
@@ -31,6 +21,7 @@ if (move_uploaded_file($archivoTemporal, $rutaArchivo)) {
     $materia = $_POST['cbx_materia'];
     $tipo = $_POST['tipo'];
     $nulo =  0;
+    $null='';
 
     // Obtener las etiquetas del formulario
     $etiquetas = $_POST['etiquetas'];
@@ -40,54 +31,57 @@ if (move_uploaded_file($archivoTemporal, $rutaArchivo)) {
     // insercion
     $inserta = "INSERT INTO publicacion (id_Usuario, titulo_Pub, fecha_pub, descrip_Pub, calif_Pub, carrera_Pub, materia_Pub, tipo_pub, estado_Pub, archivo_Pub) VALUES (?,?,?,?,?,?,?,?,?,?)";
     if ($stmt = $link->prepare($inserta)) {
-        // Vincular parámetros
-        $stmt->bind_param("isssssssss", $idUsuario, $titulo, $fechaActual ,$descripcion, $nulo, $carrera, $materia, $tipo, $nulo, $rutaArchivo);
+        $stmt->bind_param("isssssssss", $idUsuario, $titulo, $fechaActual ,$descripcion, $nulo, $carrera, $materia, $tipo, $nulo, $null);
 
-        // Ejecutar la consulta
         if ($stmt->execute()) {
-            // Obtener el ID de la última inserción
             $idPublicacion = $stmt->insert_id;
+            // Renombrar el archivo en el servidor
+            $archivoTemporal = $_FILES['archivo']['tmp_name'];
+            $nombreArchivo = $idPublicacion . "_" . $_FILES['archivo']['name'];
 
-            // Insertar etiquetas en la tabla tag_publicacion
-            foreach ($arrayEtiquetas as $etiqueta) {
-                // Verificar si la etiqueta no está vacía
-                if (!empty($etiqueta)) {
-                    // Quitar el símbolo '#' de la etiqueta
-                    $etiquetaSinSimbolo = substr($etiqueta, 1);
-                    // Insertar la etiqueta en la tabla
-                    $insertarEtiqueta = "INSERT INTO tag_publicacion (idPub, nombreTag) VALUES (?, ?)";
-                    if ($stmtEtiqueta = $link->prepare($insertarEtiqueta)) {
-                        // Vincular parámetros
-                        $stmtEtiqueta->bind_param("is", $idPublicacion, $etiquetaSinSimbolo);
-                        // Ejecutar la consulta para insertar la etiqueta
-                        $stmtEtiqueta->execute();
+            $rutaArchivo = $carpetaUsuario . '/' . $nombreArchivo;
+                if (move_uploaded_file($archivoTemporal, $rutaArchivo)) {
+                    // Actualizar la ruta del archivo en la base de datos
+                    $rutaUpdate = "UPDATE publicacion SET archivo_Pub = '$rutaArchivo' WHERE idPub = $idPublicacion";
+                    if ($update = $link->prepare($rutaUpdate)) {
+                        $update->execute();
+    
+                        // Insertar etiquetas en la tabla tag_publicacion
+                        foreach ($arrayEtiquetas as $etiqueta) {
+                            if (!empty($etiqueta)) {
+                                $etiquetaSinSimbolo = substr($etiqueta, 1);
+                                $insertarEtiqueta = "INSERT INTO tag_publicacion (idPub, nombreTag) VALUES (?, ?)";
+                                if ($stmtEtiqueta = $link->prepare($insertarEtiqueta)) {
+                                    $stmtEtiqueta->bind_param("is", $idPublicacion, $etiquetaSinSimbolo);
+                                    $stmtEtiqueta->execute();
+                                }
+                            }
+                        }
+                        $_SESSION["alert_message"] = "La publicación se ha mandado a revisión.";
+                        header("location: publicar.php");
+                        exit;
+                    } else {
+                        $_SESSION["alert_message"] = "Error al actualizar la ruta del archivo en la base de datos.";
+                        header("location: publicar.php");
+                        exit;
                     }
+                } else {
+                    $_SESSION["alert_message"] = "Error al mover el archivo a la nueva ubicación.";
+                    header("location: publicar.php");
+                    exit;
                 }
-            }
-
-            $_SESSION["alert_message"] = "La publicación se ha mandado a revisión.";
-            header("location: publicar.php"); // Redirigir de vuelta al formulario de inicio de sesión
-            exit;
+           
         } else {
-            $_SESSION["alert_message"] = "Error en la preparación de la consulta: " . $link->error;
-            header("location: publicar.php"); // Redirigir de vuelta al formulario de inicio de sesión
+            $_SESSION["alert_message"] = "Error al ejecutar la consulta SQL: " . $link->error;
+            header("location: publicar.php");
             exit;
         }
-
-        // Cerrar la consulta preparada
         $stmt->close();
     } else {
-        $_SESSION["alert_message"] = "Error en la preparación de la consulta: " . $link->error;
-        header("location: publicar.php"); // Redirigir de vuelta al formulario de inicio de sesión
+        $_SESSION["alert_message"] = "Error en la preparación de la consulta SQL: " . $link->error;
+        header("location: publicar.php");
         exit;
     }
-} else {
-    $_SESSION["alert_message"] = "Error al subir el archivo.";
-    header("location: publicar.php"); // Redirigir de vuelta al formulario de inicio de sesión
-    exit;
-}
-
-// Cerrar la conexión
-$link->close();
-
-?>
+    
+    $link->close();
+    ?>
