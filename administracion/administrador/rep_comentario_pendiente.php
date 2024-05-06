@@ -127,14 +127,14 @@ session_start();
               </div>
             </div>
               <div class="card-body">
-                <h3 class="card-title display-6"><b><?php echo $fila2['titulo_Pub']; ?></b></h3>
-                <p class="card-text lead"><?php echo $fila2['descrip_Pub']; ?></p>
-                <p class="card-text" style="color: red;">Motivo: <?php echo ($fila['motivo_Report']); ?></p>
+                <h3 class="card-title display-6"><b><?php //echo $fila2['titulo_Pub']; ?></b></h3>
+                <p class="card-text lead"><?php //echo $fila2['descrip_Pub']; ?></p>
+                <p class="card-text" style="color: red;">Motivo: <?php //echo ($fila['motivo_Report']); ?></p>
                 
               </div>
               <div class="card-footer d-flex text-muted justify-content-between align-items-end">
-                <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila2['nom_Us'] . " " . $fila2['apell_Us']; ?></span>
-                <span class="card-text comment-date mb-0">Fecha de reporte: <?php echo functions::convertirFecha($fila['fecha_Report']); ?></span>
+                <span class="card-text comment-date mb-0">Publicado por: <?php //echo $fila2['nom_Us'] . " " . $fila2['apell_Us']; ?></span>
+                <span class="card-text comment-date mb-0">Fecha de reporte: <?php// echo functions::convertirFecha($fila['fecha_Report']); ?></span>
               </div>
           </div>
           -->
