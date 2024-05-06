@@ -81,8 +81,8 @@ if (isset($_GET['id'])) {
         $motivo = $_POST["motivo"];
         $fechaRep = date("Y-m-d");
 
-        $qRepPub = "INSERT INTO `reportepublicación`(`idPub`, `fecha_Report`, `motivo_Report`) 
-                    VALUES ($idPub,CURDATE(),'$motivo');";
+        $qRepPub = "INSERT INTO `reportepublicación`(`idPub`, `fecha_Report`, `motivo_Report`,`estado_Report`) 
+                    VALUES ($idPub,CURDATE(),'$motivo',0);";
 
         $resR = mysqli_query($link, $qRepPub);
         if ($resR) {
@@ -97,8 +97,8 @@ if (isset($_GET['id'])) {
         $idComRep = $_POST["idComentario"];
         $fechaRep = date("Y-m-d");
 
-        $qRepCom = "INSERT INTO `reportecomentario`(`idComent`, `fecha_Report`, `motivo_Report`)
-                    VALUES ($idComRep,CURDATE(),'$motivo')";
+        $qRepCom = "INSERT INTO `reportecomentario`(`idComent`, `fecha_Report`, `motivo_Report`,`estado_Report`)
+                    VALUES ($idComRep,CURDATE(),'$motivo',0)";
 
         $resR = mysqli_query($link, $qRepCom);
         if ($resR) {
