@@ -134,12 +134,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <title>BiblioTec - Detalles de la Publicación</title>
 
     <!--En esta seccion se incluyen las hojas de estilos-->
-    <link rel="icon" href="../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
-    <link rel="stylesheet" href="../css/normalizar.css">
-    <link rel="stylesheet" href="../css/estilos.css">
-    <link rel="stylesheet" href="../css/hover-min.css">
-    <link rel="stylesheet" href="../css/animate.css">
-    <link rel="stylesheet" href="../css/sidebars.css">
+    <link rel="icon" href="../../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
+    <link rel="stylesheet" href="../../css/normalizar.css">
+    <link rel="stylesheet" href="../../css/estilos.css">
+    <link rel="stylesheet" href="../../css/hover-min.css">
+    <link rel="stylesheet" href="../../css/animate.css">
+    <link rel="stylesheet" href="../../css/sidebars.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!--Inicia Bootstrap-->
@@ -182,12 +182,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 <body>
 <header class="bg-primary py-2">
-<div class="container d-flex align-items-right" style="margin-left:0.1vmax;">
+<div class="container d-flex align-items-right" style="margin-left:7.8vmax;">
             <!-- Logo y título -->
             <div class="logo col-5">
-                <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2" width="55" height="80">
-                <b><span class="col-1">Biblio</span><span class="col-2">Tec</span>
-                <span> - Publicacion del comentario reportado</span></b>
+                <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
+                <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span>
+                <span>- Publicacion del comentario reportado</span></h4></b>
             </div>
     
   </header>
@@ -359,22 +359,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                             <div class="mt-5">
                                 <h5 class="mb-4">Comentarios</h5>
 
-                                <!-- Formulario para agregar comentarios -->
-                                <form action="comentar.php" method="POST">
-                                    <div class="mb-3">
-                                        <label for="comentario" class="form-label">Agregar Comentario:</label>
-                                        <textarea class="form-control" id="comentario" name="comentario" rows="3" required></textarea>
-                                    </div>
-                                    <input type="hidden" name="id_publicacion" value="<?php echo $publicacion['idPub']; ?>">
-                                    <button type="submit" class="btn btn-primary">Enviar Comentario</button>
-                                </form>
 
                                 <!-- Arreglo de rutas de imágenes aleatorias -->
                                 <?php
                                 $imagenes_aleatorias = array();
 
                                 // Ruta base de las imágenes
-                                $ruta_base = "../images/tigers/";
+                                $ruta_base = "../../images/tigers/";
 
                                 // Generar el arreglo de rutas de imágenes
                                 for ($i = 1; $i <= 15; $i++) {
@@ -396,7 +387,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                     <i class="bi bi-flag-fill"></i>
                                                 </a>
                                                 <!-- Botón para ver perfil -->
-                                                <a class="btn btn-outline-info btn-sm shadow" href = "../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $comentario['idUsuario']; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Perfil">
+                                                <a class="btn btn-outline-info btn-sm shadow" href = "../../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $comentario['idUsuario']; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Perfil">
                                                     <i class="bi bi-person-fill"></i>
                                                 </a>
                                             </div>
@@ -413,7 +404,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="col">
-                                                    <h6 class="mb-1"><a class="link-dark link-underline link-underline-opacity-0" href="../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $comentario['idUsuario']; ?>"><?php echo $comentario['nom_Us'] . " " . $comentario['apell_Us']; ?></a></h6>
+                                                    <h6 class="mb-1"><a class="link-dark link-underline link-underline-opacity-0" href="../../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $comentario['idUsuario']; ?>"><?php echo $comentario['nom_Us'] . " " . $comentario['apell_Us']; ?></a></h6>
                                                     <pre class="mb-1"><?php echo $comentario['text_Coment']; ?></pre>
                                                     <small class="text-muted"><?php echo functions::convertirFecha($comentario['fecha_Coment']); ?></small>
                                                 </div>
