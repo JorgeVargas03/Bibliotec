@@ -17,63 +17,71 @@ if (isset($_GET['id'])) {
     $fila = mysqli_fetch_array($registro);
     $publicacion = mysqli_fetch_array($result);
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['ConfirmarEliminar2'])) {
-    $rutaArchivo = "../".$publicacion['archivo_Pub'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['ConfirmarEliminar2'])) {
+        $rutaArchivo = "../" . $publicacion['archivo_Pub'];
 
-    if (file_exists($rutaArchivo)) {
-        if (unlink($rutaArchivo)) {
-            $sql = "DELETE FROM publicacion WHERE idPub = $idPub";
-           if (mysqli_query($link,$sql)) {
-                // Eliminar los tags asociados a la publicación de la tabla 'tag_publicacion'
-                $sqlTags = "DELETE FROM tag_publicacion WHERE idPub = $idPub";
+        if (file_exists($rutaArchivo)) {
+            if (unlink($rutaArchivo)) {
+                $sql = "DELETE FROM publicacion WHERE idPub = $idPub";
+                if (mysqli_query($link, $sql)) {
+                    // Eliminar los tags asociados a la publicación de la tabla 'tag_publicacion'
+                    $sqlTags = "DELETE FROM tag_publicacion WHERE idPub = $idPub";
 
-                if (mysqli_query($link,$sqlTags)) {
-                    echo "El archivo y la publicación se han eliminado correctamente.";
-                    header("Location: rep_publicacion_pendiente.php");
+                    if (mysqli_query($link, $sqlTags)) {
+                        echo "El archivo y la publicación se han eliminado correctamente.";
+                        header("Location: rep_publicacion_pendiente.php");
+                    } else {
+                        echo "Error al intentar eliminar los tags de la publicación: " . $conexion->error;
+                    }
                 } else {
-                    echo "Error al intentar eliminar los tags de la publicación: " . $conexion->error;
+                    echo "Error al intentar eliminar la publicación: " . $conexion->error;
                 }
             } else {
-                echo "Error al intentar eliminar la publicación: " . $conexion->error;
+                // Error al intentar eliminar el archivo
+                echo "Error al intentar eliminar el archivo.";
             }
         } else {
-            // Error al intentar eliminar el archivo
-            echo "Error al intentar eliminar el archivo.";
+            // El archivo no existe
+            echo "El archivo no existe.";
         }
-    } else {
-        // El archivo no existe
-        echo "El archivo no existe.";
+        exit;
     }
-    exit;
-  }
+    if(isset(($_POST['RechazarReporte']))){
+        $sql = "CALL eliminarReportePublicacion($idPub)";
+        mysqli_query($link, $sql);
+        header("Location: rep_publicacion_pendiente.php");
+    }
+}
 
-  mysqli_close($link);
+mysqli_close($link);
 
-  // Inicia la sesión después de cerrar la conexión
-  session_start();
-  
-  // Verificar si el usuario no ha iniciado sesión
-  if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["rol"] !== "admin") {
+// Inicia la sesión después de cerrar la conexión
+session_start();
+
+// Verificar si el usuario no ha iniciado sesión
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["rol"] !== "admin") {
     header("location: ../../index.php");
     exit;
-  }
-  
-  // Verificar si se ha enviado una solicitud para cerrar sesión
-  if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
+}
+
+// Verificar si se ha enviado una solicitud para cerrar sesión
+if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
     // Destruir todas las variables de sesión
     session_unset();
-  
+
     // Destruir la sesión
     session_destroy();
-  
+
     // Redirigir al usuario al inicio de sesión
     header("location: ../../index.php");
     exit;
-  }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,8 +120,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['ConfirmarEliminar2'])
             'GRAD' 100,
             'opsz' 424
     }
-
-    
 </style>
 
 
@@ -121,186 +127,210 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['ConfirmarEliminar2'])
     <header class="bg-primary py-2">
         <div class="container" style="margin-left:7.8vmax;">
             <!-- Logo y título -->
-            <div class="logo col-11" >
+            <div class="logo col-11">
                 <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
                 <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span>
-                <span>- Reportes de publicaciones</span></b></h4>
+                        <span>- Reportes de publicaciones</span></b></h4>
             </div>
     </header>
 
-    <div class="container-fluid" >
-        <div class="row" >
+    <div class="container-fluid">
+        <div class="row">
             <!-- Barra de navegación izquierda -->
             <div class="flex-shrink-0 p-3 hola" style="width: 15%; background-color: #F07B12; ">
                 <ul class="list-unstyled" id="menu-lateral">
-                <li class="mb-1">
-                  <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
-                </li>
+                    <li class="mb-1">
+                        <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
+                    </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
-                          Reportes
+                            Reportes
                         </button>
                         <div class="collapse" id="dashboard-collapse">
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="rep_comentario_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Comentarios</a></li>
-                            <li><a href="rep_publicacion_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
-                      </ul>
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="rep_comentario_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Comentarios</a></li>
+                                <li><a href="rep_publicacion_pendiente.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres">Publicaciones</a></li>
+                            </ul>
                         </div>
-                      </li>
+                    </li>
                     <hr class="my-2"> <!-- Línea divisora -->
                     <li class="mb-1">
                         <button class="btn d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" style="color: black; font-weight: bold;">
-                        <a class="nav-link align-items-center" href="admin_home.php?logout=true" id="letrabar" name ="id">Cerrar sesión</a>
+                            <a class="nav-link align-items-center" href="admin_home.php?logout=true" id="letrabar" name="id">Cerrar sesión</a>
                         </button>
                     </li>
                     <hr class="my-2"> <!-- Línea divisora -->
                 </ul>
             </div>
-            
+
             <!-- Contenido principal -->
 
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="font-weight:normal; margin-left: 1%;">
-                
-                    <div class="container mt-5 mb-5" >
-                        <div class="row" >
-                            <div class="col-md-11" style="margin-left: 4%;">
-                                <!-- Detalles de la publicación -->
-                                <div class="card card-details" style="background-color: rgba(255, 0, 0, 0.13);">
-                                    <div class="card-header " style="background-color: rgb(167, 4, 4);">
-                                    </div>
-                                    
-                                    <!-- Botón para ver archivo adjunto -->
-                                    <div class="row">
-                                        <div class="col mt-1 mb-2" >
-                                            <h3 class="pl-1  mb-2" style="margin-left: 2vmax;"> Reporte de publicación</h3>
-                                            <h5 class="row"><Span style="margin-left: 2vmax;"><b>Motivo de reporte: </b><?php echo $fila['motivo_Report'];?></Span><span></span></h5> 
-                                        </div>
-                                        <div class="col text-end mt-4 mb-3  align-items-end" style="margin-right: 2vmax;">
-                                            <a href="#"  class="btn btn-success btn-sm">
-                                                <i class="bi bi-check2 mr-2"></i> Rechazar reporte
-                                            </a>
-                                            <a id = "idEliminar2" data-bs-toggle="modal" data-bs-target="#reg-modal"  href="#" class="btn btn-danger btn-sm">
-                                                <i class="bi bi-trash3 mr-2"></i> Eliminar publicacion
-                                            </a>
 
-                                        </div>
-
-                                    </div>
-                                    
+                <div class="container mt-5 mb-5">
+                    <div class="row">
+                        <div class="col-md-11" style="margin-left: 4%;">
+                            <!-- Detalles de la publicación -->
+                            <div class="card card-details" style="background-color: rgba(255, 0, 0, 0.13);">
+                                <div class="card-header " style="background-color: rgb(167, 4, 4);">
                                 </div>
+
+                                <!-- Botón para ver archivo adjunto -->
+                                <div class="row">
+                                    <div class="col mt-1 mb-2">
+                                        <h3 class="pl-1  mb-2" style="margin-left: 2vmax;"> Reporte de publicación</h3>
+                                        <h5 class="row"><Span style="margin-left: 2vmax;"><b>Motivo de reporte: </b><?php echo $fila['motivo_Report']; ?></Span><span></span></h5>
+                                    </div>
+                                    <div class="col text-end mt-4 mb-3  align-items-end" style="margin-right: 2vmax;">
+                                        <a id="Rechazar" data-bs-toggle="modal" data-bs-target="#reg-modalR" href="#" class="btn btn-success btn-sm">
+                                            <i class="bi bi-check2 mr-2"></i> Rechazar reporte
+                                        </a>
+                                        <a id="idEliminar2" data-bs-toggle="modal" data-bs-target="#reg-modal" href="#" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash3 mr-2"></i> Eliminar publicacion
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
                             </div>
-                        </div>
-                    </div>
-
-
-                    <!--PUBLICACIÓN-->
-
-
-                    <div class="container mt-4 mb-5">
-                        <div class="row" >
-                            <div class="col-md-8" style="width: 92%; margin-left: 4%;">
-                                <!-- Detalles de la publicación -->
-                                <div class="card card-details">
-                                    <div class="card-header  text-light" style="background-color: rgba(167, 4, 4, .8);">
-                                        <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
-                                        <p class="card-text mb-0">Por:<b> <?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></p>
-                                    </div>
-                                    <div class="card-body">
-                                        <!-- Descripción de la publicación -->
-                                        <div class="row mb-4">
-                                            <div class="col">
-                                                <div class="bg-light p-3 rounded">
-                                                    <p class="card-text"><?php echo $publicacion['descrip_Pub']; ?></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Información adicional de la publicación -->
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <p class="card-text"><b>Carrera:</b> <?php echo $publicacion['carrera_Pub']; ?></p>
-                                                <p class="card-text"><b>Materia:</b> <?php echo $publicacion['materia_Pub']; ?></p>
-                                                <p class="card-text"><b>Tipo de Publicación:</b> <?php echo $publicacion['tipo_pub']; ?></p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <!-- Calificación con estrellas -->
-                                                <div class="rating mt-3">
-                                                    <p class="card-text"><b>Calificación:</b></p>
-                                                    <?php
-                                                    // Calificación actual de la publicación
-                                                    $calificacion = $publicacion['calif_Pub'];
-
-                                                    // Convertir calificación del rango 1-10 a 1-5
-                                                    $calificacion_estrellas = ceil($calificacion / 2);
-
-                                                    // Mostrar estrellas llenas según la calificación
-                                                    for ($i = 1; $i <= 5; $i++) {
-                                                        if ($i <= $calificacion_estrellas) {
-                                                            echo '<i class="bi bi-star-fill text-warning"></i>';
-                                                        } else {
-                                                            echo '<i class="bi bi-star text-warning"></i>';
-                                                        }
-                                                    }
-                                                    ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Botón para ver archivo adjunto -->
-                                    <div class="row">
-                                        <div class="col text-center mt-3 mb-3">
-                                            <a href="../<?php echo $publicacion['archivo_Pub']; ?>" target="_blank" class="btn btn-primary btn-lg">
-                                                <i class="bi bi-file-pdf-fill mr-2"></i> Ver Archivo Adjunto
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!-- Etiquetas -->
-                                    <div class="card-footer d-flex justify-content-between align-items-end">
-                                        <?php
-                                        // Etiquetas por defecto y colores asignados
-                                        $etiquetas = array("Etiqueta1", "Etiqueta2", "Etiqueta3");
-                                        $colores = array("bg-danger", "bg-success", "bg-info");
-
-                                        // Iterar sobre las etiquetas y mostrarlas
-                                        foreach ($etiquetas as $index => $etiqueta) {
-                                            echo '<span class="badge ' . $colores[$index % count($colores)] . ' mr-1">' . $etiqueta . '</span>';
-                                        }
-                                        ?>
-                                        <!-- Fecha de Publicación -->
-                                        <p class="card-text comment-date mb-0 align-self-end">Fecha de Reporte: <?php echo $fila['fecha_Report']; ?></p>
-                                    </div>
-                                </div>
-
-
-            </main>
-            <!-- Modal -->
-            <form method="POST" name="ConfirmarEliminar2">
-            <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
-                <div class="modal.dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title" id="modal-title">Confirmar Eliminar</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                                <div class="modal-body">
-                                <p> ¿Estas seguro de querer eliminar esta publicación?</p>
-                                </div>
-                                    <div class="modal-footer">
-                                    <button class="btn btn-primary" name="ConfirmarEliminar2">Eliminar</button>
-                                    </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+
+                <!--PUBLICACIÓN-->
+
+
+                <div class="container mt-4 mb-5">
+                    <div class="row">
+                        <div class="col-md-8" style="width: 92%; margin-left: 4%;">
+                            <!-- Detalles de la publicación -->
+                            <div class="card card-details">
+                                <div class="card-header  text-light" style="background-color: rgba(167, 4, 4, .8);">
+                                    <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
+                                    <p class="card-text mb-0">Por:<b> <?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></p>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Descripción de la publicación -->
+                                    <div class="row mb-4">
+                                        <div class="col">
+                                            <div class="bg-light p-3 rounded">
+                                                <p class="card-text"><?php echo $publicacion['descrip_Pub']; ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Información adicional de la publicación -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="card-text"><b>Carrera:</b> <?php echo $publicacion['carrera_Pub']; ?></p>
+                                            <p class="card-text"><b>Materia:</b> <?php echo $publicacion['materia_Pub']; ?></p>
+                                            <p class="card-text"><b>Tipo de Publicación:</b> <?php echo $publicacion['tipo_pub']; ?></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!-- Calificación con estrellas -->
+                                            <div class="rating mt-3">
+                                                <p class="card-text"><b>Calificación:</b></p>
+                                                <?php
+                                                // Calificación actual de la publicación
+                                                $calificacion = $publicacion['calif_Pub'];
+
+                                                // Convertir calificación del rango 1-10 a 1-5
+                                                $calificacion_estrellas = ceil($calificacion / 2);
+
+                                                // Mostrar estrellas llenas según la calificación
+                                                for ($i = 1; $i <= 5; $i++) {
+                                                    if ($i <= $calificacion_estrellas) {
+                                                        echo '<i class="bi bi-star-fill text-warning"></i>';
+                                                    } else {
+                                                        echo '<i class="bi bi-star text-warning"></i>';
+                                                    }
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Botón para ver archivo adjunto -->
+                                <div class="row">
+                                    <div class="col text-center mt-3 mb-3">
+                                        <a href="../<?php echo $publicacion['archivo_Pub']; ?>" target="_blank" class="btn btn-primary btn-lg">
+                                            <i class="bi bi-file-pdf-fill mr-2"></i> Ver Archivo Adjunto
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- Etiquetas -->
+                                <div class="card-footer d-flex justify-content-between align-items-end">
+                                    <?php
+                                    // Etiquetas por defecto y colores asignados
+                                    $etiquetas = array("Etiqueta1", "Etiqueta2", "Etiqueta3");
+                                    $colores = array("bg-danger", "bg-success", "bg-info");
+
+                                    // Iterar sobre las etiquetas y mostrarlas
+                                    foreach ($etiquetas as $index => $etiqueta) {
+                                        echo '<span class="badge ' . $colores[$index % count($colores)] . ' mr-1">' . $etiqueta . '</span>';
+                                    }
+                                    ?>
+                                    <!-- Fecha de Publicación -->
+                                    <p class="card-text comment-date mb-0 align-self-end">Fecha de Reporte: <?php echo $fila['fecha_Report']; ?></p>
+                                </div>
+                            </div>
+
+
+            </main>
+            <!-- Modal para BORRAR LA PUBLICACION -->
+            <form method="POST" name="ConfirmarEliminar2">
+                <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+                    <div class="modal.dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modal-title">Confirmar Eliminar</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p> ¿Estas seguro de querer eliminar esta publicación?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" name="ConfirmarEliminar2">Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
-   
-     <script src ="../../js/fadeout.js"></script>
-            
-     <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
-        <div class="container" >
-            <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
-        </div>
-    </footer>
+
+            <!-- Modal para RECHAZAR EL REPORTE -->
+            <form method="POST" name="RechazarReporte">
+                <div class="modal fade" id="reg-modalR" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+                    <div class="modalR.dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modal-title">Confirmar Rechazo</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modalR" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p> ¿Estas seguro de querer rechazar el reporte de esta publicación?</br>
+                                Esta acción no se podrá deshacer</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" name="RechazarReporte">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <script src="../../js/fadeout.js"></script>
+
+            <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
+                <div class="container">
+                    <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
+                </div>
+            </footer>
 </body>
+
 </html>
