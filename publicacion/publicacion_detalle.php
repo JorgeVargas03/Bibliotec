@@ -79,7 +79,7 @@ if (isset($_GET['id'])) {
     //PARA LOS REPORTES DE PUBLICACIONES Y COMENTARIOS
     if (isset($_POST["repub"])) {
         $motivo = $_POST["motivo"];
-        $fechaRep = date("Y-m-d");
+        $fechaRep = date("YYYY-MM-DD");
 
         $qRepPub = "INSERT INTO `reportepublicación`(`idPub`, `fecha_Report`, `motivo_Report`,`estado_Report`) 
                     VALUES ($idPub,CURDATE(),'$motivo',0);";
@@ -95,7 +95,7 @@ if (isset($_GET['id'])) {
     if (isset($_POST["repCom"])) {
         $motivo = $_POST["motivo"];
         $idComRep = $_POST["idComentario"];
-        $fechaRep = date("Y-m-d");
+        $fechaRep = date("YYYY-MM-DD");
 
         $qRepCom = "INSERT INTO `reportecomentario`(`idComent`, `fecha_Report`, `motivo_Report`,`estado_Report`)
                     VALUES ($idComRep,CURDATE(),'$motivo',0)";

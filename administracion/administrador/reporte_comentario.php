@@ -21,12 +21,12 @@ if (isset($_GET['id'])) {
         $comentario = mysqli_fetch_assoc($result);
     } else {
         // Si no se encontró la publicación, redireccionar a la página principal
-        header("Location: ../home.php");
+        header("Location: ../../home.php");
         exit();
     }
 } else {
     // Si no se proporcionó un ID de publicación, redireccionar a la página principal
-    header("Location: ../home.php");
+    header("Location: ../../home.php");
     exit();
 }
 
@@ -147,7 +147,7 @@ session_start();?>
                                             <a href="#" class="btn btn-danger btn-sm">
                                                 <i class="bi bi-trash3 mr-2"></i> Eliminar comentario
                                             </a>
-                                            <a href="publicacion_detalle_admin.php?id=<?php echo $fila['idComent']; ?>" class="btn btn-link btn-sm">
+                                            <a href="publicacion_detalle_admin.php?id=<?php echo $comentario['idPub']; ?>" class="btn btn-link btn-sm">
                                             <i class="bi bi-file-earmark mr-2"></i> Ir a la publicacion
                                             </a>
                                         </div>
