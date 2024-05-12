@@ -769,6 +769,10 @@ INSERT INTO `reportecomentario` (`idReporteCom`, `idComent`, `fecha_Report`, `mo
 
 -- --------------------------------------------------------
 
+----
+
+----
+
 --
 -- Estructura de tabla para la tabla `reportepublicación`
 --

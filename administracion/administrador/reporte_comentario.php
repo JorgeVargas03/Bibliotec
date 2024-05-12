@@ -29,6 +29,29 @@ if (isset($_GET['id'])) {
     header("Location: ../../home.php");
     exit();
 }
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_comentario'])) {
+    // Verificar si se proporcionó un ID de comentario a eliminar
+    if (isset($_POST['idComentario'])) {
+        $idComentarioEliminar = $_POST['idComentario'];
+
+        // Eliminar los registros relacionados en la tabla reportecomentario
+        $queryEliminarReportes = "DELETE FROM reportecomentario WHERE idComent = $idComentarioEliminar";
+        mysqli_query($link, $queryEliminarReportes);
+
+        // Luego puedes eliminar el comentario de la tabla comentario
+        $queryEliminarComentario = "DELETE FROM comentario WHERE idComent = $idComentarioEliminar";
+        mysqli_query($link, $queryEliminarComentario);
+       
+        echo "El comentario ha sido eliminado correctamente.";
+        header("Location: rep_comentario_pendiente.php");
+      
+    }else{
+    echo "Error al intentar eliminar la publicación: " . $conexion->error;
+}
+}
+
+
+
 
 // Cerrar la conexión a la base de datos
 mysqli_close($link);
@@ -141,10 +164,10 @@ session_start();?>
                                             <h5><Span style="margin-left: 2vmax;"><b>Tipo de reporte: </b></Span><span><?php echo $fila['motivo_Report'];?></span></h5> 
                                         </div>
                                         <div class="col text-end mt-4 mb-3  align-items-end" style="margin-right: 2vmax;">
-                                            <a href="#"  class="btn btn-success btn-sm">
-                                                <i class="bi bi-check2 mr-2"></i> Rechazar reporte
-                                            </a>
-                                            <a href="#" class="btn btn-danger btn-sm">
+                                        <a href="#"  class="btn btn-success btn-sm" onclick="rechazarReporte(<?php echo $comentario['idComent']; ?>)">
+                                             <i class="bi bi-check2 mr-2"></i> Rechazar reporte
+                                             </a>
+                                            <a href="#" class="btn btn-danger btn-sm" onclick="eliminarComentario(<?php echo $comentario['idComent']; ?>)">
                                                 <i class="bi bi-trash3 mr-2"></i> Eliminar comentario
                                             </a>
                                             <a href="publicacion_detalle_admin.php?id=<?php echo $comentario['idPub']; ?>" class="btn btn-link btn-sm">
@@ -155,6 +178,40 @@ session_start();?>
                                 </div>
                             </div>
                         </div>
+   
+   <!-- borrar comentario -->
+   <script>
+    function eliminarComentario(idComentario) {
+        if (confirm("¿Estás seguro de que quieres eliminar este comentario?")) {
+            // Crear un formulario para enviar el ID del comentario a eliminar
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "");
+
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", "idComentario");
+            hiddenField.setAttribute("value", idComentario);
+
+            var hiddenField2 = document.createElement("input");
+            hiddenField2.setAttribute("type", "hidden");
+            hiddenField2.setAttribute("name", "eliminar_comentario");
+            hiddenField2.setAttribute("value", "true");
+
+            form.appendChild(hiddenField);
+            form.appendChild(hiddenField2);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+
+    //borrar comentario -->
+    //rechazar reporte -->
+    
+
+</script>
+<!-- /rechazar reporte -->
 
                                     
                                     <!-- COMENTARIO REPORTADO -->
