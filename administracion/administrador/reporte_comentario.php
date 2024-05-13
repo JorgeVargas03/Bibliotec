@@ -21,14 +21,49 @@ if (isset($_GET['id'])) {
         $comentario = mysqli_fetch_assoc($result);
     } else {
         // Si no se encontró la publicación, redireccionar a la página principal
-        header("Location: ../home.php");
+        header("Location: ../../home.php");
         exit();
     }
 } else {
     // Si no se proporcionó un ID de publicación, redireccionar a la página principal
-    header("Location: ../home.php");
+    header("Location: ../../home.php");
     exit();
 }
+// Verificar si se proporcionó un ID de comentario a eliminar
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_comentario'])) {
+    if (isset($_POST['idComentario'])) {
+        $idComentarioEliminar = $_POST['idComentario'];
+
+        // Eliminar los registros relacionados en la tabla reportecomentario
+        $queryEliminarReportes = "DELETE FROM reportecomentario WHERE idComent = $idComentarioEliminar";
+        mysqli_query($link, $queryEliminarReportes);
+
+        // Luego puedes eliminar el comentario de la tabla comentario
+        $queryEliminarComentario = "DELETE FROM comentario WHERE idComent = $idComentarioEliminar";
+        mysqli_query($link, $queryEliminarComentario);
+
+        // Redirigir a la página rep_comentario_pendiente.php
+        header("Location: rep_comentario_pendiente.php");
+        exit(); // Terminar el script para evitar que se ejecute más código después de la redirección
+    } else {
+        echo "Error al intentar eliminar el comentario.";
+    }
+}
+// Agregar condición para manejar el rechazo del reporte
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['RechazarReporte'])) {
+    // Eliminar el reporte de la base de datos
+    $queryEliminarReporte = "DELETE FROM reportecomentario WHERE idComent = $idComent";
+    if (mysqli_query($link, $queryEliminarReporte)) {
+        // Redirigir a la página rep_comentario_pendiente.php
+        header("Location: rep_comentario_pendiente.php");
+        exit(); // Terminar el script para evitar que se ejecute más código después de la redirección
+    } else {
+        echo "Error al eliminar el reporte: " . mysqli_error($link);
+    }
+}
+
+
+
 
 // Cerrar la conexión a la base de datos
 mysqli_close($link);
@@ -141,13 +176,13 @@ session_start();?>
                                             <h5><Span style="margin-left: 2vmax;"><b>Tipo de reporte: </b></Span><span><?php echo $fila['motivo_Report'];?></span></h5> 
                                         </div>
                                         <div class="col text-end mt-4 mb-3  align-items-end" style="margin-right: 2vmax;">
-                                            <a href="#"  class="btn btn-success btn-sm">
-                                                <i class="bi bi-check2 mr-2"></i> Rechazar reporte
-                                            </a>
-                                            <a href="#" class="btn btn-danger btn-sm">
+                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#reg-modalR">
+                                         <i class="bi bi-x-square-fill mr-2"></i> Rechazar reporte
+                                        </button>
+                                            <a href="#" class="btn btn-danger btn-sm" onclick="eliminarComentario(<?php echo $comentario['idComent']; ?>)">
                                                 <i class="bi bi-trash3 mr-2"></i> Eliminar comentario
                                             </a>
-                                            <a href="publicacion_detalle_admin.php?id=<?php echo $fila['idComent']; ?>" class="btn btn-link btn-sm">
+                                            <a href="publicacion_detalle_admin.php?id=<?php echo $comentario['idPub']; ?>" class="btn btn-link btn-sm">
                                             <i class="bi bi-file-earmark mr-2"></i> Ir a la publicacion
                                             </a>
                                         </div>
@@ -155,6 +190,40 @@ session_start();?>
                                 </div>
                             </div>
                         </div>
+   
+   <!-- borrar comentario -->
+   <script>
+    function eliminarComentario(idComentario) {
+        if (confirm("¿Estás seguro de que quieres eliminar este comentario?")) {
+            // Crear un formulario para enviar el ID del comentario a eliminar
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "");
+
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", "idComentario");
+            hiddenField.setAttribute("value", idComentario);
+
+            var hiddenField2 = document.createElement("input");
+            hiddenField2.setAttribute("type", "hidden");
+            hiddenField2.setAttribute("name", "eliminar_comentario");
+            hiddenField2.setAttribute("value", "true");
+
+            form.appendChild(hiddenField);
+            form.appendChild(hiddenField2);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+
+    //borrar comentario -->
+    //rechazar reporte -->
+    
+
+</script>
+<!-- /rechazar reporte -->
 
                                     
                                     <!-- COMENTARIO REPORTADO -->
@@ -174,6 +243,28 @@ session_start();?>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <form method="POST">
+                                        <div class="modal fade" id="reg-modalR" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+                                           <div class="modal-dialog">
+                                           <div class="modal-content">
+                                                <div class="modal-header">
+                                                   <h5 class="modal-title" id="modal-title">Confirmar Rechazo</h5>
+                                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                              <div class="modal-body">
+                                              <p>¿Estás seguro de querer rechazar el reporte de este comentario?</br>
+                                               Esta acción no se podrá deshacer.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary" name="RechazarReporte">Aceptar</button>
+                                           </div>
+                                           </div>
+                                          </div>
+                                        </div>
+                                        </form>
+
                             
                     
             </main>
