@@ -454,18 +454,19 @@ session_start();
                         </div><!-- otras cosas -->
                         <script>
                             $(document).ready(function(){
-                                var idin;
                                 $(".btn-success").click(function(){
-                                    idin = $(this).data('idin');
-                                    console.log(idin);
+                                    var idin = $(this).data('idin');
+                                    var $boton = $(this);
                                     $.ajax({
                                         URL: "UsuarioDetalle.php",
                                         method:"POST",
                                         data: {idin:idin,agregar:1},
                                         success:function(r){
-                                            $(this).disabled = true;
+                                            $boton.addClass('disabled');
+                                            $boton.prop('disabled',true);
+                                            $boton.removeClass('.btn-success');
                                             console.log("SI");
-                                            
+                                            //location.reload();
                                         }
                                     });
 
