@@ -246,7 +246,23 @@ mysqli_close($link);
             <!-- Contenido principal -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="contenedor">
-            <h1>Informacion de contacto</h1>
+            <h1>Soporte BiblioTec </h1>
+            <hr noshade="noshade">
+            <h7>Envianos sugerencias o platicanos algun error 
+                que tengamos para porder resolverlo</h7>
+            <hr noshade="noshade">
+            <h7>Enviar al correo: <input type="email" value="bibliotec.team@hotmail.com" readonly><br></h7>
+            <hr noshade="noshade">
+             <textarea id="texto" rows="5" cols="50"></textarea><br>
+            <h5> <a href="#" class="btn btn-success btn-sm" onclick="enviarTexto()">
+                <i class="bi bi-envelope-at mr-2"></i> Enviar
+            </a></h5>
+            <hr noshade="noshade">
+            <script>
+                function enviarTexto() {
+                // Este botón no hace nada en este ejemplo
+                }
+                </script>
             </div>
             </main>
                                   
