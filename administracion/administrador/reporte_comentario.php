@@ -177,7 +177,7 @@ session_start();?>
                                         </div>
                                         <div class="col text-end mt-4 mb-3  align-items-end" style="margin-right: 2vmax;">
                                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#reg-modalR">
-                                         <i class="bi bi-x-square-fill mr-2"></i> Rechazar reporte
+                                         <i class="bi bi-check-all mr-2"></i> Rechazar reporte
                                         </button>
                                             <a href="#" class="btn btn-danger btn-sm" onclick="eliminarComentario(<?php echo $comentario['idComent']; ?>)">
                                                 <i class="bi bi-trash3 mr-2"></i> Eliminar comentario
