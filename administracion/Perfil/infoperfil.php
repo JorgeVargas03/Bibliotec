@@ -41,6 +41,12 @@ if (!$registros) {
     die('Error en la consulta: ' . mysqli_error($link));
 }
 
+//Consulta e insercion de insignias
+$qInsignias = "SELECT idInsignia,`cant` FROM `usuario_insignia` WHERE idUsuario = $idUsuario";
+
+$res = mysqli_query($link,$qInsignias);
+
+
 // Cierra la conexión después de realizar la consulta
 mysqli_close($link);
 
@@ -117,7 +123,7 @@ mysqli_close($link);
             padding: 10px;
             text-align: center;
         }
-
+        
         .badge-content {
             margin-top: 20px;
         }
@@ -360,41 +366,85 @@ mysqli_close($link);
                         <div class="container mt-2">
                             <hr noshade="noshade">
                             <h3 class="text-center" style="margin-bottom: 20px;">Insignias</h3>
-                            <div class="row justify-content-center">
-                                <div class="col-md-4">
-                                    <div class="badge text-center">
-                                        <img class="trophy-icon" src="..\..\images\icons\tigre sabio.PNG" alt="Trophy Icon">
-                                        <div class="badge-content">
-                                            <span class="badge-title">Tigre Sabio</span>
-                                        </div>
+                            <div class="row row-cols-1 row-cols-md-4 g-4">
+
+                                <div class="col">
+                                <div class="card h-100 border-primary mr-10">
+                                <img class="card-img-top " src="..\..\images\icons\tigre sabio.PNG" alt="Trophy Icon">
+                                    <div class="card-body  text-center">
+                                        <span class="card-title border-primary text-center">Tigre Sabio</span><br>
+                                    </div>
+                                    <div class="card-footer border-primary text-center">
+                                        <?php   
+                                            $usInsignias = mysqli_fetch_array($res);
+                                            if($usInsignias!=null){
+                                                echo $usInsignias[0],$usInsignias[1];
+                                            }else{
+                                                echo 0;
+                                            }     
+                                        ?>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="badge text-center">
-                                        <img class="trophy-icon" src="..\..\images\icons\huelladecalidad.PNG" alt="Trophy Icon">
-                                        <div class="badge-content">
-                                            <span class="badge-title">Huella de Calidad</span>
-                                        </div>
+                                </div>
+
+                                <div class="col">
+                                <div class="card h-100 border-primary mr-5">
+                                <img class="card-img-top" src="..\..\images\icons\huelladecalidad.PNG" alt="Trophy Icon">
+                                    <div class="card-body text-center">
+                                        <span class="card-title  text-center">Huella de Calidad</span><br>
+                                    </div>
+                                    <div class ="card-footer border-primary text-center">
+                                        <?php   
+                                            $usInsignias = mysqli_fetch_array($res);
+                                            if($usInsignias!=null){
+                                                echo $usInsignias[0],$usInsignias[1];
+                                            }else{
+                                                echo 0;
+                                            }     
+                                        ?></div>
+                                </div>
+                                </div>
+
+                                <div class="col">
+                                <div class="card h-100 border-primary mr-3">
+                                <img class="card-img-top" src="..\..\images\icons\tigre Amigo.PNG" alt="Trophy Icon">
+                                    <div class="card-body text-center">
+                                        <span class="card-title">Tigre Amigo</span><br>
+                                    </div>
+                                    <div class ="card-footer border-primary text-center">
+                                        <?php   
+                                            $usInsignias = mysqli_fetch_array($res);
+                                            if($usInsignias!=null){
+                                                echo $usInsignias[0],$usInsignias[1];
+                                            }else{
+                                                echo 0;
+                                            }     
+                                        ?>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="badge text-center">
-                                        <img class="trophy-icon" src="..\..\images\icons\tigre Amigo.PNG" alt="Trophy Icon">
-                                        <div class="badge-content">
-                                            <span class="badge-title">Tigre Amigo</span>
-                                        </div>
+                                </div>
+
+                                <div class="col">
+                                <div class="card h-100 border-primary mr-3">
+                                <img class="card-img-top" src="..\..\images\icons\tigre veterano.png" alt="Trophy Icon">
+                                    <div class="card-body text-center">
+                                        <span class="card-title">Tigre Veterano</span><br>
+                                    </div>
+                                    <div class ="card-footer border-primary text-center">
+                                        <?php   
+                                            $usInsignias = mysqli_fetch_array($res);
+                                            if($usInsignias!=null){
+                                                echo $usInsignias[0],$usInsignias[1];
+                                            }else{
+                                                echo 0;
+                                            }     
+                                        ?>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="badge text-center">
-                                        <img class="trophy-icon" src="..\..\images\icons\tigre veterano.png" alt="Trophy Icon">
-                                        <div class="badge-content">
-                                            <span class="badge-title">Tigre Veterano</span>
-                                        </div>
-                                    </div>
                                 </div>
-                            </div>
-                        </div>
+
+                            </div><!-- row de las insignias(cards) -->
+                        </div><!-- otras cosas -->
 
 
 

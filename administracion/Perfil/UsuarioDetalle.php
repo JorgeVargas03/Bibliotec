@@ -20,12 +20,12 @@ if (isset($_GET['id'])) {
         $publicacion = mysqli_fetch_assoc($result);
     } else {
         // Si no se encontró la publicación, redireccionar a la página principal
-        header("Location: ../home.php");
+        header("Location: ../../home.php");
         exit();
     }
 } else {
     // Si no se proporcionó un ID de publicación, redireccionar a la página principal
-    header("Location: ../home.php");
+    header("Location: ../../home.php");
     exit();
 }
 
@@ -35,6 +35,47 @@ $registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida de
 if (!$registros) {
     die('Error en la consulta: ' . mysqli_error($link));
 }
+
+//Consulta e insercion de insignias
+$qInsignias = "SELECT idInsignia,`cant` FROM `usuario_insignia` WHERE idUsuario = $idUs ORDER BY idInsignia";
+
+$res = mysqli_query($link,$qInsignias);
+
+$porfavor = array();
+
+if(isset($_POST["agregar"])){
+    $idins = $_POST["idin"];
+    $qExist = "SELECT * FROM `usuario_insignia` where idUsuario = $idUs and idInsignia=$idins";
+
+    $res2 = mysqli_query($link,$qExist);
+    if(mysqli_num_rows($res2) < 1){
+        $meter = "INSERT INTO `usuario_insignia` VALUES ($idins,$idUs,1)";
+
+        if(mysqli_query($link,$meter)){
+            echo 'todo bien';
+            $res = mysqli_query($link,$qInsignias);
+        }else{
+            echo '<script>
+            alert("valio madre");
+            window.location = "UsuarioDetalle.php?=$idUs";
+             </script>';
+        }
+
+    }else{
+        $agregar = "UPDATE `usuario_insignia` SET cant = cant+1 where idUsuario = $idUs and idInsignia=$idins";
+
+        if(mysqli_query($link,$agregar)){
+            echo 'todo bien';
+            $res = mysqli_query($link,$qInsignias);
+        }else{
+            echo '<script>
+            alert("valio madre");
+            window.location = "UsuarioDetalle.php?=$idUs";
+             </script>';
+        }
+    }
+}
+
 // Cerrar la conexión a la base de datos
 mysqli_close($link);
 
@@ -291,45 +332,146 @@ session_start();
 
 
                     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                        <div class="container mt-2">
+                        <div class="container mt-2" >
                             <hr noshade="noshade">
                             <h3 class="text-center" style="margin-bottom: 20px;">Insignias</h3>
-                            <div class="row justify-content-center">
-                                <div class="col-md-4">
-                                    <div class="badge text-center">
-                                        <img class="trophy-icon" src="..\..\images\icons\tigre sabio.PNG" alt="Trophy Icon">
-                                        <div class="badge-content">
-                                            <span class="badge-title">Tigre Sabio</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="badge text-center">
-                                        <img class="trophy-icon" src="..\..\images\icons\huelladecalidad.PNG" alt="Trophy Icon">
-                                        <div class="badge-content">
-                                            <span class="badge-title">Huella de Calidad</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="badge text-center">
-                                        <img class="trophy-icon" src="..\..\images\icons\tigre Amigo.PNG" alt="Trophy Icon">
-                                        <div class="badge-content">
-                                            <span class="badge-title">Tigre Amigo</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="badge text-center">
-                                        <img class="trophy-icon" src="..\..\images\icons\tigre veterano.png" alt="Trophy Icon">
-                                        <div class="badge-content">
-                                            <span class="badge-title">Tigre Veterano</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            <div class="row row-cols-2 row-cols-md-4 g-6">
 
+                                <div class="col">
+                                <div class="card h-100 border-primary ">
+                                <img class="card-img-top " src="..\..\images\icons\tigre sabio.PNG" alt="Trophy Icon">
+                                    <div class="card-body  text-center">
+                                        <span class="card-title border-primary text-center">Tigre Sabio</span><br>
+                                        <a class="btn btn-success btn-sm" data-idin="1"><i class='bi bi-plus-circle bi-sm'></i></a>
+                                    </div>
+                                    <div class="card-footer border-primary text-center">
+                                        <?php   
+                                            $usInsignias = mysqli_fetch_array($res);
+                                            
+                                            if($usInsignias!=null ){
+                                                if($usInsignias[0]!=1){
+                                                    $porfavor = $usInsignias;
+                                                    echo 0;
+                                                }else{
+                                                    echo $usInsignias[1];
+                                                }
+                                            }else{
+                                                echo 0;
+                                            }     
+                                        ?>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="col">
+                                <div class="card h-100 border-primary ">
+                                <img class="card-img-top" src="..\..\images\icons\huelladecalidad.PNG" alt="Trophy Icon">
+                                    <div class="card-body text-center">
+                                        <span class="card-title  text-center">Huella de Calidad</span><br>
+                                        <a class="btn btn-success btn-sm" data-idin="2"><i class='bi bi-plus-circle bi-sm'></i></a>
+                                    </div>
+                                    <div class ="card-footer border-primary text-center">
+                                        <?php   
+                                            if($porfavor!=null && $porfavor[0]==2){
+                                                echo $porfavor[1];
+                                            }else{
+                                                $usInsignias = mysqli_fetch_array($res);
+                                                if($usInsignias!=null ){
+                                                    if($usInsignias[0]!=2){
+                                                        $porfavor = $usInsignias;
+                                                        echo 0;
+                                                    }else{
+                                                        echo $usInsignias[1];
+                                                    }
+                                                }else{
+                                                    echo 0;
+                                                } 
+                                            }
+                                        ?>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="col">
+                                <div class="card h-100 border-primary ">
+                                <img class="card-img-top" src="..\..\images\icons\tigre Amigo.PNG" alt="Trophy Icon">
+                                    <div class="card-body text-center">
+                                        <span class="card-title">Tigre Amigo</span><br>
+                                        <a class="btn btn-success btn-sm" data-idin="3"><i class='bi bi-plus-circle bi-sm'></i></a>
+                                    </div>
+                                    <div class ="card-footer border-primary text-center">
+                                        <?php   
+                                            if($porfavor!=null && $porfavor[0]==3){
+                                                echo $porfavor[1];
+                                            }else{
+                                                $usInsignias = mysqli_fetch_array($res);
+                                                if($usInsignias!=null ){
+                                                    if($usInsignias[0]!=3){
+                                                        $porfavor = $usInsignias;
+                                                        echo 0;
+                                                    }else{
+                                                        echo $usInsignias[1];
+                                                    }
+                                                }else{
+                                                    echo 0;
+                                                } 
+                                            }    
+                                        ?>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="col">
+                                <div class="card h-100 border-primary ">
+                                <img class="card-img-top" src="..\..\images\icons\tigre veterano.png" alt="Trophy Icon">
+                                    <div class="card-body text-center">
+                                        <span class="card-title">Tigre Veterano</span><br>
+                                        <a class="btn btn-success btn-sm" data-idin="4"><i class='bi bi-plus-circle bi-sm'></i></a>
+                                    </div>
+                                    <div class ="card-footer border-primary text-center">
+                                        <?php   
+                                            if($porfavor!=null && $porfavor[0]==4){
+                                                echo $porfavor[1];
+                                            }else{
+                                                $usInsignias = mysqli_fetch_array($res);
+                                                if($usInsignias!=null ){
+                                                    if($usInsignias[0]!=4){
+                                                        $porfavor = $usInsignias;
+                                                        echo 0;
+                                                    }else{
+                                                        echo $usInsignias[1];
+                                                    }
+                                                }else{
+                                                    echo 0;
+                                                } 
+                                            }    
+                                        ?>
+                                    </div>
+                                </div>
+                                </div>
+
+                            </div> <!-- row de las insignias(cards) -->
+                        </div><!-- otras cosas -->
+                        <script>
+                            $(document).ready(function(){
+                                var idin;
+                                $(".btn-success").click(function(){
+                                    idin = $(this).data('idin');
+                                    console.log(idin);
+                                    $.ajax({
+                                        URL: "UsuarioDetalle.php",
+                                        method:"POST",
+                                        data: {idin:idin,agregar:1},
+                                        success:function(r){
+                                            $(this).disabled = true;
+                                            console.log("SI");
+                                            
+                                        }
+                                    });
+
+                                });
+                            });
+                        </script>
 
 
 
