@@ -5,41 +5,9 @@ $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y 
 // Inicia la sesión después de cerrar la conexión
 session_start();
 
-// Verificar si el usuario no ha iniciado sesión
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: ../../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
-    exit;
-}
-
-// Verificar si se ha enviado una solicitud para cerrar sesión
-if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
-    // Destruir todas las variables de sesión
-    session_unset();
-
-    // Destruir la sesión
-    session_destroy();
-
-    // Redirigir al usuario al inicio de sesión
-    header("location: ../../index.php");
-    exit;
-}
 
 
-$idUsuario = $_SESSION['idU'];
-// Consulta a la base de datos
-/*$consulta = "SELECT * FROM publicacion
-WHERE carrera_Pub = '$carrera'
-ORDER BY idPub DESC LIMIT 3";*/
-$consulta = $consulta = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
-                    JOIN usuario u ON p.id_Usuario = u.idUsuario
-                    WHERE id_Usuario = '$idUsuario' and estado_Pub = 1";
 
-$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
-
-// Verifica si la consulta se ejecutó correctamente
-if (!$registros) {
-    die('Error en la consulta: ' . mysqli_error($link));
-}
 
 // Cierra la conexión después de realizar la consulta
 mysqli_close($link);
@@ -253,17 +221,31 @@ mysqli_close($link);
             <hr noshade="noshade">
             <h7>Enviar al correo: <input type="email" value="bibliotec.team@hotmail.com" readonly><br></h7>
             <hr noshade="noshade">
-             <textarea id="texto" rows="5" cols="50"></textarea><br>
-            <h5> <a href="#" class="btn btn-success btn-sm" onclick="enviarTexto()">
-                <i class="bi bi-envelope-at mr-2"></i> Enviar
-            </a></h5>
-            <hr noshade="noshade">
-            <script>
-                function enviarTexto() {
-                // Este botón no hace nada en este ejemplo
-                }
-                </script>
+            <form class="form-register" action="https://formspree.io/f/xayrkvya" method="POST" target="_blank">
+    <textarea id="texto" name="mensaje" rows="5" cols="50"></textarea><br>
+    <button class="btn btn-success btn-sm" type="button" onclick="enviarFormulario()">
+        <i class="bi bi-envelope-at mr-2"></i> Enviar
+    </button>
+</form>
+
+<script>
+window.onload = function() {
+    // Limpiar el contenido del textarea al cargar la página
+    document.getElementById('texto').value = '';
+};
+
+function enviarFormulario() {
+    // Guardar el contenido del textarea antes de enviar el formulario
+    var mensaje = document.getElementById('texto').value;
+    
+    // Abrir la página del formulario en una nueva pestaña
+    window.open('https://formspree.io/f/xayrkvya');
+}
+</script>
+
             </div>
+
+            
             </main>
                                   
 
