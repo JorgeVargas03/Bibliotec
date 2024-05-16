@@ -117,6 +117,14 @@ mysqli_close($link);
             background-color: darkblue;
             border-color: darkblue;
         }
+
+        .form-register {
+        position: relative;
+    }
+
+    .btn-enviar {
+        margin-left: 315px; /* Ajusta el margen izquierdo según sea necesario */
+    }
     </style>
 </head>
 
@@ -214,16 +222,17 @@ mysqli_close($link);
             <!-- Contenido principal -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="contenedor">
-            <h1>Soporte BiblioTec </h1>
-            <hr noshade="noshade">
-            <h7>Envianos sugerencias o platicanos algun error 
-                que tengamos para porder resolverlo</h7>
+            <h1>BiblioTec Support</h1>
+            <h5 style="width: 160px;">
+            <img src="..\..\images\icons\callcenter.png" style="max-width: 100%; height: auto;">
+            </h5>
+            <h7>Envianos sugerencias o platicanos algun error que tengamos para porder resolverlo</h7>
             <hr noshade="noshade">
             <h7>Enviar al correo: <input type="email" value="bibliotec.team@hotmail.com" readonly><br></h7>
             <hr noshade="noshade">
             <form class="form-register" action="https://formspree.io/f/xayrkvya" method="POST" target="_blank">
     <textarea id="texto" name="mensaje" rows="5" cols="50"></textarea><br>
-    <button class="btn btn-success btn-sm" type="button" onclick="enviarFormulario()">
+    <button class="btn btn-success btn-sm btn-enviar" type="button" onclick="enviarFormulario()">
         <i class="bi bi-envelope-at mr-2"></i> Enviar
     </button>
 </form>
