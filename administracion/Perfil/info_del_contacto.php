@@ -123,7 +123,7 @@ mysqli_close($link);
     }
 
     .btn-enviar {
-        margin-left: 315px; /* Ajusta el margen izquierdo según sea necesario */
+        margin-left: 170px; /* Ajusta el margen izquierdo según sea necesario */
     }
     </style>
 </head>
@@ -222,11 +222,15 @@ mysqli_close($link);
             <!-- Contenido principal -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="contenedor">
-            <h1>BiblioTec Support</h1>
+                <h1 style="text-decoration: underline;">BiblioTec Support</h1>
             <h5 style="width: 160px;">
             <img src="..\..\images\icons\callcenter.png" style="max-width: 100%; height: auto;">
             </h5>
-            <h7>Envianos sugerencias o platicanos algun error que tengamos para porder resolverlo</h7>
+            <h7 style="white-space: pre-line; text-align: center;">
+              "¡Tu opinión es fundamental para nosotros!
+               Si tienes sugerencias o encuentras algún error, háznoslo saber. 
+              Estamos aquí para resolverlo y mejorar gracias a tu ayuda."
+            </h7>
             <hr noshade="noshade">
             <h7>Enviar al correo: <input type="email" value="bibliotec.team@hotmail.com" readonly><br></h7>
             <hr noshade="noshade">
@@ -236,6 +240,7 @@ mysqli_close($link);
         <i class="bi bi-envelope-at mr-2"></i> Enviar
     </button>
 </form>
+<hr noshade="noshade">
 
 <script>
 window.onload = function() {
