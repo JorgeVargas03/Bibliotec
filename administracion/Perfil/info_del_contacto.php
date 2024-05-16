@@ -221,22 +221,24 @@ mysqli_close($link);
             <hr noshade="noshade">
             <h7>Enviar al correo: <input type="email" value="bibliotec.team@hotmail.com" readonly><br></h7>
             <hr noshade="noshade">
-            <form class="form-register" action="https://formspree.io/f/xayrkvya" method="POST">
+            <form class="form-register" action="https://formspree.io/f/xayrkvya" method="POST" target="_blank">
     <textarea id="texto" name="mensaje" rows="5" cols="50"></textarea><br>
-    <button class="btn btn-success btn-sm" type="submit">
+    <button class="btn btn-success btn-sm" type="button" onclick="enviarFormulario()">
         <i class="bi bi-envelope-at mr-2"></i> Enviar
     </button>
 </form>
 
 <script>
-function enviarFormulario() {
-     // Guardar el contenido del textarea antes de enviar el formulario
-     var mensaje = document.getElementById('texto').value;
-    
-    // Limpiar el contenido del textarea
+window.onload = function() {
+    // Limpiar el contenido del textarea al cargar la página
     document.getElementById('texto').value = '';
+};
+
+function enviarFormulario() {
+    // Guardar el contenido del textarea antes de enviar el formulario
+    var mensaje = document.getElementById('texto').value;
     
-    // Abrir la página del formulario en una nueva pestaña después de limpiar el textarea
+    // Abrir la página del formulario en una nueva pestaña
     window.open('https://formspree.io/f/xayrkvya');
 }
 </script>
