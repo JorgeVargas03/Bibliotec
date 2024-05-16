@@ -25,6 +25,7 @@ if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
 }
 
 $carrera = $_SESSION['carrera'];
+$usuario =  $_SESSION['idU'];
 
 // Consulta a la base de datos
 /*$consulta = "SELECT * FROM publicacion
@@ -35,12 +36,55 @@ $consulta = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
               WHERE carrera_Pub = '$carrera' and estado_Pub = 1
               ORDER BY p.idPub DESC LIMIT 3";
 
-$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
+
+$registros = mysqli_query($link, $consulta); 
 
 // Verifica si la consulta se ejecutó correctamente
 if (!$registros) {
   die('Error en la consulta: ' . mysqli_error($link));
 }
+
+
+
+$notisquery = "SELECT n.*, p.titulo_Pub, d.desNoti FROM notificacion_usuario n
+              JOIN publicacion p ON n.idPub = p.idPub
+              JOIN notificaciones d ON d.idNoti = n.tipoNoti
+              WHERE idUsuario = '$usuario' AND estadoNoti = 1
+              ORDER BY n.idNotiUs DESC ";
+$registrosNotis = mysqli_query($link, $notisquery); 
+
+if (!$registrosNotis) {
+  die('Error en la consulta: ' . mysqli_error($link));
+}
+
+$notisqueryCOUNT ="SELECT COUNT(*)  AS publicaciones_noleidas
+                  FROM notificacion_usuario
+                  WHERE idUsuario = '$usuario' AND estadoNoti = 1";
+
+$registrosContarNotis = mysqli_query($link, $notisqueryCOUNT);
+
+if (!$registrosContarNotis) {
+  die('Error en la consulta: ' . mysqli_error($link));
+}
+
+
+$contador_notificaciones = mysqli_fetch_assoc($registrosContarNotis);
+
+$total_notificaciones = $contador_notificaciones['publicaciones_noleidas'];
+
+
+// Verifica si se envió el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
+  // Actualizar el estado de la publicación
+  $actualizaNotis = "UPDATE notificacion_usuario
+                      SET estadoNoti = 2
+                      WHERE idUsuario = '$usuario'";
+
+  if (mysqli_query($link, $actualizaNotis)) {
+    header("Location: home.php");;
+  } 
+}
+
 
 // Cierra la conexión después de realizar la consulta
 mysqli_close($link);
@@ -88,22 +132,56 @@ mysqli_close($link);
 </style>
 
 
-<body>
-  <header class="bg-primary py-2">
-    <div class="container d-flex align-items-center">
+<body class="bg-body-secondary">
+  <header class="bg-primary d-flex flex-wrap align-items-center py-3 position-inherit">
+    <div class="d-flex align-items-center">
       <!-- Logo y título -->
-      <div class="logo">
-        <img src="images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
-        <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
-
-        <!-- BARRA DE BUSQUEDA  -->
+      <img src="images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px;  filter: drop-shadow(-2px 1px 1px rgba(255,255,255, 0.7));">
+      <img src="images/icons/tec.png" class="d-flex img-fluid" style="width: 60px;  margin-right: 1.2vmax;">
+      <a href="" class="logo d-flex align-items-center mb-3 mb-md-0 link-body-emphasis text-decoration-none">
+        <img src="images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid">
+        <h4><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></b></h4>
+      </a>
     </div>
-    <form action="administracion/general_search.php" method="GET" id="searchForm" class="position-relative search-field">
-          <input id="searchInput" name="dataSearch" class="form-control me-2" type="search" autocomplete="off" required placeholder="Buscar" aria-label="Search">
-          <button id="searchButton" type="button">
-            <i class="bi bi-search search-icon"></i>
-          </button>
-        </form>
+    <form action="administracion/general_search.php" method="GET" id="searchForm" class="d-flex search-field">
+      <input id="searchInput" name="dataSearch" class="form-control me-2" type="search" autocomplete="off" required placeholder="Buscar" aria-label="Search">
+      <button id="searchButton" type="button">
+      <i class="bi bi-search search-icon"></i>
+      </button>
+    </form>
+
+        <div class="d-flex mt-2">
+                <button class="btn btn-warning"  id="notis"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                <i class="bi bi-bell-fill"></i><span class="badge text-bg-danger"><?php echo $total_notificaciones;?></span>
+                  </button>
+                <div class="row">
+                </div>
+              <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title " id="offcanvasRightLabel" style="mr-2">Notificaciones</h5> 
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                  <div class="offcanvas-header justify-content-between">
+                  <form method="post" name="notisLeidas" > 
+                      <button name="notisLeidas" type="submit" class="btn btn-outline-primary btn-sm" name="notisLeidas" >Marcar como leidas</button>
+                  </form>
+                </div>
+                <div class="offcanvas-body">
+                <div class="list-group list-group-flush border-bottom scrollarea"> 
+                <?php while ($fila = mysqli_fetch_array($registrosNotis)) : ?> 
+                    <a href="#" class="list-group-item list-group-item-action  py-3 lh-sm" aria-current="true">
+                      <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><?php echo $fila['titulo_Pub']; ?></strong>
+                        <small><?php echo functions::convertirFecha($fila['fechaNoti']);?></small>
+                      </div>
+                      <div class="col-10 mb-1 small"><?php echo $fila['desNoti']; ?></div>
+                    </a>
+                <?php endwhile; ?>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
   </header>
   <!--Aqui se muestra un apartado para los productos que se venderan-->
 
@@ -116,13 +194,13 @@ mysqli_close($link);
   </svg>
 
 
-  <div class="container-fluid">
+  <div class="container-fluid ">
     <div class="row">
       <!-- Barra de navegación izquierda -->
       <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
         <ul class="list-unstyled" id="menu-lateral">
           <li class="mb-2 mt-2">
-            <a class="nav-link align-items-center" href="home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
+            <a class="nav-link align-items-center" href="home.php" id="letrabar">Inicio</a>
           </li>
           <li class="mb-1">
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -173,20 +251,34 @@ mysqli_close($link);
             <a class="nav-link align-items-center" name="fade" href="publicacion/publicar.php" id="letrabardos" style="margin-left:10px">Nueva publicación</a>
           </li>
 
+
           <hr class="my-2"> <!-- Línea divisora -->
-          <li class="mb-1 mt-3">
-            <a class="nav-link align-items-center" href="#" id="letrabardos" style="margin-left:10px"><?php echo "Hola " . $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></a>
+                    <li class="mb-1 mt-3">
+                        <a class="nav-link align-items-center" href="#" id="letrabardos" style="margin-left:10px"><?php echo "Hola " . $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></a>
           </li>
         </ul>
       </div>
 
       <!-- Contenido principal -->
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <div class="container mt-3">
-          <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
-          margin-top: 0.5vmax;"><b>Últimas Publicaciones</b></h2>
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content bg-body-secondary"  >
+        <div class="container mt-3 list-group list-group-flush border-bottom mb-4">
+        <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 3px rgba(114, 114, 114, 0.4);
+          margin-top: 1vmax; margin-bottom: 2vmax;"><b>Bienvenidx, <?php echo " ".$_SESSION['nombre'] . " " . $_SESSION['apellido'] ?> </b></h2>       
+        <div class="card mb-5">
+            <img src="images/icons/2.jpg" class="card-img-top" >
+            <div class="card-body">
+              <h5 class="card-title">BiblioTec e Instituto Tecnologico de Tepic</h5>
+              <p class="card-text">Colaboramos estrechamente con nuestra institución tecnológica para proporcionar la información
+                 más completa posible. ¡Todos para uno y uno para todos, comparte tu conocimiento!</p>
+              <p class="card-text"><small class="text-body-secondary">&copy; 2024</small></p>
+            </div>
+          </div>
+
+        <div class="linea-delgada"></div>
+          <h3 style="user-select: none;font-size: 1.8vmax;text-shadow: 1px 1px 1px rgba(114, 114, 114, 0.4);
+          margin-top:0.9vmax; color:#000000 ; margin-bottom:0.6vmax;">Últimas publicaciones de  <?php echo " ".$_SESSION['carrera'] ;?></h3>
           <?php while ($fila = mysqli_fetch_array($registros)) : ?>
-            <div class="publicacion card mb-4">
+            <div class="publicacion card mb-5 mt-3">
               <div class="card-body">
                 <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
                 <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
@@ -199,15 +291,18 @@ mysqli_close($link);
             </div>
           <?php endwhile; ?>
         </div>
-      </main>
-    </div>
+       </main>
+       </div>
   </div>
+ 
 
 
   <script src="js/fadeout.js"></script>
-  <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
-    <div class="container">
-      <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
+
+  <footer class="bg-primary d-flex  align-items-center py-4.5 text-light bg-primary">
+    <div></div>
+    <div class="container mb-3 mt-3">
+      <p class="mb-2 mt-2">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
     </div>
   </footer>
 

@@ -4,6 +4,7 @@ $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y 
 
 // Inicia la sesión después de cerrar la conexión
 session_start();
+$usuario =  $_SESSION['idU'];
 
 // Verificar si el usuario no ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
@@ -46,6 +47,45 @@ $qInsignias = "SELECT idInsignia,`cant` FROM `usuario_insignia` WHERE idUsuario 
 
 $res = mysqli_query($link,$qInsignias);
 
+
+$notisquery = "SELECT n.*, p.titulo_Pub, d.desNoti FROM notificacion_usuario n
+              JOIN publicacion p ON n.idPub = p.idPub
+              JOIN notificaciones d ON d.idNoti = n.tipoNoti
+              WHERE idUsuario = '$usuario' AND estadoNoti = 1
+              ORDER BY n.idNotiUs DESC ";
+$registrosNotis = mysqli_query($link, $notisquery); 
+
+if (!$registrosNotis) {
+  die('Error en la consulta: ' . mysqli_error($link));
+}
+
+$notisqueryCOUNT ="SELECT COUNT(*)  AS publicaciones_noleidas
+                  FROM notificacion_usuario
+                  WHERE idUsuario = '$usuario' AND estadoNoti = 1";
+
+$registrosContarNotis = mysqli_query($link, $notisqueryCOUNT);
+
+if (!$registrosContarNotis) {
+  die('Error en la consulta: ' . mysqli_error($link));
+}
+
+
+$contador_notificaciones = mysqli_fetch_assoc($registrosContarNotis);
+
+$total_notificaciones = $contador_notificaciones['publicaciones_noleidas'];
+
+
+// Verifica si se envió el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
+  // Actualizar el estado de la publicación
+  $actualizaNotis = "UPDATE notificacion_usuario
+                      SET estadoNoti = 2
+                      WHERE idUsuario = '$usuario'";
+
+  if (mysqli_query($link, $actualizaNotis)) {
+    header("Location: infoperfil.php");;
+  } 
+}
 
 // Cierra la conexión después de realizar la consulta
 mysqli_close($link);
@@ -103,26 +143,6 @@ mysqli_close($link);
     </style>
 
     <style>
-        .badge {
-            width: 200px;
-            /* Tamaño fijo para el cuadro */
-            height: 180px;
-            /* Tamaño fijo para el cuadro */
-            overflow: hidden;
-            /* Para ocultar el texto que desborde el contenedor */
-            text-overflow: ellipsis;
-            /* Para mostrar puntos suspensivos (...) cuando el texto desborde el contenedor */
-            white-space: nowrap;
-            /* Para evitar que el texto se divida en múltiples líneas */
-            display: inline-block;
-            margin-right: 20px;
-            border: 2px solid #007bff;
-            /* blue border */
-            border-radius: 20px;
-            /* oval shape */
-            padding: 10px;
-            text-align: center;
-        }
         
         .badge-content {
             margin-top: 20px;
@@ -166,23 +186,57 @@ mysqli_close($link);
     </symbol>
 </svg>
 
-<body>
-    <header class="bg-primary py-2">
-        <div class="container d-flex align-items-center">
-            <!-- Logo y título -->
-            <div class="logo">
-                <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
-                <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
+<body class="bg-body-secondary">
+<header class="bg-primary d-flex flex-wrap align-items-center py-3 position-inherit">
+    <div class="d-flex align-items-center">
+      <!-- Logo y título -->
+      <img src="../../images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px;  filter: drop-shadow(-2px 1px 1px rgba(255,255,255, 0.7));">
+      <img src="../../images/icons/tec.png" class="d-flex img-fluid" style="width: 60px;  margin-right: 1.2vmax;">
+      <a href="" class="logo d-flex align-items-center mb-3 mb-md-0 link-body-emphasis text-decoration-none">
+        <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid">
+        <h4><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></b></h4>
+      </a>
+    </div>
+    <form action="../general_search.php" method="GET" id="searchForm" class="d-flex search-field">
+      <input id="searchInput" name="dataSearch" class="form-control me-2" type="search" autocomplete="off" required placeholder="Buscar" aria-label="Search">
+      <button id="searchButton" type="button">
+      <i class="bi bi-search search-icon"></i>
+      </button>
+    </form>
 
-                <!-- BARRA DE BUSQUEDA  -->
+        <div class="d-flex mt-2">
+                <button class="btn btn-warning"  id="notis"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                <i class="bi bi-bell-fill"></i><span class="badge text-bg-danger"><?php echo $total_notificaciones;?></span>
+                  </button>
+                <div class="row">
+                </div>
+              <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title " id="offcanvasRightLabel" style="mr-2">Notificaciones</h5> 
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                  <div class="offcanvas-header justify-content-between">
+                  <form method="post" name="notisLeidas" > 
+                      <button name="notisLeidas" type="submit" class="btn btn-outline-primary btn-sm" name="notisLeidas" >Marcar como leidas</button>
+                  </form>
+                </div>
+                <div class="offcanvas-body">
+                <div class="list-group list-group-flush border-bottom scrollarea"> 
+                <?php while ($fila = mysqli_fetch_array($registrosNotis)) : ?> 
+                    <a href="#" class="list-group-item list-group-item-action  py-3 lh-sm" aria-current="true">
+                      <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><?php echo $fila['titulo_Pub']; ?></strong>
+                        <small><?php echo functions::convertirFecha($fila['fechaNoti']);?></small>
+                      </div>
+                      <div class="col-10 mb-1 small"><?php echo $fila['desNoti']; ?></div>
+                    </a>
+                <?php endwhile; ?>
+                </div>
+              </div>
             </div>
-            <form action="../general_search.php" method="GET" id="searchForm" class="position-relative search-field">
-                <input id="searchInput" name="dataSearch" class="form-control me-2" type="search" autocomplete="off" required placeholder="Buscar" aria-label="Search">
-                <button id="searchButton" type="button">
-                    <i class="bi bi-search search-icon"></i>
-                </button>
-            </form>
-    </header>
+          </div>
+      </div>
+  </header>
 
 
     <div class="container-fluid">
@@ -250,7 +304,7 @@ mysqli_close($link);
             </div>
 
             <!-- Contenido principal -->
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content">
                 <div class="contenedor">
                     <h1><img id="profilePic" src="..\..\images\icons\perfil.png"></h1>
 
@@ -362,10 +416,27 @@ mysqli_close($link);
                     </script>
 
 
-                    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content">
                         <div class="container mt-2">
                             <hr noshade="noshade">
                             <h3 class="text-center" style="margin-bottom: 20px;">Insignias</h3>
+                            <div class="row row-cols-1 row-cols-md-4 g-4">
+
+                                <div class="col">
+                                <div class="card h-100 border-primary mr-10">
+                                <img class="card-img-top " src="..\..\images\icons\tigre sabio.PNG" alt="Trophy Icon">
+                                    <div class="card-body  text-center">
+                                        <span class="card-title border-primary text-center">Tigre Sabio</span><br>
+                                    </div>
+                                    <div class="card-footer border-primary text-center">
+                                        <?php   
+                                            $usInsignias = mysqli_fetch_array($res);
+                                            if($usInsignias!=null){
+                                                echo $usInsignias[0],$usInsignias[1];
+                                            }else{
+                                                echo 0;
+                                            }     
+                                        ?>
                             <div class="row row-cols-1 row-cols-md-4 g-4">
 
                                 <div class="col">
@@ -404,6 +475,40 @@ mysqli_close($link);
                                         ?></div>
                                 </div>
                                 </div>
+
+                                <div class="col">
+                                <div class="card h-100 border-primary mr-5">
+                                <img class="card-img-top" src="..\..\images\icons\huelladecalidad.PNG" alt="Trophy Icon">
+                                    <div class="card-body text-center">
+                                        <span class="card-title  text-center">Huella de Calidad</span><br>
+                                    </div>
+                                    <div class ="card-footer border-primary text-center">
+                                        <?php   
+                                            $usInsignias = mysqli_fetch_array($res);
+                                            if($usInsignias!=null){
+                                                echo $usInsignias[0],$usInsignias[1];
+                                            }else{
+                                                echo 0;
+                                            }     
+                                        ?></div>
+                                </div>
+                                </div>
+
+                                <div class="col">
+                                <div class="card h-100 border-primary mr-3">
+                                <img class="card-img-top" src="..\..\images\icons\tigre Amigo.PNG" alt="Trophy Icon">
+                                    <div class="card-body text-center">
+                                        <span class="card-title">Tigre Amigo</span><br>
+                                    </div>
+                                    <div class ="card-footer border-primary text-center">
+                                        <?php   
+                                            $usInsignias = mysqli_fetch_array($res);
+                                            if($usInsignias!=null){
+                                                echo $usInsignias[0],$usInsignias[1];
+                                            }else{
+                                                echo 0;
+                                            }     
+                                        ?>
 
                                 <div class="col">
                                 <div class="card h-100 border-primary mr-3">
@@ -446,10 +551,6 @@ mysqli_close($link);
                             </div><!-- row de las insignias(cards) -->
                         </div><!-- otras cosas -->
 
-
-
-
-
                         <hr noshade="noshade"><br>
                         <h3 class="mb-5">Historial de Publicaciones</h3>
                 </div>
@@ -459,20 +560,15 @@ mysqli_close($link);
                         <div class="card-body">
 
                             <!-- Boton editar -->
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-0">
-                                <a id="idEditar" class="btn btn-outline-warning" href="../../publicacion/editar_interfaz.php?id=<?php echo $fila['idPub']; ?>" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
-                                    <span class="material-symbols-outlined">
-                                        edit_square
-                                    </span>
+                            <div class="d-grid gap-1 d-md-flex justify-content-md-end mb-0 mt-0">
+                                <a id="idEditar" class="btn btn-warning btn-sm" href="../../publicacion/editar_interfaz.php?id=<?php echo $fila['idPub']; ?>" >
+                                <i class="bi bi-pencil-square"></i>
                                 </a>
 
                                 <!-- Boton eliminar y modal -->
-                                <a data-idpub="<?php echo $fila['idPub']; ?>" id="idEliminar" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#reg-modal" style="--bs-btn-padding-y: .03rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;">
-                                    <span class="material-symbols-outlined">
-                                        delete
-                                    </span>
+                                <a data-idpub="<?php echo $fila['idPub']; ?>" id="idEliminar" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#reg-modal">
+                                <i class="bi bi-trash"></i>
                                 </a>
-
                             </div>
 
                             <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
@@ -511,7 +607,7 @@ mysqli_close($link);
             </div>
         </div>
 
-        <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
+        <footer class="  py-3 text-light bg-primary">
             <div class="container">
                 <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
             </div>

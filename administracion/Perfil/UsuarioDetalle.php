@@ -2,6 +2,54 @@
 include('../../php/functions.php');
 $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
+session_start();
+
+$usuario =  $_SESSION['idU'];
+
+
+$notisquery = "SELECT n.*, p.titulo_Pub, d.desNoti FROM notificacion_usuario n
+              JOIN publicacion p ON n.idPub = p.idPub
+              JOIN notificaciones d ON d.idNoti = n.tipoNoti
+              WHERE idUsuario = '$usuario' AND estadoNoti = 1
+              ORDER BY n.idNotiUs DESC ";
+$registrosNotis = mysqli_query($link, $notisquery); 
+
+if (!$registrosNotis) {
+  die('Error en la consulta: ' . mysqli_error($link));
+}
+
+$notisqueryCOUNT ="SELECT COUNT(*)  AS publicaciones_noleidas
+                  FROM notificacion_usuario
+                  WHERE idUsuario = '$usuario' AND estadoNoti = 1";
+
+$registrosContarNotis = mysqli_query($link, $notisqueryCOUNT);
+
+if (!$registrosContarNotis) {
+  die('Error en la consulta: ' . mysqli_error($link));
+}
+
+
+$contador_notificaciones = mysqli_fetch_assoc($registrosContarNotis);
+
+$total_notificaciones = $contador_notificaciones['publicaciones_noleidas'];
+
+
+// Verifica si se envió el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
+  // Actualizar el estado de la publicación
+  $actualizaNotis = "UPDATE notificacion_usuario
+                      SET estadoNoti = 2
+                      WHERE idUsuario = '$usuario'";
+
+  if (mysqli_query($link, $actualizaNotis)) {
+    header("Location: home.php");;
+  } 
+}
+
+
+// Iniciar sesión
+session_start();
+
 // Verificar si se proporcionó un ID de publicación
 if (isset($_GET['id'])) {
     // Obtener el ID de la publicación desde el parámetro GET
@@ -35,21 +83,26 @@ $registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida de
 if (!$registros) {
     die('Error en la consulta: ' . mysqli_error($link));
 }
-
+$idUSesion = $_SESSION['idU'];
 //Consulta e insercion de insignias
-$qInsignias = "SELECT idInsignia,`cant` FROM `usuario_insignia` WHERE idUsuario = $idUs ORDER BY idInsignia";
+$qInsignias = "SELECT idInsignia,COUNT(idInsignia) as 'cant' FROM `usuario_insignia` WHERE idUsuario = $idUs GROUP BY idInsignia ORDER BY idInsignia";
+$qAnime = "SELECT idInsignia,idCalif FROM `usuario_insignia` WHERE idUsuario = $idUs and idCalif = $idUSesion order by idInsignia";
 
 $res = mysqli_query($link,$qInsignias);
+$resAn = mysqli_query($link,$qAnime);
 
 $porfavor = array();
+$plisss = array();
+
+
 
 if(isset($_POST["agregar"])){
     $idins = $_POST["idin"];
-    $qExist = "SELECT * FROM `usuario_insignia` where idUsuario = $idUs and idInsignia=$idins";
+    $qExist = "SELECT * FROM `usuario_insignia` where idUsuario = $idUs and idInsignia=$idins and idCalif=$idUSesion";
 
     $res2 = mysqli_query($link,$qExist);
-    if(mysqli_num_rows($res2) < 1){
-        $meter = "INSERT INTO `usuario_insignia` VALUES ($idins,$idUs,1)";
+    if(mysqli_num_rows($res2) == 0){
+        $meter = "INSERT INTO `usuario_insignia` VALUES ($idins,$idUs,$idUSesion)";
 
         if(mysqli_query($link,$meter)){
             echo 'todo bien';
@@ -61,26 +114,11 @@ if(isset($_POST["agregar"])){
              </script>';
         }
 
-    }else{
-        $agregar = "UPDATE `usuario_insignia` SET cant = cant+1 where idUsuario = $idUs and idInsignia=$idins";
-
-        if(mysqli_query($link,$agregar)){
-            echo 'todo bien';
-            $res = mysqli_query($link,$qInsignias);
-        }else{
-            echo '<script>
-            alert("valio madre");
-            window.location = "UsuarioDetalle.php?=$idUs";
-             </script>';
-        }
     }
 }
 
 // Cerrar la conexión a la base de datos
 mysqli_close($link);
-
-// Iniciar sesión
-session_start();
 
 ?>
 
@@ -135,26 +173,6 @@ session_start();
     </style>
 
     <style>
-        .badge {
-            width: 200px;
-            /* Tamaño fijo para el cuadro */
-            height: 180px;
-            /* Tamaño fijo para el cuadro */
-            overflow: hidden;
-            /* Para ocultar el texto que desborde el contenedor */
-            text-overflow: ellipsis;
-            /* Para mostrar puntos suspensivos (...) cuando el texto desborde el contenedor */
-            white-space: nowrap;
-            /* Para evitar que el texto se divida en múltiples líneas */
-            display: inline-block;
-            margin-right: 20px;
-            border: 2px solid #007bff;
-            /* blue border */
-            border-radius: 20px;
-            /* oval shape */
-            padding: 10px;
-            text-align: center;
-        }
 
         .badge-content {
             margin-top: 20px;
@@ -169,7 +187,6 @@ session_start();
             font-weight: bold;
             color: #007bff;
         }
-
 
         #guardarBtn,
         #cancelarBtn {
@@ -198,24 +215,57 @@ session_start();
     </symbol>
 </svg>
 
-<body>
-    <header class="bg-primary py-2">
-        <div class="container d-flex align-items-center">
-            <!-- Logo y título -->
-            <div class="logo">
-                <img src="..\..\images\icons\flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
-                <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
+<body class="bg-body-secondary">
+    <header class="bg-primary d-flex flex-wrap align-items-center py-3 position-inherit">
+    <div class="d-flex align-items-center">
+      <!-- Logo y título -->
+      <img src="../../images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px;  filter: drop-shadow(-2px 1px 1px rgba(255,255,255, 0.7));">
+      <img src="../../images/icons/tec.png" class="d-flex img-fluid" style="width: 60px;  margin-right: 1.2vmax;">
+      <a href="" class="logo d-flex align-items-center mb-3 mb-md-0 link-body-emphasis text-decoration-none">
+        <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid">
+        <h4><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></b></h4>
+      </a>
+    </div>
+    <form action="../general_search.php" method="GET" id="searchForm" class="d-flex search-field">
+      <input id="searchInput" name="dataSearch" class="form-control me-2" type="search" autocomplete="off" required placeholder="Buscar" aria-label="Search">
+      <button id="searchButton" type="button">
+      <i class="bi bi-search search-icon"></i>
+      </button>
+    </form>
 
-                <form action="../general_search.php" method="GET" id="searchForm" class="position-relative search-field">
-                    <input id="searchInput" name="dataSearch" class="form-control me-2" type="search" autocomplete="off" required placeholder="Buscar" aria-label="Search">
-                    <button id="searchButton" type="button">
-                    <i class="bi bi-search search-icon"></i>
-                    </button>
-                </form>
+        <div class="d-flex mt-2">
+                <button class="btn btn-warning"  id="notis"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                <i class="bi bi-bell-fill"></i><span class="badge text-bg-danger"><?php echo $total_notificaciones;?></span>
+                  </button>
+                <div class="row">
+                </div>
+              <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title " id="offcanvasRightLabel" style="mr-2">Notificaciones</h5> 
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                  <div class="offcanvas-header justify-content-between">
+                  <form method="post" name="notisLeidas" > 
+                      <button name="notisLeidas" type="submit" class="btn btn-outline-primary btn-sm" name="notisLeidas" >Marcar como leidas</button>
+                  </form>
+                </div>
+                <div class="offcanvas-body">
+                <div class="list-group list-group-flush border-bottom scrollarea"> 
+                <?php while ($fila = mysqli_fetch_array($registrosNotis)) : ?> 
+                    <a href="#" class="list-group-item list-group-item-action  py-3 lh-sm" aria-current="true">
+                      <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><?php echo $fila['titulo_Pub']; ?></strong>
+                        <small><?php echo functions::convertirFecha($fila['fechaNoti']);?></small>
+                      </div>
+                      <div class="col-10 mb-1 small"><?php echo $fila['desNoti']; ?></div>
+                    </a>
+                <?php endwhile; ?>
+                </div>
+              </div>
             </div>
-        </div>
-    </header>
-
+          </div>
+      </div>
+  </header>
 
     <div class="container-fluid">
         <div class="row">
@@ -342,7 +392,20 @@ session_start();
                                 <img class="card-img-top " src="..\..\images\icons\tigre sabio.PNG" alt="Trophy Icon">
                                     <div class="card-body  text-center">
                                         <span class="card-title border-primary text-center">Tigre Sabio</span><br>
-                                        <a class="btn btn-success btn-sm" data-idin="1"><i class='bi bi-plus-circle bi-sm'></i></a>
+                                        <?php
+                                            $valedor = mysqli_fetch_array($resAn);
+                                            if($valedor != null){
+                                                if( $valedor['idInsignia'] == 1){
+                                                    echo '<a class="btn btn-success btn-sm disabled" data-idin="1" disabled><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                                }else{
+                                                    $plisss = $valedor;
+                                                    echo '<a class="btn btn-success btn-sm" data-idin="1"><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                                }
+                                            }else{
+                                                echo '<a class="btn btn-success btn-sm" data-idin="1"><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                                
+                                            }
+                                        ?>
                                     </div>
                                     <div class="card-footer border-primary text-center">
                                         <?php   
@@ -353,7 +416,7 @@ session_start();
                                                     $porfavor = $usInsignias;
                                                     echo 0;
                                                 }else{
-                                                    echo $usInsignias[1];
+                                                    echo $usInsignias['cant'];
                                                 }
                                             }else{
                                                 echo 0;
@@ -368,7 +431,24 @@ session_start();
                                 <img class="card-img-top" src="..\..\images\icons\huelladecalidad.PNG" alt="Trophy Icon">
                                     <div class="card-body text-center">
                                         <span class="card-title  text-center">Huella de Calidad</span><br>
-                                        <a class="btn btn-success btn-sm" data-idin="2"><i class='bi bi-plus-circle bi-sm'></i></a>
+                                        <?php
+                                            if($plisss != null && $plisss['idInsignia'] == 2 ){
+                                                echo '<a class="btn btn-success btn-sm disabled" data-idin="2" disabled><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                            }else{
+                                                $valedor = mysqli_fetch_array($resAn);
+                                                if($valedor != null){
+                                                    if( $valedor['idInsignia'] == 2){
+                                                        echo '<a class="btn btn-success btn-sm disabled" data-idin="2" disabled><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                                    }else{
+                                                        $plisss = $valedor;
+                                                        echo '<a class="btn btn-success btn-sm" data-idin="2"><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                                    }
+                                                }else{
+                                                    echo '<a class="btn btn-success btn-sm" data-idin="2"><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                                }
+                                            }
+                                            
+                                        ?>
                                     </div>
                                     <div class ="card-footer border-primary text-center">
                                         <?php   
@@ -397,7 +477,24 @@ session_start();
                                 <img class="card-img-top" src="..\..\images\icons\tigre Amigo.PNG" alt="Trophy Icon">
                                     <div class="card-body text-center">
                                         <span class="card-title">Tigre Amigo</span><br>
-                                        <a class="btn btn-success btn-sm" data-idin="3"><i class='bi bi-plus-circle bi-sm'></i></a>
+                                        <?php
+                                            if($plisss != null && $plisss['idInsignia'] == 3 ){
+                                                echo '<a class="btn btn-success btn-sm disabled" data-idin="3" disabled><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                            }else{
+                                                $valedor = mysqli_fetch_array($resAn);
+                                                if($valedor != null){
+                                                    if($valedor['idInsignia'] == 3){
+                                                        echo '<a class="btn btn-success btn-sm disabled" data-idin="3" disabled><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                                    }else{
+                                                        $plisss = $valedor;
+                                                        echo '<a class="btn btn-success btn-sm" data-idin="3"><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                                    }
+                                                }else{
+                                                    echo '<a class="btn btn-success btn-sm" data-idin="3"><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                                }
+                                            }
+                                        ?>
+                                        
                                     </div>
                                     <div class ="card-footer border-primary text-center">
                                         <?php   
@@ -426,7 +523,26 @@ session_start();
                                 <img class="card-img-top" src="..\..\images\icons\tigre veterano.png" alt="Trophy Icon">
                                     <div class="card-body text-center">
                                         <span class="card-title">Tigre Veterano</span><br>
-                                        <a class="btn btn-success btn-sm" data-idin="4"><i class='bi bi-plus-circle bi-sm'></i></a>
+                                        <?php
+                                            if($plisss != null && $plisss['idInsignia'] == 4){
+                                                echo '<a class="btn btn-success btn-sm disabled" data-idin="4" disabled><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                            }else{
+                                                $valedor = mysqli_fetch_array($resAn);
+                                                if($valedor != null){
+                                                    if( $valedor['idInsignia'] == 4){
+                                                        echo '<a class="btn btn-success btn-sm disabled" data-idin="4" disabled><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                                        
+                                                    }else{
+                                                        $plisss = $valedor;
+                                                        echo '<a class="btn btn-success btn-sm" data-idin="4"><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                                         
+                                                    }
+                                                }else{
+                                                    echo '<a class="btn btn-success btn-sm" data-idin="4"><i class="bi bi-plus-circle bi-sm"></i></a>';
+                                                    echo 4.2;
+                                                }
+                                            }
+                                        ?>
                                     </div>
                                     <div class ="card-footer border-primary text-center">
                                         <?php   
@@ -466,7 +582,7 @@ session_start();
                                             $boton.prop('disabled',true);
                                             $boton.removeClass('.btn-success');
                                             console.log("SI");
-                                            //location.reload();
+                                            location.reload();
                                         }
                                     });
 
