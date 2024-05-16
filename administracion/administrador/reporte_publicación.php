@@ -11,22 +11,24 @@ if (isset($_GET['id'])) {
     $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
               JOIN usuario u ON p.id_Usuario = u.idUsuario
               WHERE p.idPub = $idPub";
+
     $query2 = "SELECT * FROM reportepublicación WHERE idPub = $idPub ORDER BY `idReporte` DESC";
     $result = mysqli_query($link, $query);
     $registro = mysqli_query($link, $query2);
     $fila = mysqli_fetch_array($registro);
     $publicacion = mysqli_fetch_array($result);
 }
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['ConfirmarEliminar2'])) {
         $rutaArchivo = "../" . $publicacion['archivo_Pub'];
-
         if (file_exists($rutaArchivo)) {
             if (unlink($rutaArchivo)) {
-                $sql = "DELETE FROM publicacion WHERE idPub = $idPub";
+                $sql = "UPDATE publicacion SET estado_Pub = 3  WHERE idPub = $idPub";
                 if (mysqli_query($link, $sql)) {
                     // Eliminar los tags asociados a la publicación de la tabla 'tag_publicacion'
-                    $sqlTags = "DELETE FROM tag_publicacion WHERE idPub = $idPub";
+                    $sqlTags = "UPDATE reportepublicación SET estado_Report = 1 WHERE idPub = $idPub";
 
                     if (mysqli_query($link, $sqlTags)) {
                         echo "El archivo y la publicación se han eliminado correctamente.";
@@ -48,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
     if(isset(($_POST['RechazarReporte']))){
-        $sql = "CALL eliminarReportePublicacion($idPub)";
+        $sql = "UPDATE reportepublicación SET estado_Report= 1 WHERE idPub = $idPub";
         mysqli_query($link, $sql);
         header("Location: rep_publicacion_pendiente.php");
     }
