@@ -47,8 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
 }
 
 
-// Iniciar sesión
-session_start();
+
 
 // Verificar si se proporcionó un ID de publicación
 if (isset($_GET['id'])) {
