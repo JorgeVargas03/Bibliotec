@@ -125,6 +125,9 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
                     </button>
                 </li>
                 <hr class="my-2"> <!-- Línea divisora -->
+                <li class="mb-1">
+                  <a class="nav-link align-items-center" href="stats.php" id="letrabardos" style="margin-left:10px">Estadísticas de BiblioTec</a>
+                </li>
             </ul>
         </div>
       
