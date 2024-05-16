@@ -12,9 +12,9 @@ if (isset($_GET['carrera'])) {
   // Consultar la base de datos para obtener la información completa de la publicación
   $consulta = $query = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
   JOIN usuario u ON p.id_Usuario = u.idUsuario
-  WHERE carrera_Pub = '$carrera'
+  WHERE carrera_Pub = '$carrera' and estado_Pub = 1
   ORDER BY p.idPub";
-  $consulta2 = "SELECT nomMateria from materia WHERE nomCarrera = '$carrera'";
+  $consulta2 = "SELECT nomMateria from materia WHERE nomCarrera = '$carrera' ";
   $result = mysqli_query($link, $consulta);
   $result2 = mysqli_query($link, $consulta2);
 } else {
@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
                       WHERE idUsuario = '$usuario'";
 
   if (mysqli_query($link, $actualizaNotis)) {
-    header("Location: home.php");;
+    header("Location: search.php?carrera=".$carrera);;
   } 
 }
 

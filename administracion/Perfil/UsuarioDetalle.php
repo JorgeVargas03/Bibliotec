@@ -538,7 +538,6 @@ mysqli_close($link);
                                                     }
                                                 }else{
                                                     echo '<a class="btn btn-success btn-sm" data-idin="4"><i class="bi bi-plus-circle bi-sm"></i></a>';
-                                                    echo 4.2;
                                                 }
                                             }
                                         ?>
