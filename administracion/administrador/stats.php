@@ -1,47 +1,57 @@
 <?php
 include('../../php/functions.php');
-$link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
+$link = include('../../php/conexion.php');
 
-// Consulta a la base de datos
-$consulta = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
-              JOIN usuario u ON p.id_Usuario = u.idUsuario
-              WHERE estado_Pub = 0
-              ORDER BY p.idPub ASC";
-$registros = mysqli_query($link, $consulta); // Utiliza la conexión obtenida desde el archivo de conexión
-
-// Verifica si la consulta se ejecutó correctamente
-if (!$registros) {
-  die('Error en la consulta: ' . mysqli_error($link));
-}
-
-// Cierra la conexión después de realizar la consulta
-mysqli_close($link);
-
-// Inicia la sesión después de cerrar la conexión
 session_start();
 
-
-// Verificar si el usuario no ha iniciado sesión
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["rol"] !== "admin") {
-  header("location: ../../index.php");
-  exit;
+    header("location: ../../index.php");
+    exit;
 }
 
-// Verificar si se ha enviado una solicitud para cerrar sesión
-if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
-  // Destruir todas las variables de sesión
-  session_unset();
-  
-  // Destruir la sesión
-  session_destroy();
-  
-  // Redirigir al usuario al inicio de sesión
-  header("location: ../../index.php");
-  exit;
+if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
+    session_unset();
+    session_destroy();
+    header("location: ../../index.php");
+    exit;
 }
 
+// Obtener estadísticas
+$stats = array();
+$sp_names = array(
+    "TotalUsuarios",
+    "UsuariosPorSemestre",
+    "DistribucionUsuariosCarrera",
+    "TotalPublicaciones",
+    "PublicacionesPorTipo",
+    "PublicacionesPorCarrera",
+    "PublicacionesPorMateria",
+    "TotalComentarios",
+    "ObtenerReportes"
+);
 
+foreach ($sp_names as $sp_name) {
+    $query = "CALL $sp_name();";
+    $result = mysqli_multi_query($link, $query);
+
+    if (!$result) {
+        die('Error en la consulta: ' . mysqli_error($link));
+    }
+
+    $stats[$sp_name] = array();
+
+    // Procesar cada conjunto de resultados
+    do {
+        if ($result = mysqli_store_result($link)) {
+            $stats[$sp_name][] = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            mysqli_free_result($result);
+        }
+    } while (mysqli_next_result($link));
+}
+
+mysqli_close($link);
 ?>
+
 
 
 <!DOCTYPE html>
@@ -132,29 +142,48 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
         </div>
       
       <!-- Contenido principal -->
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 mt-2">
-      <div class="container mt-2 mb-3">
-          <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
-          margin-top: 0.5vmax;"><b>Publicaciones pendientes</b></h2>
-          <?php while ($fila = mysqli_fetch_array($registros)) : ?>
-            <div class="publicacion card mb-4 mt-4">
-              <div class="card-body ">
-              <div class="card-header d-flex justify-content-between align-items-end" style="background-color: #F7C200; color: #000000;">
-                Pendiente 
-                 <a class="col-sm-1.5" style="background-color: #2A88FF ; color: #FFFFFF;" name="fade" href="publicacion_pendiente.php?id=<?php echo ($fila['idPub']); ?>" class="btn btn-primary btn-sm">
-                Revisar</a>
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="container mt-4">
+        <h2 class="mb-4">Estadísticas</h2>
+
+        <?php foreach ($stats as $sp_name => $data) : ?>
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0"><?php echo $sp_name; ?></h5>
                 </div>
-                <h3 class="card-title display-6 mt-2"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
-                <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
-              </div>
-              <div class="card-footer d-flex text-muted justify-content-between align-items-end">
-                <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
-                <span class="card-text comment-date mb-0">Fecha de publicación: <?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
-              </div>
+                <div class="card-body">
+                    <?php foreach ($data as $result) : ?>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <?php foreach ($result[0] as $key => $value) : ?>
+                                            <th><?php echo ucwords(str_replace('_', ' ', $key)); ?></th>
+                                        <?php endforeach; ?>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($result as $row) : ?>
+                                        <tr>
+                                            <?php foreach ($row as $value) : ?>
+                                                <td><?php echo $value; ?></td>
+                                            <?php endforeach; ?>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
-          <?php endwhile; ?>
-        </div>
-      </main>
+        <?php endforeach; ?>
+    </div>
+</main>
+
+
+
+
+
     </div>
   </div>
 
