@@ -232,7 +232,16 @@ mysqli_close($link);
               Estamos aquí para resolverlo y mejorar gracias a tu ayuda."
             </h7>
             <hr noshade="noshade">
-            <h7>Enviar al correo: <input type="email" value="bibliotec.team@hotmail.com" readonly><br></h7>
+            <h7>
+             Enviar al correo: 
+             <input id="correo" type="email" value="bibliotec.team@hotmail.com" readonly onclick="mostrarMensaje()">
+             <br>
+            </h7>
+            <script>
+             function mostrarMensaje() {
+              alert("Este campo no se puede editar.");
+             }
+            </script>
             <hr noshade="noshade">
             <form class="form-register" action="https://formspree.io/f/xayrkvya" method="POST" target="_blank">
     <textarea id="texto" name="mensaje" rows="5" cols="50"></textarea><br>
