@@ -230,14 +230,14 @@ mysqli_close($link);
 
 <script>
 function enviarFormulario() {
-    // Guardar el contenido del textarea antes de enviar el formulario
-    var mensaje = document.getElementById('texto').value;
-    
-    // Abrir la página del formulario en una nueva pestaña
-    window.open('https://formspree.io/f/xayrkvya');
+     // Guardar el contenido del textarea antes de enviar el formulario
+     var mensaje = document.getElementById('texto').value;
     
     // Limpiar el contenido del textarea
     document.getElementById('texto').value = '';
+    
+    // Abrir la página del formulario en una nueva pestaña después de limpiar el textarea
+    window.open('https://formspree.io/f/xayrkvya');
 }
 </script>
 
