@@ -437,6 +437,23 @@ mysqli_close($link);
                                                 echo 0;
                                             }     
                                         ?>
+                            <div class="row row-cols-1 row-cols-md-4 g-4">
+
+                                <div class="col">
+                                <div class="card h-100 border-primary mr-10">
+                                <img class="card-img-top " src="..\..\images\icons\tigre sabio.PNG" alt="Trophy Icon">
+                                    <div class="card-body  text-center">
+                                        <span class="card-title border-primary text-center">Tigre Sabio</span><br>
+                                    </div>
+                                    <div class="card-footer border-primary text-center">
+                                        <?php   
+                                            $usInsignias = mysqli_fetch_array($res);
+                                            if($usInsignias!=null){
+                                                echo $usInsignias[0],$usInsignias[1];
+                                            }else{
+                                                echo 0;
+                                            }     
+                                        ?>
                                     </div>
                                 </div>
                                 </div>
@@ -458,6 +475,40 @@ mysqli_close($link);
                                         ?></div>
                                 </div>
                                 </div>
+
+                                <div class="col">
+                                <div class="card h-100 border-primary mr-5">
+                                <img class="card-img-top" src="..\..\images\icons\huelladecalidad.PNG" alt="Trophy Icon">
+                                    <div class="card-body text-center">
+                                        <span class="card-title  text-center">Huella de Calidad</span><br>
+                                    </div>
+                                    <div class ="card-footer border-primary text-center">
+                                        <?php   
+                                            $usInsignias = mysqli_fetch_array($res);
+                                            if($usInsignias!=null){
+                                                echo $usInsignias[0],$usInsignias[1];
+                                            }else{
+                                                echo 0;
+                                            }     
+                                        ?></div>
+                                </div>
+                                </div>
+
+                                <div class="col">
+                                <div class="card h-100 border-primary mr-3">
+                                <img class="card-img-top" src="..\..\images\icons\tigre Amigo.PNG" alt="Trophy Icon">
+                                    <div class="card-body text-center">
+                                        <span class="card-title">Tigre Amigo</span><br>
+                                    </div>
+                                    <div class ="card-footer border-primary text-center">
+                                        <?php   
+                                            $usInsignias = mysqli_fetch_array($res);
+                                            if($usInsignias!=null){
+                                                echo $usInsignias[0],$usInsignias[1];
+                                            }else{
+                                                echo 0;
+                                            }     
+                                        ?>
 
                                 <div class="col">
                                 <div class="card h-100 border-primary mr-3">
