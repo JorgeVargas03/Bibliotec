@@ -1,9 +1,11 @@
 <?php
 include('../php/functions.php');
 $link = include('../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
+session_start();
 
 // Obtener el ID de la publicación desde el parámetro GET
 $carrera = $_GET['carrera'];
+$usuario =  $_SESSION['idU'];
 
 // Verifica si la consulta se ejecutó correctamente
 if (isset($_GET['carrera'])) {
@@ -22,11 +24,49 @@ if (isset($_GET['carrera'])) {
 }
 
 
+$notisquery = "SELECT n.*, p.titulo_Pub, d.desNoti FROM notificacion_usuario n
+              JOIN publicacion p ON n.idPub = p.idPub
+              JOIN notificaciones d ON d.idNoti = n.tipoNoti
+              WHERE idUsuario = '$usuario' AND estadoNoti = 1
+              ORDER BY n.idNotiUs DESC ";
+$registrosNotis = mysqli_query($link, $notisquery); 
+
+if (!$registrosNotis) {
+  die('Error en la consulta: ' . mysqli_error($link));
+}
+
+$notisqueryCOUNT ="SELECT COUNT(*)  AS publicaciones_noleidas
+                  FROM notificacion_usuario
+                  WHERE idUsuario = '$usuario' AND estadoNoti = 1";
+
+$registrosContarNotis = mysqli_query($link, $notisqueryCOUNT);
+
+if (!$registrosContarNotis) {
+  die('Error en la consulta: ' . mysqli_error($link));
+}
+
+
+$contador_notificaciones = mysqli_fetch_assoc($registrosContarNotis);
+
+$total_notificaciones = $contador_notificaciones['publicaciones_noleidas'];
+
+
+// Verifica si se envió el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
+  // Actualizar el estado de la publicación
+  $actualizaNotis = "UPDATE notificacion_usuario
+                      SET estadoNoti = 2
+                      WHERE idUsuario = '$usuario'";
+
+  if (mysqli_query($link, $actualizaNotis)) {
+    header("Location: home.php");;
+  } 
+}
+
+
 // Cierra la conexión después de realizar la consulta
 mysqli_close($link);
 
-// Inicia la sesión después de cerrar la conexión
-session_start();
 ?>
 
 <!DOCTYPE html>
@@ -71,22 +111,56 @@ session_start();
 </style>
 
 
-<body>
-  <header class="bg-primary py-2">
-    <div class="container d-flex align-items-center">
+<body class="bg-body-secondary">
+<header class="bg-primary d-flex flex-wrap align-items-center py-3 position-inherit">
+    <div class="d-flex align-items-center">
       <!-- Logo y título -->
-      <div class="logo">
-        <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
-        <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
+      <img src="../images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px;  filter: drop-shadow(-2px 1px 1px rgba(255,255,255, 0.7));">
+      <img src="../images/icons/tec.png" class="d-flex img-fluid" style="width: 60px;  margin-right: 1.2vmax;">
+      <a href="" class="logo d-flex align-items-center mb-3 mb-md-0 link-body-emphasis text-decoration-none">
+        <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid">
+        <h4><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></b></h4>
+      </a>
+    </div>
+    <form action="general_search.php" method="GET" id="searchForm" class="d-flex search-field">
+      <input id="searchInput" name="dataSearch" class="form-control me-2" type="search" autocomplete="off" required placeholder="Buscar" aria-label="Search">
+      <button id="searchButton" type="button">
+      <i class="bi bi-search search-icon"></i>
+      </button>
+    </form>
 
-        <!-- BARRA DE BUSQUEDA  -->
+        <div class="d-flex mt-2">
+                <button class="btn btn-warning"  id="notis"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                <i class="bi bi-bell-fill"></i><span class="badge text-bg-danger"><?php echo $total_notificaciones;?></span>
+                  </button>
+                <div class="row">
+                </div>
+              <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                  <h5 class="offcanvas-title " id="offcanvasRightLabel" style="mr-2">Notificaciones</h5> 
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                  <div class="offcanvas-header justify-content-between">
+                  <form method="post" name="notisLeidas" > 
+                      <button name="notisLeidas" type="submit" class="btn btn-outline-primary btn-sm" name="notisLeidas" >Marcar como leidas</button>
+                  </form>
+                </div>
+                <div class="offcanvas-body">
+                <div class="list-group list-group-flush border-bottom scrollarea"> 
+                <?php while ($fila = mysqli_fetch_array($registrosNotis)) : ?> 
+                    <a href="#" class="list-group-item list-group-item-action  py-3 lh-sm" aria-current="true">
+                      <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1"><?php echo $fila['titulo_Pub']; ?></strong>
+                        <small><?php echo functions::convertirFecha($fila['fechaNoti']);?></small>
+                      </div>
+                      <div class="col-10 mb-1 small"><?php echo $fila['desNoti']; ?></div>
+                    </a>
+                <?php endwhile; ?>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
-      <form action="general_search.php" method="GET" id="searchForm" class="position-relative search-field">
-        <input id="searchInput" name="dataSearch" class="form-control me-2" type="search" autocomplete="off" required placeholder="Buscar" aria-label="Search">
-        <button id="searchButton" type="button">
-          <i class="bi bi-search search-icon"></i>
-        </button>
-      </form>
   </header>
   <!--Aqui se muestra un apartado para los productos que se venderan-->
 
@@ -164,10 +238,11 @@ session_start();
       </div>
 
       <!-- Contenido principal -->
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content">
         <br>
         <div class="container">
           <h2>Búsqueda</h2>
+          <div class="linea-delgada"></div>
           <form id="filterForm">
             <div class="row align-items-center justify-content-center">
               <div class="col-md-5 mb-3">
@@ -189,6 +264,7 @@ session_start();
               </div>
             </div>
           </form>
+          <div class="linea-delgada"></div>
           <br>
         </div>
         <!--Esta parte contiene los aportes coincidentes-->

@@ -9,12 +9,14 @@
 
 .logo{
     width: 55px;
-    text-decoration: none;
     display: flex;
     align-items: center; /* Alinea los elementos verticalmente */
-    text-decoration: none;
 }
 
+.main-content {
+    max-height: 83vh; /* Establece la altura máxima del main al 80% del viewport height */
+    overflow-y: auto; /* Habilita el desplazamiento vertical si el contenido excede la altura máxima */
+  }
 
 .logo h4 {
     font-family: 'Agrandir', sans-serif;
@@ -22,9 +24,10 @@
     margin: 0; /* Elimina el margen por defecto del h4 */
     color: white; /* Color del texto */
     text-shadow: 1px 1px 0 black;
-    margin-left: 5px;  
     user-select: none;
 }
+
+
 
 .logo h4 .col-1 {
     color: white; /* Color para la parte "Biblio" */
@@ -37,16 +40,10 @@
 .logo img{
     width:100%;
     vertical-align: top;
-    margin-left: -100px;
     width: 55px;
-    margin-right: 10px; 
+    margin-right: 0.1vmax; 
 }
 
-
-.search-field {
-    width: 30em;
-    margin-left: 30%;
-}
 
 .pos-btn{
     margin-left: 900px;
@@ -55,7 +52,7 @@
 
 
 .search-icon {
-    position: absolute;
+    position: relative;
     right: 50px;
     top: 50%;
     transform: translateY(-50%);
@@ -64,13 +61,21 @@
 
 /* BARRA DE BUSQUEDA */
 #searchForm {
-    display: flex; /* Usamos flexbox para alinear los elementos horizontalmente */
-    align-items: center; /* Centramos verticalmente los elementos */
+    display:flex;
+    margin-left: 17vmax;
+    align-items: center; 
+    inline-size: 29vmax;
+    align-self: center;
 }
 
-#searchInput {
-    flex: 1; /* Hacemos que el campo de texto se expanda para ocupar todo el espacio disponible */
-    margin-right: 5px; /* Añadimos un pequeño margen entre el campo de texto y el botón de búsqueda */
+.linea-delgada {
+    border-bottom: 1px solid #A6A6A6 ;
+    margin: 1% ; 
+  }
+
+#notis {
+    margin-left: 20vmax;
+    margin-right: 2vmax;
 }
 
 #searchButton {
@@ -144,6 +149,7 @@
 
 
 
+
 .main .limpiar{
 clear: both;
 }
@@ -185,7 +191,7 @@ footer{
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    background-color: #f9f9f9;
+    background-color: #c5c5c5;
   }
   /* Estilo para el botón */
   .btn-custom {
@@ -251,3 +257,22 @@ footer{
   #suggestions li:hover {
     background-color: #f1f1f1; /* Color de fondo al pasar el mouse */
   }
+
+
+  .Biblio{
+    font-size: 4.5vmax;
+    font-family:'Agrandir', sans-serif;
+    color:black;
+    -webkit-text-stroke: 0.3vmax black;
+    left: 79.5%;
+    transform: translate(-50%, -50%);
+}
+
+.Tec{
+  font-size: 4.5vmax;
+    font-family:'Agrandir', sans-serif;
+    color:#FF6100 ;
+    -webkit-text-stroke: 0.3vmax #FF6100 ;
+    left: 90%;
+    transform: translate(-70%, -50%);
+}
