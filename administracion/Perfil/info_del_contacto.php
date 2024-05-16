@@ -234,7 +234,7 @@ function enviarFormulario() {
     var mensaje = document.getElementById('texto').value;
     
     // Abrir la página del formulario en una nueva pestaña
-    window.open('https://formspree.io/f/xkndeyno');
+    window.open('https://formspree.io/f/xayrkvya');
     
     // Limpiar el contenido del textarea
     document.getElementById('texto').value = '';
