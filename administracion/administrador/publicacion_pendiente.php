@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['eliminar_archivo'])) 
   
     if (file_exists($rutaArchivo)) {     
         if (unlink($rutaArchivo)) {
-            $sql = "DELETE FROM publicacion WHERE idPub = $idPub";
+            $sql = "UPDATE publicacion SET estado_Pub = 2 WHERE idPub = $idPub";
            if (mysqli_query($link,$sql)) {
                 // Eliminar los tags asociados a la publicación de la tabla 'tag_publicacion'
                 $sqlTags = "DELETE FROM tag_publicacion WHERE idPub = $idPub";
