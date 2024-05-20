@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
                       WHERE idUsuario = '$usuario'";
 
   if (mysqli_query($link, $actualizaNotis)) {
-    header("Location: home.php");;
+    header("Location: editar_interfaz.php");;
   } 
 }
 

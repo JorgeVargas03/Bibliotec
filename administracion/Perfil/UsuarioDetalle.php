@@ -47,8 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
 }
 
 
-// Iniciar sesión
-session_start();
+
 
 // Verificar si se proporcionó un ID de publicación
 if (isset($_GET['id'])) {
@@ -539,7 +538,6 @@ mysqli_close($link);
                                                     }
                                                 }else{
                                                     echo '<a class="btn btn-success btn-sm" data-idin="4"><i class="bi bi-plus-circle bi-sm"></i></a>';
-                                                    echo 4.2;
                                                 }
                                             }
                                         ?>
