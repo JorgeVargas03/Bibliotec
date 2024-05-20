@@ -265,14 +265,11 @@ function enviarFormulario() {
     window.open('https://formspree.io/f/xayrkvya');
 }
 </script>
-
-            </div>
-
-            
+            </div>     
             </main>
                                   
 
-        <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
+        <footer class="py-3 text-light bg-primary py-2 bg-opacity-75">
             <div class="container">
                 <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
             </div>

@@ -187,11 +187,11 @@ mysqli_close($link);
 </svg>
 
 <body class="bg-body-secondary">
-<header class="bg-primary d-flex flex-wrap align-items-center py-3 position-inherit">
+<header class="bg-primary py-2 bg-opacity-75 border-bottom border-terciary border-4 d-flex flex-wrap align-items-center py-3 position-inherit">
     <div class="d-flex align-items-center">
       <!-- Logo y título -->
-      <img src="../../images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px;  filter: drop-shadow(-2px 1px 1px rgba(255,255,255, 0.7));">
-      <img src="../../images/icons/tec.png" class="d-flex img-fluid" style="width: 60px;  margin-right: 1.2vmax;">
+      <img src="../../images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px; margin-right: 2.0vmax;">
+      <img src="../../images/icons/tec.png" class="d-flex img-fluid" style="width: 60px;  margin-right: 2.0vmax;">
       <a href="" class="logo d-flex align-items-center mb-3 mb-md-0 link-body-emphasis text-decoration-none">
         <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid">
         <h4><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></b></h4>
@@ -242,10 +242,10 @@ mysqli_close($link);
     <div class="container-fluid">
         <div class="row">
             <!-- Barra de navegación izquierda -->
-            <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
+            <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body" style="width: 15%; background-color: #F07B12;">
                 <ul class="list-unstyled" id="menu-lateral">
                     <li class="mb-2 mt-2">
-                        <a class="nav-link align-items-center" href="../../home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
+                        <a class="nav-link align-items-center" href="../../home.php" id="letrabar">Inicio</a>
                     </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -272,7 +272,7 @@ mysqli_close($link);
                         </button>
                         <div class="collapse" id="contacto-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
+                                <li><a href="info_del_contacto.php?" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
                             </ul>
                         </div>
                     </li>
@@ -311,14 +311,14 @@ mysqli_close($link);
                     <h2>
                         <span id="nombreApellido"><?php echo $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></span>
                         <a href="#" class="editar-btn" data-toggle="modal" data-target="#editarNombreModal">
-                            <img src="..\..\images\icons\editar.png" height="25">
+                        <i class="bi bi-pencil-fill text-primary text-opacity-75"></i>
                         </a>
                     </h2>
 
                     <h5>
                         <span id="nombreCarrera"><?php echo $_SESSION['carrera'] ?></span>
                         <a href="#" class="editar-btn" data-toggle="modal" data-target="#editarCarreraModal">
-                            <img src="..\..\images\icons\editar.png" height="25">
+                        <i class="bi bi-pencil-fill text-primary text-opacity-75"></i>
                         </a>
                     </h5>
 
@@ -561,9 +561,10 @@ mysqli_close($link);
             </div>
         </div>
 
-        <footer class="  py-3 text-light bg-primary">
+        <script src="js/fadeout.js"></script>
+        <footer class="py-3 text-light bg-primary py-2 bg-opacity-75">
             <div class="container">
-                <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
+                <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
             </div>
         </footer>
 </body>
