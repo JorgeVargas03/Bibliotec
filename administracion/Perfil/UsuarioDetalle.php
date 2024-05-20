@@ -215,11 +215,11 @@ mysqli_close($link);
 </svg>
 
 <body class="bg-body-secondary">
-    <header class="bg-primary d-flex flex-wrap align-items-center py-3 position-inherit">
+    <header class="bg-primary py-2 bg-opacity-75 border-bottom border-terciary border-4 d-flex flex-wrap align-items-center py-3 position-inherit">
     <div class="d-flex align-items-center">
       <!-- Logo y título -->
-      <img src="../../images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px;  filter: drop-shadow(-2px 1px 1px rgba(255,255,255, 0.7));">
-      <img src="../../images/icons/tec.png" class="d-flex img-fluid" style="width: 60px;  margin-right: 1.2vmax;">
+      <img src="../../images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px; margin-right: 2.0vmax;">
+      <img src="../../images/icons/tec.png" class="d-flex img-fluid" style="width: 60px;  margin-right: 2.0vmax;">
       <a href="" class="logo d-flex align-items-center mb-3 mb-md-0 link-body-emphasis text-decoration-none">
         <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid">
         <h4><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></b></h4>
@@ -269,10 +269,10 @@ mysqli_close($link);
     <div class="container-fluid">
         <div class="row">
             <!-- Barra de navegación izquierda -->
-            <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
+            <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body" style="width: 15%;">
                 <ul class="list-unstyled" id="menu-lateral">
                     <li class="mb-2 mt-2">
-                        <a class="nav-link align-items-center" href="../../home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
+                        <a class="nav-link align-items-center" href="../../home.php" id="letrabar" >Inicio</a>
                     </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -607,7 +607,7 @@ mysqli_close($link);
 
                             <a name="fade" href="../../publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary btn-sm"><b>Leer más</b></a>
                         </div>
-                        <div class="card-footer d-flex text-muted justify-content-between align-items-end">
+                        <div class="bg-primary py-2 bg-opacity-10 card-footer d-flex text-muted justify-content-between align-items-end">
                             <span class="card-text comment-date mb-0 ">Publicado por: <?php echo $usuario['nom_Us'] . " " . $usuario['apell_Us']; ?></span>
                             <span class="card-text comment-date mb-0"><?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
                         </div>
@@ -637,7 +637,7 @@ mysqli_close($link);
             </div>
         </div>
 
-        <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
+        <footer class="bg-primary py-2 bg-opacity-75 border-top border-terciary border-4  py-3 text-light bg-primary">
             <div class="container">
                 <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
             </div>
