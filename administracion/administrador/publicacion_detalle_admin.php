@@ -246,15 +246,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                             <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
                                             <p class="card-text mb-0">Por: <a class="link-light link-underline link-underline-opacity-0" href="../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $publicacion['id_Usuario']; ?>"><b><?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></a></p>
                                         </div>
-                                        <div>
-                                            <!-- Botón de reportar -->
-                                            <a class="btn btn-danger btn-sm shadow" id="reportarPub" data-bs-toggle="modal" data-bs-target="#modal_report_p">
-                                                <i class="bi bi-flag-fill"></i>
-                                            </a>
-                                            <a class="btn btn-info btn-sm shadow" href = "../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $publicacion['id_Usuario']; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Perfil">
-                                                <i class="bi bi-person-fill"></i>
-                                            </a>
-                                        </div>
+
                                     </div>
 
                                     <div class="card-body">
@@ -325,8 +317,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                             </a>
                                         </div>
                                         <div class="mx-3">
-                                            <a href="reporte_comentario.php?id=<?php echo $publicacion['idPub']; ?>" class="btn btn-info">
-                                                <i class="bi bi-box-arrow-up-right mr-2" style="font-size: 1.5em;"></i> Regresar al reporte
+                                        <a href="javascript:history.back()" class="btn btn-info">
+                                              <i class="bi bi-box-arrow-up-right mr-2" style="font-size: 1.5em;"></i> Regresar al reporte
                                             </a>
                                         </div>
                                     </div>

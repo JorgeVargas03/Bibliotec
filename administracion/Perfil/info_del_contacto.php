@@ -3,16 +3,65 @@ include('../../php/functions.php');
 $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Inicia la sesión después de cerrar la conexión
+
 session_start();
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
+require '../verifymail/PHPMailer/PHPMailer.php';
+require '../verifymail/PHPMailer/Exception.php';
+require '../verifymail/PHPMailer/SMTP.php';  
 
+// Verificar si se han enviado datos desde el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
+    // Correo del remitente y destinatario
+    $remitente = 'soportea236@gmail.com';
+    $destinatario = 'bibliotec.team@hotmail.com';
 
+    // Mensaje obtenido del formulario
+    $mensaje = $_POST['mensaje'];
 
-// Cierra la conexión después de realizar la consulta
-mysqli_close($link);
+    // Configuración de PHPMailer
+    $mail = new PHPMailer(true);
 
+    try {
+        // Configuración del servidor SMTP
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.live.com'; // Servidor SMTP para Hotmail
+        $mail->SMTPAuth   = true;
+        $mail->Username   = $remitente; // Correo del remitente
+        $mail->Password   = 'BiblioTec123'; // Contraseña del remitente (reemplaza con tu contraseña)
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = 587;
+
+        // Configuración del remitente y destinatario
+        $mail->setFrom($remitente);
+        $mail->addAddress($destinatario);
+
+        // Contenido del correo
+        $mail->isHTML(true);
+        $mail->Subject = "Mensaje desde el formulario";
+        $mail->Body    = nl2br($mensaje); // Convertir saltos de línea a <br>
+
+        // Envío del correo
+        if ($mail->send()) {
+            echo "success"; // Envío exitoso
+        } else {
+            echo "error: " . $mail->ErrorInfo; // Error en el envío
+        }
+    } catch (Exception $e) {
+        // Manejo de errores en el envío del correo
+        echo "error: " . $e->getMessage();
+    }
+} else {
+    echo "error: No se recibieron datos del formulario."; // Datos del formulario no recibidos
+}
 ?>
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -243,28 +292,51 @@ mysqli_close($link);
              }
             </script>
             <hr noshade="noshade">
-            <form class="form-register" action="https://formspree.io/f/xayrkvya" method="POST" target="_blank">
-    <textarea id="texto" name="mensaje" rows="5" cols="50"></textarea><br>
-    <button class="btn btn-success btn-sm btn-enviar" type="button" onclick="enviarFormulario()">
+            <div id="mensaje-form">
+    <div class="form-group">
+        <label for="mensaje">Mensaje:</label>
+        <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required></textarea>
+    </div>
+    <button class="btn btn-success btn-sm" type="button" onclick="enviarCorreo()">
         <i class="bi bi-envelope-at mr-2"></i> Enviar
     </button>
-</form>
-<hr noshade="noshade">
+</div>
+<div id="mensaje-enviado" style="display: none;">
+    <p>El mensaje ha sido enviado exitosamente.</p>
+</div>
+<div id="mensaje-error" style="display: none;">
+    <p>El mensaje no pudo ser enviado. Por favor, inténtalo de nuevo más tarde.</p>
+</div>
 
 <script>
-window.onload = function() {
-    // Limpiar el contenido del textarea al cargar la página
-    document.getElementById('texto').value = '';
-};
-
-function enviarFormulario() {
-    // Guardar el contenido del textarea antes de enviar el formulario
-    var mensaje = document.getElementById('texto').value;
+function enviarCorreo() {
+    var mensaje = document.getElementById("mensaje").value;
     
-    // Abrir la página del formulario en una nueva pestaña
-    window.open('https://formspree.io/f/xayrkvya');
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "perfil/enviar_correo.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                // Si la solicitud se completó con éxito
+                document.getElementById("mensaje-form").style.display = "none";
+                if (xhr.responseText.trim() === "success") {
+                    document.getElementById("mensaje-enviado").style.display = "block";
+                } else {
+                    document.getElementById("mensaje-error").style.display = "block";
+                }
+            } else {
+                // Si hubo un error en la solicitud
+                document.getElementById("mensaje-error").style.display = "block";
+            }
+        }
+    };
+    xhr.send("mensaje=" + encodeURIComponent(mensaje));
 }
 </script>
+
+<hr noshade="noshade">
+
 
             </div>
 
