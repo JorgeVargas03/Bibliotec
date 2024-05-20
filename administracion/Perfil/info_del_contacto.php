@@ -305,7 +305,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
             <label for="mensaje">Mensaje:</label>
             <textarea class="form-control" id="mensaje" name="mensaje" rows="5" cols="50" required></textarea>
         </div><br>
-        <button class="btn btn-success btn-sm" type="button" onclick="enviarCorreo()">
+        <button class="btn btn-success btn-sm" type="button" onclick="enviarCorreo()" style = "margin-bottom: 3%">
             <i class="bi bi-envelope-at mr-2"></i> Enviar
         </button>
         </div>
