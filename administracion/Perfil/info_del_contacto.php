@@ -194,7 +194,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
 </svg>
 
 <body>
-    <header class="bg-primary py-2">
+    <header class="bg-primary bg-opacity-75 border-bottom border-terciary border-4">
         <div class="container d-flex align-items-center">
             <!-- Logo y título -->
             <div class="logo">
@@ -215,10 +215,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
     <div class="container-fluid">
         <div class="row">
             <!-- Barra de navegación izquierda -->
-            <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
+            <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body" style="width: 15%;">
                 <ul class="list-unstyled" id="menu-lateral">
                     <li class="mb-2 mt-2">
-                        <a class="nav-link align-items-center" href="../../home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
+                        <a class="nav-link align-items-center" href="../../home.php" id="letrabar">Inicio</a>
                     </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -277,7 +277,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
             </div>
 
             <!-- Contenido principal -->
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 bg-body-secondary">
                 <div class="contenedor">
                 <h1 style="text-decoration: underline;">BiblioTec Support</h1><br>
             <h5 style="width: 160px;">
@@ -351,7 +351,7 @@ function enviarCorreo() {
             </main>
                                   
 
-        <footer class="py-3 text-light bg-primary py-2 bg-opacity-75">
+        <footer class="py-3 text-light bg-primary bg-opacity-75 border-top border-terciary border-4">
             <div class="container">
                 <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
             </div>
