@@ -3,11 +3,10 @@ $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y 
 include('../../php/functions.php');
 
 // Consulta a la base de datos
-$query_rc = "SELECT * FROM 	reportecomentario ORDER BY idReporteCom DESC";
+$query_rc = "SELECT * FROM 	reportecomentario WHERE estado_Report = 0 ";
 $query_c = "SELECT c.*, u.nom_Us, u.apell_Us FROM comentario c
             JOIN usuario u ON c.idUsuario = u.idUsuario
-            WHERE c.idComent IN (SELECT idComent FROM reportecomentario)
-            ORDER BY c.idComent DESC ";
+            WHERE c.idComent IN (SELECT distinct idComent FROM reportecomentario WHERE estado_Report = 0 )";
 
 
 
