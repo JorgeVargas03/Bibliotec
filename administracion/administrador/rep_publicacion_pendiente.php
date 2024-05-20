@@ -3,11 +3,10 @@ $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y 
 include('../../php/functions.php');
 
 // Consulta a la base de datos
-$query_rp = "SELECT * FROM 	reportepublicación WHERE estado_Report = 0 ORDER BY idReporte DESC ";
+$query_rp = "SELECT * FROM 	reportepublicación WHERE estado_Report = 0  ";
 $query_p = "SELECT p.*, u.nom_Us, u.apell_Us FROM publicacion p
             JOIN usuario u ON p.id_Usuario = u.idUsuario
-            WHERE p.idPub IN (SELECT idPub FROM reportepublicación)
-            ORDER BY p.idPub DESC ";
+            WHERE p.idPub IN (SELECT idPub FROM reportepublicación WHERE estado_Report = 0 ORDER BY idReporte DESC )";
 
 $registros_rp = mysqli_query($link, $query_rp); // Utiliza la conexión obtenida desde el archivo de conexión
 $registros_p = mysqli_query($link, $query_p);

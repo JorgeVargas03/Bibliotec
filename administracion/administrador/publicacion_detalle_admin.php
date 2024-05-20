@@ -232,13 +232,20 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             </div>
             <!-- Contenido principal -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="font-weight:normal; margin-left: 1.5%">
+                <div class="col">
                 <h3 style=" margin-left: 1.5% ; margin-top: 35px;">
-                    <b class="textogran" style="font-size: 2vmax; text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
+                <b class="textogran" style="font-size: 2vmax; text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
                     margin-top: 0.5vmax;">Detalles de la Publicación</b>
-                    </h2>
+                    </h3>
+                    <span style=" margin-left: 82%;">
+                        <a href="javascript:history.back()" class="btn btn-info btn-sm">
+                            <i class="bi bi-box-arrow-up-right mr-2" style="font-size: 1em;"></i> Regresar al reporte
+                        </a>
+                    </span>
+                </div>
                     <div class="container mt-4 mb-5">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <!-- Detalles de la publicación -->
                                 <div class="card card-details">
                                     <div class="card-header bg-primary text-light d-flex justify-content-between">
@@ -246,15 +253,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                             <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
                                             <p class="card-text mb-0">Por: <a class="link-light link-underline link-underline-opacity-0" href="../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $publicacion['id_Usuario']; ?>"><b><?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></a></p>
                                         </div>
-                                        <div>
-                                            <!-- Botón de reportar -->
-                                            <a class="btn btn-danger btn-sm shadow" id="reportarPub" data-bs-toggle="modal" data-bs-target="#modal_report_p">
-                                                <i class="bi bi-flag-fill"></i>
-                                            </a>
-                                            <a class="btn btn-info btn-sm shadow" href = "../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $publicacion['id_Usuario']; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Perfil">
-                                                <i class="bi bi-person-fill"></i>
-                                            </a>
-                                        </div>
+
                                     </div>
 
                                     <div class="card-body">
@@ -324,11 +323,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                                 <i class="bi bi-cloud-arrow-down mr-2" style="font-size: 1.5em;"></i> <!-- Cambiar a otro icono de descarga -->
                                             </a>
                                         </div>
-                                        <div class="mx-3">
-                                            <a href="reporte_comentario.php?id=<?php echo $publicacion['idPub']; ?>" class="btn btn-info">
-                                                <i class="bi bi-box-arrow-up-right mr-2" style="font-size: 1.5em;"></i> Regresar al reporte
-                                            </a>
-                                        </div>
+                                        
                                     </div>
                                     <!-- Etiquetas -->
                                     <div class="card-footer d-flex justify-content-between align-items-end">
@@ -383,13 +378,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         <div class="card-header">
                                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                                 <!-- Botón de reportar -->
-                                                <a class="btn btn-sm btn-outline-danger " id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c" data-comid="<?php echo $comentario['idComent'] ?>">
-                                                    <i class="bi bi-flag-fill"></i>
-                                                </a>
+                                                
                                                 <!-- Botón para ver perfil -->
-                                                <a class="btn btn-outline-info btn-sm shadow" href = "../../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $comentario['idUsuario']; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Perfil">
-                                                    <i class="bi bi-person-fill"></i>
-                                                </a>
+                                                
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -426,72 +417,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </div>
         </main>
 
-        <!-- Ventana de reportar P -->
-        <div class="modal fade" id="modal_report_p" tabindex="-1" aria-labelledby="modal_report_pl" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Reportar Publicacion</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <label for="inputState validationCustom01" class="form-label">Motivo</label>
-                        <select id="inputState validationCustom01 " class="form-select selepub" name="motivo">
-                            <option selected>Seleccionar</option>
-                            <option>Contenido inapropiado</option>
-                            <option>Spam</option>
-                            <option>No cumple con las normas de referenciado</option>
-                        </select>
-                        <br>
-                        <label for="textAreaRp">Comentario</label>
-                        <textarea name="Comentario" id="textAreaRp" cols="60" rows="2" placeholder="(Opcional)"></textarea>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="subir_reporte_p">Aceptar</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <?php
-
-
-        ?>
-
-        <!-- VEntana reportar C -->
-        <div class="modal fade" id="modal_report_c" tabindex="-1" aria-labelledby="modal_report_cl" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Reportar Comentario</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <label for="inputState validationCustom01 " class="form-label">Motivo</label>
-                        <select id="inputState validationCustom01 " class="form-select selecom" name="motivo">
-                            <option selected>Seleccionar</option>
-                            <option>Spam</option>
-                            <option>Violencia</option>
-                            <option>Acoso</option>
-                            <option>Lenguaje inapropiado</option>
-                        </select>
-                        <br>
-                        <label for="textAreaRp">Comentario</label>
-                        <textarea name="Comentario" id="comentarioRc" cols="60" rows="2" placeholder="(Opcional)"></textarea>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="subir_reporte_c">Aceptar</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script src="reportar_pub.js"></script>
-        <?php  ?>
-
+        
     </div>
     </div>
 
