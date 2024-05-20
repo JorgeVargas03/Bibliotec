@@ -14,7 +14,7 @@ require '../verifymail/PHPMailer/Exception.php';
 require '../verifymail/PHPMailer/SMTP.php';  
 
 $var = 0;
-
+$resultado = "";
 // Verificar si se han enviado datos desde el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
     // Correo del remitente y destinatario
@@ -51,9 +51,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
 
         // Envío del correo
         if ($mail->send()) {
-            echo "success"; // Envío exitoso
+            echo 'success';
+            $resultado = "success"; // Envío exitoso
         } else {
-            echo "error: " . $mail->ErrorInfo; // Error en el envío
+            $resultado = "error: " . $mail->ErrorInfo; // Error en el envío
         }
     } catch (Exception $e) {
         // Manejo de errores en el envío del correo
@@ -310,10 +311,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
         </div>
 
         <div id="mensaje-enviado" style="display: none;">
-            <p>El mensaje ha sido enviado exitosamente.</p>
+            <p>El mensaje no pudo ser enviado. Por favor, inténtalo de nuevo más tarde.</p>
         </div>
         <div id="mensaje-error" style="display: none;">
-            <p>El mensaje no pudo ser enviado. Por favor, inténtalo de nuevo más tarde.</p>
+            <p>El mensaje ha sido enviado exitosamente.</p>
         </div>
 
 <script>
@@ -328,7 +329,8 @@ function enviarCorreo() {
             if (xhr.status == 200) {
                 // Si la solicitud se completó con éxito
                 document.getElementById("mensaje-form").style.display = "none";
-                if (xhr.responseText.trim() == "success") {
+                const res = "<?php echo $resultado ?>";
+                if (res == "success") {
                     document.getElementById("mensaje-enviado").style.display = "block";
                 } else {
                     document.getElementById("mensaje-error").style.display = "block";
