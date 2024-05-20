@@ -13,10 +13,14 @@ require '../verifymail/PHPMailer/PHPMailer.php';
 require '../verifymail/PHPMailer/Exception.php';
 require '../verifymail/PHPMailer/SMTP.php';  
 
+$var = 0;
+
 // Verificar si se han enviado datos desde el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
     // Correo del remitente y destinatario
-    $remitente = 'soportea236@gmail.com';
+
+
+    $remitente = 'bibliotec.team@hotmail.com';
     $destinatario = 'bibliotec.team@hotmail.com';
 
     // Mensaje obtenido del formulario
@@ -28,10 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
     try {
         // Configuración del servidor SMTP
         $mail->isSMTP();
-        $mail->Host       = 'smtp.live.com'; // Servidor SMTP para Hotmail
+        $mail->Host       = 'smtp-mail.outlook.com'; // Servidor SMTP para Hotmail
         $mail->SMTPAuth   = true;
         $mail->Username   = $remitente; // Correo del remitente
-        $mail->Password   = 'BiblioTec123'; // Contraseña del remitente (reemplaza con tu contraseña)
+        $mail->Password   = 'BiBliotec0027'; // Contraseña del remitente (reemplaza con tu contraseña)
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
@@ -42,7 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
         // Contenido del correo
         $mail->isHTML(true);
         $mail->Subject = "Mensaje desde el formulario";
-        $mail->Body    = nl2br($mensaje); // Convertir saltos de línea a <br>
+        $mail->Body   = "OPINION DE USUARIO: <br><br>";
+        $mail->Body   .= nl2br($mensaje); // Convertir saltos de línea a <br>
 
         // Envío del correo
         if ($mail->send()) {
@@ -55,6 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
         echo "error: " . $e->getMessage();
     }
 } else {
+    $var+=1;
+    if($var>1)
     echo "error: No se recibieron datos del formulario."; // Datos del formulario no recibidos
 }
 ?>
@@ -271,7 +278,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
             <!-- Contenido principal -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="contenedor">
-                <h1 style="text-decoration: underline;">BiblioTec Support</h1>
+                <h1 style="text-decoration: underline;">BiblioTec Support</h1><br>
             <h5 style="width: 160px;">
             <img src="..\..\images\icons\callcenter.png" style="max-width: 100%; height: auto;">
             </h5>
@@ -293,34 +300,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
             </script>
             <hr noshade="noshade">
             <div id="mensaje-form">
-    <div class="form-group">
-        <label for="mensaje">Mensaje:</label>
-        <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required></textarea>
-    </div>
-    <button class="btn btn-success btn-sm" type="button" onclick="enviarCorreo()">
-        <i class="bi bi-envelope-at mr-2"></i> Enviar
-    </button>
-</div>
-<div id="mensaje-enviado" style="display: none;">
-    <p>El mensaje ha sido enviado exitosamente.</p>
-</div>
-<div id="mensaje-error" style="display: none;">
-    <p>El mensaje no pudo ser enviado. Por favor, inténtalo de nuevo más tarde.</p>
-</div>
+        <div class="form-group justify-content-center">
+            <label for="mensaje">Mensaje:</label>
+            <textarea class="form-control" id="mensaje" name="mensaje" rows="5" cols="50" required></textarea>
+        </div><br>
+        <button class="btn btn-success btn-sm" type="button" onclick="enviarCorreo()">
+            <i class="bi bi-envelope-at mr-2"></i> Enviar
+        </button>
+        </div>
+
+        <div id="mensaje-enviado" style="display: none;">
+            <p>El mensaje ha sido enviado exitosamente.</p>
+        </div>
+        <div id="mensaje-error" style="display: none;">
+            <p>El mensaje no pudo ser enviado. Por favor, inténtalo de nuevo más tarde.</p>
+        </div>
 
 <script>
 function enviarCorreo() {
     var mensaje = document.getElementById("mensaje").value;
     
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "perfil/enviar_correo.php", true);
+    xhr.open("POST", "info_del_contacto.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 // Si la solicitud se completó con éxito
                 document.getElementById("mensaje-form").style.display = "none";
-                if (xhr.responseText.trim() === "success") {
+                if (xhr.responseText.trim() == "success") {
                     document.getElementById("mensaje-enviado").style.display = "block";
                 } else {
                     document.getElementById("mensaje-error").style.display = "block";
