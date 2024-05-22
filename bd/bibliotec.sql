@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 07-05-2024 a las 07:04:19
--- Versión del servidor: 8.0.32
--- Versión de PHP: 8.0.26
+-- Tiempo de generación: 20-05-2024 a las 05:17:02
+-- Versión del servidor: 8.2.0
+-- Versión de PHP: 8.2.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,17 +20,75 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `bibliotec`
 --
-CREATE DATABASE IF NOT EXISTS `bibliotec` DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci;
-USE `bibliotec`;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
+DROP PROCEDURE IF EXISTS `DistribucionUsuariosCarrera`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DistribucionUsuariosCarrera` ()   BEGIN
+    SELECT carrera_Us, COUNT(*) AS TotalUsuarios 
+    FROM usuario 
+    GROUP BY carrera_Us;
+END$$
+
 DROP PROCEDURE IF EXISTS `eliminarReportePublicacion`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarReportePublicacion` (IN `idPubParam` INT)   BEGIN
     -- Eliminar todos los reportes de publicaciones relacionados
     DELETE FROM reportepublicación WHERE idPub = idPubParam;
+END$$
+
+DROP PROCEDURE IF EXISTS `ObtenerReportes`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerReportes` ()   BEGIN
+    SELECT 'Publicacion' AS Tipo, COUNT(*) AS TotalReportes 
+    FROM reportepublicación
+    UNION
+    SELECT 'Comentario' AS Tipo, COUNT(*) AS TotalReportes 
+    FROM reportecomentario;
+END$$
+
+DROP PROCEDURE IF EXISTS `PublicacionesPorCarrera`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PublicacionesPorCarrera` ()   BEGIN
+    SELECT carrera_Pub, COUNT(*) AS TotalPublicaciones 
+    FROM publicacion 
+    GROUP BY carrera_Pub;
+END$$
+
+DROP PROCEDURE IF EXISTS `PublicacionesPorMateria`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PublicacionesPorMateria` ()   BEGIN
+    SELECT materia_Pub, COUNT(*) AS TotalPublicaciones 
+    FROM publicacion 
+    GROUP BY materia_Pub;
+END$$
+
+DROP PROCEDURE IF EXISTS `PublicacionesPorTipo`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PublicacionesPorTipo` ()   BEGIN
+    SELECT tipo_pub, COUNT(*) AS TotalPublicaciones 
+    FROM publicacion 
+    GROUP BY tipo_pub;
+END$$
+
+DROP PROCEDURE IF EXISTS `TotalComentarios`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TotalComentarios` ()   BEGIN
+    SELECT COUNT(*) AS TotalComentarios 
+    FROM comentario;
+END$$
+
+DROP PROCEDURE IF EXISTS `TotalPublicaciones`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TotalPublicaciones` ()   BEGIN
+    SELECT COUNT(*) AS TotalPublicaciones FROM publicacion;
+END$$
+
+DROP PROCEDURE IF EXISTS `TotalUsuarios`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TotalUsuarios` ()   BEGIN
+    SELECT COUNT(*) AS TotalUsuarios FROM usuario;
+END$$
+
+DROP PROCEDURE IF EXISTS `UsuariosPorSemestre`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UsuariosPorSemestre` ()   BEGIN
+    SELECT semestre_Us, COUNT(*) AS TotalUsuarios 
+    FROM usuario 
+    GROUP BY semestre_Us;
 END$$
 
 DELIMITER ;
@@ -76,7 +134,8 @@ CREATE TABLE IF NOT EXISTS `calificacion_detalle` (
 --
 
 INSERT INTO `calificacion_detalle` (`id_Usuario`, `idPub`, `calificacion`) VALUES
-(10, 5, '2.00');
+(10, 5, 2.00),
+(12, 18, 3.00);
 
 -- --------------------------------------------------------
 
@@ -123,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `comentario` (
   PRIMARY KEY (`idComent`),
   KEY `fk_Comentario_Publicacion_idx` (`idPub`),
   KEY `fk_Comentario_Usuario1_idx` (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `comentario`
@@ -138,7 +197,38 @@ INSERT INTO `comentario` (`idComent`, `idPub`, `idUsuario`, `text_Coment`, `fech
 (14, 4, 4, 'WOW Joorgeee eres un crackkkk. ', '2023-04-03'),
 (15, 5, 10, 'Excelente aporte amigo ', '2024-04-03'),
 (16, 5, 10, 'Excelente', '2024-04-14'),
-(19, 2, 10, 'La bruja ya se comió al niño >:|', '2024-05-06');
+(19, 2, 10, 'La bruja ya se comió al niño >:|', '2024-05-06'),
+(20, 18, 12, 'me gusta mucho el numero 0 gracias!!!\r\n', '2024-05-16');
+
+--
+-- Disparadores `comentario`
+--
+DROP TRIGGER IF EXISTS `coment_eliminar`;
+DELIMITER $$
+CREATE TRIGGER `coment_eliminar` AFTER DELETE ON `comentario` FOR EACH ROW BEGIN
+        INSERT INTO notificacion_usuario (idPub, idUsuario,idComent, tipoNoti, estadoNoti, fechaNoti) 
+        VALUES (OLD.idPub, OLD.idUsuario,OLD.idComent, 11, 1, CURDATE());
+END
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `inserta_comentario`;
+DELIMITER $$
+CREATE TRIGGER `inserta_comentario` AFTER INSERT ON `comentario` FOR EACH ROW BEGIN
+    DECLARE publicacion_usuario_id INT;
+
+    -- Obtener el id_usuario (dueño de la publicación) de la tabla publicacion
+    SELECT id_Usuario INTO publicacion_usuario_id 
+    FROM publicacion 
+    WHERE idPub = NEW.idPub;
+
+    -- Solo insertar una notificación si el usuario que comenta no es el dueño de la publicación
+    IF publicacion_usuario_id <> NEW.idUsuario THEN
+        INSERT INTO notificacion_usuario (idPub, idUsuario, tipoNoti, estadoNoti, fechaNoti) 
+        VALUES (NEW.idPub, publicacion_usuario_id, 5, 1,CURDATE());
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -151,7 +241,17 @@ CREATE TABLE IF NOT EXISTS `insignia` (
   `idInsignia` int NOT NULL AUTO_INCREMENT,
   `tipo_Insig` varchar(45) NOT NULL,
   PRIMARY KEY (`idInsignia`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Volcado de datos para la tabla `insignia`
+--
+
+INSERT INTO `insignia` (`idInsignia`, `tipo_Insig`) VALUES
+(1, 'Tigre Sabio'),
+(2, 'Huella de Calidad'),
+(3, 'Tigre Amigo'),
+(4, 'Tigre Veterano');
 
 -- --------------------------------------------------------
 
@@ -680,6 +780,78 @@ INSERT INTO `materia` (`nomMateria`, `nomCarrera`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `notificaciones`
+--
+
+DROP TABLE IF EXISTS `notificaciones`;
+CREATE TABLE IF NOT EXISTS `notificaciones` (
+  `idNoti` int NOT NULL AUTO_INCREMENT,
+  `desNoti` varchar(130) NOT NULL,
+  PRIMARY KEY (`idNoti`),
+  KEY `idNoti` (`idNoti`)
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Volcado de datos para la tabla `notificaciones`
+--
+
+INSERT INTO `notificaciones` (`idNoti`, `desNoti`) VALUES
+(5, 'Tiene un nuevo comentario.'),
+(12, 'No fue aprobada por infringir con nuestras normas'),
+(7, 'Ha sido aceptada y publicada.'),
+(11, 'Se eliminado un comentario suyo de esta publicación por no cumplir con las normas'),
+(10, 'Se ha eliminado porque no cumple con nuestras normas.'),
+(13, 'Tiene un nuevo comentario.'),
+(14, 'No fue aprobada por infringir con nuestras normas'),
+(15, 'Ha sido aceptada y publicada.'),
+(16, 'Se eliminado un comentario suyo de esta publicación por no cumplir con las normas'),
+(17, 'Se ha eliminado porque no cumple con nuestras normas.');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `notificacion_usuario`
+--
+
+DROP TABLE IF EXISTS `notificacion_usuario`;
+CREATE TABLE IF NOT EXISTS `notificacion_usuario` (
+  `idNotiUs` int NOT NULL AUTO_INCREMENT,
+  `idUsuario` int NOT NULL,
+  `idPub` int NOT NULL,
+  `idComent` int NOT NULL,
+  `tipoNoti` int NOT NULL,
+  `estadoNoti` smallint NOT NULL,
+  `fechaNoti` date NOT NULL,
+  PRIMARY KEY (`idNotiUs`)
+) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Volcado de datos para la tabla `notificacion_usuario`
+--
+
+INSERT INTO `notificacion_usuario` (`idNotiUs`, `idUsuario`, `idPub`, `idComent`, `tipoNoti`, `estadoNoti`, `fechaNoti`) VALUES
+(19, 1, 1, 0, 5, 2, '2024-05-15'),
+(20, 4, 17, 0, 5, 2, '2024-05-15'),
+(21, 4, 30, 0, 5, 2, '2024-05-15'),
+(22, 4, 31, 0, 7, 2, '2024-05-15'),
+(23, 4, 17, 0, 5, 2, '2024-05-15'),
+(24, 4, 17, 0, 5, 2, '2024-05-15'),
+(25, 4, 38, 0, 12, 2, '2024-05-15'),
+(26, 4, 31, 0, 10, 2, '2024-05-15'),
+(27, 1, 4, 0, 11, 1, '2024-05-15'),
+(28, 4, 17, 0, 11, 2, '2024-05-15'),
+(29, 1, 4, 0, 5, 1, '2024-05-15'),
+(30, 4, 4, 44, 11, 2, '2024-05-15'),
+(31, 1, 4, 0, 5, 1, '2024-05-15'),
+(32, 1, 4, 0, 5, 1, '2024-05-15'),
+(33, 4, 4, 42, 11, 2, '2024-05-15'),
+(34, 4, 18, 0, 7, 1, '2024-05-16'),
+(35, 4, 18, 0, 10, 1, '2024-05-16'),
+(36, 4, 18, 0, 5, 1, '2024-05-16');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `publicacion`
 --
 
@@ -698,21 +870,24 @@ CREATE TABLE IF NOT EXISTS `publicacion` (
   `estado_Pub` tinyint(1) NOT NULL,
   PRIMARY KEY (`idPub`),
   KEY `fk_Publicacion_Usuario1_idx` (`id_Usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `publicacion`
 --
 
 INSERT INTO `publicacion` (`idPub`, `id_Usuario`, `titulo_Pub`, `fecha_Pub`, `descrip_Pub`, `calif_Pub`, `carrera_Pub`, `materia_Pub`, `tipo_pub`, `archivo_Pub`, `estado_Pub`) VALUES
-(1, 1, 'Mi primera publicacion', '2024-03-18', 'Hola a todos amigos, mi primer aporte :)', '5', 'Ing. Sistemas Computacionales', 'Ingeniería de Software', 'Recurso Bibliográfico', 'libroHTML.pdf', 1),
-(2, 1, 'Curso de Cocina de Benigno', '2024-03-18', 'Hola a todos amigos, mi segundo aporte :)', '7', 'Ing. Sistemas Computacionales', 'Ingeniería de Software', 'Recurso Bibliográfico', 'RecetasBenigno.pdf', 1),
-(3, 1, 'Como resolver una Ecuacion Diferencial', '2024-03-18', 'Hola a todos amigos, mi tercer aporte :)', '10', 'Ing. Sistemas Computacionales', 'Ecuaciones Diferenciales', 'Recurso Bibliográfico', 'EcuacionesDiferenciales.pdf', 1),
-(4, 1, 'Curso de HTML+PHP', '2024-03-18', 'Les comparto mi libro de HTML', '10', 'Ing. Sistemas Computacionales', 'Programación Web', 'Apuntes y Tareas', 'libroHTML.pdf', 1),
-(5, 1, 'Metodologia SCRUM', '2024-03-18', 'Lo que debes saber sobre la Metodologia Scrum', '10', 'Ing. Sistemas Computacionales', 'Ingeniería de Software', 'Apuntes y Tareas', '../Publicacion.pdf', 0),
-(6, 10, 'Publicacion de prueba', '2024-04-22', 'Ejemplo 6', '0', 'Ing. Mecatronica', 'Electrónica de Potencia Aplicada', 'Recurso Bibliografico', '../repo_archivos/10/La Biblia del Diablo.pdf', 0),
-(7, 10, 'Publicacion de Prueba PARTE 2', '2024-04-22', 'PARTE 2', '0', 'Lic. Administracion', 'Comunicación Corporativa', 'Recurso Bibliografico', '../repo_archivos/10/4.1DefiniciónEconomía.pdf', 1),
-(15, 10, 'COMENTEN SI LES GUSTO ESTA PUBLICACION', '2024-04-24', 'HOLA BUENAS', '0', 'Ing. Quimica', 'Gestión de la Calidad', 'Trabajos y tareas', '../repo_archivos/10/Publicacion.pdf', 0);
+(1, 1, 'Mi primera publicacion', '2024-03-18', 'Hola a todos amigos, mi primer aporte :)', 5, 'Ing. Sistemas Computacionales', 'Ingeniería de Software', 'Recurso Bibliográfico', 'libroHTML.pdf', 1),
+(2, 1, 'Curso de Cocina de Benigno', '2024-03-18', 'Hola a todos amigos, mi segundo aporte :)', 7, 'Ing. Sistemas Computacionales', 'Ingeniería de Software', 'Recurso Bibliográfico', 'RecetasBenigno.pdf', 1),
+(3, 1, 'Como resolver una Ecuacion Diferencial', '2024-03-18', 'Hola a todos amigos, mi tercer aporte :)', 10, 'Ing. Sistemas Computacionales', 'Ecuaciones Diferenciales', 'Recurso Bibliográfico', 'EcuacionesDiferenciales.pdf', 1),
+(4, 1, 'Curso de HTML+PHP', '2024-03-18', 'Les comparto mi libro de HTML', 10, 'Ing. Sistemas Computacionales', 'Programación Web', 'Apuntes y Tareas', 'libroHTML.pdf', 1),
+(5, 1, 'Metodologia SCRUM', '2024-03-18', 'Lo que debes saber sobre la Metodologia Scrum', 10, 'Ing. Sistemas Computacionales', 'Ingeniería de Software', 'Apuntes y Tareas', '../Publicacion.pdf', 0),
+(6, 10, 'Publicacion de prueba', '2024-04-22', 'Ejemplo 6', 0, 'Ing. Mecatronica', 'Electrónica de Potencia Aplicada', 'Recurso Bibliografico', '../repo_archivos/10/La Biblia del Diablo.pdf', 0),
+(7, 10, 'Publicacion de Prueba PARTE 2', '2024-04-22', 'PARTE 2', 0, 'Lic. Administracion', 'Comunicación Corporativa', 'Recurso Bibliografico', '../repo_archivos/10/4.1DefiniciónEconomía.pdf', 1),
+(15, 10, 'COMENTEN SI LES GUSTO ESTA PUBLICACION', '2024-04-24', 'HOLA BUENAS', 0, 'Ing. Quimica', 'Gestión de la Calidad', 'Trabajos y tareas', '../repo_archivos/10/Publicacion.pdf', 0),
+(18, 4, '0', '2024-05-16', '0', 0, 'Ing. Sistemas Computacionales', 'Fundamentos de Base de Datos', 'Recurso Bibliografico', '../repo_archivos/4/18_Manual De Usuario WareLang.pdf', 3),
+(19, 12, 'presentacion', '2024-05-16', 'para este precioso sprint 4', 0, 'Ing. Sistemas Computacionales', 'Desarrollo de Aplicaciones Multiplataforma', 'Recurso Bibliografico', '../repo_archivos/12/19_SCRIPT_PRACTICA.docx', 0),
+(20, 12, 'RECHACEN ESTA', '2024-05-16', 'ola', 0, 'Ing. Sistemas Computacionales', 'Estructura de Datos', 'Recurso Bibliografico', '../repo_archivos/12/20_Interrupciones en Ensamblador.pdf', 0);
 
 --
 -- Disparadores `publicacion`
@@ -734,6 +909,34 @@ CREATE TRIGGER `borrado_publicacion` BEFORE DELETE ON `publicacion` FOR EACH ROW
 
     -- Eliminar etiquetas relacionadas
     DELETE FROM tag_publicacion WHERE idPub = OLD.idPub;
+END
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `nombre_trigger`;
+DELIMITER $$
+CREATE TRIGGER `nombre_trigger` AFTER UPDATE ON `publicacion` FOR EACH ROW BEGIN
+    DECLARE publicacion_usuario_id INT;
+
+    IF OLD.estado_Pub <> NEW.estado_Pub THEN
+        SELECT id_Usuario INTO publicacion_usuario_id
+        FROM publicacion 
+        WHERE idPub = NEW.idPub;
+
+        IF NEW.estado_Pub = 2 THEN
+            INSERT INTO notificacion_usuario (idPub, idUsuario, tipoNoti, estadoNoti, fechaNoti) 
+            VALUES (NEW.idPub, publicacion_usuario_id, 12, 1, CURDATE());
+        END IF;
+
+        IF NEW.estado_Pub = 1 THEN
+            INSERT INTO notificacion_usuario (idPub, idUsuario, tipoNoti, estadoNoti, fechaNoti) 
+            VALUES (NEW.idPub, publicacion_usuario_id, 7, 1, CURDATE());
+        END IF;
+
+        IF NEW.estado_Pub = 3 THEN
+            INSERT INTO notificacion_usuario (idPub, idUsuario, tipoNoti, estadoNoti, fechaNoti) 
+            VALUES (NEW.idPub, publicacion_usuario_id, 10, 1, CURDATE());
+        END IF;
+    END IF;
 END
 $$
 DELIMITER ;
@@ -764,14 +967,9 @@ INSERT INTO `reportecomentario` (`idReporteCom`, `idComent`, `fecha_Report`, `mo
 (2, 1, '2024-05-05', 'Spam', 0),
 (3, 9, '2024-05-05', 'Lenguaje inapropiado', 0),
 (4, 19, '2024-05-06', 'Lenguaje inapropiado', 0),
-(5, 12, '2024-05-07', 'Spam', 0),
-(6, 13, '2024-05-07', 'Lenguaje inapropiado', 0);
+(5, 12, '2024-05-07', 'Spam', 0);
 
 -- --------------------------------------------------------
-
-----
-
-----
 
 --
 -- Estructura de tabla para la tabla `reportepublicación`
@@ -786,14 +984,18 @@ CREATE TABLE IF NOT EXISTS `reportepublicación` (
   `estado_Report` tinyint(1) NOT NULL,
   PRIMARY KEY (`idReporte`),
   KEY `fk_ReportePublicación_Publicacion1_idx` (`idPub`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `reportepublicación`
 --
 
 INSERT INTO `reportepublicación` (`idReporte`, `idPub`, `fecha_Report`, `motivo_Report`, `estado_Report`) VALUES
-(5, 3, '2024-05-07', 'Contenido inapropiado', 0);
+(5, 3, '2024-05-07', 'Contenido inapropiado', 1),
+(6, 18, '2024-05-16', 'No cumple con las normas de referenciado', 1),
+(7, 3, '2024-05-16', 'Spam', 1),
+(8, 4, '2024-05-16', 'Contenido inapropiado', 1),
+(9, 3, '2024-05-16', 'Spam', 1);
 
 -- --------------------------------------------------------
 
@@ -828,7 +1030,15 @@ INSERT INTO `tag_publicacion` (`idPub`, `nombreTag`) VALUES
 (5, 'Resumen'),
 (6, 'Ejemplo1'),
 (6, 'Ejemplo2'),
-(6, 'Ejemplo3');
+(6, 'Ejemplo3'),
+(18, 'hermano'),
+(18, 'no'),
+(18, 'o'),
+(19, 'hermano'),
+(19, 'no'),
+(19, 'o'),
+(20, '1'),
+(20, 'etiqueta');
 
 -- --------------------------------------------------------
 
@@ -847,7 +1057,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `contra_Us` varchar(60) NOT NULL,
   PRIMARY KEY (`idUsuario`),
   KEY `carrera_Us` (`carrera_Us`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Volcado de datos para la tabla `usuario`
@@ -858,8 +1068,9 @@ INSERT INTO `usuario` (`idUsuario`, `nom_Us`, `apell_Us`, `carrera_Us`, `semestr
 (2, 'Maria', 'DB', 'Arquitectura', '7', 'mariadb@ittepic.edu.mx', '12345678'),
 (3, 'Javier', 'DB', 'Ing. Civil', '8', 'javierdb@ittepic.edu.mx', '$2y$10$gLoihHD8cQm7tBTvR8oN/.MlbnU8XjGEKWpK0.ZuSEMN/snUcWyDi'),
 (4, 'Rebeca', 'Ramirez', 'Ing. Sistemas Computacionales', '6', 'Rebeca@ittepic.edu.mx', '$2y$10$gLoihHD8cQm7tBTvR8oN/.MlbnU8XjGEKWpK0.ZuSEMN/snUcWyDi'),
-(5, 'Yvan', 'Acosta', 'Ing. Sistemas Computacionales', '6', 'yvfeacostaca@ittepic.edu.mx', '$2y$10$gLoihHD8cQm7tBTvR8oN/.MlbnU8XjGEKWpK0.ZuSEMN/snUcWyDi'),
-(10, 'Jorge', 'Mendoza', 'Ing. Sistemas Computacionales', '8', 'joluvargaspa@ittepic.edu.mx', '$2y$10$KV8tBYdz5GKrauJb4hFp6uaOPWvjkBv8SxAB2AwQ1WxgVZlvrvvUe');
+(5, 'Yvan', 'Acosta', 'Ing. Sistemas Computacionales', '6', 'yvfeacostaca2@ittepic.edu.mx', '$2y$10$gLoihHD8cQm7tBTvR8oN/.MlbnU8XjGEKWpK0.ZuSEMN/snUcWyDi'),
+(10, 'Jorge', 'Mendoza', 'Ing. Sistemas Computacionales', '8', 'joluvargaspa@ittepic.edu.mx', '$2y$10$KV8tBYdz5GKrauJb4hFp6uaOPWvjkBv8SxAB2AwQ1WxgVZlvrvvUe'),
+(12, 'Yvan ', 'Acosta', 'Ing. Sistemas Computacionales', '6', 'yvfeacostaca@ittepic.edu.mx', '$2y$10$i1TQkhCypN5.sJb43Ojj1O2xVaqEir.Leg88Hk92AZTym//mFIKaO');
 
 --
 -- Disparadores `usuario`
@@ -886,7 +1097,7 @@ DROP TABLE IF EXISTS `usuario_insignia`;
 CREATE TABLE IF NOT EXISTS `usuario_insignia` (
   `idInsignia` int NOT NULL,
   `idUsuario` int NOT NULL,
-  `cant` int NOT NULL,
+  `idCalif` int NOT NULL,
   KEY `fk_Usuario_Insignia_Insignia1_idx` (`idInsignia`),
   KEY `fk_Usuario_Insignia_Usuario1_idx` (`idUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -908,7 +1119,7 @@ CREATE TABLE IF NOT EXISTS `usuario_temp` (
   `contra_Us` varchar(60) NOT NULL,
   `token` varchar(5) NOT NULL,
   PRIMARY KEY (`idUsuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Restricciones para tablas volcadas
@@ -963,13 +1174,6 @@ ALTER TABLE `tag_publicacion`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`carrera_Us`) REFERENCES `carrera` (`nomCarrera`);
-
---
--- Filtros para la tabla `usuario_insignia`
---
-ALTER TABLE `usuario_insignia`
-  ADD CONSTRAINT `fk_Usuario_Insignia_Insignia1` FOREIGN KEY (`idInsignia`) REFERENCES `insignia` (`idInsignia`),
-  ADD CONSTRAINT `fk_Usuario_Insignia_Usuario1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

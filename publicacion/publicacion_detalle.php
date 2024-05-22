@@ -223,11 +223,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 
 <body class="bg-body-secondary">
-<header class="bg-primary d-flex flex-wrap align-items-center py-3 position-inherit">
+<header class="bg-primary py-2 bg-opacity-75 border-bottom border-terciary border-4 d-flex flex-wrap align-items-center py-3 position-inherit">
     <div class="d-flex align-items-center">
       <!-- Logo y título -->
-      <img src="../images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px;  filter: drop-shadow(-2px 1px 1px rgba(255,255,255, 0.7));">
-      <img src="../images/icons/tec.png" class="d-flex img-fluid" style="width: 60px;  margin-right: 1.2vmax;">
+      <img src="../images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px; margin-right: 2.0vmax;">
+      <img src="../images/icons/tec.png" class="d-flex img-fluid" style="width: 60px;  margin-right: 2.0vmax;">
       <a href="" class="logo d-flex align-items-center mb-3 mb-md-0 link-body-emphasis text-decoration-none">
         <img src="../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid">
         <h4><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></b></h4>
@@ -287,10 +287,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <div class="container-fluid">
         <div class="row">
             <!-- Barra de navegación izquierda -->
-            <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
+            <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body" style="width: 15%; background-color: #F07B12;">
                 <ul class="list-unstyled" id="menu-lateral">
                     <li class="mb-2 mt-2">
-                        <a class="nav-link align-items-center" href="../home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
+                        <a class="nav-link align-items-center" href="../home.php" id="letrabar">Inicio</a>
                     </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -352,7 +352,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 bg-body-secondary main-content" style="font-weight:normal; margin-left: 1.5%">
                 <h3 style=" margin-left: 1.5% ; margin-top: 35px;">
-                    <b class="textogran" style="font-size: 2vmax; text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
+                    <b class="textogran" style="font-size: 2vmax; 
                     margin-top: 0.5vmax;">Detalles de la Publicación</b>
                     </h2>
                     <div class="linea-delgada"></div>
@@ -361,7 +361,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                             <div class="col-md-11">
                                 <!-- Detalles de la publicación -->
                                 <div class="card card-details">
-                                    <div class="card-header bg-primary text-light d-flex justify-content-between">
+                                    <div class="card-header bg-primary bg-opacity-75 text-light d-flex justify-content-between">
                                         <div>
                                             <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
                                             <p class="card-text mb-0">Por: <a class="link-light link-underline link-underline-opacity-0" href="../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $publicacion['id_Usuario']; ?>"><b><?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></a></p>
@@ -621,7 +621,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
     <script src="../js/fadeout.js"></script>
 
-    <footer class="bg-primary d-flex  align-items-center py-4 text-light bg-primary">
+    <footer class="bg-primary py-2 bg-opacity-75 border-top border-terciary border-4 d-flex  align-items-center py-4 text-light bg-primary">
     <div></div>
     <div class="container mb-3 mt-2">
       <p class="mb-2 mt-2">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
