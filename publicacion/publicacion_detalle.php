@@ -368,9 +368,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         </div>
                                         <div>
                                             <!-- Botón de reportar -->
-                                            <a class="btn btn-danger btn-sm shadow" id="reportarPub" data-bs-toggle="modal" data-bs-target="#modal_report_p">
-                                                <i class="bi bi-flag-fill"></i>
-                                            </a>
+                                            <?php
+                                                if($usuario != $publicacion['id_Usuario']){
+                                                    echo '<a class="btn btn-danger btn-sm shadow" id="reportarPub" data-bs-toggle="modal" data-bs-target="#modal_report_p">
+                                                    <i class="bi bi-flag-fill"></i>
+                                                </a>';
+                                                }
+                                            ?>
+                                            
                                             <a class="btn btn-info btn-sm shadow" href = "../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $publicacion['id_Usuario']; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Perfil">
                                                 <i class="bi bi-person-fill"></i>
                                             </a>
@@ -507,9 +512,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         <div class="card-header">
                                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                                 <!-- Botón de reportar -->
-                                                <a class="btn btn-sm btn-outline-danger " id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c" data-comid="<?php echo $comentario['idComent'] ?>">
+                                                <?php if($usuario != $comentario['idUsuario']){
+                                                    echo '<a class="btn btn-sm btn-outline-danger " id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c" data-comid="'.$comentario['idComent'].'">
                                                     <i class="bi bi-flag-fill"></i>
-                                                </a>
+                                                </a>';
+                                                } 
+                                                ?>
+                                                
                                                 <!-- Botón para ver perfil -->
                                                 <a class="btn btn-outline-info btn-sm shadow" href = "../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $comentario['idUsuario']; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Perfil">
                                                     <i class="bi bi-person-fill"></i>

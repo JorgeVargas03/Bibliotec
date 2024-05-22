@@ -3,23 +3,26 @@ $link = include('../../php/conexion.php'); // Incluye el archivo de conexión y 
 include('../../php/functions.php');
 
 // Consulta a la base de datos
-$query_rc = "SELECT * FROM 	reportecomentario WHERE estado_Report = 0 ";
-$query_c = "SELECT c.*, u.nom_Us, u.apell_Us FROM comentario c
+
+$query_rc = "SELECT rc.*, c.text_Coment, c.idPub, c.idUsuario, u.nom_Us, u.apell_Us
+              FROM reportecomentario rc
+              JOIN comentario c ON c.idComent = rc.idComent
+              JOIN usuario u ON c.idUsuario = u.idUsuario
+              WHERE rc.estado_Report = 0
+              GROUP BY rc.idComent" ;
+
+/*"SELECT rc.*,c.text_Coment,c.idPub,c.idUsuario, u.nom_Us, u.apell_Us FROM reportecomentario rc 
+            JOIN comentario c on c.idComent = rc.idReporteCom
             JOIN usuario u ON c.idUsuario = u.idUsuario
-            WHERE c.idComent IN (SELECT distinct idComent FROM reportecomentario WHERE estado_Report = 0 )";
-
-
+            WHERE rc.estado_Report = 0 " */
 
 $registros_rc = mysqli_query($link, $query_rc); // Utiliza la conexión obtenida desde el archivo de conexión
-$registros_c = mysqli_query($link, $query_c);
 
 // Verifica si la consulta se ejecutó correctamente
 if (!$registros_rc) {
   die('Error en la consulta: ' . mysqli_error($link));
 }
-if (!$registros_c) {
-  die('Error en la consulta: ' . mysqli_error($link));
-}
+
 
 // Cierra la conexión después de realizar la consulta
 mysqli_close($link);
@@ -116,7 +119,7 @@ session_start();
           margin-top: 0.5vmax;"><b>Comentarios Reportados</b></h2>
           <br>
           <?php
-          while ($fila = mysqli_fetch_array($registros_rc) and $fila2 = mysqli_fetch_array($registros_c)) {
+          while ($fila = mysqli_fetch_array($registros_rc)) {
           ?>
           <div class="publicacion card mb-4">
             <div class="card-header d-flex justify-content-between align-items-end" style="background-color: #FF3511; color: #000000;">
@@ -127,12 +130,12 @@ session_start();
               </div>
             </div>
               <div class="card-body">
-                <h3 class="card-title display-6"><b>Usuario: <?php echo $fila2['nom_Us']; ?>  <?php echo $fila2['apell_Us'];?></b></h3>
-                <p class="card-text lead">Comentario: <?php echo ($fila2['text_Coment']); ?></p>
+                <h3 class="card-title display-6"><b>Usuario: <?php echo $fila['nom_Us']; ?>  <?php echo $fila['apell_Us'];?></b></h3>
+                <p class="card-text lead">Comentario: <?php echo ($fila['text_Coment']); ?></p>
                 <p class="card-text" style="color: red;">Motivo: <?php echo ($fila['motivo_Report']); ?></p>
               </div>
               <div class="card-footer d-flex text-muted justify-content-between align-items-end">
-                <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila2['nom_Us'] . " " . $fila2['apell_Us']; ?></span>
+                <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
                 <span class="card-text comment-date mb-0">Fecha de reporte: <?php echo functions::convertirFecha($fila['fecha_Report']); ?></span>
               </div>
           </div>
