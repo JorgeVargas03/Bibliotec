@@ -6,6 +6,10 @@ session_start();
 
 $usuario =  $_SESSION['idU'];
 
+if(isset($_GET['id']) && $usuario == $_GET['id']){
+    header("Location: infoperfil.php");
+}
+
 
 $notisquery = "SELECT n.*, p.titulo_Pub, d.desNoti FROM notificacion_usuario n
               JOIN publicacion p ON n.idPub = p.idPub
@@ -42,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
                       WHERE idUsuario = '$usuario'";
 
   if (mysqli_query($link, $actualizaNotis)) {
-    header("Location: home.php");;
+    header("Location: home.php");
   } 
 }
 
@@ -380,17 +384,20 @@ mysqli_close($link);
                     </div>
 
 
-                    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                    <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-4">
                         <div class="container mt-2" >
                             <hr noshade="noshade">
                             <h3 class="text-center" style="margin-bottom: 20px;">Insignias</h3>
-                            <div class="row row-cols-2 row-cols-md-4 g-6">
+                            <div class="row row-cols-1 row-cols-md-4 g-6">
 
                                 <div class="col">
-                                <div class="card h-100 border-primary ">
-                                <img class="card-img-top " src="..\..\images\icons\tigre sabio.PNG" alt="Trophy Icon">
+                                <div class="card h-100 border-primary" style="width: 10rem;">
+                                <button type="button" class="btn btn-sm mx-3 my-3" data-bs-toggle="popover" title="Descripcion" style="--bs-btn-padding-y: .01rem; --bs-btn-padding-x: 0rem; --bs-btn-font-size: .01rem; --bs-btn-color: var(--bs-blue)" data-bs-content="Para los Tigres que destacan en el aspecto académico.">
+                                    <img class="img-fluid rounded-start" src="..\..\images\icons\tigre sabio.PNG" alt="Trophy Icon">
+                                </button>
                                     <div class="card-body  text-center">
-                                        <span class="card-title border-primary text-center">Tigre Sabio</span><br>
+                                        <span class="card-title border-primary text-center">Tigre Sabio</span>
+                                        <br>
                                         <?php
                                             $valedor = mysqli_fetch_array($resAn);
                                             if($valedor != null){
@@ -426,10 +433,13 @@ mysqli_close($link);
                                 </div>
 
                                 <div class="col">
-                                <div class="card h-100 border-primary ">
-                                <img class="card-img-top" src="..\..\images\icons\huelladecalidad.PNG" alt="Trophy Icon">
+                                <div class="card h-100 border-primary" style="width: 10rem;">
+                                <button type="button" class="btn btn-sm mx-3 my-3" data-bs-toggle="popover" title="Descripcion" style="--bs-btn-padding-y: .01rem; --bs-btn-padding-x: .0rem; --bs-btn-font-size: .1rem; --bs-btn-color: var(--bs-blue)" data-bs-content="Aquellos Tigres que dejan una huella de calidad con sus aportaciones.">
+                                    <img class="img-fluid rounded-start" src="..\..\images\icons\huelladecalidad.PNG" alt="Trophy Icon">        
+                                </button>
                                     <div class="card-body text-center">
-                                        <span class="card-title  text-center">Huella de Calidad</span><br>
+                                        <span class="card-title  text-center">Huella de Calidad</span>
+                                        <br>
                                         <?php
                                             if($plisss != null && $plisss['idInsignia'] == 2 ){
                                                 echo '<a class="btn btn-success btn-sm disabled" data-idin="2" disabled><i class="bi bi-plus-circle bi-sm"></i></a>';
@@ -450,6 +460,7 @@ mysqli_close($link);
                                         ?>
                                     </div>
                                     <div class ="card-footer border-primary text-center">
+                                        <!-- seccion para agregar la cantidad de insignias -->
                                         <?php   
                                             if($porfavor!=null && $porfavor[0]==2){
                                                 echo $porfavor[1];
@@ -472,10 +483,13 @@ mysqli_close($link);
                                 </div>
 
                                 <div class="col">
-                                <div class="card h-100 border-primary ">
-                                <img class="card-img-top" src="..\..\images\icons\tigre Amigo.PNG" alt="Trophy Icon">
+                                <div class="card h-100 border-primary" style="width: 10rem;">
+                                <button type="button" class="btn btn-sm mx-3 my-3" data-bs-toggle="popover" title="Descripcion" style="--bs-btn-padding-y: .01rem; --bs-btn-padding-x: .0rem; --bs-btn-font-size: .1rem; --bs-btn-color: var(--bs-blue)" data-bs-content="Para aquellos Tigres que están dispuestos a ayudar y apoyan a la comunidad">
+                                        <img class="img-fluid rounded-start " src="..\..\images\icons\tigre Amigo.PNG" alt="Trophy Icon">
+                                </button>
                                     <div class="card-body text-center">
-                                        <span class="card-title">Tigre Amigo</span><br>
+                                        <span class="card-title">Tigre Amigo</span>
+                                        <br>
                                         <?php
                                             if($plisss != null && $plisss['idInsignia'] == 3 ){
                                                 echo '<a class="btn btn-success btn-sm disabled" data-idin="3" disabled><i class="bi bi-plus-circle bi-sm"></i></a>';
@@ -518,10 +532,13 @@ mysqli_close($link);
                                 </div>
 
                                 <div class="col">
-                                <div class="card h-100 border-primary ">
-                                <img class="card-img-top" src="..\..\images\icons\tigre veterano.png" alt="Trophy Icon">
+                                <div class="card h-100 border-primary" style="width: 10rem;">
+                                <button type="button" class="btn btn-sm mx-3 my-3" data-bs-toggle="popover" title="Descripcion" style="--bs-btn-padding-y: .01rem; --bs-btn-padding-x: .0rem; --bs-btn-font-size: .1rem; --bs-btn-color: var(--bs-blue)" data-bs-content="Un Tigre que tiene mucha experiencia en la plataforma">
+                                    <img class="img-fluid rounded-start " src="..\..\images\icons\tigre veterano.png" alt="Trophy Icon">
+                                </button>
                                     <div class="card-body text-center">
-                                        <span class="card-title">Tigre Veterano</span><br>
+                                        <span class="card-title">Tigre Veterano</span>
+                                        <br>
                                         <?php
                                             if($plisss != null && $plisss['idInsignia'] == 4){
                                                 echo '<a class="btn btn-success btn-sm disabled" data-idin="4" disabled><i class="bi bi-plus-circle bi-sm"></i></a>';
@@ -586,6 +603,10 @@ mysqli_close($link);
 
                                 });
                             });
+                        </script>
+                        <script>
+                            const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+                            const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
                         </script>
 
 
