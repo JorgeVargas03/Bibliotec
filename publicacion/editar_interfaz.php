@@ -102,8 +102,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
                       SET estadoNoti = 2
                       WHERE idUsuario = '$usuario'";
 
+$idPublicacion = $_GET['id'];
   if (mysqli_query($link, $actualizaNotis)) {
-    header("Location: editar_interfaz.php");;
+    header("Location: editar_interfaz.php?id=$idPublicacion");
   } 
 }
 
@@ -189,8 +190,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
 
 
 
-<body>
-<header class="bg-primary d-flex flex-wrap align-items-center py-3 position-inherit">
+<body class="bg-body-secondary">
+<header class="bg-primary py-2 bg-opacity-75 border-bottom border-terciary border-4 d-flex flex-wrap align-items-center py-3 position-inherit">
     <div class="d-flex align-items-center">
       <!-- Logo y título -->
       <img src="../images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px;  filter: drop-shadow(-2px 1px 1px rgba(255,255,255, 0.7));">
@@ -254,10 +255,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
   <div class="bg-body-secondary">
     <div class="row">
       <!-- Barra de navegación izquierda -->
-      <div class="flex-shrink-0 p-3" style="width: 15%; background-color: #F07B12;">
+      <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body" style="width: 15%;">
         <ul class="list-unstyled" id="menu-lateral">
           <li class="mb-2 mt-2">
-            <a class="nav-link align-items-center" href="../home.php" id="letrabar" style="filter: drop-shadow(-1px 2px 3px rgb(255, 231, 9));">Inicio</a>
+            <a class="nav-link align-items-center" href="../home.php" id="letrabar" >Inicio</a>
           </li>
           <li class="mb-1">
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -284,7 +285,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
             </button>
             <div class="collapse" id="contacto-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
+                <li><a href="../administracion/Perfil/info_del_contacto.php?" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
               </ul>
             </div>
           </li>
@@ -319,7 +320,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="margin-left: 0.9%;">
 
-        <div class="container" style="margin-top:1vmax; align-items: center;">
+        <div class="container mb-4" style="margin-top:1vmax; align-items: center;">
 
           <h2 style=" margin-left: 0.1% ; margin-bottom: 1vmax;"><span class="material-symbols-outlined"> library_add </span>
             <b style="margin-left:0.5vmax;" class="textogran">Editar Publicación</b>
@@ -417,9 +418,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
         inputArchivo.value = rutaArchivo;
     });
 </script>
-  <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
-    <div class="container">
-      <p class="mb-0">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
+  <footer class="py-3 text-light bg-primary bg-opacity-75 border-top border-terciary border-4">
+  <div></div>
+    <div class="container mb-3 mt-3">
+      <p class="mb-2 mt-2">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
     </div>
   </footer>
 </body>

@@ -163,8 +163,8 @@ mysqli_close($link);
     <div class="container mt-4">
         <h2 class="mb-4">Estadísticas
         <form action="generar_excel.php" method="post">
-                <button type="submit" class="btn btn-success"style="margin-left:2vmax">
-                        <i class="bi bi-filetype-xml" style="font-size: 1.5vmax"></i>  Descargar estadísticas
+                <button type="submit" class="btn btn-success" >
+                        <i class="bi bi-filetype-xml" style="font-size: 1vmax"></i>  Descargar estadísticas
                 </button>
         </form>
         </h2>
