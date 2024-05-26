@@ -35,6 +35,20 @@ if (!isset($_SESSION["rol"])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <title>BiblioTec - SingIn</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <script>
+                window.onpopstate = function () {
+                    window.location.href = "index.php";
+                };
+                // Añade un estado al historial
+                history.pushState(null, null, index.php);
+                window.onpopstate = function () {
+                    history.go(1);
+                };
+    </script>
 
   <!--En esta seccion se incluyen las hojas de estilos-->
   <link rel="icon" href="images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
@@ -135,6 +149,8 @@ if (!isset($_SESSION["rol"])) {
       }
     });
   </script>
+
+
 </body>
 
 </html>

@@ -14,7 +14,7 @@ if (isset($_GET['carrera'])) {
     $consulta = "SELECT p.*, u.nom_Us, u.apell_Us 
              FROM publicacion p
              JOIN usuario u ON p.id_Usuario = u.idUsuario
-             WHERE carrera_Pub = '$carrera'";
+             WHERE carrera_Pub = '$carrera' and estado_Pub = 1";
 
     if ($materia != '') {
         $consulta .= " AND materia_Pub LIKE '%$materia%'";

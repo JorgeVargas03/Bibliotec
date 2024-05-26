@@ -1,7 +1,28 @@
 <?php
 include('../php/functions.php');
 //include('../php/sesion.php');
+// Inicia la sesión después de cerrar la conexión
 session_start();
+
+// Verificar si el usuario no ha iniciado sesión
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+  header("location: index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
+  exit;
+}
+
+// Verificar si se ha enviado una solicitud para cerrar sesión
+if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
+  // Destruir todas las variables de sesión
+  session_unset();
+
+  // Destruir la sesión
+  session_destroy();
+
+  // Redirigir al usuario al inicio de sesión
+  header("location: index.php");
+  exit;
+}
+
 // Incluir el archivo de conexión a la base de datos
 $link = include('../php/conexion.php');
 $usuario =  $_SESSION['idU'];
@@ -48,6 +69,7 @@ if (isset($_GET['id'])) {
         exit();
     }
 
+ 
 
     //Query para obtener el promedio de calificaciones de esta publicacion
     $qcalif = "SELECT AVG(`calificacion`) as 'promedio' from calificacion_detalle cd 
@@ -167,17 +189,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
 }
 
 
+//contador de consultass
+$fechaActual = date("Y-m-d");
+
+if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['contador'])) {
+        // Actualizar el estado de la publicación
+        $queryCont = "INSERT INTO consultas(fechaConsulta) VALUES ('$fechaActual')";
+        
+        mysqli_query($link, $queryCont);
+  }
+
+
+
 // Cerrar la conexión a la base de datos
 mysqli_close($link);
-
-// Iniciar sesión
-//session_start();
-
-// Verificar si el usuario no ha iniciado sesión
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: ../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
-    exit;
-}
 
 ?>
 <!DOCTYPE html>
@@ -450,15 +475,18 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         </div>
                                     </div>
                                     <!-- Botones para ver y descargar archivo adjunto -->
+                                    <form id="consultaForm" method="post">
+                                        <input type="hidden" name="contador" value="1">
+                                    </form>
                                     <div class="card-footer d-flex justify-content-center align-items-center">
                                         <div class="mx-3">
-                                            <a href="<?php echo $publicacion['archivo_Pub']; ?>" target="_blank" class="btn btn-primary btn-lg">
-                                                <i class="bi bi-file-pdf-fill mr-2"></i> Ver Archivo Adjunto
+                                            <a href="<?php echo $publicacion['archivo_Pub']; ?>" target="_blank" class="btn btn-primary btn-lg"  onclick="enviarFormulario()" >
+                                                <i class="bi bi-file-pdf-fill mr-2"  ></i> Ver Archivo Adjunto
                                             </a>
                                         </div>
                                         <div class="mx-3">
-                                            <a href="<?php echo $publicacion['archivo_Pub']; ?>" download class="btn btn-success">
-                                                <i class="bi bi-cloud-arrow-down mr-2" style="font-size: 1.5em;"></i> <!-- Cambiar a otro icono de descarga -->
+                                            <a href="<?php echo $publicacion['archivo_Pub']; ?>" download class="btn btn-success"   onclick="enviarFormulario()"  >
+                                                <i class="bi bi-cloud-arrow-down mr-2" style="font-size: 1.5em;"  ></i> <!-- Cambiar a otro icono de descarga -->
                                             </a>
                                         </div>
                                     </div>
@@ -635,7 +663,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             </div>
         </div>
         <script src="reportar_pub.js"></script>
-        <?php  ?>
+        <script>
+        function enviarFormulario() {
+            document.getElementById('consultaForm').submit();
+        }
+        </script>
 
     </div>
     </div>
