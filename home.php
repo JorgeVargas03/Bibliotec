@@ -200,7 +200,7 @@ mysqli_close($link);
       <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body" style="width: 15%;">
         <ul class="list-unstyled" id="menu-lateral">
           <li class="mb-2 mt-2">
-            <a class="nav-link align-items-center" href="home.php" id="letrabar">Inicio</a>
+            <a class="nav-link align-items-center" href="home.php" id="letrabardos" style="color: black; font-weight: bold;">Inicio</a>
           </li>
           <li class="mb-1">
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -260,7 +260,7 @@ mysqli_close($link);
       </div>
 
       <!-- Contenido principal -->
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content bg-body-secondary"  >
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content bg-body-secondary">
         <div class="container mt-3 list-group list-group-flush border-bottom mb-4">
         <h2 style="user-select: none;font-size: 2vmax;
           margin-top: 1vmax; margin-bottom: 2vmax;"><b>Bienvenidx, <?php echo " ".$_SESSION['nombre'] . " " . $_SESSION['apellido'] ?> </b></h2>       

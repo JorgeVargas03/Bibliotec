@@ -86,16 +86,17 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
 </style>
 
 
-<body>
-
-
-
-  <header class="bg-primary py-2 bg-opacity-75 border-bottom border-terciary border-4 py-2">
-    <div class="container " style="margin-left:7.8vmax;" >
+<body class="bg-body-secondary">
+<header class="bg-primary py-2 bg-opacity-75 border-bottom border-terciary border-4 d-flex flex-wrap align-items-center py-3 position-inherit">
+    <div class="d-flex align-items-center">
       <!-- Logo y título -->
-      <div class="logo">
-        <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
-        <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
+      <img src="../../images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px; margin-right: 2.0vmax;">
+      <img src="../../images/icons/tec.png" class="d-flex img-fluid" style="width: 60px;  margin-right: 2.0vmax;">
+      <a href="" class="logo d-flex align-items-center mb-3 mb-md-0 link-body-emphasis text-decoration-none">
+        <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid" style = "margin-right: 0.5vmax;">
+        <h4><span class="col-1 ">Biblio</span>
+        <span class="col-2">Tec<span class="col-1"> - Administrador</span></span></h4>
+      </a>
     </div>
   </header>
 
@@ -103,8 +104,8 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
     <div class="row" >
         <!-- Barra de navegación izquierda -->
         <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body p-3" style="width: 15%;">
-            <ul class="list-unstyled" id="menu-lateral" style="padding-bottom: 300px">
-            <li class="mb-1">
+            <ul class="list-unstyled" id="menu-lateral">
+            <li class="mb-2 mt-2">
                   <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
                 </li>
                 <li class="mb-1">
@@ -132,25 +133,28 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
         </div>
       
       <!-- Contenido principal -->
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 mt-2">
-      <div class="container mt-2 mb-3">
-          <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
-          margin-top: 0.5vmax;"><b>Publicaciones pendientes</b></h2>
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content bg-body-secondary">
+      <div class="container mt-3">
+          <h2 style="user-select: none;font-size: 2vmax;"><b>Publicaciones pendientes</b></h2>
           <?php while ($fila = mysqli_fetch_array($registros)) : ?>
             <div class="publicacion card mb-4 mt-4">
-              <div class="card-body ">
-              <div class="card-header d-flex justify-content-between align-items-end" style="background-color: #F7C200; color: #000000;">
-                Pendiente 
-                 <a class="col-sm-1.5" style="background-color: #2A88FF ; color: #FFFFFF;" name="fade" href="publicacion_pendiente.php?id=<?php echo ($fila['idPub']); ?>" class="btn btn-primary btn-sm">
-                Revisar</a>
-                </div>
+              <div class="card-body">
                 <h3 class="card-title display-6 mt-2"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
                 <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
               </div>
               <div class="card-footer d-flex text-muted justify-content-between align-items-end">
-                <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
-                <span class="card-text comment-date mb-0">Fecha de publicación: <?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
-              </div>
+              <div class="col-auto col-sm-4 d-flex justify-content-start">
+    <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
+    </div>
+    <div class="col-auto d-flex justify-content-center col-sm-4">
+    <button class="btn btn-outline-warning btn-sm" onclick="window.location.href='publicacion_pendiente.php?id=<?php echo $fila['idPub']; ?>'" style="width: 100px;">
+            Revisar
+              </button>
+    </div>
+    <div class="col-auto col-sm-4 d-flex justify-content-end">
+    <span class="card-text comment-date mb-0">Fecha de publicación: <?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
+    </div>
+  </div>
             </div>
           <?php endwhile; ?>
         </div>

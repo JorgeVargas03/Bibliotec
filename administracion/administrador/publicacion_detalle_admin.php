@@ -180,16 +180,18 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 </style>
 
 
-<body>
-<header class="bg-primary py-2">
-<div class="container d-flex align-items-right" style="margin-left:7.8vmax;">
-            <!-- Logo y título -->
-            <div class="logo col-5">
-                <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
-                <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span>
-                <span>- Publicacion del comentario reportado</span></h4></b>
-            </div>
-    
+<body class="bg-body-secondary">
+<header class="bg-primary py-2 bg-opacity-75 border-bottom border-terciary border-4 d-flex flex-wrap align-items-center py-3 position-inherit">
+    <div class="d-flex align-items-center">
+      <!-- Logo y título -->
+      <img src="../../images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px; margin-right: 2.0vmax;">
+      <img src="../../images/icons/tec.png" class="d-flex img-fluid" style="width: 60px;  margin-right: 2.0vmax;">
+      <a href="" class="logo d-flex align-items-center mb-3 mb-md-0 link-body-emphasis text-decoration-none">
+        <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid" style = "margin-right: 0.5vmax;">
+        <h4><span class="col-1 ">Biblio</span>
+        <span class="col-2">Tec<span class="col-1"> - Administrador</span></span></h4>
+      </a>
+    </div>
   </header>
     <!--Aqui se muestra un apartado para los productos que se venderan-->
 
