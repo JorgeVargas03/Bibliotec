@@ -2,17 +2,29 @@
 $link = include('../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
 
 // Inicia la sesión después de cerrar la conexión
-session_start();
+session_start()
+// Verificar si el usuario no ha iniciado sesión
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+  header("location: index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
+  exit;
+}
+
+// Verificar si se ha enviado una solicitud para cerrar sesión
+if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
+  // Destruir todas las variables de sesión
+  session_unset();
+
+  // Destruir la sesión
+  session_destroy();
+
+  // Redirigir al usuario al inicio de sesión
+  header("location: index.php");
+  exit;
+}
+
 $nombreUS =  strstr($_SESSION['email'],'@',true);
 $usuario =  $_SESSION['idU'];
 
-
-
-// Verificar si el usuario no ha iniciado sesión
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-  header("location: ../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
-  exit;
-}
 
 $queryCarrera = "SELECT nomCarrera FROM carrera";
 $res = mysqli_query($link,$queryCarrera); // Utiliza la conexión obtenida desde el archivo de conexión

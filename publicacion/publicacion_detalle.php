@@ -1,7 +1,28 @@
 <?php
 include('../php/functions.php');
 //include('../php/sesion.php');
+// Inicia la sesión después de cerrar la conexión
 session_start();
+
+// Verificar si el usuario no ha iniciado sesión
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+  header("location: index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
+  exit;
+}
+
+// Verificar si se ha enviado una solicitud para cerrar sesión
+if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
+  // Destruir todas las variables de sesión
+  session_unset();
+
+  // Destruir la sesión
+  session_destroy();
+
+  // Redirigir al usuario al inicio de sesión
+  header("location: index.php");
+  exit;
+}
+
 // Incluir el archivo de conexión a la base de datos
 $link = include('../php/conexion.php');
 $usuario =  $_SESSION['idU'];
@@ -166,14 +187,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['contador'])) {
         mysqli_query($link, $queryCont);
   }
 
-// Iniciar sesión
-//session_start();
-
-// Verificar si el usuario no ha iniciado sesión
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: ../index.php"); // Redirigir al usuario al inicio de sesión si no ha iniciado sesión
-    exit;
-}
 
 
 // Cerrar la conexión a la base de datos
