@@ -96,6 +96,7 @@ mysqli_close($link);
   <link rel="stylesheet" href="../css/hover-min.css">
   <link rel="stylesheet" href="../css/animate.css">
   <link rel="stylesheet" href="../css/sidebars.css">
+  <link rel="stylesheet" href="../publicacion/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <!--Inicia Bootstrap-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -251,7 +252,6 @@ mysqli_close($link);
 
       <!-- Contenido principal -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content">
-        <br>
         <div class="container">
         <h3 style="user-select: none;font-size: 1.8vmax;
           margin-top:0.9vmax; color:#000000 ; margin-bottom:0.6vmax;">Búsqueda</h3> 
@@ -284,15 +284,23 @@ mysqli_close($link);
         <div id="filteredPublications" class="container">
           <div id="ajaxContainer" class="ajax-container"></div>
           <?php while ($fila = mysqli_fetch_array($result)) : ?>
-            <div class="publicacion card mb-4">
+            <div class="publicacion card mb-4 card-details">
               <div class="card-body">
                 <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
                 <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
-                <a name="fade" href="../publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-primary btn-sm"><b>Leer más</b></a>
               </div>
-              <div class="card-footer d-flex text-muted justify-content-between align-items-end">
-                <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
+              <div class="bg-primary py-2 bg-opacity-10 card-footer d-flex text-muted justify-content-between align-items-end">
+              <div class="col-auto col-sm-4 d-flex justify-content-start">
+              <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
+                </div>
+                <div class="col-auto d-flex justify-content-center col-sm-4">
+    <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='../publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>'" style="width: 100px;">
+            Más detalles
+              </button>
+    </div>
+                <div class="col-auto col-sm-4 d-flex justify-content-end">
                 <span class="card-text comment-date mb-0">Fecha de publicación: <?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
+                </div>
               </div>
             </div>
           <?php endwhile; ?>

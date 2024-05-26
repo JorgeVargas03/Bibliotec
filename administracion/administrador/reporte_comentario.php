@@ -137,8 +137,10 @@ session_start();?>
             <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body p-3" style="width: 15%;">
                 <ul class="list-unstyled" id="menu-lateral">
                 <li class="mb-1">
-                  <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
-                </li>
+                <a class="nav-link align-items-center p-3" href="admin_home.php" id="letrabardos"  style="color: black; font-weight: bold;">
+                            Publicaciones Pendientes
+                        </a>
+                                    </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
                           Reportes
@@ -168,8 +170,8 @@ session_start();?>
                         <div class="row" >
                             <div class="col-md-11" style="margin-left: 4%;">
                                 <!-- Detalles de la publicación -->
-                                <div class="card card-details" style="background-color:rgba(255, 51, 0, 0.158);" >
-                                    <div class="card-header" style="background-color: rgb(167, 4, 4);" >
+                                <div class="card card-details bg-danger-subtle">
+                                    <div class="card-header bg-danger">
                                     </div>
                                     
                                     <!-- Botón para ver archivo adjunto -->
@@ -179,13 +181,13 @@ session_start();?>
                                             <h5><Span style="margin-left: 2vmax;"><b>Tipo de reporte: </b></Span><span><?php echo $fila['motivo_Report'];?></span></h5> 
                                         </div>
                                         <div class="col text-end mt-4 mb-3  align-items-end" style="margin-right: 2vmax;">
-                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#reg-modalR">
+                                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#reg-modalR">
                                          <i class="bi bi-check-all mr-2"></i> Rechazar reporte
                                         </button>
-                                            <a href="#" class="btn btn-danger btn-sm" onclick="eliminarComentario(<?php echo $comentario['idComent']; ?>)">
+                                            <a href="#" class="btn btn-outline-danger btn-sm" onclick="eliminarComentario(<?php echo $comentario['idComent']; ?>)">
                                                 <i class="bi bi-trash3 mr-2"></i> Eliminar comentario
                                             </a>
-                                            <a href="publicacion_detalle_admin.php?id=<?php echo $comentario['idPub']; ?>" class="btn btn-link btn-sm">
+                                            <a href="publicacion_detalle_admin.php?id=<?php echo $comentario['idPub']; ?>" class="btn btn-outline-info btn-sm">
                                             <i class="bi bi-file-earmark mr-2"></i> Ir a la publicacion
                                             </a>
                                         </div>
@@ -231,7 +233,7 @@ session_start();?>
                                     
                                     <!-- COMENTARIO REPORTADO -->
                                         <div class="card mt-5 mb-5" style="height: 40%; width: 92%; margin-left: 4%;">
-                                            <div class="card-header bg-primary text-light" style="height: 3vh;">
+                                            <div class="card-header bg-danger text-light">
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">

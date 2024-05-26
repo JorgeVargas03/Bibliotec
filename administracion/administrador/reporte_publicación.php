@@ -145,7 +145,9 @@ if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
             <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body p-3" style="width: 15%;">
                 <ul class="list-unstyled" id="menu-lateral">
                     <li class="mb-1">
-                        <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
+                    <a class="nav-link align-items-center p-3" href="admin_home.php" id="letrabardos"  style="color: black; font-weight: bold;">
+                            Publicaciones Pendientes
+                        </a>
                     </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -177,8 +179,8 @@ if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
                     <div class="row">
                         <div class="col-md-11" style="margin-left: 4%;">
                             <!-- Detalles de la publicación -->
-                            <div class="card card-details" style="background-color: rgba(255, 0, 0, 0.13);">
-                                <div class="card-header " style="background-color: rgb(167, 4, 4);">
+                            <div class="card card-details bg-danger-subtle">
+                                <div class="card-header bg-danger">
                                 </div>
 
                                 <!-- Botón para ver archivo adjunto -->
@@ -188,10 +190,10 @@ if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
                                         <h5 class="row"><Span style="margin-left: 2vmax;"><b>Motivo de reporte: </b><?php echo $fila['motivo_Report']; ?></Span><span></span></h5>
                                     </div>
                                     <div class="col text-end mt-4 mb-3  align-items-end" style="margin-right: 2vmax;">
-                                        <a id="Rechazar" data-bs-toggle="modal" data-bs-target="#reg-modalR" href="#" class="btn btn-success btn-sm">
+                                        <a id="Rechazar" data-bs-toggle="modal" data-bs-target="#reg-modalR" href="#" class="btn btn-outline-success btn-sm">
                                             <i class="bi bi-check2 mr-2"></i> Rechazar reporte
                                         </a>
-                                        <a id="idEliminar2" data-bs-toggle="modal" data-bs-target="#reg-modal" href="#" class="btn btn-danger btn-sm">
+                                        <a id="idEliminar2" data-bs-toggle="modal" data-bs-target="#reg-modal" href="#" class="btn btn-outline-danger btn-sm">
                                             <i class="bi bi-trash3 mr-2"></i> Eliminar publicacion
                                         </a>
 
@@ -213,7 +215,7 @@ if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
                         <div class="col-md-8" style="width: 92%; margin-left: 4%;">
                             <!-- Detalles de la publicación -->
                             <div class="card card-details">
-                                <div class="card-header  text-light" style="background-color: rgba(167, 4, 4, .8);">
+                                <div class="card-header text-light bg-danger">
                                     <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
                                     <p class="card-text mb-0">Por:<b> <?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></p>
                                 </div>

@@ -106,6 +106,7 @@ mysqli_close($link);
   <link rel="stylesheet" href="css/hover-min.css">
   <link rel="stylesheet" href="css/animate.css">
   <link rel="stylesheet" href="css/sidebars.css">
+  <link rel="stylesheet" href="publicacion/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <!--Inicia Bootstrap-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -270,7 +271,7 @@ mysqli_close($link);
               <h5 class="card-title">BiblioTec e Instituto Tecnologico de Tepic</h5>
               <p class="card-text">Colaboramos estrechamente con nuestra institución tecnológica para proporcionar la información
                  más completa posible. ¡Todos para uno y uno para todos, comparte tu conocimiento!</p>
-              <p class="card-text"><small class="text-body-secondary">&copy; 2024</small></p>
+              <p class="card-text"><small class="text-body-secondary">&copy; Instituto Tecnológico de Tepic 2024</small></p>
             </div>
           </div>
 
@@ -278,7 +279,7 @@ mysqli_close($link);
           <h3 style="user-select: none;font-size: 1.8vmax;
           margin-top:0.9vmax; color:#000000 ; margin-bottom:0.6vmax;">Últimas publicaciones de  <?php echo " ".$_SESSION['carrera'] ;?></h3>
           <?php while ($fila = mysqli_fetch_array($registros)) : ?>
-            <div class="publicacion card mb-5 mt-3">
+            <div class="publicacion card mb-4 mt-3 card-details">
               <div class="card-body">
                 <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
                 <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
@@ -289,7 +290,7 @@ mysqli_close($link);
                 </div>
                 <div class="col-auto d-flex justify-content-center col-sm-4">
     <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>'" style="width: 100px;">
-            Revisar
+            Más detalles
               </button>
     </div>
                 <div class="col-auto col-sm-4 d-flex justify-content-end">

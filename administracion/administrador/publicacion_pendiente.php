@@ -175,9 +175,9 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
             <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body p-3" style="width: 15%;">
                 <ul class="list-unstyled" id="menu-lateral">
                     <li class="mb-1">
-                        <button class="btn d-inline-flex align-items-start rounded border-5 col-1" href="admin_home.php" id="letrabardos"  style="color: black; font-weight: bold;">
+                        <a class="nav-link align-items-center p-3" href="admin_home.php" id="letrabardos"  style="color: black; font-weight: bold;">
                             Publicaciones Pendientes
-                        </button>
+                        </a>
                     </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -209,8 +209,8 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
                         <div class="row " >
                             <div class="col-md-12 ">
                                 <!-- Decision de publicacion -->
-                                <div class="card card-details mb-3" style="background-color: rgba(255, 166, 0, 0.281);">
-                                    <div class="card-header " style="background-color: rgb(252, 146, 7);">
+                                <div class="card card-details mb-3 bg-warning-subtle">
+                                    <div class="card-header bg-warning">
                                     </div>
                                     
                                     <!-- Botón para ver archivo adjunto -->
@@ -219,10 +219,10 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
                                             <h3 class="pl-1 mb-2 mt-3" style="margin-left: 2vmax;"> <b>Publicación pendiente</b></h3> 
                                         </div>
                                         <div class="col text-end mt-4 mb-4  align-items-end" style="margin-right: 2vmax;">
-                                            <a class="btn btn-success btn-sm"  data-bs-target="#staticBackdrop"   data-bs-toggle="modal">
+                                            <a class="btn btn-outline-success btn-sm"  data-bs-target="#staticBackdrop"   data-bs-toggle="modal">
                                                 <i class="bi bi-check2 mr-2"></i> Aprobar
                                             </a>
-                                            <a  data-bs-target="#staticBackdrop2"   data-bs-toggle="modal" class="btn btn-danger btn-sm">
+                                            <a  data-bs-target="#staticBackdrop2"   data-bs-toggle="modal" class="btn btn-outline-danger btn-sm">
                                                 <i class="bi bi-trash3 mr-2"></i> Rechazar
                                             </a>
                                         </div>
@@ -233,11 +233,13 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
                     </div>
 
 
-                    <!--PUBLICACIÓN-->
+                    <!--CSS
+                style="background-color: rgba(255, 166, 0, 0.281);
+                style="background-color: rgb(252, 146, 7); -->
 
                     <!-- Detalles de la publicación -->
-                    <div class="card card-details mb-5">
-                                    <div class="card-header bg-primary text-light d-flex justify-content-between">
+                    <div class="card mb-5">
+                                    <div class="card-header bg-warning bg-opacity-75 text-light d-flex justify-content-between">
                                         <div>
                                             <h5 class="card-title mb-0"><?php echo $publicacion['titulo_Pub']; ?></h5>
                                             <p class="card-text mb-0">Por:<b> <?php echo $publicacion['nom_Us'] . " " . $publicacion['apell_Us']; ?></b></p>
@@ -264,10 +266,6 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
                                             </div>
                                             <div class="col-md-6">
                                                 <!-- Calificación con estrellas -->
-                                                <div class="rating mt-3">
-                                                    <p class="card-text"><b>Calificación:
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>

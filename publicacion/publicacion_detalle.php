@@ -327,7 +327,7 @@ mysqli_close($link);
             <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body" style="width: 15%; background-color: #F07B12;">
                 <ul class="list-unstyled" id="menu-lateral">
                     <li class="mb-2 mt-2">
-                        <a class="nav-link align-items-center" href="../home.php" id="letrabar">Inicio</a>
+                    <a class="nav-link align-items-center" href="../home.php" id="letrabar" style="color: black; font-weight: bold;">Inicio</a>
                     </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -407,14 +407,14 @@ mysqli_close($link);
                                             <!-- Botón de reportar -->
                                             <?php
                                                 if($usuario != $publicacion['id_Usuario']){
-                                                    echo '<a class="btn btn-danger btn-sm shadow" id="reportarPub" data-bs-toggle="modal" data-bs-target="#modal_report_p">
-                                                    <i class="bi bi-flag-fill"></i>
+                                                    echo '<a class="btn btn-danger btn-sm shadow" id="reportarPub" data-bs-toggle="modal" data-bs-target="#modal_report_p" style="width: 30px; height: 30px;">
+                                                    <i class="bi bi-flag"></i>
                                                 </a>';
                                                 }
                                             ?>
                                             
-                                            <a class="btn btn-info btn-sm shadow" href = "../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $publicacion['id_Usuario']; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Perfil">
-                                                <i class="bi bi-person-fill"></i>
+                                            <a class="btn btn-info btn-sm shadow" href = "../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $publicacion['id_Usuario']; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Perfil" style="width: 30px; height: 30px;">
+                                                <i class="bi bi-person"></i>
                                             </a>
                                         </div>
                                     </div>
@@ -553,14 +553,14 @@ mysqli_close($link);
                                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                                 <!-- Botón de reportar -->
                                                 <?php if($usuario != $comentario['idUsuario']){
-                                                    echo '<a class="btn btn-sm btn-outline-danger " id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c" data-comid="'.$comentario['idComent'].'">
+                                                    echo '<a class="btn btn-sm btn-outline-danger " id="reportarCom" data-bs-toggle="modal" data-bs-target="#modal_report_c" data-comid="'.$comentario['idComent'].'" style="width: 30px; height: 30px;">
                                                     <i class="bi bi-flag-fill"></i>
                                                 </a>';
                                                 } 
                                                 ?>
                                                 
                                                 <!-- Botón para ver perfil -->
-                                                <a class="btn btn-outline-info btn-sm shadow" href = "../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $comentario['idUsuario']; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Perfil">
+                                                <a class="btn btn-outline-info btn-sm shadow" href = "../administracion/Perfil/UsuarioDetalle.php?id=<?php echo $comentario['idUsuario']; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Perfil" style="width: 30px; height: 30px;">
                                                     <i class="bi bi-person-fill"></i>
                                                 </a>
                                             </div>

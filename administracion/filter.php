@@ -34,15 +34,21 @@ if (isset($_GET['carrera'])) {
         // Si se encontraron resultados, muestra las publicaciones
         while ($fila = mysqli_fetch_array($result)) {
             // Construye el HTML para mostrar cada publicación
-            echo '<div class="publicacion card mb-4">';
+            echo '<div class="publicacion card mb-4 card-details">';
             echo '<div class="card-body">';
             echo '<h3 class="card-title display-6"><b>' . $fila['titulo_Pub'] . '</b></h3>';
             echo '<p class="card-text lead">' . $fila['descrip_Pub'] . '</p>';
-            echo '<a name="fade" href="../publicacion/publicacion_detalle.php?id=' . $fila['idPub'] . '" class="btn btn-primary btn-sm"><b>Leer más</b></a>';
             echo '</div>';
-            echo '<div class="card-footer d-flex text-muted justify-content-between align-items-end">';
+            echo '<div class="bg-primary py-2 bg-opacity-10 card-footer d-flex text-muted justify-content-between align-items-end">';
+            echo '<div class="col-auto col-sm-4 d-flex justify-content-start">';
             echo '<span class="card-text comment-date mb-0">Publicado por: ' . $fila['nom_Us'] . ' ' . $fila['apell_Us'] . '</span>';
+            echo '</div>';
+            echo '<div class="col-auto d-flex justify-content-center col-sm-4">';
+            echo "<button class=\"btn btn-outline-primary btn-sm\" onclick=\"window.location.href='../publicacion/publicacion_detalle.php?id=" . $fila['idPub'] . "'\" style=\"width: 100px;\"> Más detalles </button>";
+            echo '</div>';
+            echo '<div class="col-auto col-sm-4 d-flex justify-content-end">';
             echo '<span class="card-text comment-date mb-0">Fecha de publicación: ' . functions::convertirFecha($fila['fecha_Pub']) . '</span>';
+            echo '</div>';
             echo '</div>';
             echo '</div>';
         }

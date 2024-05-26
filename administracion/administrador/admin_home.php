@@ -53,12 +53,13 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
   <title>BiblioTec - AdminHome</title>
 
   <!--En esta seccion se incluyen las hojas de estilos-->
-  <link rel="icon" href="../../images\icons\tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
+  <link rel="icon" href="../../images/icons/tigerF.png"><!--Esta seccion de codigo agrega un icono a la pagina-->
   <link rel="stylesheet" href="../../css/normalizar.css">
   <link rel="stylesheet" href="../../css/estilos.css">
   <link rel="stylesheet" href="../../css/hover-min.css">
   <link rel="stylesheet" href="../../css/animate.css">
   <link rel="stylesheet" href="../../css/sidebars.css">
+  <link rel="stylesheet" href="../../publicacion/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <!--Inicia Bootstrap-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -66,6 +67,7 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
   <!--Termmina Bootstrap-->
   <!--iconos-->
@@ -106,7 +108,9 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
         <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body p-3" style="width: 15%;">
             <ul class="list-unstyled" id="menu-lateral">
             <li class="mb-2 mt-2">
-                  <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
+            <a class="nav-link align-items-center p-3" href="admin_home.php" id="letrabardos"  style="color: black; font-weight: bold;">
+                            Publicaciones Pendientes
+                        </a>
                 </li>
                 <li class="mb-1">
                     <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -135,14 +139,14 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
       <!-- Contenido principal -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content bg-body-secondary">
       <div class="container mt-3">
-          <h2 style="user-select: none;font-size: 2vmax;"><b>Publicaciones pendientes</b></h2>
+          <h2 style="user-select: none;font-size: 2vmax;"><b>Publicaciones Pendientes</b></h2>
           <?php while ($fila = mysqli_fetch_array($registros)) : ?>
-            <div class="publicacion card mb-4 mt-4">
+            <div class="publicacion card mb-4 mt-4 card-details">
               <div class="card-body">
                 <h3 class="card-title display-6 mt-2"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
                 <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
               </div>
-              <div class="card-footer d-flex text-muted justify-content-between align-items-end">
+              <div class="card-footer d-flex text-muted justify-content-between align-items-end bg-warning bg-opacity-10">
               <div class="col-auto col-sm-4 d-flex justify-content-start">
     <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
     </div>
