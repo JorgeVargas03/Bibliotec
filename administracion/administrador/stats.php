@@ -20,14 +20,14 @@ if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
 $stats = array();
 $sp_names = array(
     "TotalUsuarios",
-    "UsuariosPorSemestre",
     "DistribucionUsuariosCarrera",
     "TotalPublicaciones",
     "PublicacionesPorTipo",
     "PublicacionesPorCarrera",
-    "PublicacionesPorMateria",
     "TotalComentarios",
-    "ObtenerReportes"
+    "ObtenerReportes",
+    "ObtenerNumeroDeConsultasMes",
+    "TotalPublicacionesPorAnio"
 );
 
 foreach ($sp_names as $sp_name) {
@@ -48,6 +48,23 @@ foreach ($sp_names as $sp_name) {
         }
     } while (mysqli_next_result($link));
 }
+
+
+
+if (isset($_GET['file'])) {
+    // Obtener el nombre del archivo del parámetro GET
+    $fileName = $_GET['file'];
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . basename($fileName) . '"');
+        header('Content-Length: ' . filesize($fileName));
+        
+        // Leer el archivo y enviarlo al navegador
+        readfile($fileName);
+        exit;
+}
+
+
 
 mysqli_close($link);
 ?>
@@ -144,11 +161,17 @@ mysqli_close($link);
       <!-- Contenido principal -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
     <div class="container mt-4">
-        <h2 class="mb-4">Estadísticas</h2>
+        <h2 class="mb-4">Estadísticas
+        <form action="generar_excel.php" method="post">
+                <button type="submit" class="btn btn-success"style="margin-left:2vmax">
+                        <i class="bi bi-filetype-xml" style="font-size: 1.5vmax"></i>  Descargar estadísticas
+                </button>
+        </form>
+        </h2>
 
         <?php foreach ($stats as $sp_name => $data) : ?>
             <div class="card mb-4">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header bg-primary text-white justify-content-between d-flex">
                     <h5 class="card-title mb-0"><?php echo $sp_name; ?></h5>
                 </div>
                 <div class="card-body">
@@ -181,14 +204,12 @@ mysqli_close($link);
 </main>
 
 
-
-
-
     </div>
   </div>
 
   <script src ="../../js/fadeout.js">
   </script>
+
 
   <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
         <div class="container" >

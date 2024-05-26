@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
                       WHERE idUsuario = '$usuario'";
 
   if (mysqli_query($link, $actualizaNotis)) {
-    header("Location: infoperfil.php");;
+    header("Location: infoperfil.php");
   } 
 }
 
@@ -304,10 +304,34 @@ mysqli_close($link);
                 </ul>
             </div>
 
+            <?php
+                $imagenes_aleatorias = array();
+
+                // Ruta base de las imágenes
+                $ruta_base = "../../images/tigers/";
+
+                // Generar el arreglo de rutas de imágenes
+                for ($i = 1; $i <= 15; $i++) {
+                    $ruta_imagen = $ruta_base . "a" . $i . ".png";
+                    $imagenes_aleatorias[] = $ruta_imagen;
+                }
+
+                // Contador para alternar entre las imágenes aleatorias y los avatares
+                $contador = 0;
+                ?>
+
             <!-- Contenido principal -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content">
                 <div class="contenedor">
-                    <h1><img id="profilePic" src="..\..\images\icons\perfil.png"></h1>
+                <div class="col-auto" style="margin-top: 2vmax;">
+                    <?php if ($contador % 2 == 0) : ?>
+                        <!-- Mostrar imagen aleatoria -->
+                        <img src="<?php echo $imagenes_aleatorias[array_rand($imagenes_aleatorias)]; ?>" alt="Imagen Aleatoria" class="rounded-circle" width="200">
+                    <?php else : ?>
+                        <!-- Mostrar avatar -->
+                        <img src="<?php echo $imagenes_aleatorias[array_rand($imagenes_aleatorias)]; ?>" alt="Imagen Aleatoria" class="rounded-circle" width="200">
+                    <?php endif; ?>
+                </div>
 
                     <h2>
                         <span id="nombreApellido"><?php echo $_SESSION['nombre'] . " " . $_SESSION['apellido'] ?></span>
