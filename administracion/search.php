@@ -1,7 +1,19 @@
 <?php
 include('../php/functions.php');
 $link = include('../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
+
 session_start();
+if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
+  // Destruir todas las variables de sesión
+  session_unset();
+
+  // Destruir la sesión
+  session_destroy();
+
+  // Redirigir al usuario al inicio de sesión
+  header("location: index.php");
+  exit;
+}
 
 // Obtener el ID de la publicación desde el parámetro GET
 $carrera = $_GET['carrera'];
@@ -206,7 +218,7 @@ mysqli_close($link);
             </button>
             <div class="collapse" id="contacto-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
+              <li><a href="Perfil/info_del_contacto.php?" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
               </ul>
             </div>
           </li>
@@ -221,7 +233,7 @@ mysqli_close($link);
             <div class="collapse" id="cuenta-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li><a href="Perfil/infoperfil.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Mi Perfil</a></li>
-                <a href="home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a>
+                <a href="../home.php?logout=true" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Cerrar Sesión</a>
               </ul>
             </div>
           </li>

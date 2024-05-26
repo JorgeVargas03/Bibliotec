@@ -38,14 +38,14 @@ $total_notificaciones = $contador_notificaciones['publicaciones_noleidas'];
 
 // Verifica si se envió el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
-  // Actualizar el estado de la publicación
-  $actualizaNotis = "UPDATE notificacion_usuario
-                      SET estadoNoti = 2
-                      WHERE idUsuario = '$usuario'";
+    // Actualizar el estado de la publicación
+    $actualizaNotis = "UPDATE notificacion_usuario
+                        SET estadoNoti = 2
+                        WHERE idUsuario = '$usuario'";
 
-  if (mysqli_query($link, $actualizaNotis)) {
-    header("Location: general_search.php");;
-  } 
+    if (mysqli_query($link, $actualizaNotis)) {
+    header("Location: general_search.php?dataSearch=".$_GET["dataSearch"]);;
+    } 
 }
 
 
@@ -73,6 +73,7 @@ if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
     // Obtener el término de búsqueda del formulario
     $searchTerm = $_GET["dataSearch"];
+
 
     // Consulta para buscar coincidencias con usuarios
     $consultaUsuarios = "SELECT * FROM usuario
@@ -240,7 +241,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                         </button>
                         <div class="collapse" id="contacto-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
+                                <li><a href="Perfil/info_del_contacto.php" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
                             </ul>
                         </div>
                     </li>

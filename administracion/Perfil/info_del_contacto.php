@@ -245,7 +245,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
                         </button>
                         <div class="collapse" id="contacto-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="administracion/Perfil/info_del_contacto.php?" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
+                                <li><a href="info_del_contacto.php?" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
                             </ul>
                         </div>
                     </li>

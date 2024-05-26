@@ -6,6 +6,18 @@ session_start();
 $link = include('../php/conexion.php');
 $usuario =  $_SESSION['idU'];
 
+if (isset($_GET["logout"]) && $_GET["logout"] === "true") {
+    // Destruir todas las variables de sesión
+    session_unset();
+
+    // Destruir la sesión
+    session_destroy();
+
+    // Redirigir al usuario al inicio de sesión
+    header("location: index.php");
+    exit;
+}
+
 // Verificar si se proporcionó un ID de publicación
 if (isset($_GET['id'])) {
     // Obtener el ID de la publicación desde el parámetro GET
@@ -150,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
                       WHERE idUsuario = '$usuario'";
 
   if (mysqli_query($link, $actualizaNotis)) {
-    header("Location: publicacion_detalle.php");
+    header("Location: publicacion_detalle.php?id=".$idPub);
   } 
 }
 
@@ -317,7 +329,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         </button>
                         <div class="collapse" id="contacto-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
+                                <li><a href="../administracion/Perfil/info_del_contacto.php?" class="link-body-emphasis d-inline-flex text-decoration-none rounded" id="letrabartres" style="color: black;">Información de contacto</a></li>
                             </ul>
                         </div>
                     </li>
