@@ -90,8 +90,8 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
 
 
 
-  <header class="bg-primary py-2">
-    <div class="container" style="margin-left:7.8vmax;" >
+  <header class="bg-primary py-2 bg-opacity-75 border-bottom border-terciary border-4 py-2">
+    <div class="container " style="margin-left:7.8vmax;" >
       <!-- Logo y título -->
       <div class="logo">
         <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
@@ -102,7 +102,7 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
   <div class="container-fluid" >
     <div class="row" >
         <!-- Barra de navegación izquierda -->
-        <div class="flex-shrink-0 p-3 hola" style="width: 15%; background-color: #F07B12; ">
+        <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body p-3" style="width: 15%;">
             <ul class="list-unstyled" id="menu-lateral" style="padding-bottom: 300px">
             <li class="mb-1">
                   <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
@@ -161,7 +161,7 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
   <script src ="../../js/fadeout.js">
   </script>
 
-  <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
+  <footer class="bg-primary py-2 bg-opacity-75 border-top border-terciary border-4 py-3 text-light bg-primary">
         <div class="container" >
             <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
         </div>
