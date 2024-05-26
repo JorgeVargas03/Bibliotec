@@ -188,7 +188,7 @@ mysqli_close($link);
   <div class="container-fluid">
     <div class="row">
       <!-- Barra de navegación izquierda -->
-      <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body" style="width: 15%; background-color: #F07B12;">
+      <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body" style="width: 15%;">
         <ul class="list-unstyled" id="menu-lateral">
           <li class="mb-2 mt-2">
             <a class="nav-link align-items-center" href="../home.php" id="letrabar">Inicio</a>
@@ -253,7 +253,8 @@ mysqli_close($link);
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content">
         <br>
         <div class="container">
-          <h2>Búsqueda</h2>
+        <h3 style="user-select: none;font-size: 1.8vmax;
+          margin-top:0.9vmax; color:#000000 ; margin-bottom:0.6vmax;">Búsqueda</h3> 
           <div class="linea-delgada"></div>
           <form id="filterForm">
             <div class="row align-items-center justify-content-center">

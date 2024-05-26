@@ -200,7 +200,7 @@ mysqli_close($link);
       <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body" style="width: 15%;">
         <ul class="list-unstyled" id="menu-lateral">
           <li class="mb-2 mt-2">
-            <a class="nav-link align-items-center" href="home.php" id="letrabardos" style="color: black; font-weight: bold;">Inicio</a>
+            <a class="nav-link align-items-center" href="home.php" id="letrabar" style="color: black; font-weight: bold;">Inicio</a>
           </li>
           <li class="mb-1">
             <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color: black; font-weight: bold;">
@@ -282,11 +282,19 @@ mysqli_close($link);
               <div class="card-body">
                 <h3 class="card-title display-6"><b><?php echo $fila['titulo_Pub']; ?></b></h3>
                 <p class="card-text lead"><?php echo $fila['descrip_Pub']; ?></p>
-                <a name="fade" href="publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>" class="btn btn-outline-primary btn-sm"><b>Leer más</b></a>
               </div>
               <div class="bg-primary py-2 bg-opacity-10 card-footer d-flex text-muted justify-content-between align-items-end">
+              <div class="col-auto col-sm-4 d-flex justify-content-start">
                 <span class="card-text comment-date mb-0">Publicado por: <?php echo $fila['nom_Us'] . " " . $fila['apell_Us']; ?></span>
+                </div>
+                <div class="col-auto d-flex justify-content-center col-sm-4">
+    <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='publicacion/publicacion_detalle.php?id=<?php echo $fila['idPub']; ?>'" style="width: 100px;">
+            Revisar
+              </button>
+    </div>
+                <div class="col-auto col-sm-4 d-flex justify-content-end">
                 <span class="card-text comment-date mb-0">Fecha de publicación: <?php echo functions::convertirFecha($fila['fecha_Pub']); ?></span>
+                </div>
               </div>
             </div>
           <?php endwhile; ?>

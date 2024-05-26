@@ -72,20 +72,24 @@ session_start();
 </style>
 
 
-<body>
-  <header class="bg-primary py-2">
-    <div class="container" style="margin-left:7.8vmax;" >
+<body class="bg-body-secondary">
+<header class="bg-primary py-2 bg-opacity-75 border-bottom border-terciary border-4 d-flex flex-wrap align-items-center py-3 position-inherit">
+    <div class="d-flex align-items-center">
       <!-- Logo y título -->
-      <div class="logo">
-        <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid mr-2">
-        <h4 class="mb-0"><b><span class="col-1">Biblio</span><span class="col-2">Tec</span></h4>
+      <img src="../../images/icons/TecNM.png"  class="d-flex img-fluid" style="width: 145px; margin-right: 2.0vmax;">
+      <img src="../../images/icons/tec.png" class="d-flex img-fluid" style="width: 60px;  margin-right: 2.0vmax;">
+      <a href="" class="logo d-flex align-items-center mb-3 mb-md-0 link-body-emphasis text-decoration-none">
+        <img src="../../images/icons/flamita.png" alt="Logo T - BiblioTec" class="img-fluid" style = "margin-right: 0.5vmax;">
+        <h4><span class="col-1 ">Biblio</span>
+        <span class="col-2">Tec<span class="col-1"> - Administrador</span></span></h4>
+      </a>
     </div>
   </header>
 
   <div class="container-fluid">
     <div class="row" >
         <!-- Barra de navegación izquierda -->
-        <div class="flex-shrink-0 p-3 hola" style="width: 15%; background-color: #F07B12; ">
+        <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body p-3" style="width: 15%;">
             <ul class="list-unstyled" id="menu-lateral" style="padding-bottom: 300px">
                 <li class="mb-1">
                   <a class="nav-link align-items-center" href="admin_home.php" id="letrabardos" style="margin-left:10px">Publicaciones Pendiendes</a>
@@ -112,11 +116,10 @@ session_start();
         </div>
   
       <!-- Contenido principal -->
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content bg-body-secondary">
         <!-- REPORTE COMENTARIO -->
         <div class="container mt-3">
-          <h2 style="user-select: none;font-size: 2vmax;text-shadow: 2px 2px 4px rgba(114, 114, 114, 0.4);
-          margin-top: 0.5vmax;"><b>Comentarios Reportados</b></h2>
+          <h2 style="user-select: none;font-size: 2vmax; margin-top: 0.5vmax;"><b>Comentarios Reportados</b></h2>
           <br>
           <?php
           while ($fila = mysqli_fetch_array($registros_rc)) {
@@ -150,7 +153,7 @@ session_start();
 
   <script src ="../../js/fadeout.js"></script>
 
-  <footer class="animate__animated animate__heartBeat animate__delay-2s py-3 text-light bg-primary">
+  <footer class="bg-primary py-2 bg-opacity-75 border-top border-terciary border-4 py-3 text-light bg-primary">
         <div class="container" >
             <p class="mb-1">&copy; 2024 BiblioTec - Todos los derechos reservados</p>
         </div>

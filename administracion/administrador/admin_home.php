@@ -101,7 +101,7 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
   </header>
 
   <div class="container-fluid" >
-    <div class="row" >
+    <div class="row">
         <!-- Barra de navegación izquierda -->
         <div class="flex-shrink-0 p-3 border-end border-terciary border-4 bg-body p-3" style="width: 15%;">
             <ul class="list-unstyled" id="menu-lateral">
@@ -121,7 +121,7 @@ if(isset($_GET["logout"]) && $_GET["logout"] === "true") {
                   </li>
                 <hr class="my-2"> <!-- Línea divisora -->
                 <li class="mb-1">
-                    <button class="btn d-inline-flex align-items-center rounded border-0 collapsed" id="letrabardos" style="color: black; font-weight: bold;">
+                    <button class="btn d-inline-flex align-items-center rounded collapsed" id="letrabardos" style="color: black;">
                     <a class="nav-link align-items-center" href="admin_home.php?logout=true" id="letrabar">Cerrar sesión</a>
                     </button>
                 </li>

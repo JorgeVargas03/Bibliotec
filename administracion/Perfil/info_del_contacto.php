@@ -311,7 +311,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_POST['notisLeidas'])) {
             </div>
 
             <!-- Contenido principal -->
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 bg-body-secondary">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-content bg-body-secondary">
                 <div class="contenedor">
                 <h1 style="text-decoration: underline;">BiblioTec Support</h1><br>
             <h5 style="width: 160px;">
