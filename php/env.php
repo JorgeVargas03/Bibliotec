@@ -59,6 +59,7 @@ if (!function_exists('envRequired')) {
 }
 
 if (!function_exists('envValue')) {
+    // Note: these values are raw config values; validate/escape according to their usage context.
     function envValue($key, $default = null)
     {
         $value = getenv($key);
