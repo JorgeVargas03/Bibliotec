@@ -1,8 +1,8 @@
-#ENV KEY REQUIRED
--SMTP_HOST
--SMTP_PORT
--SMTP_USERNAME
--SMTP_PASSWORD
--SMTP_FROM_EMAIL
--SMTP_FROM_NAME
--SUPPORT_EMAIL
+# Configuración de Correo (SMTP)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=tu-correo@gmail.com
+SMTP_PASSWORD=tu-app-password
+SMTP_FROM_EMAIL=notificaciones@tuapp.com
+SMTP_FROM_NAME="Nombre de tu App"
+SUPPORT_EMAIL=soporte@tuapp.com
