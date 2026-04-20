@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
         $mail->Host       = envValue('SMTP_HOST', 'smtp.office365.com'); // Servidor SMTP para Hotmail
         $mail->SMTPAuth   = true;
         $mail->Username   = $remitente; // Correo del remitente
-        $mail->Password   = envValue('SMTP_PASSWORD', ''); // Contraseña del remitente (reemplaza con tu contraseña)
+        $mail->Password   = envRequired('SMTP_PASSWORD'); // Contraseña del remitente (reemplaza con tu contraseña)
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = (int) envValue('SMTP_PORT', '587');
 

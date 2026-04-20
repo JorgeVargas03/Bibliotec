@@ -26,7 +26,7 @@ if (!function_exists('loadEnvFile')) {
             $key = trim($key);
             $value = trim($value);
 
-            if ($key === '') {
+            if ($key === '' || !preg_match('/^[A-Z0-9_]+$/i', $key)) {
                 continue;
             }
 
@@ -37,10 +37,24 @@ if (!function_exists('loadEnvFile')) {
                 $value = substr($value, 1, -1);
             }
 
+            $value = str_replace("\0", '', $value);
+
             putenv($key . '=' . $value);
             $_ENV[$key] = $value;
             $_SERVER[$key] = $value;
         }
+    }
+}
+
+if (!function_exists('envRequired')) {
+    function envRequired($key)
+    {
+        $value = envValue($key);
+        if ($value === null || $value === '') {
+            throw new RuntimeException('Missing required environment variable: ' . $key);
+        }
+
+        return $value;
     }
 }
 
@@ -58,4 +72,3 @@ if (!function_exists('envValue')) {
         return $value === false ? $default : $value;
     }
 }
-
