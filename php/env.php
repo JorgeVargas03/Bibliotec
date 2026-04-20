@@ -22,7 +22,7 @@ if (!function_exists('loadEnvFile')) {
                 continue;
             }
 
-            list($key, $value) = explode('=', $line, 2);
+            [$key, $value] = explode('=', $line, 2);
             $key = trim($key);
             $value = trim($value);
 
