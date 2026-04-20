@@ -37,7 +37,7 @@ if (!function_exists('loadEnvFile')) {
                 $value = substr($value, 1, -1);
             }
 
-            $value = str_replace("\0", '', $value);
+            $value = str_replace(["\0", "\r", "\n"], '', $value);
 
             putenv($key . '=' . $value);
             $_ENV[$key] = $value;

@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $mail->Port       = (int) envValue('SMTP_PORT', '587');                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
                 //Recipients
-                $mail->setFrom(envValue('SMTP_FROM_EMAIL', $mail->Username), envValue('SMTP_FROM_NAME', 'Dev-Bibliotec'));
+                $mail->setFrom(envValue('SMTP_FROM_EMAIL', envValue('SMTP_USERNAME', 'bibliotec.team@hotmail.com')), envValue('SMTP_FROM_NAME', 'Dev-Bibliotec'));
                 $mail->addAddress($email, $nombre . " " . $apellidos);     //Add a recipient //Name is optional
 
                 //Content
