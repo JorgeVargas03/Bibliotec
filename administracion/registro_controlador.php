@@ -7,6 +7,9 @@ use PHPMailer\PHPMailer\Exception;
 require 'verifymail/PHPMailer/PHPMailer.php';
 require 'verifymail/PHPMailer/Exception.php';
 require 'verifymail/PHPMailer/SMTP.php';  
+require_once '../php/env.php';
+
+loadEnvFile();
 
 
 $link = include('../php/conexion.php'); // Incluye el archivo de conexión y obtén la conexión
@@ -91,15 +94,15 @@ try {
     //Server settings
     $mail->SMTPDebug = 0;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.office365.com';                     //Set the SMTP server to send through
+    $mail->Host       = envValue('SMTP_HOST', 'smtp.office365.com');                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'bibliotec.team@hotmail.com';                     //SMTP username
-    $mail->Password   = 'BiBliotec0027';                               //SMTP password
+    $mail->Username   = envValue('SMTP_USERNAME', 'bibliotec.team@hotmail.com');                     //SMTP username
+    $mail->Password   = envValue('SMTP_PASSWORD', '');                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
-    $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    $mail->Port       = (int) envValue('SMTP_PORT', '587');                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
-    $mail->setFrom('bibliotec.team@hotmail.com', 'Dev-Bibliotec');
+    $mail->setFrom(envValue('SMTP_FROM_EMAIL', $mail->Username), envValue('SMTP_FROM_NAME', 'Dev-Bibliotec'));
     $mail->addAddress($correo, $nombre." ".$apellidos);     //Add a recipient //Name is optional
     
     //Content
