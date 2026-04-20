@@ -32,6 +32,9 @@ use PHPMailer\PHPMailer\Exception;
 require '../verifymail/PHPMailer/PHPMailer.php';
 require '../verifymail/PHPMailer/Exception.php';
 require '../verifymail/PHPMailer/SMTP.php';  
+require_once '../../php/env.php';
+
+loadEnvFile();
 
 $var = 0;
 $resultado = "";
@@ -40,8 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
     // Correo del remitente y destinatario
 
 
-    $remitente = 'bibliotec.team@hotmail.com';
-    $destinatario = 'bibliotec.team@hotmail.com';
+    $remitente = envValue('SMTP_FROM_EMAIL', envValue('SMTP_USERNAME', 'bibliotec.team@hotmail.com'));
+    $destinatario = envValue('SUPPORT_EMAIL', 'bibliotec.team@hotmail.com');
 
     // Mensaje obtenido del formulario
     $mensaje = $_POST['mensaje'];
@@ -52,12 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mensaje'])) {
     try {
         // Configuración del servidor SMTP
         $mail->isSMTP();
-        $mail->Host       = 'smtp-mail.outlook.com'; // Servidor SMTP para Hotmail
+        $mail->Host       = envValue('SMTP_HOST', 'smtp.office365.com'); // Servidor SMTP configurable por entorno
         $mail->SMTPAuth   = true;
         $mail->Username   = $remitente; // Correo del remitente
-        $mail->Password   = 'BiBliotec0027'; // Contraseña del remitente (reemplaza con tu contraseña)
+        $mail->Password   = envRequired('SMTP_PASSWORD'); // Contraseña del remitente (reemplaza con tu contraseña)
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
+        $mail->Port       = (int) envValue('SMTP_PORT', '587');
 
         // Configuración del remitente y destinatario
         $mail->setFrom($remitente);
